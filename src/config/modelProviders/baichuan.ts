@@ -9,6 +9,7 @@ const Baichuan: ModelProviderCard = {
       enabled: true,
       functionCall: true,
       id: 'Baichuan4',
+      maxOutput: 4096,
       tokens: 32_768,
     },
     {
@@ -17,6 +18,7 @@ const Baichuan: ModelProviderCard = {
       enabled: true,
       functionCall: true,
       id: 'Baichuan3-Turbo',
+      maxOutput: 8192,
       tokens: 32_768,
     },
     {
@@ -24,6 +26,7 @@ const Baichuan: ModelProviderCard = {
       displayName: 'Baichuan 3 Turbo 128k',
       enabled: true,
       id: 'Baichuan3-Turbo-128k',
+      maxOutput: 4096,
       tokens: 128_000,
     },
     {
@@ -31,6 +34,7 @@ const Baichuan: ModelProviderCard = {
       displayName: 'Baichuan 2 Turbo',
       enabled: true,
       id: 'Baichuan2-Turbo',
+      maxOutput: 8192,
       tokens: 32_768,
     },
     {
@@ -38,6 +42,7 @@ const Baichuan: ModelProviderCard = {
       displayName: 'Baichuan 2 Turbo 192k',
       enabled: true,
       id: 'Baichuan2-Turbo-192k',
+      maxOutput: 2048,
       tokens: 192_000,
     },
   ],
