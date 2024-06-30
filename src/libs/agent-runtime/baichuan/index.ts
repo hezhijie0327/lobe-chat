@@ -7,16 +7,22 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.baichuan-ai.com/v1',
   chatCompletion: {
     handlePayload: (payload: ChatStreamPayload) => {
-      // frequency_penalty must be greater than or equal to 1 and less than or equal to 2
       const { frequency_penalty, ...rest } = payload;
-      const adjustedFrequencyPenalty = frequency_penalty !== undefined
-        ? Math.min(Math.max(frequency_penalty, 1), 2)
-        : 1.5;  // Default value set to 1.5 (middle of the allowed range)
 
-      return {
-        ...rest,
-        frequency_penalty: adjustedFrequencyPenalty,
-      } as OpenAI.ChatCompletionCreateParamsStreaming;
+      let adjustedFrequencyPenalty = frequency_penalty;
+
+      if (frequency_penalty !== undefined) {
+        if (frequency_penalty < 1) {
+          // If less than 1 (including negative values), add 1 to bring it into the 1-2 range
+          adjustedFrequencyPenalty = Math.min(Math.max(frequency_penalty + 1, 1), 2);
+        } else if (frequency_penalty > 2) {
+          // If greater than 2, cap it at 2
+          adjustedFrequencyPenalty = 2;
+        }
+        // If between 1 and 2, keep the original value
+      }
+
+      return { ...rest, frequency_penalty: adjustedFrequencyPenalty } as OpenAI.ChatCompletionCreateParamsStreaming;
     },
   },
   debug: {
