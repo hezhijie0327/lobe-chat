@@ -22,7 +22,7 @@ const Spark: ModelProviderCard = {
       description: '专业级大语言模型，兼顾模型效果与性能 数学、代码、医疗、教育等场景专项优化 支持联网搜索、天气、日期等多个内置插件 覆盖大部分知识问答、语言理解、文本创作等多个场景',
       displayName: 'Spark Pro',
       enabled: true,
-      functionCall: false,
+      functionCall: true,
       id: 'generalv3',
       maxOutput: 8192,
     },
