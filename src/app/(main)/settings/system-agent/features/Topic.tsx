@@ -18,10 +18,14 @@ type SettingItemGroup = ItemGroup;
 const systemAgentKey = 'topic'
 const Topic = memo(() => {
   const { t } = useTranslation('setting');
-  const [form] = AntForm.useForm();
 
   const settings = useUserStore(settingsSelectors.currentSystemAgent, isEqual);
   const [updateSystemAgent] = useUserStore((s) => [s.updateSystemAgent]);
+
+  const [form] = AForm.useForm();
+  useEffect(() => {
+    form.setFieldsValue(settings);
+  }, []);
 
   const systemAgentSettings: SettingItemGroup = {
     children: [
