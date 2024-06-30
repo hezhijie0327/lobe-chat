@@ -9,7 +9,7 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
     handlePayload: (payload: ChatStreamPayload) => {
       const { frequency_penalty, ...rest } = payload;
 
-      let adjustedFrequencyPenalty = frequency_penalty;
+      let adjustedFrequencyPenalty = frequency_penalty ?? 1;
 
       if (frequency_penalty !== undefined) {
         if (frequency_penalty < 1) {
