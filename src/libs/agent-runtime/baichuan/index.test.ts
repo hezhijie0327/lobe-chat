@@ -12,7 +12,7 @@ import * as debugStreamModule from '../utils/debugStream';
 import { LobeBaichuanAI } from './index';
 
 const provider = ModelProvider.Baichuan;
-const defaultBaseURL = 'https://api.Baichuan.com/v1';
+const defaultBaseURL = 'https://api.baichuan-ai.com/v1';
 
 const bizErrorType = 'ProviderBizError';
 const invalidErrorType = 'InvalidProviderAPIKey';
