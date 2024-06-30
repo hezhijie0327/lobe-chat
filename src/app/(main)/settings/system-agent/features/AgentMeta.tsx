@@ -22,7 +22,7 @@ const AgentMeta = memo(() => {
   const settings = useUserStore(settingsSelectors.currentSystemAgent, isEqual);
   const [updateSystemAgent] = useUserStore((s) => [s.updateSystemAgent]);
 
-  const [form] = AForm.useForm();
+  const [form] = AntForm.useForm();
   useEffect(() => {
     form.setFieldsValue(settings);
   }, [settings, form]);
