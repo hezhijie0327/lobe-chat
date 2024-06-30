@@ -34,7 +34,7 @@ const Baichuan: ModelProviderCard = {
   checkModel: 'Baichuan4',
   id: 'baichuan',
   modelList: { showModelFetcher: true },
-  name: 'baichuan',
+  name: 'Baichuan',
 };
 
 export default Baichuan;
