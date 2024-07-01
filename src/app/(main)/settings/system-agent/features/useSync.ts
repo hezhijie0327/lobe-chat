@@ -6,7 +6,7 @@ import { useUserStore } from '@/store/user';
 export const useSyncSystemAgent = (form: FormInstance) => {
   useEffect(() => {
     // set the first time
-    form.setFieldsValue(useUserStore.getState().settings.systemAgent);
+    //form.setFieldsValue(useUserStore.getState().settings.systemAgent);
 
     // sync with later updated settings
     const unsubscribe = useUserStore.subscribe(
