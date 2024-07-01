@@ -46,6 +46,7 @@ import { useAzureProvider } from './Azure';
 import { useBedrockProvider } from './Bedrock';
 import { useOllamaProvider } from './Ollama';
 import { useOpenAIProvider } from './OpenAI';
+import { useSparkProvider } from './Spark';
 
 const BASE_DOC_URL = 'https://lobehub.com/docs/usage/providers';
 
