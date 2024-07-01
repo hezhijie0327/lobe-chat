@@ -85,6 +85,7 @@ export const getLLMConfig = () => {
 
       ENABLED_SPARK: z.boolean(),
       SPARK_API_KEY: z.string().optional(),
+      SPARK_API_SECRET: z.string().optional(),
     },
     runtimeEnv: {
       API_KEY_SELECT_MODE: process.env.API_KEY_SELECT_MODE,
