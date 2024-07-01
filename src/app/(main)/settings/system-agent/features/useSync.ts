@@ -4,12 +4,12 @@ import { useUserStore } from '@/store/user';
 
 export const useSyncSystemAgent = (form: FormInstance, settings: any) => {
   useEffect(() => {
-    form.setFieldsValue(settings);
+    form.setFieldsValue(useUserStore.getState().settings.systemAgent);
 
     const unsubscribe = useUserStore.subscribe(
       (s) => s.settings.systemAgent,
-      (newSettings) => {
-        form.setFieldsValue(newSettings);
+      (settings) => {
+        form.setFieldsValue(settings);
       },
     );
 
