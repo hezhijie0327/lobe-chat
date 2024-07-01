@@ -3,9 +3,9 @@ import createFormSystemAgent from './features/createForm';
 const Page = () => {
   return (
     <>
-      <createFormSystemAgent systemAgentKey="topic" />
-      <createFormSystemAgent systemAgentKey="translation" />
-      <createFormSystemAgent systemAgentKey="agentMeta" />
+      {createFormSystemAgent({ systemAgentKey: "topic" })}
+      {createFormSystemAgent({ systemAgentKey: "translation" })}
+      {createFormSystemAgent({ systemAgentKey: "agentMeta" })}
     </>
   );
 };
