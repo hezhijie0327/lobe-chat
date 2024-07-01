@@ -16,7 +16,7 @@ export const useSparkProvider = (): ProviderItem => {
   const { t } = useTranslation('modelProvider');
 
   return {
-    ...useSparkProviderCard,
+    ...SparkProviderCard,
     apiKeyItems: [
       {
         children: (
