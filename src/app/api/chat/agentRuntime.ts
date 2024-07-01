@@ -175,10 +175,11 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
     case ModelProvider.Spark: {
       const { SPARK_API_KEY, SPARK_API_SECRET } = getLLMConfig();
 
-      const apiKey = apiKeyManager.pick(payload?.apiKey || SPARK_API_KEY);
-      const apiSecret = payload?.apiSecret || SPARK_API_SECRET;
+      const sparkApiKey = payload?.sparkApiKey || SPARK_API_KEY;
+      const sparkApiSecret = payload?.sparkApiSecret || SPARK_API_SECRET;
 
-      return { apiKey, apiSecret };
+      const apiKey = sparkApiKey + ':' + sparkApiSecret;
+      return { apiKey };
     }
   }
 };
