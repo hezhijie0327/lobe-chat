@@ -1,21 +1,22 @@
 import { ModelProviderCard } from '@/types/llm';
 
 // ref https://www.xfyun.cn/doc/spark/HTTP%E8%B0%83%E7%94%A8%E6%96%87%E6%A1%A3.html#_3-%E8%AF%B7%E6%B1%82%E8%AF%B4%E6%98%8E
+// ref https://www.xfyun.cn/doc/spark/Web.html#_1-%E6%8E%A5%E5%8F%A3%E8%AF%B4%E6%98%8E
 const Spark: ModelProviderCard = {
   chatModels: [
     {
       description: '轻量级大语言模型，低延迟，全免费 支持在线联网搜索功能 响应快速、便捷，全面免费开放 适用于低算力推理与模型精调等定制化场景',
       displayName: 'Spark Lite',
-      enabled: false,
+      enabled: true,
       functionCall: false,
-      id: 'general',
+      id: 'generalv1.1',
       maxOutput: 4096,
     },
     {
       displayName: 'Spark v2.0',
-      enabled: false,
+      enabled: true,
       functionCall: false,
-      id: 'generalv2',
+      id: 'generalv2.1',
       maxOutput: 4096,
     },
     {
@@ -23,7 +24,7 @@ const Spark: ModelProviderCard = {
       displayName: 'Spark Pro',
       enabled: true,
       functionCall: true,
-      id: 'generalv3',
+      id: 'generalv3.1',
       maxOutput: 8192,
     },
     {
@@ -39,7 +40,7 @@ const Spark: ModelProviderCard = {
       displayName: 'Spark4.0 Ultra',
       enabled: true,
       functionCall: false,
-      id: '4.0Ultra',
+      id: 'generalv4.0',
       maxOutput: 8192,
     },
   ],
