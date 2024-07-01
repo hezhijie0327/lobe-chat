@@ -34,7 +34,6 @@ import {
   OpenRouterProviderCard,
   PerplexityProviderCard,
   QwenProviderCard,
-  SparkProviderCard,
   StepfunProviderCard,
   TogetherAIProviderCard,
   ZeroOneProviderCard,
