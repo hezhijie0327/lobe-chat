@@ -83,6 +83,7 @@ export const useProviderList = (): ProviderItem[] => {
   const ollamaProvider = useOllamaProvider();
   const openAIProvider = useOpenAIProvider();
   const bedrockProvider = useBedrockProvider();
+  const sparkProvider = useSparkProvider();
 
   return useMemo(
     () => [
@@ -178,6 +179,6 @@ export const useProviderList = (): ProviderItem[] => {
         title: <Spark.Combine size={ 20 } type={ 'color' } />,
       },
     ],
-    [azureProvider, ollamaProvider, ollamaProvider, bedrockProvider],
+    [azureProvider, ollamaProvider, ollamaProvider, bedrockProvider, sparkProvider],
   );
 };
