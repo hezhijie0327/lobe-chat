@@ -1,11 +1,6 @@
 import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
-export interface LobeSparkParams {
-  sparkApiKey?: string;
-  sparkApiSecret?: string;
-}
-
 export const LobeSparkAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://spark-api-open.xf-yun.com/v1',
   debug: {
