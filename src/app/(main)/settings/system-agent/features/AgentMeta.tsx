@@ -43,7 +43,7 @@ const AgentMeta = memo(() => {
     title: t(`systemAgent.${systemAgentKey}.title`),
   };
 
-  useSyncSystemAgent(form);
+  useSyncSystemAgent(form, settings);
 
   return (
     <Form
