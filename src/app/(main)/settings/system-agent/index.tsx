@@ -1,4 +1,4 @@
-import systemAgentForm from './features/createSystemAgentForm';
+import systemAgentForm from './features/createForm';
 
 const Page = () => {
   return (
