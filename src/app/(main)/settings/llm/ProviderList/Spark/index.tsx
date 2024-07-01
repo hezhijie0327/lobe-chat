@@ -1,5 +1,8 @@
 'use client';
 
+import { Spark } from '@lobehub/icons';
+import { useTheme } from 'antd-style';
+
 import { Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 
