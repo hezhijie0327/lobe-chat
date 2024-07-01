@@ -161,6 +161,7 @@ export const getLLMConfig = () => {
 
       ENABLED_SPARK: !!process.env.SPARK_API_KEY,
       SPARK_API_KEY: process.env.SPARK_API_KEY,
+      SPARK_API_SECRET: process.env.SPARK_API_SECRET,
     },
   });
 };
