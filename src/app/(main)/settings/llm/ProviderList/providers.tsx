@@ -10,7 +10,6 @@ import {
   Moonshot,
   OpenRouter,
   Perplexity,
-  Spark,
   Stepfun,
   Together,
   Tongyi,
