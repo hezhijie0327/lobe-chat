@@ -185,7 +185,7 @@ export const useProviderList = (): ProviderItem[] => {
       {
         ...SparkProviderCard,
         docUrl: urlJoin(BASE_DOC_URL, 'spark'),
-        title: <Spark.Combine size={ 20 } type={ 'color' } />,
+        title: <SparkBrand />,
       },
     ],
     [azureProvider, ollamaProvider, ollamaProvider, bedrockProvider, sparkProvider],
