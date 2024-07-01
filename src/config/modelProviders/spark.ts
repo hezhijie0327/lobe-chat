@@ -44,7 +44,7 @@ const Spark: ModelProviderCard = {
       maxOutput: 8192,
     },
   ],
-  checkModel: 'generalv3',
+  checkModel: 'generalv3.1',
   id: 'spark',
   modelList: { showModelFetcher: true },
   name: 'Spark',
