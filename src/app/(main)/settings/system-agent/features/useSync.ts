@@ -1,10 +1,10 @@
 import { FormInstance } from 'antd';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 import { useUserStore } from '@/store/user';
 
 export const useSyncSystemAgent = (form: FormInstance) => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     // set the first time
     //form.setFieldsValue(useUserStore.getState().settings.systemAgent);
 
