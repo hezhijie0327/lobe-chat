@@ -10,12 +10,13 @@ import { FORM_STYLE } from '@/const/layoutTokens';
 import ModelSelect from '@/features/ModelSelect';
 import { useUserStore } from '@/store/user';
 import { settingsSelectors } from '@/store/user/selectors';
+import { UserSystemAgentConfigKey } from '@/types/user/settings/systemAgent';
 
 import { useSyncSystemAgent } from './useSync';
 
 type SettingItemGroup = ItemGroup;
 
-const SystemAgentForm = memo(({ systemAgentKey }: { systemAgentKey: string }) => {
+const SystemAgentForm = memo(({ systemAgentKey }: { systemAgentKey: UserSystemAgentConfigKey }) => {
   const { t } = useTranslation('setting');
 
   const settings = useUserStore(settingsSelectors.currentSystemAgent, isEqual);
