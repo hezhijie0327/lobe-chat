@@ -17,7 +17,7 @@ import { LobeOpenAI } from './openai';
 import { LobeOpenRouterAI } from './openrouter';
 import { LobePerplexityAI } from './perplexity';
 import { LobeQwenAI } from './qwen';
-import { LobeSparkAI } from './spark';
+import { LobeSparkAI, LobeSparkParams } from './spark';
 import { LobeStepfunAI } from './stepfun';
 import { LobeTogetherAI } from './togetherai';
 import {
@@ -116,7 +116,7 @@ class AgentRuntime {
       openrouter: Partial<ClientOptions>;
       perplexity: Partial<ClientOptions>;
       qwen: Partial<ClientOptions>;
-      spark: Partial<ClientOptions>;
+      spark: Partial<LobeCloudflareParams>;
       stepfun: Partial<ClientOptions>;
       togetherai: Partial<ClientOptions>;
       zeroone: Partial<ClientOptions>;
