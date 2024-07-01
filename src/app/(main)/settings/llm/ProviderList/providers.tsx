@@ -181,7 +181,7 @@ export const useProviderList = (): ProviderItem[] => {
         title: <Stepfun.Combine size={20} type={'color'} />,
       },
       {
-        ...SparkProvider,
+        ...sparkProvider,
         docUrl: urlJoin(BASE_DOC_URL, 'spark'),
         title: <SparkBrand />,
       },
