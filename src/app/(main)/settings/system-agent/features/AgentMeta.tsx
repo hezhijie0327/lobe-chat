@@ -23,7 +23,6 @@ const AgentMeta = memo(() => {
   const [updateSystemAgent] = useUserStore((s) => [s.updateSystemAgent]);
 
   const [form] = AntForm.useForm();
-  useSyncSystemAgent(form, settings);
   
   const systemAgentSettings: SettingItemGroup = {
     children: [
@@ -43,6 +42,8 @@ const AgentMeta = memo(() => {
     ],
     title: t(`systemAgent.${systemAgentKey}.title`),
   };
+
+  useSyncSystemAgent(form, settings);
 
   return (
     <Form
