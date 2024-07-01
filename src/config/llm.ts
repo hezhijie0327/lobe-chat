@@ -82,6 +82,9 @@ export const getLLMConfig = () => {
 
       ENABLED_STEPFUN: z.boolean(),
       STEPFUN_API_KEY: z.string().optional(),
+
+      ENABLED_SPARK: z.boolean(),
+      SPARK_API_KEY: z.string().optional(),
     },
     runtimeEnv: {
       API_KEY_SELECT_MODE: process.env.API_KEY_SELECT_MODE,
