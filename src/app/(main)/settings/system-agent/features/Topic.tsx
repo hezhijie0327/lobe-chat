@@ -23,9 +23,6 @@ const Topic = memo(() => {
   const [updateSystemAgent] = useUserStore((s) => [s.updateSystemAgent]);
 
   const [form] = AntForm.useForm();
-  useEffect(() => {
-    form.setFieldsValue(settings);
-  }, [settings]);
 
   const systemAgentSettings: SettingItemGroup = {
     children: [
@@ -46,7 +43,7 @@ const Topic = memo(() => {
     title: t(`systemAgent.${systemAgentKey}.title`),
   };
 
-  useSyncSystemAgent(form);
+  useSyncSystemAgent(form, settings);
 
   return (
     <Form
