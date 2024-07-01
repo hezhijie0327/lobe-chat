@@ -8,9 +8,18 @@ import { GlobalLLMProviderKey } from '@/types/user/settings';
 
 import { KeyVaultsConfigKey } from '../../const';
 import { ProviderItem } from '../../type';
-import { SparkBrand } from '../providers';
 
 const providerKey: GlobalLLMProviderKey = 'spark';
+
+const SparkBrand = () => {
+  const theme = useTheme();
+  return (
+    <Spark.Combine
+      color={theme.isDarkMode ? theme.colorText : Spark.colorPrimary}
+      size={22}
+    />
+  );
+};
 
 export const useSparkProvider = (): ProviderItem => {
   const { t } = useTranslation('modelProvider');
