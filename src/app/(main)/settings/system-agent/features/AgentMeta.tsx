@@ -3,7 +3,7 @@
 import { Form, type ItemGroup } from '@lobehub/ui';
 import { Form as AntForm } from 'antd';
 import isEqual from 'fast-deep-equal';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { FORM_STYLE } from '@/const/layoutTokens';
@@ -23,9 +23,6 @@ const AgentMeta = memo(() => {
   const [updateSystemAgent] = useUserStore((s) => [s.updateSystemAgent]);
 
   const [form] = AntForm.useForm();
-  useEffect(() => {
-    form.setFieldsValue(settings);
-  }, [settings]);
 
   const systemAgentSettings: SettingItemGroup = {
     children: [
