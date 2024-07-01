@@ -22,22 +22,22 @@ export const useSparkProvider = (): ProviderItem => {
         children: (
           <Input.Password
             autoComplete={'new-password'}
-            placeholder={t(`${providerKey}.sparkApiKey.placeholder`)}
+            placeholder={t('spark.sparkApiKey.placeholder')}
           />
         ),
-        desc: t(`${providerKey}.sparkApiKey.desc`),
-        label: t(`${providerKey}.sparkApiKey.title`),
+        desc: t('spark.sparkApiKey.desc'),
+        label: t('spark.sparkApiKey.title'),
         name: [KeyVaultsConfigKey, providerKey, 'sparkApiKey'],
       },
       {
         children: (
           <Input.Password
             autoComplete={'new-password'}
-            placeholder={t(`${providerKey}.sparkApiSecret.placeholder`)}
+            placeholder={t('spark.sparkApiSecret.placeholder')}
           />
         ),
-        desc: t(`${providerKey}.sparkApiSecret.desc`),
-        label: t(`${providerKey}.sparkApiSecret.title`),
+        desc: t('spark.sparkApiSecret.desc'),
+        label: t('spark.sparkApiSecret.title'),
         name: [KeyVaultsConfigKey, providerKey, 'sparkApiSecret'],
       },
     ],
