@@ -116,7 +116,7 @@ class AgentRuntime {
       openrouter: Partial<ClientOptions>;
       perplexity: Partial<ClientOptions>;
       qwen: Partial<ClientOptions>;
-      spark: Partial<LobeCloudflareParams>;
+      spark: Partial<LobeSparkParams>;
       stepfun: Partial<ClientOptions>;
       togetherai: Partial<ClientOptions>;
       zeroone: Partial<ClientOptions>;
