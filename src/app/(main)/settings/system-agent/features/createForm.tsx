@@ -10,7 +10,7 @@ import { FORM_STYLE } from '@/const/layoutTokens';
 import ModelSelect from '@/features/ModelSelect';
 import { useUserStore } from '@/store/user';
 import { settingsSelectors } from '@/store/user/selectors';
-import { type UserSystemAgentConfigKey } from '@/types/user/settings';
+import { UserSystemAgentConfigKey } from '@/types/user/settings';
 
 import { useSyncSystemAgent } from './useSync';
 
