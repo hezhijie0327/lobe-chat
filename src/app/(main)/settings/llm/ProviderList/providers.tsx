@@ -79,11 +79,11 @@ const GoogleBrand = () => (
   </Flexbox>
 );
 
-export const SparkBrand = () => (
-  <Flexbox align={'center'} gap={8} horizontal>
-    <Spark.Combine size={22} type={'color'} />
-  </Flexbox>
-);
+export const SparkBrand = () => {
+  const theme = useTheme();
+
+  return <Spark.Text color={theme.isDarkMode ? theme.colorText : Spark.colorPrimary} size={20} />;
+};
 
 export const useProviderList = (): ProviderItem[] => {
   const azureProvider = useAzureProvider();
