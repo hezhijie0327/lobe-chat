@@ -5,22 +5,19 @@ import { useUserStore } from '@/store/user';
 
 export const useSyncSystemAgent = (form: FormInstance) => {
   useLayoutEffect(() => {
-    const initialSettings = useUserStore.getState().settings.systemAgent;
-    if (initialSettings) {
-      form.setFieldsValue(initialSettings);
-    }
+    // set the first time
+    form.setFieldsValue(useUserStore.getState().settings.systemAgent);
 
+    // sync with later updated settings
     const unsubscribe = useUserStore.subscribe(
-      (state) => state.settings.systemAgent,
+      (s) => s.settings.systemAgent,
       (settings) => {
-        if (settings) {
-          form.setFieldsValue(settings);
-        }
+        form.setFieldsValue(settings);
       },
     );
 
     return () => {
       unsubscribe();
     };
-  }, [form]);
+  }, [settings]);
 };
