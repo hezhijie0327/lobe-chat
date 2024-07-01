@@ -16,7 +16,7 @@ import { useSyncSystemAgent } from './useSync';
 
 type SettingItemGroup = ItemGroup;
 
-const createFormSystemAgent = memo(({ systemAgentKey }: { systemAgentKey: UserSystemAgentConfigKey }) => {
+const SystemAgentForm = memo(({ systemAgentKey }: { systemAgentKey: UserSystemAgentConfigKey }) => {
   const { t } = useTranslation('setting');
 
   const settings = useUserStore(settingsSelectors.currentSystemAgent, isEqual);
@@ -56,4 +56,4 @@ const createFormSystemAgent = memo(({ systemAgentKey }: { systemAgentKey: UserSy
   );
 });
 
-export default createFormSystemAgent;
+export default SystemAgentForm;
