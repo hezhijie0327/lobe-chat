@@ -80,8 +80,12 @@ const GoogleBrand = () => (
 
 export const SparkBrand = () => {
   const theme = useTheme();
-
-  return <Spark.Text color={theme.isDarkMode ? theme.colorText : Spark.colorPrimary} size={20} />;
+  return (
+    <Spark.Combine
+      color={theme.isDarkMode ? theme.colorText : Spark.colorPrimary}
+      size={22}
+    />
+  );
 };
 
 export const useProviderList = (): ProviderItem[] => {
