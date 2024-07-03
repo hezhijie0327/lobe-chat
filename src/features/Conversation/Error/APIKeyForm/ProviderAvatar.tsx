@@ -83,7 +83,7 @@ const ProviderAvatar = memo<ProviderAvatarProps>(({ provider }) => {
     }
 
     case ModelProvider.Taichu: {
-      return <Spark color={Baichuan.colorPrimary} size={56} />; // TODO: change icon to Taichu
+      return <Baichuan color={Baichuan.colorPrimary} size={56} />; // TODO: change icon to Taichu
     }
 
     case ModelProvider.TogetherAI: {
