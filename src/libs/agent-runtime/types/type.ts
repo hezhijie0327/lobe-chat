@@ -40,8 +40,8 @@ export enum ModelProvider {
   Stepfun = 'stepfun',
   TogetherAI = 'togetherai',
   ZeroOne = 'zeroone',
-  Zhinao = 'zhinao',
   ZhiPu = 'zhipu',
+  Zhinao = 'zhinao',
 }
 
 export type ModelProviderKey = Lowercase<keyof typeof ModelProvider>;
