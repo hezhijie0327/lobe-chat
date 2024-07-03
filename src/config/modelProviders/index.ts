@@ -16,6 +16,7 @@ import OpenRouterProvider from './openrouter';
 import PerplexityProvider from './perplexity';
 import QwenProvider from './qwen';
 import StepfunProvider from './stepfun';
+import TaichuProvider from './taichu';
 import TogetherAIProvider from './togetherai';
 import ZeroOneProvider from './zeroone';
 import ZhiPuProvider from './zhipu';
@@ -39,6 +40,7 @@ export const LOBE_DEFAULT_MODEL_LIST: ChatModelCard[] = [
   ZeroOneProvider.chatModels,
   StepfunProvider.chatModels,
   BaichuanProvider.chatModels,
+  TaichuProvider.chatModels,
 ].flat();
 
 export const DEFAULT_MODEL_PROVIDER_LIST = [
@@ -61,6 +63,7 @@ export const DEFAULT_MODEL_PROVIDER_LIST = [
   ZhiPuProvider,
   StepfunProvider,
   BaichuanProvider,
+  TaichuProvider,
 ];
 
 export const filterEnabledModels = (provider: ModelProviderCard) => {
