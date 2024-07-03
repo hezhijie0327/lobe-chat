@@ -1,6 +1,6 @@
 import { ModelProviderCard } from '@/types/llm';
 
-// ref https://ai.360.cn/platform.html
+// ref https://ai.360.cn/platform/docs/overview
 const Zhinao: ModelProviderCard = {
   chatModels: [
     {
