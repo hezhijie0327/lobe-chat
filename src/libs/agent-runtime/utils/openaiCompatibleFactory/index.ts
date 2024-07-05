@@ -36,7 +36,7 @@ interface OpenAICompatibleFactoryOptions {
   constructorOptions?: ClientOptions;
   debug?: {
     chatCompletion: () => boolean;
-    includeUser?: boolean;
+    excludeUser?: boolean;
   };
   errorType?: {
     bizError: ILobeAgentRuntimeErrorType;
@@ -86,9 +86,9 @@ export const LobeOpenAICompatibleFactory = ({
             } as OpenAI.ChatCompletionCreateParamsStreaming);
 
         const response = await this.client.chat.completions.create(
+          postPayload,
+          (debug?.excludeUser ? {} : { user: options?.user }),
           {
-            ...postPayload,
-            ...(debug?.includeUser ? { user: options?.user } : {}),
             // https://github.com/lobehub/lobe-chat/pull/318
             headers: { Accept: '*/*' },
             signal: options?.signal,
