@@ -30,13 +30,13 @@ const CHAT_MODELS_BLOCK_LIST = [
 interface OpenAICompatibleFactoryOptions {
   baseURL?: string;
   chatCompletion?: {
+    excludeUser?: boolean;
     handleError?: (error: any) => Omit<ChatCompletionErrorPayload, 'provider'> | undefined;
     handlePayload?: (payload: ChatStreamPayload) => OpenAI.ChatCompletionCreateParamsStreaming;
   };
   constructorOptions?: ClientOptions;
   debug?: {
     chatCompletion: () => boolean;
-    excludeUser?: boolean;
   };
   errorType?: {
     bizError: ILobeAgentRuntimeErrorType;
@@ -88,7 +88,7 @@ export const LobeOpenAICompatibleFactory = ({
         console.log('Post Payload A:', postPayload);
         
         const response = await this.client.chat.completions.create(
-          { ...postPayload, ...(debug?.excludeUser ? {} : { user: options?.user }) },
+          { ...postPayload, ...(chatCompletion?.excludeUser ? {} : { user: options?.user }) },
           {
             // https://github.com/lobehub/lobe-chat/pull/318
             headers: { Accept: '*/*' },
