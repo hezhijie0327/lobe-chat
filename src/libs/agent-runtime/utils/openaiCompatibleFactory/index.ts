@@ -30,9 +30,9 @@ const CHAT_MODELS_BLOCK_LIST = [
 interface OpenAICompatibleFactoryOptions {
   baseURL?: string;
   chatCompletion?: {
-    excludeUser?: boolean;
     handleError?: (error: any) => Omit<ChatCompletionErrorPayload, 'provider'> | undefined;
     handlePayload?: (payload: ChatStreamPayload) => OpenAI.ChatCompletionCreateParamsStreaming;
+    noUserId?: boolean;
   };
   constructorOptions?: ClientOptions;
   debug?: {
@@ -78,8 +78,6 @@ export const LobeOpenAICompatibleFactory = ({
 
     async chat(payload: ChatStreamPayload, options?: ChatCompetitionOptions) {
       try {
-        console.log('Payload A:', payload);
-        
         const postPayload = chatCompletion?.handlePayload
           ? chatCompletion.handlePayload(payload)
           : ({
@@ -87,18 +85,17 @@ export const LobeOpenAICompatibleFactory = ({
               stream: payload.stream ?? true,
             } as OpenAI.ChatCompletionCreateParamsStreaming);
 
-        console.log('Post Payload:', postPayload);
-        
         const response = await this.client.chat.completions.create(
-          { ...postPayload, ...(chatCompletion?.excludeUser ? {} : { user: options?.user }) },
+          {
+            ...postPayload,
+            ...(chatCompletion?.noUserId ? {} : { user: options?.user }) 
+          },
           {
             // https://github.com/lobehub/lobe-chat/pull/318
             headers: { Accept: '*/*' },
             signal: options?.signal,
           },
         );
-
-        console.log('Payload B:', payload);
 
         if (postPayload.stream) {
           const [prod, useForDebug] = response.tee();
