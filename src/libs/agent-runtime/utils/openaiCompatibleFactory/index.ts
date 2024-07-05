@@ -86,8 +86,7 @@ export const LobeOpenAICompatibleFactory = ({
             } as OpenAI.ChatCompletionCreateParamsStreaming);
 
         const response = await this.client.chat.completions.create(
-          postPayload,
-          debug?.excludeUser ? {} : { user: options?.user },
+          { ...postPayload, (debug?.excludeUser ? {} : { user: options?.user }) },
           {
             // https://github.com/lobehub/lobe-chat/pull/318
             headers: { Accept: '*/*' },
