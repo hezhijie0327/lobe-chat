@@ -54,7 +54,7 @@ export const LobeOpenAICompatibleFactory = ({
   provider,
   baseURL: DEFAULT_BASE_URL,
   errorType,
-  debug,
+  debug = { includeUser: true },
   constructorOptions,
   chatCompletion,
   models,
