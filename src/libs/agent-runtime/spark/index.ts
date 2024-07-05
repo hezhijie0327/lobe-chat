@@ -5,6 +5,7 @@ export const LobeSparkAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://spark-api-open.xf-yun.com/v1',
   debug: {
     chatCompletion: () => process.env.DEBUG_SPARK_CHAT_COMPLETION === '1',
+    excludeUser: true,
   },
   provider: ModelProvider.Spark,
 });
