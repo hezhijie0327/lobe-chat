@@ -85,6 +85,8 @@ export const LobeOpenAICompatibleFactory = ({
               stream: payload.stream ?? true,
             } as OpenAI.ChatCompletionCreateParamsStreaming);
 
+        console.log('Post Payload A:', postPayload);
+        
         const response = await this.client.chat.completions.create(
           { ...postPayload, ...(debug?.excludeUser ? {} : { user: options?.user }) },
           {
@@ -94,6 +96,8 @@ export const LobeOpenAICompatibleFactory = ({
           },
         );
 
+        console.log('Post Payload B:', postPayload);
+        
         if (postPayload.stream) {
           const [prod, useForDebug] = response.tee();
 
