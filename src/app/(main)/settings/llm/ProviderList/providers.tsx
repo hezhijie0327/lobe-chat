@@ -182,7 +182,7 @@ export const useProviderList = (): ProviderItem[] => {
       {
         ...TaichuProviderCard,
         docUrl: urlJoin(BASE_DOC_URL, 'taichu'),
-        title: <AiMass.Combine size={ 30 } type={ 'color' } />,
+        title: <AiMass.Combine size={ 28 } type={ 'color' } />,
       },
     ],
     [azureProvider, ollamaProvider, ollamaProvider, bedrockProvider],
