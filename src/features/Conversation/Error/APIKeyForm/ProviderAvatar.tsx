@@ -83,7 +83,7 @@ const ProviderAvatar = memo<ProviderAvatarProps>(({ provider }) => {
     }
 
     case ModelProvider.Taichu: {
-      return <AiMass size={56} />;
+      return <AiMass.Color size={56} />;
     }
 
     case ModelProvider.TogetherAI: {
