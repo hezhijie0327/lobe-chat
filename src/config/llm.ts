@@ -88,6 +88,9 @@ export const getLLMConfig = () => {
 
       ENABLED_TAICHU: z.boolean(),
       TAICHU_API_KEY: z.string().optional(),
+
+      ENABLED_NVIDIA: z.boolean(),
+      NVIDIA_API_KEY: z.string().optional(),
     },
     runtimeEnv: {
       API_KEY_SELECT_MODE: process.env.API_KEY_SELECT_MODE,
@@ -167,6 +170,9 @@ export const getLLMConfig = () => {
 
       ENABLED_TAICHU: !!process.env.TAICHU_API_KEY,
       TAICHU_API_KEY: process.env.TAICHU_API_KEY,
+
+      ENABLED_NVIDIA: !!process.env.NVIDIA_API_KEY,
+      NVIDIA_API_KEY: process.env.NVIDIA_API_KEY,
     },
   });
 };
