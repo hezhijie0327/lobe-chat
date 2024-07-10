@@ -8,6 +8,7 @@ import {
   MinimaxProviderCard,
   MistralProviderCard,
   MoonshotProviderCard,
+  NvidiaProviderCard,
   OllamaProviderCard,
   OpenAIProviderCard,
   OpenRouterProviderCard,
@@ -62,6 +63,10 @@ export const DEFAULT_LLM_CONFIG: UserModelProviderConfig = {
   moonshot: {
     enabled: false,
     enabledModels: filterEnabledModels(MoonshotProviderCard),
+  },
+  nvidia: {
+    enabled: false,
+    enabledModels: filterEnabledModels(NvidiaProviderCard),
   },
   ollama: {
     enabled: true,
