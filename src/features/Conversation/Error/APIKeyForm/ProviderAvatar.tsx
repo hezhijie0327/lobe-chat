@@ -8,6 +8,7 @@ import {
   Minimax,
   Mistral,
   Moonshot,
+  Nvidia,
   OpenAI,
   OpenRouter,
   Perplexity,
@@ -48,6 +49,10 @@ const ProviderAvatar = memo<ProviderAvatarProps>(({ provider }) => {
 
     case ModelProvider.Moonshot: {
       return <Moonshot size={56} />;
+    }
+
+    case ModelProvider.Nvidia: {
+      return <Nvidia color={Nvidia.colorPrimary} size={56} />;
     }
 
     case ModelProvider.Perplexity: {
