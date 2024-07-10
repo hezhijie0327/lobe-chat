@@ -36,6 +36,7 @@ export const getServerGlobalConfig = () => {
     ENABLED_STEPFUN,
     ENABLED_BAICHUAN,
     ENABLED_TAICHU,
+    ENABLED_NVIDIA,
 
     ENABLED_AZURE_OPENAI,
     AZURE_MODEL_LIST,
@@ -80,6 +81,7 @@ export const getServerGlobalConfig = () => {
       minimax: { enabled: ENABLED_MINIMAX },
       mistral: { enabled: ENABLED_MISTRAL },
       moonshot: { enabled: ENABLED_MOONSHOT },
+      nvidia: { enabled: ENABLED_NVIDIA },
       ollama: {
         enabled: ENABLED_OLLAMA,
         fetchOnClient: !OLLAMA_PROXY_URL,
