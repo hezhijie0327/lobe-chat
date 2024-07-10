@@ -13,6 +13,7 @@ import { LobeGroq } from './groq';
 import { LobeMinimaxAI } from './minimax';
 import { LobeMistralAI } from './mistral';
 import { LobeMoonshotAI } from './moonshot';
+import { LobeNvidiaAI } from './nvidia';
 import { LobeOllamaAI } from './ollama';
 import { LobeOpenAI } from './openai';
 import { LobeOpenRouterAI } from './openrouter';
@@ -113,6 +114,7 @@ class AgentRuntime {
       minimax: Partial<ClientOptions>;
       mistral: Partial<ClientOptions>;
       moonshot: Partial<ClientOptions>;
+      nvidia: Partial<ClientOptions>;
       ollama: Partial<ClientOptions>;
       openai: Partial<ClientOptions>;
       openrouter: Partial<ClientOptions>;
@@ -231,6 +233,11 @@ class AgentRuntime {
 
       case ModelProvider.Taichu: {
         runtimeModel = new LobeTaichuAI(params.taichu ?? {});
+        break
+      }
+
+      case ModelProvider.Nvidia: {
+        runtimeModel = new LobeNvidiaAI(params.nvidia ?? {});
         break
       }
     }
