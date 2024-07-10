@@ -11,6 +11,7 @@ import {
   Minimax,
   Mistral,
   Moonshot,
+  Nvidia,
   Ollama,
   OpenAI,
   OpenRouter,
@@ -122,6 +123,10 @@ const ModelProviderIcon = memo<ModelProviderIconProps>(({ provider }) => {
 
     case ModelProvider.Taichu: {
       return <AiMass size={20} />;
+    }
+
+    case ModelProvider.Nvidia: {
+      return <Nvidia size={20} />;
     }
 
     default: {
