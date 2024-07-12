@@ -78,6 +78,7 @@ export const isProviderDisableBroswerRequest = (id: string) => {
   return !!provider;
 };
 
+export { default as Ai360ProviderCard } from './ai360';
 export { default as AnthropicProviderCard } from './anthropic';
 export { default as AzureProviderCard } from './azure';
 export { default as BaichuanProviderCard } from './baichuan';
