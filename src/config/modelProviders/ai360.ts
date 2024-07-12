@@ -29,6 +29,7 @@ const Ai360: ModelProviderCard = {
     },
   ],
   checkModel: '360gpt-turbo',
+  disableBrowserRequest: true,
   id: 'ai360',
   modelList: { showModelFetcher: true },
   name: '360 智脑',
