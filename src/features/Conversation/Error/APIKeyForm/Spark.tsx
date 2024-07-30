@@ -22,7 +22,7 @@ const SparkForm = memo(() => {
   const theme = useTheme();
   return (
     <FormAction
-      avatar={<Spark.Color color={theme.colorText} size={56} />}
+      avatar={<Spark color={Spark.colorPrimary} size={56} />}
       description={t('spark.sparkApiKey.desc')}
       title={t('spark.sparkApiKey.title')}
     >
