@@ -21,8 +21,8 @@ const SparkForm = memo(() => {
   return (
     <FormAction
       avatar={<Spark color={Spark.colorPrimary} size={56} />}
-      description={t('spark.sparkApiKey.desc')}
-      title={t('spark.sparkApiKey.title')}
+      description={t('spark.unlock.description')}
+      title={t('spark.unlock.title')}
     >
       <Input.Password
         autoComplete={'new-password'}
