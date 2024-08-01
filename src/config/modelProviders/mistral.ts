@@ -23,6 +23,12 @@ const Mistral: ModelProviderCard = {
       tokens: 65_536,
     },
     {
+      displayName: 'Mistral Nemo',
+      enabled: true,
+      id: 'open-mistral-nemo',
+      tokens: 128_000,
+    },
+    {
       displayName: 'Mistral Small',
       enabled: true,
       id: 'mistral-small-latest',
@@ -38,6 +44,18 @@ const Mistral: ModelProviderCard = {
       displayName: 'Mistral Large',
       enabled: true,
       id: 'mistral-large-latest',
+      tokens: 32_768,
+    },
+    {
+      displayName: 'Codestral',
+      enabled: true,
+      id: 'codestral-latest',
+      tokens: 32_768,
+    },
+    {
+      displayName: 'Codestral Mamba',
+      enabled: true,
+      id: 'open-codestral-mamba',
       tokens: 32_768,
     },
   ],
