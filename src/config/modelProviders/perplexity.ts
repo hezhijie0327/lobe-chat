@@ -5,6 +5,7 @@ const Perplexity: ModelProviderCard = {
   chatModels: [
     {
       displayName: 'Perplexity 8B Chat',
+      enabled: true,
       id: 'llama-3.1-sonar-small-128k-chat',
       tokens: 128_000,
     },
@@ -16,6 +17,7 @@ const Perplexity: ModelProviderCard = {
     },
     {
       displayName: 'Perplexity 8B Online',
+      enabled: true,
       id: 'llama-3.1-sonar-small-128k-online',
       tokens: 128_000,
     },
