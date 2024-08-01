@@ -24,24 +24,24 @@ const Mistral: ModelProviderCard = {
       tokens: 65_536,
     },
     {
-      displayName: 'Mistral Nemo',
-      enabled: true,
-      functionCall: true,
-      id: 'open-mistral-nemo',
-      tokens: 128_000,
-    },
-    {
       displayName: 'Mistral Small',
-      enabled: true,
+      enabled: false,
       functionCall: true,
       id: 'mistral-small-latest',
       tokens: 32_768,
     },
     {
       displayName: 'Mistral Medium',
-      enabled: true,
+      enabled: false,
       id: 'mistral-medium-latest',
       tokens: 32_768,
+    },
+    {
+      displayName: 'Mistral Nemo',
+      enabled: true,
+      functionCall: true,
+      id: 'open-mistral-nemo',
+      tokens: 128_000,
     },
     {
       displayName: 'Mistral Large',
