@@ -56,7 +56,7 @@ const ModelIcon = memo<ModelIconProps>(({ model: originModel, size = 12 }) => {
   if (model.includes('claude')) return <Claude size={size} />;
   if (model.includes('deepseek')) return <DeepSeek size={size} />;
   if (model.includes('titan')) return <Aws size={size} />;
-  if (model.includes('firefunction') || model.includes('firellava')) return <Fireworks.Avatar size={size} />;
+  if (model.includes('firefunction') || model.includes('firellava')) return <Fireworks size={size} />;
   if (model.includes('llama')) return <Meta size={size} />;
   if (model.includes('llava')) return <LLaVA size={size} />;
   if (model.includes('gemini')) return <Gemini size={size} />;
@@ -99,7 +99,7 @@ const ModelIcon = memo<ModelIconProps>(({ model: originModel, size = 12 }) => {
   )
     return <Stability size={size} />;
 
-  if (model.includes('phi3') || model.includes('phi-3') || model.includes('wizardlm')) return <Azure.Avatar size={size} />;
+  if (model.includes('phi3') || model.includes('phi-3') || model.includes('wizardlm')) return <Azure size={size} />;
   if (model.includes('firefly')) return <AdobeFirefly size={size} />;
   if (model.includes('jamba') || model.includes('j2-')) return <Ai21 size={size} />;
 });
