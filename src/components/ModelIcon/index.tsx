@@ -14,6 +14,7 @@ import {
   Cohere,
   Dbrx,
   DeepSeek,
+  Fireworks,
   FishAudio,
   Gemini,
   Gemma,
@@ -56,7 +57,8 @@ const ModelIcon = memo<ModelProviderIconProps>(({ model: originModel, size = 12 
   if (model.includes('deepseek')) return <DeepSeek.Avatar size={size} />;
   if (model.includes('claude')) return <Claude.Avatar size={size} />;
   if (model.includes('titan')) return <Aws.Avatar size={size} />;
-  if (model.includes('llama') || model.includes('firefunction')) return <Meta.Avatar size={size} />;
+  if (model.includes('firefunction') || model.includes('firellava')) return <Fireworks.Avatar size={size} />;
+  if (model.includes('llama')) return <Meta.Avatar size={size} />;
   if (model.includes('llava')) return <LLaVA.Avatar size={size} />;
   if (model.includes('gemini')) return <Gemini.Avatar size={size} />;
   if (model.includes('gemma')) return <Gemma.Avatar size={size} />;
