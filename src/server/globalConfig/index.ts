@@ -7,6 +7,7 @@ import {
   OpenAIProviderCard,
   OpenRouterProviderCard,
   TogetherAIProviderCard,
+  FireworksAIProviderCard,
 } from '@/config/modelProviders';
 import { enableNextAuth } from '@/const/auth';
 import { parseSystemAgent } from '@/server/globalConfig/parseSystemAgent';
