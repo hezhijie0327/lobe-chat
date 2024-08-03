@@ -56,7 +56,7 @@ const ModelIcon = memo<ModelIconProps>(({ model: originModel, size = 12 }) => {
   if (model.includes('claude')) return <Claude size={size} />;
   if (model.includes('deepseek')) return <DeepSeek size={size} />;
   if (model.includes('titan')) return <Aws size={size} />;
-  if (model.includes('firefunction') || model.includes('firellava')) return <Fireworks size={size} />;
+  if (model.includes('accounts/fireworks/models/fire')) return <Fireworks size={size} />;
   if (model.includes('llama')) return <Meta size={size} />;
   if (model.includes('llava')) return <LLaVA size={size} />;
   if (model.includes('gemini')) return <Gemini size={size} />;
