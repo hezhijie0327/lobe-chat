@@ -53,6 +53,9 @@ export const getServerGlobalConfig = () => {
     ENABLED_ZEROONE,
     ENABLED_TOGETHERAI,
     TOGETHERAI_MODEL_LIST,
+
+    ENABLED_FIREWORKSAI,
+    FIREWORKSAI_MODEL_LIST,
   } = getLLMConfig();
 
   const config: GlobalServerConfig = {
