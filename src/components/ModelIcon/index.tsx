@@ -14,6 +14,7 @@ import {
   Cohere,
   Dbrx,
   DeepSeek,
+  Fireworks,
   FishAudio,
   Gemini,
   Gemma,
