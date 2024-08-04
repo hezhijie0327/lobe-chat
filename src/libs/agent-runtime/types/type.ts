@@ -30,6 +30,7 @@ export enum ModelProvider {
   DeepSeek = 'deepseek',
   Google = 'google',
   Groq = 'groq',
+  HuggingFace = 'huggingface',
   Minimax = 'minimax',
   Mistral = 'mistral',
   Moonshot = 'moonshot',
