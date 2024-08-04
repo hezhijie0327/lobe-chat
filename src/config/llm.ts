@@ -54,6 +54,10 @@ export const getLLMConfig = () => {
       OPENROUTER_API_KEY: z.string().optional(),
       OPENROUTER_MODEL_LIST: z.string().optional(),
 
+      ENABLED_HUGGINGFACEAI: z.boolean(),
+      HUGGINGFACEAI_API_KEY: z.string().optional(),
+      HUGGINGFACEAI_MODEL_LIST: z.string().optional(),
+
       ENABLED_ZEROONE: z.boolean(),
       ZEROONE_API_KEY: z.string().optional(),
 
@@ -129,6 +133,10 @@ export const getLLMConfig = () => {
       ENABLED_OPENROUTER: !!process.env.OPENROUTER_API_KEY,
       OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
       OPENROUTER_MODEL_LIST: process.env.OPENROUTER_MODEL_LIST,
+
+      ENABLED_HUGGINGFACEAI: !!process.env.HUGGINGFACEAI_API_KEY,
+      HUGGINGFACEAI_API_KEY: process.env.HUGGINGFACEAI_API_KEY,
+      HUGGINGFACEAI_MODEL_LIST: process.env.HUGGINGFACEAI_MODEL_LIST,
 
       ENABLED_TOGETHERAI: !!process.env.TOGETHERAI_API_KEY,
       TOGETHERAI_API_KEY: process.env.TOGETHERAI_API_KEY,
