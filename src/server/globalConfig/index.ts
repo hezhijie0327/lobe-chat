@@ -86,10 +86,10 @@ export const getServerGlobalConfig = () => {
       groq: { enabled: ENABLED_GROQ },
       huggingface: {
         enabled: ENABLED_HUGGINGFACE,
-        enabledModels: extractEnabledModels(ENABLED_HUGGINGFACE_MODEL_LIST),
+        enabledModels: extractEnabledModels(HUGGINGFACE_MODEL_LIST),
         serverModelCards: transformToChatModelCards({
           defaultChatModels: HuggingFaceAIProviderCard.chatModels,
-          modelString: ENABLED_HUGGINGFACE_MODEL_LIST,
+          modelString: HUGGINGFACE_MODEL_LIST,
         }),
       },
       minimax: { enabled: ENABLED_MINIMAX },
