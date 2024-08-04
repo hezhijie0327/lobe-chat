@@ -8,6 +8,7 @@ import BedrockProvider from './bedrock';
 import DeepSeekProvider from './deepseek';
 import GoogleProvider from './google';
 import GroqProvider from './groq';
+import HuggingFaceAIProvider from './huggingface';
 import MinimaxProvider from './minimax';
 import MistralProvider from './mistral';
 import MoonshotProvider from './moonshot';
@@ -36,6 +37,7 @@ export const LOBE_DEFAULT_MODEL_LIST: ChatModelCard[] = [
   MoonshotProvider.chatModels,
   OllamaProvider.chatModels,
   OpenRouterProvider.chatModels,
+  HuggingFaceProvider.chatModels,
   TogetherAIProvider.chatModels,
   PerplexityProvider.chatModels,
   AnthropicProvider.chatModels,
@@ -56,6 +58,7 @@ export const DEFAULT_MODEL_PROVIDER_LIST = [
   DeepSeekProvider,
   GoogleProvider,
   OpenRouterProvider,
+  HuggingFaceProvider,
   TogetherAIProvider,
   BedrockProvider,
   PerplexityProvider,
@@ -89,6 +92,7 @@ export { default as BedrockProviderCard } from './bedrock';
 export { default as DeepSeekProviderCard } from './deepseek';
 export { default as GoogleProviderCard } from './google';
 export { default as GroqProviderCard } from './groq';
+export { default as HuggingFaceProviderCard } from './huggingface';
 export { default as MinimaxProviderCard } from './minimax';
 export { default as MistralProviderCard } from './mistral';
 export { default as MoonshotProviderCard } from './moonshot';
