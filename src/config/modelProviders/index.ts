@@ -8,7 +8,7 @@ import BedrockProvider from './bedrock';
 import DeepSeekProvider from './deepseek';
 import GoogleProvider from './google';
 import GroqProvider from './groq';
-import HuggingFaceAIProvider from './huggingface';
+import HuggingFaceProvider from './huggingface';
 import MinimaxProvider from './minimax';
 import MistralProvider from './mistral';
 import MoonshotProvider from './moonshot';
