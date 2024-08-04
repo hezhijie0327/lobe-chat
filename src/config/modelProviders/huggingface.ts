@@ -1,7 +1,7 @@
 import { ModelProviderCard } from '@/types/llm';
 
 // ref https://huggingface.co/models?pipeline_tag=text-generation&sort=trending
-const HuggingFaceAI: ModelProviderCard = {
+const HuggingFace: ModelProviderCard = {
   chatModels: [
     {
       displayName: 'Llama 3.1 8B Instruct',
@@ -17,4 +17,4 @@ const HuggingFaceAI: ModelProviderCard = {
   name: 'Hugging Face',
 };
 
-export default HuggingFaceAI;
+export default HuggingFace;
