@@ -112,7 +112,7 @@ const ModelProviderIcon = memo<ModelProviderIconProps>(({ provider }) => {
     }
 
     case ModelProvider.FireworksAI: {
-      return <Fireworks size={32} />;
+      return <Fireworks size={24} />;
     }
 
     case ModelProvider.Qwen: {
