@@ -8,6 +8,7 @@ import {
   Gemini,
   Google,
   Groq,
+  HuggingFace,
   Minimax,
   Mistral,
   Moonshot,
@@ -33,6 +34,7 @@ import {
   DeepSeekProviderCard,
   GoogleProviderCard,
   GroqProviderCard,
+  HuggingFaceProviderCard,
   MinimaxProviderCard,
   MistralProviderCard,
   MoonshotProviderCard,
@@ -127,6 +129,11 @@ export const useProviderList = (): ProviderItem[] => {
         ...OpenRouterProviderCard,
         docUrl: urlJoin(BASE_DOC_URL, 'openrouter'),
         title: <OpenRouter.Combine iconProps={{ color: OpenRouter.colorPrimary }} size={20} />,
+      },
+      {
+        ...HuggingFaceProviderCard,
+        docUrl: urlJoin(BASE_DOC_URL, 'huggingface'),
+        title: <HuggingFace.Combine size={26} type={'color'} />,
       },
       {
         ...NovitaProviderCard,
