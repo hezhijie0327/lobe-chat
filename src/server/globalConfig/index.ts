@@ -6,6 +6,7 @@ import {
   OllamaProviderCard,
   OpenAIProviderCard,
   OpenRouterProviderCard,
+  HuggingFaceProviderCard,
   TogetherAIProviderCard,
 } from '@/config/modelProviders';
 import { enableNextAuth } from '@/const/auth';
@@ -49,6 +50,9 @@ export const getServerGlobalConfig = () => {
     ENABLED_OPENROUTER,
     OPENROUTER_MODEL_LIST,
 
+    ENABLED_HUGGINGFACE,
+    HUGGINGFACE_MODEL_LIST,
+
     ENABLED_ZEROONE,
     ENABLED_TOGETHERAI,
     TOGETHERAI_MODEL_LIST,
@@ -80,6 +84,14 @@ export const getServerGlobalConfig = () => {
       deepseek: { enabled: ENABLED_DEEPSEEK },
       google: { enabled: ENABLED_GOOGLE },
       groq: { enabled: ENABLED_GROQ },
+      huggingface: {
+        enabled: ENABLED_HUGGINGFACE,
+        enabledModels: extractEnabledModels(ENABLED_HUGGINGFACE_MODEL_LIST),
+        serverModelCards: transformToChatModelCards({
+          defaultChatModels: HuggingFaceAIProviderCard.chatModels,
+          modelString: ENABLED_HUGGINGFACE_MODEL_LIST,
+        }),
+      },
       minimax: { enabled: ENABLED_MINIMAX },
       mistral: { enabled: ENABLED_MISTRAL },
       moonshot: { enabled: ENABLED_MOONSHOT },
