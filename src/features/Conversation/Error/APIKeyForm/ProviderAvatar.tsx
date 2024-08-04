@@ -6,6 +6,7 @@ import {
   DeepSeek,
   Google,
   Groq,
+  HuggingFace,
   Minimax,
   Mistral,
   Moonshot,
@@ -74,6 +75,10 @@ const ProviderAvatar = memo<ProviderAvatarProps>(({ provider }) => {
 
     case ModelProvider.OpenRouter: {
       return <OpenRouter color={OpenRouter.colorPrimary} size={56} />;
+    }
+
+    case ModelProvider.HuggingFace: {
+      return <HuggingFace color={OpenRouter.colorPrimary} size={56} />;
     }
 
     case ModelProvider.Qwen: {
