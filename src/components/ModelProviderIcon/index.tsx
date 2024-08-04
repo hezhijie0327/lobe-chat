@@ -8,6 +8,7 @@ import {
   DeepSeek,
   Google,
   Groq,
+  HuggingFace,
   LobeHub,
   Minimax,
   Mistral,
@@ -100,6 +101,10 @@ const ModelProviderIcon = memo<ModelProviderIconProps>(({ provider }) => {
 
     case ModelProvider.OpenRouter: {
       return <OpenRouter size={20} />;
+    }
+
+    case ModelProvider.HuggingFaceAI: {
+      return <HuggingFace size={20} />;
     }
 
     case ModelProvider.ZeroOne: {
