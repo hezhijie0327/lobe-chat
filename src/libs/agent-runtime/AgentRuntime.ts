@@ -11,6 +11,7 @@ import { LobeBedrockAI, LobeBedrockAIParams } from './bedrock';
 import { LobeDeepSeekAI } from './deepseek';
 import { LobeGoogleAI } from './google';
 import { LobeGroq } from './groq';
+import { LobeHuggingFace } from './huggingface';
 import { LobeMinimaxAI } from './minimax';
 import { LobeMistralAI } from './mistral';
 import { LobeMoonshotAI } from './moonshot';
@@ -113,6 +114,7 @@ class AgentRuntime {
       deepseek: Partial<ClientOptions>;
       google: { apiKey?: string; baseURL?: string };
       groq: Partial<ClientOptions>;
+      huggingface: Partial<ClientOptions>;
       minimax: Partial<ClientOptions>;
       mistral: Partial<ClientOptions>;
       moonshot: Partial<ClientOptions>;
@@ -206,6 +208,11 @@ class AgentRuntime {
       case ModelProvider.OpenRouter: {
         runtimeModel = new LobeOpenRouterAI(params.openrouter);
         break;
+      }
+
+      case ModelProvider.HuggingFace: {
+        runtimeModel = new LobeHuggingFaceAI(params.huggingface);
+        break
       }
 
       case ModelProvider.TogetherAI: {
