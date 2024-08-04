@@ -137,7 +137,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
 
       return { apiKey };
     }
-    case ModelProvider.HuggingFaceAI: {
+    case ModelProvider.HuggingFace: {
       const { HUGGINGFACEAI_API_KEY } = getLLMConfig();
 
       const apiKey = apiKeyManager.pick(payload?.apiKey || HUGGINGFACEAI_API_KEY);
