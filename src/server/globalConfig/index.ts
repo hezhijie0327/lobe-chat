@@ -88,7 +88,7 @@ export const getServerGlobalConfig = () => {
         enabled: ENABLED_HUGGINGFACE,
         enabledModels: extractEnabledModels(HUGGINGFACE_MODEL_LIST),
         serverModelCards: transformToChatModelCards({
-          defaultChatModels: HuggingFaceAIProviderCard.chatModels,
+          defaultChatModels: HuggingFaceProviderCard.chatModels,
           modelString: HUGGINGFACE_MODEL_LIST,
         }),
       },
