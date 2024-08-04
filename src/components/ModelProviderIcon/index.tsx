@@ -103,7 +103,7 @@ const ModelProviderIcon = memo<ModelProviderIconProps>(({ provider }) => {
       return <OpenRouter size={20} />;
     }
 
-    case ModelProvider.HuggingFaceAI: {
+    case ModelProvider.HuggingFace: {
       return <HuggingFace size={20} />;
     }
 
