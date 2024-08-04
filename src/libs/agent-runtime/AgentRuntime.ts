@@ -11,7 +11,7 @@ import { LobeBedrockAI, LobeBedrockAIParams } from './bedrock';
 import { LobeDeepSeekAI } from './deepseek';
 import { LobeGoogleAI } from './google';
 import { LobeGroq } from './groq';
-import { LobeHuggingFace } from './huggingface';
+import { LobeHuggingFaceAI } from './huggingface';
 import { LobeMinimaxAI } from './minimax';
 import { LobeMistralAI } from './mistral';
 import { LobeMoonshotAI } from './moonshot';
