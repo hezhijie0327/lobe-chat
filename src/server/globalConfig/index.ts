@@ -7,6 +7,7 @@ import {
   OllamaProviderCard,
   OpenAIProviderCard,
   OpenRouterProviderCard,
+  SiliconCloudProviderCard,
   TogetherAIProviderCard,
 } from '@/config/modelProviders';
 import { enableNextAuth } from '@/const/auth';
