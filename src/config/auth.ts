@@ -34,6 +34,11 @@ declare global {
       AUTHENTIK_CLIENT_SECRET?: string;
       AUTHENTIK_ISSUER?: string;
 
+      // Cloudflare Zero Trust
+      CLOUDFLARE_ZERO_TRUST_CLIENT_ID?: string;
+      CLOUDFLARE_ZERO_TRUST_CLIENT_SECRET?: string;
+      CLOUDFLARE_ZERO_TRUST_ISSUER?: string;
+      
       // ZITADEL
       ZITADEL_CLIENT_ID?: string;
       ZITADEL_CLIENT_SECRET?: string;
@@ -86,6 +91,11 @@ export const getAuthConfig = () => {
       AUTHELIA_CLIENT_SECRET: z.string().optional(),
       AUTHELIA_ISSUER: z.string().optional(),
 
+      // Cloudflare Zero Trust
+      CLOUDFLARE_ZERO_TRUST_CLIENT_ID: z.string().optional(),
+      CLOUDFLARE_ZERO_TRUST_CLIENT_SECRET: z.string().optional(),
+      CLOUDFLARE_ZERO_TRUST_ISSUER: z.string().optional(),
+      
       // ZITADEL
       ZITADEL_CLIENT_ID: z.string().optional(),
       ZITADEL_CLIENT_SECRET: z.string().optional(),
