@@ -6,7 +6,6 @@ import { CommonProviderConfig } from './sso.config';
 
 export type CloudflareZeroTrustProfile = {
   email: string;
-  id: string;
   name: string;
   sub: string;
 };
@@ -24,7 +23,6 @@ const provider = {
     profile(profile) {
       return {
         email: profile.email,
-        id: profile.id,
         name: profile.name,
         providerAccountId: profile.sub,
       };
