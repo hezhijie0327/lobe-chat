@@ -5,14 +5,10 @@ import { authEnv } from '@/config/auth';
 import { CommonProviderConfig } from './sso.config';
 
 export type CloudflareZeroTrustProfile = {
-  // The users display name
-  email: string; 
-  // The users email
-  groups: string[]; 
-  // The username the user used to login with
-  name: string; 
-  preferred_username: string; // The users groups
-  sub: string; // The users id
+  account_id: string;
+  email: string;
+  id: string;
+  name: string;
 };
 
 const provider = {
@@ -20,7 +16,6 @@ const provider = {
   provider: {
     ...CommonProviderConfig,
     authorization: { params: { scope: 'openid email profile' } },
-    checks: ['state', 'pkce'],
     clientId: authEnv.CLOUDFLARE_ZERO_TRUST_CLIENT_ID,
     clientSecret: authEnv.CLOUDFLARE_ZERO_TRUST_CLIENT_SECRET,
     id: 'cloudflare-zero-trust',
@@ -29,8 +24,9 @@ const provider = {
     profile(profile) {
       return {
         email: profile.email,
+        id: profile.id,
         name: profile.name,
-        providerAccountId: profile.sub,
+        providerAccountId: profile.account_id,
       };
     },
     type: 'oidc',
