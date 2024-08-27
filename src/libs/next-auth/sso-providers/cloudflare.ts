@@ -16,14 +16,14 @@ export type CloudflareZeroTrustProfile = {
 };
 
 const provider = {
-  id: 'cloudflare',
+  id: 'cloudflare-zero-trust',
   provider: {
     ...CommonProviderConfig,
     authorization: { params: { scope: 'openid email profile' } },
     checks: ['state', 'pkce'],
     clientId: authEnv.CLOUDFLARE_ZERO_TRUST_CLIENT_ID,
     clientSecret: authEnv.CLOUDFLARE_ZERO_TRUST_CLIENT_SECRET,
-    id: 'cloudflare',
+    id: 'cloudflare-zero-trust',
     issuer: authEnv.CLOUDFLARE_ZERO_TRUST_ISSUER,
     name: 'Cloudflare Zero Trust',
     profile(profile) {
