@@ -5,10 +5,10 @@ import { authEnv } from '@/config/auth';
 import { CommonProviderConfig } from './sso.config';
 
 export type CloudflareZeroTrustProfile = {
-  account_id: string;
   email: string;
   id: string;
   name: string;
+  sub: string;
 };
 
 const provider = {
@@ -26,7 +26,7 @@ const provider = {
         email: profile.email,
         id: profile.id,
         name: profile.name,
-        providerAccountId: profile.account_id,
+        providerAccountId: profile.sub,
       };
     },
     type: 'oidc',
