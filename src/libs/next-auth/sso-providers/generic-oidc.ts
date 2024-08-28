@@ -10,7 +10,7 @@ interface GenericOIDCProfile extends Record<string, any> {
   name?: string;
   picture?: string;
   sub: string;
-  username？: string;
+  username?: string;
 }
 
 function LobeGenericOIDCProvider(config: OIDCUserConfig<GenericOIDCProfile>): OIDCConfig<GenericOIDCProfile> {
