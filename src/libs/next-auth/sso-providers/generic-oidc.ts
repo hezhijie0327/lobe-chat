@@ -6,8 +6,11 @@ import { CommonProviderConfig } from './sso.config';
 
 export type GenericOIDCProfile = {
   email: string;
+  id?: string;
   name?: string;
+  picture?: string;
   sub: string;
+  username?: string;
 };
 
 const provider = {
@@ -24,7 +27,9 @@ const provider = {
     profile(profile) {
       return {
         email: profile.email,
-        name: profile.name ?? profile.email, // use profile.email instead of profile.name if not exsit.
+        id: profile.sub,
+        image: profile.picture,
+        name: profile.name ?? profile.username ?? profile.email,
         providerAccountId: profile.sub,
       };
     },
