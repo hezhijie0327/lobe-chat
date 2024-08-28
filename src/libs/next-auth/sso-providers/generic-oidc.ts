@@ -6,11 +6,8 @@ import { CommonProviderConfig } from './sso.config';
 
 interface GenericOIDCProfile extends Record<string, any> {
   email: string;
-  id: string;
   name?: string;
-  picture?: string;
   sub: string;
-  username?: string;
 }
 
 function LobeGenericOIDCProvider(config: OIDCUserConfig<GenericOIDCProfile>): OIDCConfig<GenericOIDCProfile> {
@@ -22,9 +19,7 @@ function LobeGenericOIDCProvider(config: OIDCUserConfig<GenericOIDCProfile>): OI
     profile(profile) {
       return {
         email: profile.email,
-        id: profile.sub,
-        //image: profile.picture ? profile.picture : undefined,
-        name: profile.name ?? profile.username ?? profile.email,
+        name: profile.name ?? profile.email,
         providerAccountId: profile.sub,
       };
     },
