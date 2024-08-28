@@ -35,10 +35,8 @@ function LobeGenericOIDCProvider(config: OIDCUserConfig<GenericOIDCProfile>): OI
 const provider = {
   id: 'generic-oidc',
   provider: LobeGenericOIDCProvider({
-    authorization: {
-      params: { scope: 'openid offline_access profile email' },
-    },
-    checks: ['state', 'pkce'],
+    authorization: { params: { scope: 'email offline_access openid profile' } }, // exclude: address, phone
+    checks: ['pkce', 'state'],
     clientId: authEnv.GENERIC_OIDC_CLIENT_ID,
     clientSecret: authEnv.GENERIC_OIDC_CLIENT_SECRET,
     issuer: authEnv.GENERIC_OIDC_ISSUER,
