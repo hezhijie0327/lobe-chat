@@ -11,7 +11,7 @@ import {
 import * as debugStreamModule from '../utils/debugStream';
 import { LobeUpstageAI } from './index';
 
-const provider = ModelProvider.UpstageAI;
+const provider = ModelProvider.Upstage;
 const defaultBaseURL = 'https://api.upstage.ai/v1/solar';
 
 const bizErrorType = 'ProviderBizError';
