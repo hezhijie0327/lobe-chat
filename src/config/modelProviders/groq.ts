@@ -43,7 +43,7 @@ const Groq: ModelProviderCard = {
       displayName: 'Meta Llama 3 8B',
       enabled: true,
       functionCall: true,
-      id: 'llama3-70b-8192',
+      id: 'llama3-8b-8192',
       tokens: 8192,
     },
     {
