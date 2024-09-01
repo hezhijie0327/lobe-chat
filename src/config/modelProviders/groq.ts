@@ -10,20 +10,20 @@ const Groq: ModelProviderCard = {
       enabled: true,
       functionCall: true,
       id: 'llama-3.1-8b-instant',
-      tokens: 8192,
+      tokens: 8000,
     },
     {
       displayName: 'Llama 3.1 70B (Preview)',
       enabled: true,
       functionCall: true,
       id: 'llama-3.1-70b-versatile',
-      tokens: 8192,
+      tokens: 8000,
     },
     {
       displayName: 'Llama 3.1 405B (Preview)',
       functionCall: true,
       id: 'llama-3.1-405b-reasoning',
-      tokens: 8192,
+      tokens: 8000,
     },
     {
       displayName: 'Llama 3 Groq 8B Tool Use (Preview)',
