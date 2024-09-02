@@ -6,7 +6,7 @@ const Ai21: ModelProviderCard = {
     {
       displayName: 'Jamba 1.5 Mini',
       enabled: true,
-      functionCall: true,
+      functionCall: false,
       id: 'jamba-1.5-mini',
       tokens: 256_000,
     },
