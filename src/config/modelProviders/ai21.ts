@@ -1,7 +1,7 @@
 import { ModelProviderCard } from '@/types/llm';
 
 // ref https://docs.ai21.com/reference/jamba-15-api-ref
-const Upstage: ModelProviderCard = {
+const Ai21: ModelProviderCard = {
   chatModels: [
     {
       displayName: 'Jamba 1.5 Mini',
@@ -21,7 +21,7 @@ const Upstage: ModelProviderCard = {
   checkModel: 'jamba-1.5-mini',
   id: 'ai21',
   modelList: { showModelFetcher: true },
-  name: 'AI21 Studio',
+  name: 'Ai21Labs',
 };
 
 export default Ai21;
