@@ -22,8 +22,12 @@ import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseMo
 
 import { parseAgentConfig } from './parseDefaultAgent';
 
+import { useBedrockProvider } from './Bedrock';
+
 export const getServerGlobalConfig = () => {
   const { ACCESS_CODES, DEFAULT_AGENT_CONFIG } = getAppConfig();
+
+  const BedrockProvider = useBedrockProvider();
 
   const {
     ENABLED_OPENAI,
@@ -34,6 +38,8 @@ export const getServerGlobalConfig = () => {
     ZHIPU_MODEL_LIST,
 
     ENABLED_AWS_BEDROCK,
+    AWS_BEDROCK_MODEL_LIST,
+
     ENABLED_GOOGLE,
 
     ENABLED_GROQ,
@@ -100,7 +106,14 @@ export const getServerGlobalConfig = () => {
         }),
       },
       baichuan: { enabled: ENABLED_BAICHUAN },
-      bedrock: { enabled: ENABLED_AWS_BEDROCK },
+      bedrock: {
+        enabled: ENABLED_AWS_BEDROCK,
+        enabledModels: extractEnabledModels(AWS_BEDROCK_MODEL_LIST),
+        serverModelCards: transformToChatModelCards({
+          defaultChatModels: BedrockProvider.chatModels,
+          modelString: AWS_BEDROCK_MODEL_LIST,
+        }),
+      },
       deepseek: { enabled: ENABLED_DEEPSEEK },
       google: { enabled: ENABLED_GOOGLE },
       groq: {
