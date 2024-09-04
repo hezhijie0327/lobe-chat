@@ -80,7 +80,7 @@ const Groq: ModelProviderCard = {
       displayName: 'LLaVA 1.5 7B',
       enabled: true,
       id: 'llava-v1.5-7b-4096-preview',
-      tokens: 4096 ,
+      tokens: 4096,
       vision: true,
     },
   ],
