@@ -4,6 +4,7 @@ import { fileEnv } from '@/config/file';
 import { langfuseEnv } from '@/config/langfuse';
 import { getLLMConfig } from '@/config/llm';
 import {
+  BedrockProviderCard,
   GroqProviderCard,
   NovitaProviderCard,
   OllamaProviderCard,
@@ -22,12 +23,8 @@ import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseMo
 
 import { parseAgentConfig } from './parseDefaultAgent';
 
-import { useBedrockProvider } from './Bedrock';
-
 export const getServerGlobalConfig = () => {
   const { ACCESS_CODES, DEFAULT_AGENT_CONFIG } = getAppConfig();
-
-  const BedrockProvider = useBedrockProvider();
 
   const {
     ENABLED_OPENAI,
@@ -110,7 +107,7 @@ export const getServerGlobalConfig = () => {
         enabled: ENABLED_AWS_BEDROCK,
         enabledModels: extractEnabledModels(AWS_BEDROCK_MODEL_LIST),
         serverModelCards: transformToChatModelCards({
-          defaultChatModels: BedrockProvider.chatModels,
+          defaultChatModels: BedrockProviderCard.chatModels,
           modelString: AWS_BEDROCK_MODEL_LIST,
         }),
       },
