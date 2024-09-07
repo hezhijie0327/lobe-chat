@@ -55,10 +55,6 @@ export const transformMistralStream = (
 
   const item = chunk.choices[0];
 
-  if (typeof item.message?.content === 'string') {
-    return { data: item.message.content, id: stack.id, type: 'text' };
-  }
-
   // mistral_chunk_tool_calls: {"choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"3NcHNntdRyaHu8zisKJAhQ","function":{"name":"realtime-weather____fetchCurrentWeather","arguments":"{\"city\": \"Singapore\"}"}}]},"stop_reason":"tool_calls"}]}
   if (item.message?.tool_calls) {
     return {
@@ -75,6 +71,10 @@ export const transformMistralStream = (
     } as StreamProtocolToolCallChunk;
   }
 
+  if (typeof item.message?.content === 'string') {
+    return { data: item.message.content, id: stack.id, type: 'text' };
+  }
+  
   if (item.stop_reason) {
     return { data: item.stop_reason, id: stack.id, type: 'stop' };
   }
