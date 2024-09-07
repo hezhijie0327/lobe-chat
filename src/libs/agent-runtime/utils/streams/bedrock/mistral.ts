@@ -6,9 +6,12 @@ import { nanoid } from '@/utils/uuid';
 import { ChatStreamCallbacks } from '../../../types';
 import {
   StreamProtocolChunk,
+  StreamProtocolToolCallChunk,
   StreamStack,
+  StreamToolCallChunkData,
   createCallbacksTransformer,
   createSSEProtocolTransformer,
+  generateToolCallId,
 } from '../protocol';
 import { createBedrockStream } from './common';
 
@@ -52,6 +55,19 @@ export const transformMistralStream = (
 
   if (typeof item.message?.content === 'string') {
     return { data: item.message.content, id: stack.id, type: 'text' };
+  }
+
+  if (item.message?.tool_calls) {
+    return {
+      data: item.message.tool_calls.map(
+        (value, index): StreamToolCallChunkData => ({
+          function: value.function,
+          id: value.id || generateToolCallId(index, value.function?.name),
+        }),
+      ),
+      id: stack.id,
+      type: 'tool_calls',
+    } as StreamProtocolToolCallChunk;
   }
 
   if (item.stop_reason) {
