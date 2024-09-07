@@ -62,7 +62,7 @@ export const transformAi21Stream = (
   }
 
   return {
-    data: { delta: item.delta, id: stack.id },
+    data: { delta: item.delta, id: stack.id, index: item.index },
     id: stack.id,
     type: 'data',
   };
