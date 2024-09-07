@@ -79,7 +79,7 @@ export const transformMistralStream = (
   }
 
   return {
-    data: { id: stack.id, message: item.message, index: item.index },
+    data: { id: stack.id, index: item.index, message: item.message },
     id: stack.id,
     type: 'data',
   };
