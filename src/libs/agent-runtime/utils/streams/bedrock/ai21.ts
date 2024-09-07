@@ -18,7 +18,8 @@ interface AmazonBedrockInvocationMetrics {
   outputTokenCount: number;
 }
 
-interface BedrockOpenAICompatibleStreamChunk {
+// https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-jamba.html
+interface BedrockAi21StreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
   'choices': {
     'delta': {
@@ -40,7 +41,7 @@ interface BedrockOpenAICompatibleStreamChunk {
 }
 
 export const transformAi21Stream = (
-  chunk: BedrockOpenAICompatibleStreamChunk,
+  chunk: BedrockAi21StreamChunk,
   stack: StreamStack,
 ): StreamProtocolChunk => {
   // remove 'amazon-bedrock-invocationMetrics' from chunk
