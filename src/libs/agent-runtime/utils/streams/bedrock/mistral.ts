@@ -63,6 +63,8 @@ export const transformMistralStream = (
         (value, index): StreamToolCallChunkData => ({
           function: value.function,
           id: value.id || generateToolCallId(index, value.function?.name),
+          index: typeof value.index !== 'undefined' ? value.index : index,
+          type: value.type || 'function',
         }),
       ),
       id: stack.id,
