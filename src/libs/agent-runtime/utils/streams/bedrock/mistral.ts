@@ -69,7 +69,7 @@ export const transformMistralStream = (
           type: value.type || 'function',
         }),
       ),
-      id: stack.id,
+      id: chunk.id,
       type: 'tool_calls',
     } as StreamProtocolToolCallChunk;
   }
