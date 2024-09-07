@@ -27,6 +27,7 @@ interface AmazonBedrockInvocationMetrics {
 interface BedrockMistralStreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
   'choices': {
+    'id'?: string;
     'index'?: number;
     'message': {
       'content': string;
