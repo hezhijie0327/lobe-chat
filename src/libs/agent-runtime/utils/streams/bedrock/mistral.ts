@@ -30,6 +30,7 @@ interface BedrockMistralStreamChunk {
     'message': {
       'content': string;
       'role'?: string;
+      'tool_call_id'?: string;
       'tool_calls'?: {
         'function': any;
         'id'?: string;
