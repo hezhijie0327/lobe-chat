@@ -48,14 +48,11 @@ export const transformAi21Stream = (
   // remove 'amazon-bedrock-invocationMetrics' from chunk
   delete chunk['amazon-bedrock-invocationMetrics'];
 
-  if (!chunk.choices || chunk.choices.length === 0) {
+  if (!chunk.choices || chunk.choices.length === 0 || !chunk.choices[0]) {
     return { data: chunk, id: stack.id, type: 'data' };
   }
 
   const item = chunk.choices[0];
-  if (!item) {
-    return { data: chunk, id: stack.id, type: 'data' };
-  }
 
   if (typeof item.delta?.content === 'string') {
     return { data: item.delta.content, id: stack.id, type: 'text' };
