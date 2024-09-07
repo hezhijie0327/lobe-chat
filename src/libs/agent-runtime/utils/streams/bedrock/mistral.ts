@@ -27,6 +27,10 @@ interface BedrockMistralStreamChunk {
     'message': {
       'content': string;
       'role'?: string;
+      'tool_calls'?: {
+        function: any;
+        id?: string;
+      }[];
     };
     'index'?: number;
     'stop_reason'?: null | string;
@@ -46,16 +50,16 @@ export const transformMistralStream = (
 
   const item = chunk.choices[0];
 
-  if (typeof item.delta?.content === 'string') {
-    return { data: item.delta.content, id: stack.id, type: 'text' };
+  if (typeof item.message?.content === 'string') {
+    return { data: item.message.content, id: stack.id, type: 'text' };
   }
 
-  if (item.finish_reason) {
-    return { data: item.finish_reason, id: stack.id, type: 'stop' };
+  if (item.stop_reason) {
+    return { data: item.stop_reason, id: stack.id, type: 'stop' };
   }
 
   return {
-    data: { delta: item.delta, id: stack.id, index: item.index },
+    data: { message: item.message, id: stack.id, index: item.index },
     id: stack.id,
     type: 'data',
   };
