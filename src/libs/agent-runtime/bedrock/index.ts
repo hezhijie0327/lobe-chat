@@ -56,12 +56,14 @@ export class LobeBedrockAI implements LobeRuntimeAI {
     payload: ChatStreamPayload,
     options?: ChatCompetitionOptions,
   ): Promise<Response> => {
-    const { max_tokens, messages, model, temperature, top_p } = payload;
+    const { frequency_penalty, max_tokens, messages, model, presence_penalty, temperature, top_p } = payload;
     const command = new InvokeModelWithResponseStreamCommand({
       accept: 'application/json',
       body: JSON.stringify({
-        max_tokens: max_tokens || 8000,
+        frequency_penalty: frequency_penalty,
+        max_tokens: max_tokens || 4096,
         messages: messages,
+        presence_penalty: presence_penalty,
         temperature: temperature,
         top_p: top_p,
       }),
