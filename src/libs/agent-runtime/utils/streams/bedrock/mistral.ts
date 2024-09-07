@@ -32,10 +32,10 @@ interface BedrockMistralStreamChunk {
       'content': string;
       'role'?: string;
       'tool_calls'?: {
-        function: any;
-        id?: string;
-        index?: any;
-        type?: any;
+        'function': any;
+        'id'?: string;
+        'index'?: any;
+        'type'?: any;
       }[];
     };
     'stop_reason'?: null | string;
