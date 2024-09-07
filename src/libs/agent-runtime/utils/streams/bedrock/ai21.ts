@@ -57,12 +57,12 @@ export const transformAi21Stream = (
     return { data: chunk, id: stack.id, type: 'data' };
   }
 
-  if (item.finish_reason) {
-    return { data: item.finish_reason, id: stack.id, type: 'stop' };
+  if (typeof item.delta?.content === 'string') {
+    return { data: item.delta.content, id: stack.id, type: 'text' };
   }
 
-  if (item.delta?.content === null) {
-    return { data: item.delta, id: stack.id, type: 'data' };
+  if (item.finish_reason) {
+    return { data: item.finish_reason, id: stack.id, type: 'stop' };
   }
 
   return {
