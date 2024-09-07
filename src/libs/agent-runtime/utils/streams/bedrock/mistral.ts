@@ -20,7 +20,7 @@ interface AmazonBedrockInvocationMetrics {
 }
 
 // https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-mistral-chat-completion.html
-// mistral_chunk: {"id":"chat-ae86a1e555f04e5cbddb86cc6a98ce5e","choices":[{"index":0,"delta":{"content":"?"},"finish_reason":"stop","stop_reason":"<|eom|>"}],"usage":{"prompt_tokens":144,"total_tokens":158,"completion_tokens":14},"meta":{"requestDurationMillis":146}},"amazon-bedrock-invocationMetrics":{"inputTokenCount":63,"outputTokenCount":263,"invocationLatency":5330,"firstByteLatency":122}}
+// mistral_chunk: {"choices":[{"index":0,"message":{"role":"assistant","content":""},"stop_reason":"stop"}],"amazon-bedrock-invocationMetrics":{"inputTokenCount":63,"outputTokenCount":263,"invocationLatency":5330,"firstByteLatency":122}}
 interface BedrockMistralStreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
   'choices': {
