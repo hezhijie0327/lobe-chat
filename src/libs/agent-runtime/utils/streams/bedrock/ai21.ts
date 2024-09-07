@@ -45,24 +45,36 @@ export const transformAi21Stream = (
   stack: StreamStack,
 ): StreamProtocolChunk => {
   // remove 'amazon-bedrock-invocationMetrics' from chunk
-  // eg: "amazon-bedrock-invocationMetrics":{"inputTokenCount":63,"outputTokenCount":263,"invocationLatency":5330,"firstByteLatency":122}}
+  // ai21_chunk: "amazon-bedrock-invocationMetrics":{"inputTokenCount":63,"outputTokenCount":263,"invocationLatency":5330,"firstByteLatency":122}}
   delete chunk['amazon-bedrock-invocationMetrics'];
 
   if (!chunk.choices || chunk.choices.length === 0) {
     return { data: chunk, id: stack.id, type: 'data' };
   }
 
-  // {"id":"chat-ae86a1e555f04e5cbddb86cc6a98ce5e","choices":[{"index":0,"delta":{"content":"?"},"finish_reason":"stop","stop_reason":"<|eom|>"}],"usage":{"prompt_tokens":144,"total_tokens":158,"completion_tokens":14},"meta":{"requestDurationMillis":146}}
+  // ai21_chunk: {"id":"chat-ae86a1e555f04e5cbddb86cc6a98ce5e","choices":[{"index":0,"delta":{"content":"?"},"finish_reason":"stop","stop_reason":"<|eom|>"}],"usage":{"prompt_tokens":144,"total_tokens":158,"completion_tokens":14},"meta":{"requestDurationMillis":146}}
   const item = chunk.choices[0];
   if (!item) {
     return { data: chunk, id: stack.id, type: 'data' };
+  }
+
+  if (typeof item.delta?.content === 'string') {
+    return { data: item.delta.content, id: stack.id, type: 'text' };
   }
 
   if (item.finish_reason) {
     return { data: item.finish_reason, id: stack.id, type: 'stop' };
   }
 
-  return { data: item.delta?.content, id: stack.id, type: 'text' };
+  if (item.delta?.content === null) {
+    return { data: item.delta, id: stack.id, type: 'data' };
+  }
+
+  return {
+    data: { delta: item.delta, id: stack.id },
+    id: stack.id,
+    type: 'data',
+  };
 };
 
 export const AWSBedrockAi21Stream = (
