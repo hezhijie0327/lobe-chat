@@ -6,12 +6,9 @@ import { nanoid } from '@/utils/uuid';
 import { ChatStreamCallbacks } from '../../../types';
 import {
   StreamProtocolChunk,
-  StreamProtocolToolCallChunk,
   StreamStack,
-  StreamToolCallChunkData,
   createCallbacksTransformer,
   createSSEProtocolTransformer,
-  generateToolCallId,
 } from '../protocol';
 import { createBedrockStream } from './common';
 
@@ -27,7 +24,6 @@ interface AmazonBedrockInvocationMetrics {
 interface BedrockMistralStreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
   'choices': {
-    'id'?: string;
     'index'?: number;
     'message': {
       'content': string;
@@ -35,8 +31,6 @@ interface BedrockMistralStreamChunk {
       'tool_calls'?: {
         'function': any;
         'id'?: string;
-        'index'?: any;
-        'type'?: any;
       }[];
     };
     'stop_reason'?: null | string;
@@ -60,19 +54,9 @@ export const transformMistralStream = (
     return { data: item.message.content, id: stack.id, type: 'text' };
   }
 
+  // mistral_chunk_tool_calls: {"choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"3NcHNntdRyaHu8zisKJAhQ","function":{"name":"realtime-weather____fetchCurrentWeather","arguments":"{\"city\": \"Singapore\"}"}}]},"stop_reason":"tool_calls"}]}
   if (item.message?.tool_calls) {
-    return {
-      data: item.message.tool_calls.map(
-        (value, index): StreamToolCallChunkData => ({
-          function: value.function,
-          id: value.id || generateToolCallId(index, value.function?.name),
-          index: typeof value.index !== 'undefined' ? value.index : index,
-          type: value.type || 'function',
-        }),
-      ),
-      id: chunk.id,
-      type: 'tool_calls',
-    } as StreamProtocolToolCallChunk;
+    return { data: item.message.tool_calls, id: stack.id, type: 'tool_calls' }
   }
 
   if (item.stop_reason) {
