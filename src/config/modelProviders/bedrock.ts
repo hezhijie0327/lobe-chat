@@ -117,6 +117,8 @@ const Bedrock: ModelProviderCard = {
       id: 'meta.llama3-70b-instruct-v1:0',
       tokens: 8000,
     },
+/*
+    // TODO: Not support for now
     {
       description: 'A 7B dense Transformer, fast-deployed and easily customisable. Small, yet powerful for a variety of use cases. Supports English and code, and a 32k context window.',
       displayName: 'Mistral 7B Instruct',
@@ -154,6 +156,7 @@ const Bedrock: ModelProviderCard = {
       id: 'mistral.mistral-large-2402-v1:0',
       tokens: 32_000,
     },
+*/
 /*
     // TODO: Not support for now
     {
@@ -188,9 +191,11 @@ const Bedrock: ModelProviderCard = {
       tokens: 4000,
     },
 */
+    // TODO: Not support for now
     {
       description: 'The latest Foundation Model from AI21 Labs, Jamba-Instruct offers an impressive 256K context window and delivers the best value per price on core text generation, summarization, and question answering tasks for the enterprise.',
       displayName: 'Jamba-Instruct',
+      enabled: true,
       id: 'ai21.jamba-instruct-v1:0',
       tokens: 256_000,
     },
