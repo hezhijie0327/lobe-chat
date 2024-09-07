@@ -58,6 +58,11 @@ export const transformAi21Stream = (
     return { data: item.finish_reason, id: stack.id, type: 'stop' };
   }
 
+  if (!item.delta?.content) {
+    // Return a chunk indicating this is a no-op, or use a type that represents an empty chunk
+    return { data: '', id: stack.id, type: 'noop' as 'text' };
+  }
+
   return { data: item.delta?.content, id: stack.id, type: 'text' };
 };
 
