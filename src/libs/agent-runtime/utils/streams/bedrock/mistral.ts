@@ -34,6 +34,8 @@ interface BedrockMistralStreamChunk {
       'tool_calls'?: {
         function: any;
         id?: string;
+        index?: any;
+        type?: any;
       }[];
     };
     'stop_reason'?: null | string;
