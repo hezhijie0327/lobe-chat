@@ -117,6 +117,8 @@ const Bedrock: ModelProviderCard = {
       id: 'meta.llama3-70b-instruct-v1:0',
       tokens: 8000,
     },
+/*
+    // TODO: Not support for now
     {
       description: 'A 7B dense Transformer, fast-deployed and easily customisable. Small, yet powerful for a variety of use cases. Supports English and code, and a 32k context window.',
       displayName: 'Mistral 7B Instruct',
@@ -131,6 +133,7 @@ const Bedrock: ModelProviderCard = {
       id: 'mistral.mixtral-8x7b-instruct-v0:1',
       tokens: 32_000,
     },
+*/
     {
       description: 'Mistral Small is perfectly suited for straightforward tasks that can be performed in bulk, such as classification, customer support, or text generation. It provides outstanding performance at a cost-effective price point.',
       displayName: 'Mistral Small',
