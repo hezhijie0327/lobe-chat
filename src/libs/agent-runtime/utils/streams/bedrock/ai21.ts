@@ -48,6 +48,10 @@ export const transformAi21Stream = (
   // eg: "amazon-bedrock-invocationMetrics":{"inputTokenCount":63,"outputTokenCount":263,"invocationLatency":5330,"firstByteLatency":122}}
   delete chunk['amazon-bedrock-invocationMetrics'];
 
+  if (!chunk.choices || chunk.choices.length === 0) {
+    return { data: chunk, id: stack.id, type: 'data' };
+  }
+
   // {"id":"chat-ae86a1e555f04e5cbddb86cc6a98ce5e","choices":[{"index":0,"delta":{"content":"?"},"finish_reason":"stop","stop_reason":"<|eom|>"}],"usage":{"prompt_tokens":144,"total_tokens":158,"completion_tokens":14},"meta":{"requestDurationMillis":146}}
   const item = chunk.choices[0];
   if (!item) {
@@ -56,11 +60,6 @@ export const transformAi21Stream = (
 
   if (item.finish_reason) {
     return { data: item.finish_reason, id: stack.id, type: 'stop' };
-  }
-
-  if (!item.delta?.content) {
-    // Return a chunk indicating this is a no-op, or use a type that represents an empty chunk
-    return { data: '', id: stack.id, type: 'noop' as 'text' };
   }
 
   return { data: item.delta?.content, id: stack.id, type: 'text' };
