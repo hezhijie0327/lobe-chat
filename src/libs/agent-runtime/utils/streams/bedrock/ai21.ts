@@ -52,13 +52,9 @@ export const transformAi21Stream = (
     return { data: chunk, id: stack.id, type: 'data' };
   }
 
- const item = chunk.choices[0];
+  const item = chunk.choices[0];
   if (!item) {
     return { data: chunk, id: stack.id, type: 'data' };
-  }
-
-  if (typeof item.delta?.content === 'string') {
-    return { data: item.delta.content, id: stack.id, type: 'text' };
   }
 
   if (item.finish_reason) {
