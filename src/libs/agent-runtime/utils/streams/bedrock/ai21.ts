@@ -17,6 +17,7 @@ interface AmazonBedrockInvocationMetrics {
   invocationLatency: number;
   outputTokenCount: number;
 }
+
 interface BedrockOpenAICompatibleStreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
   'choices': {
@@ -24,10 +25,13 @@ interface BedrockOpenAICompatibleStreamChunk {
       'content': string;
     };
     'finish_reason'?: null | 'stop' | string;
-    'stop_reason'?: null | string;
     'index'?: number;
+    'stop_reason'?: null | string;
   }[];
   'id'?: string;
+  'meta'?: {
+    'requestDurationMillis': number;
+  };
   'usage'?: {
     'completion_tokens': number;
     'prompt_tokens': number;
@@ -35,23 +39,25 @@ interface BedrockOpenAICompatibleStreamChunk {
   };
 }
 
-export const transformOpenAICompatibleStream = (
+export const transformAi21Stream = (
   chunk: BedrockOpenAICompatibleStreamChunk,
   stack: StreamStack,
 ): StreamProtocolChunk => {
-  const choice = chunk.choices[0];
-  const content = choice.delta.content || '';
+  // remove 'amazon-bedrock-invocationMetrics' from chunk
+  // eg: "amazon-bedrock-invocationMetrics":{"inputTokenCount":63,"outputTokenCount":263,"invocationLatency":5330,"firstByteLatency":122}}
+  delete chunk['amazon-bedrock-invocationMetrics'];
 
-  if (choice.finish_reason === 'stop') {
-    return { data: 'finished', id: stack.id, type: 'stop' };
+  // {"id":"chat-ae86a1e555f04e5cbddb86cc6a98ce5e","choices":[{"index":0,"delta":{"content":"?"},"finish_reason":"stop","stop_reason":"<|eom|>"}],"usage":{"prompt_tokens":144,"total_tokens":158,"completion_tokens":14},"meta":{"requestDurationMillis":146}}
+  const item = chunk.choices[0];
+  if (!item) {
+    return { data: chunk, id: stack.id, type: 'data' };
   }
 
-  if (!content) {
-    // Return a chunk indicating this is a no-op, or use a type that represents an empty chunk
-    return { data: '', id: stack.id, type: 'noop' as 'text' };
+  if (item.finish_reason) {
+    return { data: item.finish_reason, id: stack.id, type: 'stop' };
   }
 
-  return { data: content, id: stack.id, type: 'text' };
+  return { data: item.delta?.content, id: stack.id, type: 'text' };
 };
 
 export const AWSBedrockAi21Stream = (
@@ -63,6 +69,6 @@ export const AWSBedrockAi21Stream = (
   const stream = res instanceof ReadableStream ? res : createBedrockStream(res);
 
   return stream
-    .pipeThrough(createSSEProtocolTransformer(transformOpenAICompatibleStream, streamStack))
+    .pipeThrough(createSSEProtocolTransformer(transformAi21Stream, streamStack))
     .pipeThrough(createCallbacksTransformer(cb));
 };
