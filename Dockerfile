@@ -189,6 +189,6 @@ CMD \
         > "/etc/proxychains/proxychains.conf"; \
     fi; \
     # Fix DNS resolving issue in Docker Compose
-    sed -i '/ndots:0/d' "/etc/resolv.conf";
+    sed -i '/ndots:0/d' "/etc/resolv.conf"; \
     # Run the server
     ${PROXYCHAINS} node "/app/server.js";
