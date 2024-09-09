@@ -190,8 +190,10 @@ CMD \
     fi; \
     # Fix DNS resolving issue in Docker Compose
     if [ -f "/etc/resolv.conf" ]; then \
-        cat "/etc/resolv.conf" | grep '^nameserver' | awk '{print "nameserver " $2}' > "/etc/resolv.conf.bak"; \
-        mv "/etc/resolv.conf.bak" "/etc/resolv.conf"; \
+        resolv_conf=$(grep '^nameserver' "/etc/resolv.conf" | awk '{print "nameserver " $2}'); \
+        printf "%s\n" \
+            "$resolv_conf" \
+        > "/etc/resolv.conf"; \
     fi; \
     # Run the server
     ${PROXYCHAINS} node "/app/server.js";
