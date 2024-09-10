@@ -191,7 +191,7 @@ CMD \
     fi; \
     # Fix DNS resolving issue in Docker Compose, ref https://github.com/lobehub/lobe-chat/pull/3837
     if [ -f "/etc/resolv.conf" ]; then \
-        sudo chmod 666 "/etc/resolv.conf" \
+        sudo chmod 666 "/etc/resolv.conf"; \
         resolv_conf=$(grep '^nameserver' "/etc/resolv.conf" | awk '{print "nameserver " $2}'); \
         printf "%s\n" \
             "$resolv_conf" \
