@@ -65,9 +65,9 @@ describe('AI21 Stream', () => {
       const result = transformAi21Stream(chunk, stack);
 
       expect(result).toEqual({
-        data: "stop",
+        data: "",
         id: 'chat_test-id',
-        type: 'stop'
+        type: 'text'
       });
     });
 
@@ -176,14 +176,15 @@ describe('AI21 Stream', () => {
         'event: text\n',
         'data: " world!"\n\n',
         'id: chat_test-id\n',
-        'event: stop\n',
-        'data: "stop"\n\n',
+        'event: text\n',
+        'data: ""\n\n',
       ]);
 
       expect(onStartMock).toHaveBeenCalledTimes(1);
       expect(onTextMock).toHaveBeenNthCalledWith(1, '"Hello"');
       expect(onTextMock).toHaveBeenNthCalledWith(2, '" world!"');
-      expect(onTokenMock).toHaveBeenCalledTimes(2);
+      expect(onTextMock).toHaveBeenNthCalledWith(3, '""');
+      expect(onTokenMock).toHaveBeenCalledTimes(3);
       expect(onCompletionMock).toHaveBeenCalledTimes(1);
     });
   });
