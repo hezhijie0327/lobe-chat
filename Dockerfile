@@ -10,12 +10,13 @@ RUN \
     fi \
     # Add required package & update base package
     && apk update \
-    && apk add --no-cache bind-tools proxychains-ng \
+    && apk add --no-cache bind-tools proxychains-ng sudo \
     && apk upgrade --no-cache \
     # Add user nextjs to run the app
     && addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 nextjs \
-    && chown -R nextjs:nodejs "/etc/proxychains" "/etc/resolv.conf" \
+    && echo "nextjs ALL=(ALL) NOPASSWD: /usr/bin/printf" >> /etc/sudoers \
+    && chown -R nextjs:nodejs "/etc/proxychains" \
     && rm -rf /tmp/* /var/cache/apk/*
 
 ## Builder image, install all the dependencies and build the app
