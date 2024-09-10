@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as uuidModule from '@/utils/uuid';
-import { transformMistralStream, AWSBedrockMistralStream } from './mistral';
+import { transformMistralStream, AWSBedrockMistralStream, BedrockMistralStreamChunk } from './mistral';
 
 describe('Mistral Stream', () => {
   describe('transformMistralStream', () => {
     it('should transform text response chunks', () => {
-      const chunk = {
+      const chunk: BedrockMistralStreamChunk = {
         choices: [{
           index: 0,
           message: { role: "assistant", content: "Hello world!" }
@@ -23,7 +23,7 @@ describe('Mistral Stream', () => {
     });
 
     it('should transform tool call chunks', () => {
-      const chunk = {
+      const chunk: BedrockMistralStreamChunk = {
         choices: [{
           index: 0,
           message: {
@@ -59,7 +59,7 @@ describe('Mistral Stream', () => {
     });
 
     it('should handle stop reason', () => {
-      const chunk = {
+      const chunk: BedrockMistralStreamChunk = {
         choices: [{
           index: 0,
           message: { role: "assistant", content: "" },
@@ -78,10 +78,10 @@ describe('Mistral Stream', () => {
     });
 
     it('should handle empty content', () => {
-      const chunk = {
+      const chunk: BedrockMistralStreamChunk = {
         choices: [{
           index: 0,
-          message: { role: "assistant", content: null }
+          message: { role: "assistant", content: "" }
         }]
       };
       const stack = { id: 'chat_test-id' };
@@ -89,14 +89,14 @@ describe('Mistral Stream', () => {
       const result = transformMistralStream(chunk, stack);
 
       expect(result).toEqual({
-        data: { role: "assistant", content: null },
+        data: { role: "assistant", content: "" },
         id: 'chat_test-id',
         type: 'data'
       });
     });
 
     it('should remove amazon-bedrock-invocationMetrics', () => {
-      const chunk = {
+      const chunk: BedrockMistralStreamChunk = {
         choices: [{
           index: 0,
           message: { role: "assistant", content: "Hello" }
@@ -162,9 +162,9 @@ describe('Mistral Stream', () => {
       });
 
       const decoder = new TextDecoder();
-      const chunks = [];
+      const chunks: string[] = [];
 
-      for await (const chunk of protocolStream) {
+      for await (const chunk of protocolStream as any) {
         chunks.push(decoder.decode(chunk, { stream: true }));
       }
 
