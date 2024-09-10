@@ -15,7 +15,7 @@ RUN \
     # Add user nextjs to run the app
     && addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 nextjs \
-    && echo "nextjs ALL=(ALL) NOPASSWD: /usr/bin/printf" >> /etc/sudoers \
+    && echo "nextjs ALL=(ALL) NOPASSWD: /bin/chmod" >> /etc/sudoers \
     && chown -R nextjs:nodejs "/etc/proxychains" \
     && rm -rf /tmp/* /var/cache/apk/*
 
@@ -191,6 +191,7 @@ CMD \
     fi; \
     # Fix DNS resolving issue in Docker Compose, ref https://github.com/lobehub/lobe-chat/pull/3837
     if [ -f "/etc/resolv.conf" ]; then \
+        sudo chmod 666 "/etc/resolv.conf" \
         resolv_conf=$(grep '^nameserver' "/etc/resolv.conf" | awk '{print "nameserver " $2}'); \
         printf "%s\n" \
             "$resolv_conf" \
