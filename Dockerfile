@@ -15,8 +15,8 @@ RUN \
     # Add user nextjs to run the app
     && addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 nextjs \
-    && echo "nextjs ALL=(ALL) NOPASSWD: /bin/chmod * /etc/resolv.conf" >> /etc/sudoers \
     && chown -R nextjs:nodejs "/etc/proxychains" \
+    && echo "nextjs ALL=(ALL) NOPASSWD: /bin/chmod * /etc/resolv.conf" >> /etc/sudoers \
     && rm -rf /tmp/* /var/cache/apk/*
 
 ## Builder image, install all the dependencies and build the app
