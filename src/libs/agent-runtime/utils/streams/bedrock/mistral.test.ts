@@ -1,13 +1,14 @@
-import { ReadableStream } from 'stream/web';
-import { AWSBedrockMistralStream, transformMistralStream } from './mistral'; // 请替换为实际的文件名
+import { ReadableStream as NodeReadableStream } from 'stream/web';
+import { AWSBedrockMistralStream, transformMistralStream } from './mistral';
 import { StreamStack } from '../protocol';
+import { InvokeModelWithResponseStreamResponse } from '@aws-sdk/client-bedrock-runtime';
 
 describe('AWSBedrockMistralStream', () => {
-  let mockReadableStream: ReadableStream;
+  let mockReadableStream: NodeReadableStream;
   let mockController: ReadableStreamDefaultController;
 
   beforeEach(() => {
-    mockReadableStream = new ReadableStream({
+    mockReadableStream = new NodeReadableStream({
       start(controller) {
         mockController = controller;
       },
@@ -15,7 +16,7 @@ describe('AWSBedrockMistralStream', () => {
   });
 
   test('handles basic text output', async () => {
-    const stream = AWSBedrockMistralStream(mockReadableStream);
+    const stream = AWSBedrockMistralStream(mockReadableStream as unknown as ReadableStream);
     const reader = stream.getReader();
 
     mockController.enqueue(JSON.stringify({
@@ -30,7 +31,7 @@ describe('AWSBedrockMistralStream', () => {
   });
 
   test('handles tool calls', async () => {
-    const stream = AWSBedrockMistralStream(mockReadableStream);
+    const stream = AWSBedrockMistralStream(mockReadableStream as unknown as ReadableStream);
     const reader = stream.getReader();
 
     mockController.enqueue(JSON.stringify({
@@ -51,23 +52,27 @@ describe('AWSBedrockMistralStream', () => {
     mockController.close();
 
     const { value } = await reader.read();
-    expect(JSON.parse(value.split('data: ')[1])).toEqual({
-      data: [{
-        function: {
-          name: 'testFunction',
-          arguments: '{"arg": "value"}',
-        },
-        id: 'tool1',
-        index: 0,
-        type: 'function',
-      }],
-      id: 'chat_mock-id',
-      type: 'tool_calls',
-    });
+    if (value) {
+      expect(JSON.parse(value.split('data: ')[1])).toEqual({
+        data: [{
+          function: {
+            name: 'testFunction',
+            arguments: '{"arg": "value"}',
+          },
+          id: 'tool1',
+          index: 0,
+          type: 'function',
+        }],
+        id: 'chat_mock-id',
+        type: 'tool_calls',
+      });
+    } else {
+      fail('Expected a value but received undefined');
+    }
   });
 
   test('handles stop chunk with metrics', async () => {
-    const stream = AWSBedrockMistralStream(mockReadableStream);
+    const stream = AWSBedrockMistralStream(mockReadableStream as unknown as ReadableStream);
     const reader = stream.getReader();
 
     mockController.enqueue(JSON.stringify({
@@ -77,15 +82,19 @@ describe('AWSBedrockMistralStream', () => {
     mockController.close();
 
     const { value } = await reader.read();
-    expect(JSON.parse(value.split('data: ')[1])).toEqual({
-      data: 'stop',
-      id: 'chat_mock-id',
-      type: 'stop'
-    });
+    if (value) {
+      expect(JSON.parse(value.split('data: ')[1])).toEqual({
+        data: 'stop',
+        id: 'chat_mock-id',
+        type: 'stop'
+      });
+    } else {
+      fail('Expected a value but received undefined');
+    }
   });
 
   test('handles tool calls chunk with specific format', async () => {
-    const stream = AWSBedrockMistralStream(mockReadableStream);
+    const stream = AWSBedrockMistralStream(mockReadableStream as unknown as ReadableStream);
     const reader = stream.getReader();
 
     mockController.enqueue(JSON.stringify({
@@ -94,19 +103,23 @@ describe('AWSBedrockMistralStream', () => {
     mockController.close();
 
     const { value } = await reader.read();
-    expect(JSON.parse(value.split('data: ')[1])).toEqual({
-      data: [{
-        function: {
-          name: "realtime-weather____fetchCurrentWeather",
-          arguments: "{\"city\": \"Singapore\"}"
-        },
-        id: "3NcHNntdRyaHu8zisKJAhQ",
-        index: 0,
-        type: 'function'
-      }],
-      id: 'chat_mock-id',
-      type: 'tool_calls'
-    });
+    if (value) {
+      expect(JSON.parse(value.split('data: ')[1])).toEqual({
+        data: [{
+          function: {
+            name: "realtime-weather____fetchCurrentWeather",
+            arguments: "{\"city\": \"Singapore\"}"
+          },
+          id: "3NcHNntdRyaHu8zisKJAhQ",
+          index: 0,
+          type: 'function'
+        }],
+        id: 'chat_mock-id',
+        type: 'tool_calls'
+      });
+    } else {
+      fail('Expected a value but received undefined');
+    }
   });
 });
 
