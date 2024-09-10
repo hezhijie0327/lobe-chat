@@ -50,12 +50,12 @@ describe('AI21 Stream', () => {
       });
     });
 
-    it('should handle stop reason', () => {
+    it('should handle stop reason with content', () => {
       const chunk: BedrockAi21StreamChunk = {
         id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
         choices: [{
           index: 0,
-          delta: { content: "" },
+          delta: { content: "Final words." },
           finish_reason: "stop",
           stop_reason: "<|eom|>"
         }]
@@ -65,7 +65,7 @@ describe('AI21 Stream', () => {
       const result = transformAi21Stream(chunk, stack);
 
       expect(result).toEqual({
-        data: "",
+        data: "Final words.",
         id: 'chat_test-id',
         type: 'text'
       });
@@ -140,7 +140,7 @@ describe('AI21 Stream', () => {
             id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
             choices: [{
               index: 0,
-              delta: { content: "" },
+              delta: { content: " Final words." },
               finish_reason: "stop",
               stop_reason: "<|eom|>"
             }]
@@ -177,13 +177,13 @@ describe('AI21 Stream', () => {
         'data: " world!"\n\n',
         'id: chat_test-id\n',
         'event: text\n',
-        'data: ""\n\n',
+        'data: " Final words."\n\n',
       ]);
 
       expect(onStartMock).toHaveBeenCalledTimes(1);
       expect(onTextMock).toHaveBeenNthCalledWith(1, '"Hello"');
       expect(onTextMock).toHaveBeenNthCalledWith(2, '" world!"');
-      expect(onTextMock).toHaveBeenNthCalledWith(3, '""');
+      expect(onTextMock).toHaveBeenNthCalledWith(3, '" Final words."');
       expect(onTokenMock).toHaveBeenCalledTimes(3);
       expect(onCompletionMock).toHaveBeenCalledTimes(1);
     });
