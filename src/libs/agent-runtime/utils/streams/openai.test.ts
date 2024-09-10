@@ -394,7 +394,7 @@ describe('OpenAIStream', () => {
           `data: [{"function":{"arguments":"","name":"realtime-weather____fetchCurrentWeather"},"id":"toolu_01VQtK4W9kqxGGLHgsPPxiBj","index":0,"type":"function"}]\n`,
           'id: 1',
           'event: tool_calls',
-          `data: [{"function":{"arguments":"{\\"city\\": \\"杭州\\",\"name\":null}"},"id":"toolu_01VQtK4W9kqxGGLHgsPPxiBj","index":0,"type":"function"}]\n`,
+          `data: [{"function":{"arguments":"{\\"city\\": \\"杭州\\"},\"name\":null"},"id":"toolu_01VQtK4W9kqxGGLHgsPPxiBj","index":0,"type":"function"}]\n`,
           'id: 1',
           'event: stop',
           `data: "tool_calls"\n`,
