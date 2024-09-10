@@ -114,9 +114,9 @@ describe('Mistral Stream', () => {
       const result = transformMistralStream(chunk, stack);
 
       expect(result).toEqual({
-        data: { role: "assistant", content: "" },
+        data: "",
         id: 'chat_test-id',
-        type: 'data'
+        type: 'text'
       });
     });
 
