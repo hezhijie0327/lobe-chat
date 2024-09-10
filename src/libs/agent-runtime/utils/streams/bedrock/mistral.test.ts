@@ -1,206 +1,190 @@
-import { ReadableStream as NodeReadableStream } from 'stream/web';
-import { AWSBedrockMistralStream, transformMistralStream } from './mistral';
-import { StreamStack } from '../protocol';
-import { InvokeModelWithResponseStreamResponse } from '@aws-sdk/client-bedrock-runtime';
+import { describe, expect, it, vi } from 'vitest';
+import * as uuidModule from '@/utils/uuid';
+import { transformMistralStream, AWSBedrockMistralStream } from './mistral';
 
-describe('AWSBedrockMistralStream', () => {
-  let mockReadableStream: NodeReadableStream;
-  let mockController: ReadableStreamDefaultController;
-
-  beforeEach(() => {
-    mockReadableStream = new NodeReadableStream({
-      start(controller) {
-        mockController = controller;
-      },
-    });
-  });
-
-  test('handles basic text output', async () => {
-    const stream = AWSBedrockMistralStream(mockReadableStream as unknown as ReadableStream);
-    const reader = stream.getReader();
-
-    mockController.enqueue(JSON.stringify({
-      choices: [{
-        message: { content: 'Hello, world!' },
-      }],
-    }));
-    mockController.close();
-
-    const { value } = await reader.read();
-    expect(value).toBe('data: {"data":"Hello, world!","id":"chat_mock-id","type":"text"}\n\n');
-  });
-
-  test('handles tool calls', async () => {
-    const stream = AWSBedrockMistralStream(mockReadableStream as unknown as ReadableStream);
-    const reader = stream.getReader();
-
-    mockController.enqueue(JSON.stringify({
-      choices: [{
-        message: {
-          content: '',
-          tool_calls: [{
-            id: 'tool1',
-            function: {
-              name: 'testFunction',
-              arguments: '{"arg": "value"}',
-            },
-          }],
-        },
-        stop_reason: 'tool_calls',
-      }],
-    }));
-    mockController.close();
-
-    const { value } = await reader.read();
-    if (value) {
-      expect(JSON.parse(value.split('data: ')[1])).toEqual({
-        data: [{
-          function: {
-            name: 'testFunction',
-            arguments: '{"arg": "value"}',
-          },
-          id: 'tool1',
+describe('Mistral Stream', () => {
+  describe('transformMistralStream', () => {
+    it('should transform text response chunks', () => {
+      const chunk = {
+        choices: [{
           index: 0,
-          type: 'function',
-        }],
-        id: 'chat_mock-id',
-        type: 'tool_calls',
+          message: { role: "assistant", content: "Hello world!" }
+        }]
+      };
+      const stack = { id: 'chat_test-id' };
+
+      const result = transformMistralStream(chunk, stack);
+
+      expect(result).toEqual({
+        data: "Hello world!",
+        id: 'chat_test-id',
+        type: 'text'
       });
-    } else {
-      fail('Expected a value but received undefined');
-    }
-  });
+    });
 
-  test('handles stop chunk with metrics', async () => {
-    const stream = AWSBedrockMistralStream(mockReadableStream as unknown as ReadableStream);
-    const reader = stream.getReader();
+    it('should transform tool call chunks', () => {
+      const chunk = {
+        choices: [{
+          index: 0,
+          message: {
+            role: "assistant",
+            content: "",
+            tool_calls: [{
+              id: "3NcHNntdRyaHu8zisKJAhQ",
+              function: {
+                name: "realtime-weather____fetchCurrentWeather",
+                arguments: '{"city": "Singapore"}'
+              }
+            }]
+          }
+        }]
+      };
+      const stack = { id: 'chat_test-id' };
 
-    mockController.enqueue(JSON.stringify({
-      "choices":[{"index":0,"message":{"role":"assistant","content":""},"stop_reason":"stop"}],
-      "amazon-bedrock-invocationMetrics":{"inputTokenCount":63,"outputTokenCount":263,"invocationLatency":5330,"firstByteLatency":122}
-    }));
-    mockController.close();
+      const result = transformMistralStream(chunk, stack);
 
-    const { value } = await reader.read();
-    if (value) {
-      expect(JSON.parse(value.split('data: ')[1])).toEqual({
-        data: 'stop',
-        id: 'chat_mock-id',
-        type: 'stop'
-      });
-    } else {
-      fail('Expected a value but received undefined');
-    }
-  });
-
-  test('handles tool calls chunk with specific format', async () => {
-    const stream = AWSBedrockMistralStream(mockReadableStream as unknown as ReadableStream);
-    const reader = stream.getReader();
-
-    mockController.enqueue(JSON.stringify({
-      "choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"3NcHNntdRyaHu8zisKJAhQ","function":{"name":"realtime-weather____fetchCurrentWeather","arguments":"{\"city\": \"Singapore\"}"}}]},"stop_reason":"tool_calls"}]
-    }));
-    mockController.close();
-
-    const { value } = await reader.read();
-    if (value) {
-      expect(JSON.parse(value.split('data: ')[1])).toEqual({
+      expect(result).toEqual({
         data: [{
           function: {
             name: "realtime-weather____fetchCurrentWeather",
-            arguments: "{\"city\": \"Singapore\"}"
+            arguments: '{"city": "Singapore"}'
           },
           id: "3NcHNntdRyaHu8zisKJAhQ",
           index: 0,
           type: 'function'
         }],
-        id: 'chat_mock-id',
+        id: 'chat_test-id',
         type: 'tool_calls'
       });
-    } else {
-      fail('Expected a value but received undefined');
-    }
-  });
-});
+    });
 
-describe('transformMistralStream', () => {
-  const mockStack: StreamStack = { id: 'chat_mock-id' };
+    it('should handle stop reason', () => {
+      const chunk = {
+        choices: [{
+          index: 0,
+          message: { role: "assistant", content: "" },
+          stop_reason: "stop"
+        }]
+      };
+      const stack = { id: 'chat_test-id' };
 
-  test('transforms text content', () => {
-    const chunk = {
-      choices: [{
-        message: { content: 'Test content' },
-      }],
-    };
-    const result = transformMistralStream(chunk, mockStack);
-    expect(result).toEqual({
-      data: 'Test content',
-      id: 'chat_mock-id',
-      type: 'text',
+      const result = transformMistralStream(chunk, stack);
+
+      expect(result).toEqual({
+        data: "stop",
+        id: 'chat_test-id',
+        type: 'stop'
+      });
+    });
+
+    it('should handle empty content', () => {
+      const chunk = {
+        choices: [{
+          index: 0,
+          message: { role: "assistant", content: null }
+        }]
+      };
+      const stack = { id: 'chat_test-id' };
+
+      const result = transformMistralStream(chunk, stack);
+
+      expect(result).toEqual({
+        data: { role: "assistant", content: null },
+        id: 'chat_test-id',
+        type: 'data'
+      });
+    });
+
+    it('should remove amazon-bedrock-invocationMetrics', () => {
+      const chunk = {
+        choices: [{
+          index: 0,
+          message: { role: "assistant", content: "Hello" }
+        }],
+        "amazon-bedrock-invocationMetrics": {
+          inputTokenCount: 63,
+          outputTokenCount: 263,
+          invocationLatency: 5330,
+          firstByteLatency: 122
+        }
+      };
+      const stack = { id: 'chat_test-id' };
+
+      const result = transformMistralStream(chunk, stack);
+
+      expect(result).toEqual({
+        data: "Hello",
+        id: 'chat_test-id',
+        type: 'text'
+      });
+      expect(chunk['amazon-bedrock-invocationMetrics']).toBeUndefined();
     });
   });
 
-  test('transforms tool calls', () => {
-    const chunk = {
-      choices: [{
-        message: {
-          content: '',
-          tool_calls: [{
-            id: 'tool1',
-            function: {
-              name: 'testFunction',
-              arguments: '{"arg": "value"}',
-            },
-          }],
+  describe('AWSBedrockMistralStream', () => {
+    it('should transform Bedrock Mistral stream to protocol stream', async () => {
+      vi.spyOn(uuidModule, 'nanoid').mockReturnValueOnce('test-id');
+      const mockBedrockStream = new ReadableStream({
+        start(controller) {
+          controller.enqueue({
+            choices: [{
+              index: 0,
+              message: { role: "assistant", content: "Hello" }
+            }]
+          });
+          controller.enqueue({
+            choices: [{
+              index: 0,
+              message: { role: "assistant", content: " world!" }
+            }]
+          });
+          controller.enqueue({
+            choices: [{
+              index: 0,
+              message: { role: "assistant", content: "" },
+              stop_reason: "stop"
+            }]
+          });
+          controller.close();
         },
-      }],
-    };
-    const result = transformMistralStream(chunk, mockStack);
-    expect(result).toEqual({
-      data: [{
-        function: {
-          name: 'testFunction',
-          arguments: '{"arg": "value"}',
-        },
-        id: 'tool1',
-        index: 0,
-        type: 'function',
-      }],
-      id: 'chat_mock-id',
-      type: 'tool_calls',
-    });
-  });
+      });
 
-  test('transforms stop chunk with metrics', () => {
-    const chunk = {
-      "choices":[{"index":0,"message":{"role":"assistant","content":""},"stop_reason":"stop"}],
-      "amazon-bedrock-invocationMetrics":{"inputTokenCount":63,"outputTokenCount":263,"invocationLatency":5330,"firstByteLatency":122}
-    };
-    const result = transformMistralStream(chunk, mockStack);
-    expect(result).toEqual({
-      data: 'stop',
-      id: 'chat_mock-id',
-      type: 'stop'
-    });
-  });
+      const onStartMock = vi.fn();
+      const onTextMock = vi.fn();
+      const onTokenMock = vi.fn();
+      const onCompletionMock = vi.fn();
 
-  test('transforms tool calls chunk with specific format', () => {
-    const chunk = {
-      "choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"3NcHNntdRyaHu8zisKJAhQ","function":{"name":"realtime-weather____fetchCurrentWeather","arguments":"{\"city\": \"Singapore\"}"}}]},"stop_reason":"tool_calls"}]
-    };
-    const result = transformMistralStream(chunk, mockStack);
-    expect(result).toEqual({
-      data: [{
-        function: {
-          name: "realtime-weather____fetchCurrentWeather",
-          arguments: "{\"city\": \"Singapore\"}"
-        },
-        id: "3NcHNntdRyaHu8zisKJAhQ",
-        index: 0,
-        type: 'function'
-      }],
-      id: 'chat_mock-id',
-      type: 'tool_calls'
+      const protocolStream = AWSBedrockMistralStream(mockBedrockStream, {
+        onStart: onStartMock,
+        onText: onTextMock,
+        onToken: onTokenMock,
+        onCompletion: onCompletionMock,
+      });
+
+      const decoder = new TextDecoder();
+      const chunks = [];
+
+      for await (const chunk of protocolStream) {
+        chunks.push(decoder.decode(chunk, { stream: true }));
+      }
+
+      expect(chunks).toEqual([
+        'id: chat_test-id\n',
+        'event: text\n',
+        'data: "Hello"\n\n',
+        'id: chat_test-id\n',
+        'event: text\n',
+        'data: " world!"\n\n',
+        'id: chat_test-id\n',
+        'event: stop\n',
+        'data: "stop"\n\n',
+      ]);
+
+      expect(onStartMock).toHaveBeenCalledTimes(1);
+      expect(onTextMock).toHaveBeenNthCalledWith(1, '"Hello"');
+      expect(onTextMock).toHaveBeenNthCalledWith(2, '" world!"');
+      expect(onTokenMock).toHaveBeenCalledTimes(2);
+      expect(onCompletionMock).toHaveBeenCalledTimes(1);
     });
   });
 });
