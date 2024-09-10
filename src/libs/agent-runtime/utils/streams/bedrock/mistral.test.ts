@@ -1,6 +1,31 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as uuidModule from '@/utils/uuid';
-import { transformMistralStream, AWSBedrockMistralStream, BedrockMistralStreamChunk } from './mistral';
+import { transformMistralStream, AWSBedrockMistralStream } from './mistral';
+
+// Define the BedrockMistralStreamChunk type in the test file
+interface BedrockMistralStreamChunk {
+  'amazon-bedrock-invocationMetrics'?: {
+    inputTokenCount: number;
+    outputTokenCount: number;
+    invocationLatency: number;
+    firstByteLatency: number;
+  };
+  choices: {
+    index?: number;
+    message: {
+      content: string;
+      role?: string;
+      tool_call_id?: string;
+      tool_calls?: {
+        function: any;
+        id?: string;
+        index?: number;
+        type?: string;
+      }[];
+    };
+    stop_reason?: string | null;
+  }[];
+}
 
 describe('Mistral Stream', () => {
   describe('transformMistralStream', () => {
@@ -164,7 +189,7 @@ describe('Mistral Stream', () => {
       const decoder = new TextDecoder();
       const chunks: string[] = [];
 
-      for await (const chunk of protocolStream as any) {
+      for await (const chunk of protocolStream as unknown as AsyncIterable<Uint8Array>) {
         chunks.push(decoder.decode(chunk, { stream: true }));
       }
 
