@@ -15,7 +15,7 @@ RUN \
     # Add user nextjs to run the app
     && addgroup --system --gid 1001 nodejs \
     && adduser --system --uid 1001 nextjs \
-    && echo "nextjs ALL=(ALL) NOPASSWD: /bin/chmod" >> /etc/sudoers \
+    && echo "nextjs ALL=(ALL) NOPASSWD: /bin/chmod * /etc/resolv.conf" >> /etc/sudoers \
     && chown -R nextjs:nodejs "/etc/proxychains" \
     && rm -rf /tmp/* /var/cache/apk/*
 
