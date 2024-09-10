@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import * as uuidModule from '@/utils/uuid';
 import { transformAi21Stream, AWSBedrockAi21Stream } from './ai21';
 
+// Define the BedrockAi21StreamChunk type in the test file
 interface BedrockAi21StreamChunk {
   'amazon-bedrock-invocationMetrics'?: {
     inputTokenCount: number;
@@ -9,48 +10,34 @@ interface BedrockAi21StreamChunk {
     invocationLatency: number;
     firstByteLatency: number;
   };
-  'choices': {
-    'delta': {
-      'content': string;
+  id?: string;
+  choices: {
+    index?: number;
+    delta: {
+      content: string;
     };
-    'finish_reason'?: null | 'stop' | string;
-    'index'?: number;
-    'stop_reason'?: null | string;
+    finish_reason?: string | null;
+    stop_reason?: string | null;
   }[];
-  'id'?: string;
-  'meta'?: {
-    'requestDurationMillis': number;
+  usage?: {
+    prompt_tokens: number;
+    total_tokens: number;
+    completion_tokens: number;
   };
-  'usage'?: {
-    'completion_tokens': number;
-    'prompt_tokens': number;
-    'total_tokens': number;
+  meta?: {
+    requestDurationMillis: number;
   };
 }
 
-describe('Ai21 Stream', () => {
+describe('AI21 Stream', () => {
   describe('transformAi21Stream', () => {
     it('should transform text response chunks', () => {
       const chunk: BedrockAi21StreamChunk = {
-        id: 'chat-ae86a1e555f04e5cbddb86cc6a98ce5e',
+        id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
         choices: [{
           index: 0,
           delta: { content: "Hello world!" }
-        }],
-        usage: {
-          prompt_tokens: 144,
-          total_tokens: 158,
-          completion_tokens: 14,
-        },
-        meta: {
-          requestDurationMillis: 146
-        },
-        'amazon-bedrock-invocationMetrics': {
-          inputTokenCount: 63,
-          outputTokenCount: 263,
-          invocationLatency: 5330,
-          firstByteLatency: 122
-        }
+        }]
       };
       const stack = { id: 'chat_test-id' };
 
@@ -61,26 +48,17 @@ describe('Ai21 Stream', () => {
         id: 'chat_test-id',
         type: 'text'
       });
-      expect(chunk['amazon-bedrock-invocationMetrics']).toBeUndefined();
     });
 
     it('should handle stop reason', () => {
       const chunk: BedrockAi21StreamChunk = {
-        id: 'chat-ae86a1e555f04e5cbddb86cc6a98ce5e',
+        id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
         choices: [{
           index: 0,
           delta: { content: "" },
           finish_reason: "stop",
           stop_reason: "<|eom|>"
-        }],
-        usage: {
-          prompt_tokens: 144,
-          total_tokens: 158,
-          completion_tokens: 14,
-        },
-        meta: {
-          requestDurationMillis: 146
-        }
+        }]
       };
       const stack = { id: 'chat_test-id' };
 
@@ -95,19 +73,11 @@ describe('Ai21 Stream', () => {
 
     it('should handle empty content', () => {
       const chunk: BedrockAi21StreamChunk = {
-        id: 'chat-ae86a1e555f04e5cbddb86cc6a98ce5e',
+        id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
         choices: [{
           index: 0,
           delta: { content: "" }
-        }],
-        usage: {
-          prompt_tokens: 144,
-          total_tokens: 158,
-          completion_tokens: 14,
-        },
-        meta: {
-          requestDurationMillis: 146
-        }
+        }]
       };
       const stack = { id: 'chat_test-id' };
 
@@ -122,20 +92,12 @@ describe('Ai21 Stream', () => {
 
     it('should remove amazon-bedrock-invocationMetrics', () => {
       const chunk: BedrockAi21StreamChunk = {
-        id: 'chat-ae86a1e555f04e5cbddb86cc6a98ce5e',
+        id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
         choices: [{
           index: 0,
           delta: { content: "Hello" }
         }],
-        usage: {
-          prompt_tokens: 144,
-          total_tokens: 158,
-          completion_tokens: 14,
-        },
-        meta: {
-          requestDurationMillis: 146
-        },
-        'amazon-bedrock-invocationMetrics': {
+        "amazon-bedrock-invocationMetrics": {
           inputTokenCount: 63,
           outputTokenCount: 263,
           invocationLatency: 5330,
@@ -156,56 +118,32 @@ describe('Ai21 Stream', () => {
   });
 
   describe('AWSBedrockAi21Stream', () => {
-    it('should transform Bedrock Ai21 stream to protocol stream', async () => {
+    it('should transform Bedrock AI21 stream to protocol stream', async () => {
       vi.spyOn(uuidModule, 'nanoid').mockReturnValueOnce('test-id');
       const mockBedrockStream = new ReadableStream({
         start(controller) {
           controller.enqueue({
-            id: 'chat-ae86a1e555f04e5cbddb86cc6a98ce5e',
+            id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
             choices: [{
               index: 0,
               delta: { content: "Hello" }
-            }],
-            usage: {
-              prompt_tokens: 144,
-              total_tokens: 158,
-              completion_tokens: 14,
-            },
-            meta: {
-              requestDurationMillis: 146
-            }
+            }]
           });
           controller.enqueue({
-            id: 'chat-ae86a1e555f04e5cbddb86cc6a98ce5e',
+            id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
             choices: [{
               index: 0,
               delta: { content: " world!" }
-            }],
-            usage: {
-              prompt_tokens: 144,
-              total_tokens: 158,
-              completion_tokens: 14,
-            },
-            meta: {
-              requestDurationMillis: 146
-            }
+            }]
           });
           controller.enqueue({
-            id: 'chat-ae86a1e555f04e5cbddb86cc6a98ce5e',
+            id: "chat-ae86a1e555f04e5cbddb86cc6a98ce5e",
             choices: [{
               index: 0,
               delta: { content: "" },
               finish_reason: "stop",
               stop_reason: "<|eom|>"
-            }],
-            usage: {
-              prompt_tokens: 144,
-              total_tokens: 158,
-              completion_tokens: 14,
-            },
-            meta: {
-              requestDurationMillis: 146
-            }
+            }]
           });
           controller.close();
         },
