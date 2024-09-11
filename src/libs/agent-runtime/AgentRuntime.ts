@@ -277,17 +277,17 @@ class AgentRuntime {
 
       case ModelProvider.Upstage: {
         runtimeModel = new LobeUpstageAI(params.upstage);
-        break;
+        break
       }
 
       case ModelProvider.Spark: {
         runtimeModel = new LobeSparkAI(params.spark);
-        break;
+        break
       }
 
       case ModelProvider.Ai21: {
         runtimeModel = new LobeAi21AI(params.ai21);
-        break;
+        break
       }
 
     return new AgentRuntime(runtimeModel);
