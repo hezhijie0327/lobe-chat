@@ -115,8 +115,10 @@ RUN \
     # Add nextjs:nodejs to run the app
     addgroup -S -g 1001 nodejs \
     & adduser -D -H -h /app -u 1001 nextjs -G nodejs \
-    # Create proxychains configuration directory
-    && mkdir -p /etc/proxychains \
+    # Create required directory
+    && mkdir -p "/etc/proxychains" "/etc/ssl/certs" \
+    # Add CA Certificates
+    && wget "https://curl.se/ca/cacert.pem" -O "/etc/ssl/certs/ca-certificates.crt" \
     # Set permission for nextjs:nodejs
     && chown -R nextjs:nodejs /app /etc/proxychains
 
