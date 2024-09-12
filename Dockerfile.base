@@ -33,7 +33,7 @@ FROM scratch AS app
 
 COPY --from=base /distroless/ /
 
-## Production image, copy all the files and run next
+## Production image, copy all the files and set permission
 FROM busybox:latest
 
 COPY --from=app / /
