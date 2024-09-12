@@ -1,10 +1,11 @@
+## Set CN mirror if needed
+ARG USE_CN_MIRROR
+
 ## Set NodeJS version
 ARG NODEJS_VERSION="20"
 
 ## Base image for all the stages
 FROM node:${NODEJS_VERSION}-slim AS base
-
-ARG USE_CN_MIRROR="true"
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
@@ -31,8 +32,6 @@ RUN \
 
 ## Builder image, install all the dependencies and build the app
 FROM base AS builder
-
-ARG USE_CN_MIRROR
 
 ENV NEXT_PUBLIC_BASE_PATH=""
 
