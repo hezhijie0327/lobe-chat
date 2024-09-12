@@ -85,9 +85,9 @@ RUN npm run build:docker
 ## Application image, copy all the files for production
 FROM scratch AS app
 
-COPY --from=base /distroless/ /
-
 COPY --from=builder /app/public /app/public
+
+COPY --from=base /distroless/ /
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -178,9 +178,9 @@ ENV \
     # Zhipu
     ZHIPU_API_KEY="" ZHIPU_MODEL_LIST=""
 
-EXPOSE 3210/tcp
-
 USER nextjs
+
+EXPOSE 3210/tcp
 
 CMD \
     if [ -n "$PROXY_URL" ]; then \
