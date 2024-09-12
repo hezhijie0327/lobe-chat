@@ -16,6 +16,11 @@ RUN \
     # Add required package & update base package
     && apt update \
     && apt install proxychains-ng -qy \
+    # Prepare required package to distroless
+    && mkdir -p /proxychains/usr/lib/$(arch)-linux-gnu /proxychains/usr/bin \
+    && cp -rf /usr/lib/$(arch)-linux-gnu/libproxychains.so.4 /proxychains/usr/lib/$(arch)-linux-gnu/libproxychains.so.4 \
+    && cp -rf /usr/bin/proxychains /proxychains/usr/bin/proxychains \
+    # Cleanup temp files
     && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ## Builder image, install all the dependencies and build the app
