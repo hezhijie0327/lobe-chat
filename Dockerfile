@@ -103,7 +103,7 @@ COPY --from=app / /
 RUN \
     # Add nextjs:nodejs to run the app
     addgroup -S -g 1001 nodejs \
-    & adduser -D -H -h /app -u 1001 nextjs -G nodejs \
+    && adduser -D -H -h /app -u 1001 nextjs -G nodejs \
     # Create required directory
     && mkdir -p "/etc/proxychains" \
     # Set permission for nextjs:nodejs
