@@ -2,19 +2,19 @@
 ARG NODEJS_VERSION="20"
 
 ## Base image for all the stages
-FROM node:${NODEJS_VERSION}-alpine AS base
+FROM node:${NODEJS_VERSION}-slim AS base
 
 ARG USE_CN_MIRROR
 
 RUN \
     # If you want to build docker in China, build with --build-arg USE_CN_MIRROR=true
     if [ "${USE_CN_MIRROR:-false}" = "true" ]; then \
-        sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" "/etc/apk/repositories"; \
+        sed -i "s/deb.debian.org/mirrors.ustc.edu.cn/g" "/etc/apt/sources.list.d/debian.sources"; \
     fi \
     # Add required package & update base package
-    && apk update \
-    && apk upgrade --no-cache \
-    && rm -rf /tmp/* /var/cache/apk/*
+    && apt update \
+    && apt install proxychains-ng -qy \
+    && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ## Builder image, install all the dependencies and build the app
 FROM base AS builder
