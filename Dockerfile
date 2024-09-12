@@ -7,7 +7,8 @@ ARG NODEJS_VERSION="20"
 ## Base image for all the stages
 FROM node:${NODEJS_VERSION}-slim AS base
 
-ENV DEBIAN_FRONTEND="noninteractive"
+ENV DEBIAN_FRONTEND="noninteractive" \
+    USE_CN_MIRROR=${USE_CN_MIRROR}
 
 RUN \
     # If you want to build docker in China, build with --build-arg USE_CN_MIRROR=true
@@ -32,6 +33,8 @@ RUN \
 
 ## Builder image, install all the dependencies and build the app
 FROM base AS builder
+
+ENV USE_CN_MIRROR=${USE_CN_MIRROR}
 
 ENV NEXT_PUBLIC_BASE_PATH=""
 
