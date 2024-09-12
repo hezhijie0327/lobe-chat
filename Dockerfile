@@ -63,7 +63,7 @@ COPY --from=builder /app/.next/static /app/.next/static
 COPY --from=builder /deps/node_modules/.pnpm /app/node_modules/.pnpm
 
 ## Production image, copy all the files and run next
-FROM hezhijie0327/lobechat:base
+FROM lobehub/lobe-chat-base:latest
 
 # Copy all the files from app, set the correct permission for prerender cache
 COPY --from=app /app /app
