@@ -10,7 +10,7 @@ RUN \
     if [ "${USE_CN_MIRROR:-false}" = "true" ]; then \
         sed -i "s/deb.debian.org/mirrors.ustc.edu.cn/g" "/etc/apt/sources.list.d/debian.sources"; \
     fi \
-    # Add required package & update base package
+    # Add required package
     && apt update \
     && apt install proxychains-ng -qy \
     # Prepare required package to distroless
