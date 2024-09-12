@@ -10,13 +10,7 @@ RUN \
     fi \
     # Add required package & update base package
     && apk update \
-    && apk add --no-cache bind-tools proxychains-ng sudo \
     && apk upgrade --no-cache \
-    # Add user nextjs to run the app
-    && addgroup --system --gid 1001 nodejs \
-    && adduser --system --uid 1001 nextjs \
-    && chown -R nextjs:nodejs "/etc/proxychains" \
-    && echo "nextjs ALL=(ALL) NOPASSWD: /bin/chmod * /etc/resolv.conf" >> /etc/sudoers \
     && rm -rf /tmp/* /var/cache/apk/*
 
 ## Builder image, install all the dependencies and build the app
@@ -84,7 +78,7 @@ COPY --from=builder /app/.next/static /app/.next/static
 COPY --from=builder /deps/node_modules/.pnpm /app/node_modules/.pnpm
 
 ## Production image, copy all the files and run next
-FROM base
+FROM gcr.io/distroless/nodejs20:nonroot
 
 # Copy all the files from app, set the correct permission for prerender cache
 COPY --from=app --chown=nextjs:nodejs /app /app
@@ -158,48 +152,8 @@ ENV \
     # Zhipu
     ZHIPU_API_KEY="" ZHIPU_MODEL_LIST=""
 
-USER nextjs
-
 EXPOSE 3210/tcp
 
 CMD \
-    if [ -n "$PROXY_URL" ]; then \
-        # Set regex for IPv4
-        IP_REGEX="^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$"; \
-        # Set proxychains command
-        PROXYCHAINS="proxychains -q"; \
-        # Parse the proxy URL
-        host_with_port="${PROXY_URL#*//}"; \
-        host="${host_with_port%%:*}"; \
-        port="${PROXY_URL##*:}"; \
-        protocol="${PROXY_URL%%://*}"; \
-        # Resolve to IP address if the host is a domain
-        if ! [[ "$host" =~ "$IP_REGEX" ]]; then \
-            nslookup=$(nslookup -q="A" "$host" | tail -n +3 | grep 'Address:'); \
-            if [ -n "$nslookup" ]; then \
-                host=$(echo "$nslookup" | tail -n 1 | awk '{print $2}'); \
-            fi; \
-        fi; \
-        # Generate proxychains configuration file
-        printf "%s\n" \
-            'localnet 127.0.0.0/255.0.0.0' \
-            'localnet ::1/128' \
-            'proxy_dns' \
-            'remote_dns_subnet 224' \
-            'strict_chain' \
-            'tcp_connect_time_out 8000' \
-            'tcp_read_time_out 15000' \
-            '[ProxyList]' \
-            "$protocol $host $port" \
-        > "/etc/proxychains/proxychains.conf"; \
-    fi; \
-    # Fix DNS resolving issue in Docker Compose, ref https://github.com/lobehub/lobe-chat/pull/3837
-    if [ -f "/etc/resolv.conf" ]; then \
-        sudo chmod 666 "/etc/resolv.conf"; \
-        resolv_conf=$(grep '^nameserver' "/etc/resolv.conf" | awk '{print "nameserver " $2}'); \
-        printf "%s\n" \
-            "$resolv_conf" \
-        > "/etc/resolv.conf"; \
-    fi; \
     # Run the server
     ${PROXYCHAINS} node "/app/server.js";
