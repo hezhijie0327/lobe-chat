@@ -1,5 +1,8 @@
+## Set NodeJS version
+ARG NODEJS_VERSION="20"
+
 ## Base image for all the stages
-FROM node:20-alpine AS base
+FROM node:${NODEJS_VERSION}-alpine AS base
 
 ARG USE_CN_MIRROR
 
@@ -78,7 +81,7 @@ COPY --from=builder /app/.next/static /app/.next/static
 COPY --from=builder /deps/node_modules/.pnpm /app/node_modules/.pnpm
 
 ## Production image, copy all the files and run next
-FROM gcr.io/distroless/nodejs20:nonroot
+FROM gcr.io/distroless/nodejs${NODEJS_VERSION}:nonroot
 
 # Copy all the files from app, set the correct permission for prerender cache
 COPY --from=app --chown=nextjs:nodejs /app /app
