@@ -14,7 +14,7 @@ RUN \
     && apt update \
     && apt install ca-certificates proxychains-ng -qy \
     # Prepare required package to distroless
-    && mkdir -p /distroless/lib /distroless/bin \
+    && mkdir -p /distroless/bin /distroless/lib /distroless/etc/ssl/certs \
     # Copy proxychains to distroless
     && cp /usr/lib/$(arch)-linux-gnu/libproxychains.so.4 /distroless/lib/libproxychains.so.4 \
     && cp /usr/lib/$(arch)-linux-gnu/libdl.so.2 /distroless/lib/libdl.so.2 \
