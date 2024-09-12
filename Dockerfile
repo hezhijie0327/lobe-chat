@@ -1,27 +1,23 @@
-## Set NodeJS version
-ARG NODEJS_VERSION="20"
-
 ## Base image for all the stages
-FROM node:${NODEJS_VERSION}-slim AS base
+FROM node:20-alpine AS base
 
 ARG USE_CN_MIRROR
-
-ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN \
     # If you want to build docker in China, build with --build-arg USE_CN_MIRROR=true
     if [ "${USE_CN_MIRROR:-false}" = "true" ]; then \
-        sed -i "s/deb.debian.org/mirrors.ustc.edu.cn/g" "/etc/apt/sources.list.d/debian.sources"; \
+        sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" "/etc/apk/repositories"; \
     fi \
     # Add required package & update base package
-    && apt update \
-    && apt install proxychains-ng -qy \
-    # Prepare required package to distroless
-    && mkdir -p /proxychains/usr/lib/$(arch)-linux-gnu /proxychains/usr/bin \
-    && cp -rf /usr/lib/$(arch)-linux-gnu/libproxychains.so.4 /proxychains/usr/lib/$(arch)-linux-gnu/libproxychains.so.4 \
-    && cp -rf /usr/bin/proxychains /proxychains/usr/bin/proxychains \
-    # Cleanup temp files
-    && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+    && apk update \
+    && apk add --no-cache bind-tools proxychains-ng sudo \
+    && apk upgrade --no-cache \
+    # Add user nextjs to run the app
+    && addgroup --system --gid 1001 nodejs \
+    && adduser --system --uid 1001 nextjs \
+    && chown -R nextjs:nodejs "/etc/proxychains" \
+    && echo "nextjs ALL=(ALL) NOPASSWD: /bin/chmod * /etc/resolv.conf" >> /etc/sudoers \
+    && rm -rf /tmp/* /var/cache/apk/*
 
 ## Builder image, install all the dependencies and build the app
 FROM base AS builder
@@ -88,7 +84,7 @@ COPY --from=builder /app/.next/static /app/.next/static
 COPY --from=builder /deps/node_modules/.pnpm /app/node_modules/.pnpm
 
 ## Production image, copy all the files and run next
-FROM gcr.io/distroless/nodejs${NODEJS_VERSION}:nonroot
+FROM base
 
 # Copy all the files from app, set the correct permission for prerender cache
 COPY --from=app --chown=nextjs:nodejs /app /app
@@ -162,8 +158,48 @@ ENV \
     # Zhipu
     ZHIPU_API_KEY="" ZHIPU_MODEL_LIST=""
 
+USER nextjs
+
 EXPOSE 3210/tcp
 
 CMD \
+    if [ -n "$PROXY_URL" ]; then \
+        # Set regex for IPv4
+        IP_REGEX="^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$"; \
+        # Set proxychains command
+        PROXYCHAINS="proxychains -q"; \
+        # Parse the proxy URL
+        host_with_port="${PROXY_URL#*//}"; \
+        host="${host_with_port%%:*}"; \
+        port="${PROXY_URL##*:}"; \
+        protocol="${PROXY_URL%%://*}"; \
+        # Resolve to IP address if the host is a domain
+        if ! [[ "$host" =~ "$IP_REGEX" ]]; then \
+            nslookup=$(nslookup -q="A" "$host" | tail -n +3 | grep 'Address:'); \
+            if [ -n "$nslookup" ]; then \
+                host=$(echo "$nslookup" | tail -n 1 | awk '{print $2}'); \
+            fi; \
+        fi; \
+        # Generate proxychains configuration file
+        printf "%s\n" \
+            'localnet 127.0.0.0/255.0.0.0' \
+            'localnet ::1/128' \
+            'proxy_dns' \
+            'remote_dns_subnet 224' \
+            'strict_chain' \
+            'tcp_connect_time_out 8000' \
+            'tcp_read_time_out 15000' \
+            '[ProxyList]' \
+            "$protocol $host $port" \
+        > "/etc/proxychains/proxychains.conf"; \
+    fi; \
+    # Fix DNS resolving issue in Docker Compose, ref https://github.com/lobehub/lobe-chat/pull/3837
+    if [ -f "/etc/resolv.conf" ]; then \
+        sudo chmod 666 "/etc/resolv.conf"; \
+        resolv_conf=$(grep '^nameserver' "/etc/resolv.conf" | awk '{print "nameserver " $2}'); \
+        printf "%s\n" \
+            "$resolv_conf" \
+        > "/etc/resolv.conf"; \
+    fi; \
     # Run the server
     ${PROXYCHAINS} node "/app/server.js";
