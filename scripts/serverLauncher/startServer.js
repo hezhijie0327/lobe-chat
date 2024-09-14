@@ -45,8 +45,6 @@ async function runDBMigrationScript() {
 
 async function runServer() {
   if (PROXY_URL) {
-    const IP_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/;
-
     // Parse the proxy URL
     const { protocol, host, port } = parseProxyUrl(PROXY_URL);
 
