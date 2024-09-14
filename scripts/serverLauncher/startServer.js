@@ -1,7 +1,6 @@
-const dns = require('dns').promises;
 const fs = require('fs');
-
 const { spawn } = require('child_process');
+const dns = require('dns').promises;
 
 // Set the proxychains configuration path
 const PROXYCHAINS_CONF_PATH = process.env.PROXYCHAINS_CONF_PATH || '/etc/proxychains4.conf';
@@ -19,17 +18,21 @@ async function runServer() {
     const hostWithPort = PROXY_URL.split('//')[1];
     let [host, port] = hostWithPort.split(':');
     const protocol = PROXY_URL.split('://')[0];
+    const originalHost = host; // Store the original hostname for logging
 
     // If the host is not an IP, resolve it using DNS
     if (!IP_REGEX.test(host)) {
       try {
         const result = await dns.lookup(host);
         host = result.address;  // Get the resolved IP address
-        console.log(`Resolved ${hostWithPort} to IP: ${host}`);
+        console.log(`Resolved hostname "${originalHost}" to IP: ${host}`);
       } catch (error) {
         console.error(`DNS lookup failed for host: ${host}`, error);
         process.exit(1);
       }
+    } else {
+      // Log the original IP if it's already an IP address
+      console.log(`Using IP: ${host}`);
     }
 
     // Generate the proxychains configuration file
