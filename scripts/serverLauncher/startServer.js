@@ -14,6 +14,12 @@ const PROXYCHAINS_CONF_PATH = process.env.PROXYCHAINS_CONF_PATH || '/etc/proxych
 // Read proxy URL from environment variable
 const PROXY_URL = process.env.PROXY_URL;
 
+// Function to check if a string is a valid IP address
+function isValidIP(ip) {
+  const IP_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/;
+  return IP_REGEX.test(ip);
+}
+
 async function runServer() {
   if (PROXY_URL) {
     const IP_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/;
@@ -27,18 +33,23 @@ async function runServer() {
     let ip = host
 
     // If the host is not an IP, resolve it using DNS
-    if (!IP_REGEX.test(host)) {
+    if (!isValidIP(host)) {
       try {
         const result = await dns.lookup(host);
-        ip = result.address; // Get the resolved IP address
-        console.log(`Resolved hostname "${host}" to IP: ${ip}`);
+        if (isValidIP(result.address)) {
+          ip = result.address;  // Get the resolved IP address
+          console.log(`Resolved hostname "${host}" to IP: ${ip}`);
+        } else {
+          console.error(`Resolved address "${result.address}" is not a valid IPv4 address.`);
+          process.exit(1);
+        }
       } catch (error) {
         console.error(`DNS lookup failed for host: ${host}`, error);
         process.exit(1);
       }
     } else {
       // Log the original IP if it's already an IP address
-      console.log(`Using IP: ${host}`);
+      console.log(`Using IP: ${ip}`);
     }
 
     // Generate the proxychains configuration file
