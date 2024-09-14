@@ -1,7 +1,14 @@
-const { spawn } = require('child_process');
-const fs = require('fs');
 const dns = require('dns').promises;
+const fs = require('fs');
 
+const { spawn } = require('child_process');
+
+// Set the proxychains configuration path
+const PROXYCHAINS_CONF_PATH = process.env.PROXYCHAINS_CONF_PATH || '/etc/proxychains4.conf';
+// Set the server script path
+const SERVER_SCRIPT_PATH = process.env.SERVER_SCRIPT_PATH || '/app/server.js';
+
+// Read proxy URL from environment variable
 const PROXY_URL = process.env.PROXY_URL;
 
 async function runServer() {
@@ -17,8 +24,8 @@ async function runServer() {
     if (!IP_REGEX.test(host)) {
       try {
         const result = await dns.lookup(host);
-        ip = result.address;  // Get the resolved IP address
-        console.log(`Resolved ${host} to IP: ${ip}`);
+        host = result.address;  // Get the resolved IP address
+        console.log(`Resolved ${hostWithPort} to IP: ${host}`);
       } catch (error) {
         console.error(`DNS lookup failed for host: ${host}`, error);
         process.exit(1);
@@ -38,17 +45,18 @@ tcp_read_time_out 15000
 ${protocol} ${host} ${port}
 `;
 
-    fs.writeFileSync('/etc/proxychains4.conf', proxyChainsConfig.trim());
+    // Write configuration to the specified path
+    fs.writeFileSync(PROXYCHAINS_CONF_PATH, proxyChainsConfig.trim());
 
     // Run the server using proxychains
-    const proxyChains = spawn('proxychains', ['-q', 'node', '/app/server.js'], { stdio: 'inherit' });
+    const proxyChains = spawn('proxychains', ['-q', 'node', SERVER_SCRIPT_PATH], { stdio: 'inherit' });
 
     proxyChains.on('close', (code) => {
       console.log(`Server exited with code ${code}`);
     });
   } else {
     // No proxy, run the server directly
-    const server = spawn('node', ['/app/server.js'], { stdio: 'inherit' });
+    const server = spawn('node', [SERVER_SCRIPT_PATH], { stdio: 'inherit' });
 
     server.on('close', (code) => {
       console.log(`Server exited with code ${code}`);
