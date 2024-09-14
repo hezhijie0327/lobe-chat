@@ -39,8 +39,8 @@ async function runServer() {
 
     // Parse the proxy URL
     const hostWithPort = PROXY_URL.split('//')[1];
-    let [host, port] = hostWithPort.split(':');
     const protocol = PROXY_URL.split('://')[0];
+    let [host, port] = hostWithPort.split(':');
 
     // assume host is an IP address
     let ip = host
