@@ -2,10 +2,11 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const dns = require('dns').promises;
 
-// Set the proxychains configuration path
+// Set configuration paths and modes
 const PROXYCHAINS_CONF_PATH = process.env.PROXYCHAINS_CONF_PATH || '/etc/proxychains4.conf';
-// Set the server script path
 const SERVER_SCRIPT_PATH = process.env.SERVER_SCRIPT_PATH || '/app/server.js';
+const IS_SERVER_MODE = process.env.IS_SERVER_MODE === 'true'; // Set server mode based on environment variable
+const DOCKER_SCRIPT_PATH = '/app/docker.cjs'; // Path to the Docker script
 
 // Read proxy URL from environment variable
 const PROXY_URL = process.env.PROXY_URL;
@@ -67,4 +68,34 @@ ${protocol} ${host} ${port}
   }
 }
 
-runServer();
+async function runDockerScript() {
+  return new Promise((resolve, reject) => {
+    const dockerProcess = spawn('node', [DOCKER_SCRIPT_PATH], { stdio: 'inherit' });
+
+    dockerProcess.on('close', (code) => {
+      if (code !== 0) {
+        console.error(`Docker script failed with code ${code}`);
+        reject(new Error('Docker script failed.'));
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+(async () => {
+  if (IS_SERVER_MODE) {
+    try {
+      // Run the Docker script first
+      await runDockerScript();
+      // If successful, proceed to run the server
+      runServer();
+    } catch (error) {
+      console.error('Exiting due to Docker script failure.');
+      process.exit(1);
+    }
+  } else {
+    // Non-server mode: Run server directly
+    runServer();
+  }
+})();
