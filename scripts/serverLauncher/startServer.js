@@ -50,8 +50,8 @@ async function runServer() {
       try {
         const result = await dns.lookup(host);
         if (isValidIP(result.address)) {
-          ip = result.address;  // Get the resolved IP address
-          console.log(`Proxy Mode: Resolved hostname "${host}" to IP: ${ip}`);
+          // Get the resolved IP address
+          ip = result.address;
         } else {
           console.error(`Proxy Mode: Resolved IP "${result.address}" is not a valid IPv4 address.`);
           process.exit(1);
@@ -60,9 +60,6 @@ async function runServer() {
         console.error(`Proxy Mode: Failed to resolve for hostname: ${host}`, error);
         process.exit(1);
       }
-    } else {
-      // Log the original IP if it's already an IP address
-      console.log(`PROXY: Using IP: ${ip}`);
     }
 
     // Generate the proxychains configuration file
