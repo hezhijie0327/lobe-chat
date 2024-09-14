@@ -18,6 +18,16 @@ function isValidIP(ip) {
   return IP_REGEX.test(ip);
 }
 
+// Function to parse host and port from a URL
+function parseProxyUrl(url) {
+    const urlObj = new URL(url);
+    return {
+        protocol: urlObj.protocol.replace(':', ''),
+        host: urlObj.hostname,
+        port: urlObj.port
+    };
+}
+
 async function runDBMigrationScript() {
   return new Promise((resolve, reject) => {
     const dbMigrationProcess = spawn('node', [DB_MIGRATION_SCRIPT_PATH], { stdio: 'inherit' });
@@ -38,9 +48,7 @@ async function runServer() {
     const IP_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/;
 
     // Parse the proxy URL
-    const hostWithPort = PROXY_URL.split('//')[1];
-    const protocol = PROXY_URL.split('://')[0];
-    let [host, port] = hostWithPort.split(':');
+    const { protocol, host, port } = parseProxyUrl(PROXY_URL);
 
     // assume host is an IP address
     let ip = host
