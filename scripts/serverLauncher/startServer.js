@@ -30,6 +30,7 @@ function parseProxyUrl(url) {
     };
 }
 
+// Function to run the DB Migration script
 async function runDBMigrationScript() {
   return new Promise((resolve, reject) => {
     const dbMigrationProcess = spawn('node', [DB_MIGRATION_SCRIPT_PATH], { stdio: 'inherit' });
@@ -45,6 +46,7 @@ async function runDBMigrationScript() {
   });
 }
 
+// Function to run the server
 async function runServer() {
   if (PROXY_URL) {
     // Parse the proxy URL
@@ -102,6 +104,7 @@ ${protocol} ${ip} ${port}
   }
 }
 
+// Main
 (async () => {
   if (IS_DATABASE_MODE) {
     try {
