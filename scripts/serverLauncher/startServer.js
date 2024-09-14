@@ -1,12 +1,15 @@
-const fs = require('fs');
-const { spawn } = require('child_process');
 const dns = require('dns').promises;
+const fs = require('fs');
+
+const { spawn } = require('child_process');
 
 // Set configuration paths and modes
-const PROXYCHAINS_CONF_PATH = process.env.PROXYCHAINS_CONF_PATH || '/etc/proxychains4.conf';
+const IS_DATABASE_MODE = process.env.IS_DATABASE_MODE === 'true';
+
+const DB_MIGRATION_SCRIPT_PATH = '/app/docker.cjs';
 const SERVER_SCRIPT_PATH = process.env.SERVER_SCRIPT_PATH || '/app/server.js';
-const IS_SERVER_MODE = process.env.IS_SERVER_MODE === 'true'; // Set server mode based on environment variable
-const DOCKER_SCRIPT_PATH = '/app/docker.cjs'; // Path to the Docker script
+
+const PROXYCHAINS_CONF_PATH = process.env.PROXYCHAINS_CONF_PATH || '/etc/proxychains4.conf';
 
 // Read proxy URL from environment variable
 const PROXY_URL = process.env.PROXY_URL;
@@ -19,14 +22,16 @@ async function runServer() {
     const hostWithPort = PROXY_URL.split('//')[1];
     let [host, port] = hostWithPort.split(':');
     const protocol = PROXY_URL.split('://')[0];
-    const originalHost = host; // Store the original hostname for logging
+
+    // assume host is an IP address
+    let ip = host
 
     // If the host is not an IP, resolve it using DNS
     if (!IP_REGEX.test(host)) {
       try {
         const result = await dns.lookup(host);
-        host = result.address;  // Get the resolved IP address
-        console.log(`Resolved hostname "${originalHost}" to IP: ${host}`);
+        ip = result.address; // Get the resolved IP address
+        console.log(`Resolved hostname "${host}" to IP: ${ip}`);
       } catch (error) {
         console.error(`DNS lookup failed for host: ${host}`, error);
         process.exit(1);
@@ -46,7 +51,7 @@ strict_chain
 tcp_connect_time_out 8000
 tcp_read_time_out 15000
 [ProxyList]
-${protocol} ${host} ${port}
+${protocol} ${ip} ${port}
 `;
 
     // Write configuration to the specified path
@@ -68,14 +73,14 @@ ${protocol} ${host} ${port}
   }
 }
 
-async function runDockerScript() {
+async function runDBMigrationScript() {
   return new Promise((resolve, reject) => {
-    const dockerProcess = spawn('node', [DOCKER_SCRIPT_PATH], { stdio: 'inherit' });
+    const dbMigrationProcess = spawn('node', [DB_MIGRATION_SCRIPT_PATH], { stdio: 'inherit' });
 
-    dockerProcess.on('close', (code) => {
+    dbMigrationProcess.on('close', (code) => {
       if (code !== 0) {
-        console.error(`Docker script failed with code ${code}`);
-        reject(new Error('Docker script failed.'));
+        console.error(`DB Migration script failed with code ${code}`);
+        reject(new Error('DB Migration script failed.'));
       } else {
         resolve();
       }
@@ -84,18 +89,18 @@ async function runDockerScript() {
 }
 
 (async () => {
-  if (IS_SERVER_MODE) {
+  if (IS_DATABASE_MODE) {
     try {
-      // Run the Docker script first
-      await runDockerScript();
+      // Run the DB Migration script first
+      await runDBMigrationScript();
       // If successful, proceed to run the server
       runServer();
     } catch (error) {
-      console.error('Exiting due to Docker script failure.');
+      console.error('Exiting due to DB Migration script failure.');
       process.exit(1);
     }
   } else {
-    // Non-server mode: Run server directly
+    // Non-database mode: Run server directly
     runServer();
   }
 })();
