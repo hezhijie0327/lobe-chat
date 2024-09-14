@@ -76,7 +76,7 @@ COPY --from=builder /app/scripts/migrateServerDB/docker.cjs /app/docker.cjs
 COPY --from=builder /app/scripts/migrateServerDB/errorHint.js /app/errorHint.js
 
 # Copy server launcher
-COPY --from=builder /app/scripts/serverLauncher/startServer.cjs /app/startServer.js
+COPY --from=builder /app/scripts/serverLauncher/startServer.js /app/startServer.js
 
 ## Production image, copy all the files and run next
 FROM lobehub/lobe-chat-base:latest
