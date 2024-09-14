@@ -20,6 +20,21 @@ function isValidIP(ip) {
   return IP_REGEX.test(ip);
 }
 
+async function runDBMigrationScript() {
+  return new Promise((resolve, reject) => {
+    const dbMigrationProcess = spawn('node', [DB_MIGRATION_SCRIPT_PATH], { stdio: 'inherit' });
+
+    dbMigrationProcess.on('close', (code) => {
+      if (code !== 0) {
+        console.error(`DB Migration script failed with code ${code}`);
+        reject(new Error('DB Migration script failed.'));
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
 async function runServer() {
   if (PROXY_URL) {
     const IP_REGEX = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/;
@@ -82,21 +97,6 @@ ${protocol} ${ip} ${port}
       console.log(`Server exited with code ${code}`);
     });
   }
-}
-
-async function runDBMigrationScript() {
-  return new Promise((resolve, reject) => {
-    const dbMigrationProcess = spawn('node', [DB_MIGRATION_SCRIPT_PATH], { stdio: 'inherit' });
-
-    dbMigrationProcess.on('close', (code) => {
-      if (code !== 0) {
-        console.error(`DB Migration script failed with code ${code}`);
-        reject(new Error('DB Migration script failed.'));
-      } else {
-        resolve();
-      }
-    });
-  });
 }
 
 (async () => {
