@@ -63,7 +63,7 @@ COPY --from=builder /app/.next/static /app/.next/static
 COPY --from=builder /deps/node_modules/.pnpm /app/node_modules/.pnpm
 
 # Copy server launcher
-COPY --from=builder /app/scripts/serverLauncher/startServer.cjs /app/startServer.js
+COPY --from=builder /app/scripts/serverLauncher/startServer.js /app/startServer.js
 
 ## Production image, copy all the files and run next
 FROM lobehub/lobe-chat-base:latest
