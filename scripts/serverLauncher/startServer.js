@@ -4,8 +4,6 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 
 // Set configuration paths and modes
-const DATABASE_URL = process.env.DATABASE_URL;
-
 const DB_MIGRATION_SCRIPT_PATH = '/app/docker.cjs';
 const SERVER_SCRIPT_PATH = '/app/server.js';
 
@@ -100,7 +98,7 @@ ${protocol} ${ip} ${port}
 }
 
 (async () => {
-  if (DATABASE_URL) {
+  if (process.env.DATABASE_URL) {
     try {
       // Run the DB Migration script first
       await runDBMigrationScript();
