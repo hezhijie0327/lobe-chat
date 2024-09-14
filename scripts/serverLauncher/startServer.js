@@ -53,11 +53,11 @@ async function runServer() {
           // Get the resolved IP address
           ip = result.address;
         } else {
-          console.error(`Proxy Mode: Resolved IP "${result.address}" is not a valid IPv4 address.`);
+          console.error(`Proxy Mode: Resolved "${result.address}" is not a valid IPv4 address.`);
           process.exit(1);
         }
       } catch (error) {
-        console.error(`Proxy Mode: Failed to resolve for hostname: ${host}`, error);
+        console.error(`Proxy Mode: Failed to resolve: ${host}`, error);
         process.exit(1);
       }
     }
