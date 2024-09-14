@@ -4,12 +4,12 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 
 // Set configuration paths and modes
-const IS_DATABASE_MODE = process.env.IS_DATABASE_MODE === 'true';
+const DATABASE_URL = process.env.DATABASE_URL;
 
-const DB_MIGRATION_SCRIPT_PATH = process.env.DB_MIGRATION_SCRIPT_PATH || '/app/docker.cjs';
-const SERVER_SCRIPT_PATH = process.env.SERVER_SCRIPT_PATH || '/app/server.js';
+const DB_MIGRATION_SCRIPT_PATH = '/app/docker.cjs';
+const SERVER_SCRIPT_PATH = '/app/server.js';
 
-const PROXYCHAINS_CONF_PATH = process.env.PROXYCHAINS_CONF_PATH || '/etc/proxychains4.conf';
+const PROXYCHAINS_CONF_PATH = '/etc/proxychains4.conf';
 
 // Read proxy URL from environment variable
 const PROXY_URL = process.env.PROXY_URL;
@@ -100,7 +100,7 @@ ${protocol} ${ip} ${port}
 }
 
 (async () => {
-  if (IS_DATABASE_MODE) {
+  if (DATABASE_URL) {
     try {
       // Run the DB Migration script first
       await runDBMigrationScript();
