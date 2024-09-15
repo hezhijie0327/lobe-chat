@@ -163,6 +163,7 @@ describe('OpenAIStream', () => {
   });
 
   it('should handle content with tool_calls but is an empty object', async () => {
+    // data: {"id":"chatcmpl-A7pokGUqSov0JuMkhiHhWU9GRtAgJ", "object":"chat.completion.chunk", "created":1726430846, "model":"gpt-4o-2024-05-13", "choices":[{"index":0, "delta":{"content":" today", "role":"", "tool_calls":[]}, "finish_reason":"", "logprobs":""}], "prompt_annotations":[{"prompt_index":0, "content_filter_results":null}]}
     const mockOpenAIStream = new ReadableStream({
       start(controller) {
         controller.enqueue({
