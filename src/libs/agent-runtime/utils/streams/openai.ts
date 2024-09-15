@@ -27,7 +27,7 @@ export const transformOpenAIStream = (
       return { data: chunk, id: chunk.id, type: 'data' };
     }
 
-    if (item.delta?.tool_calls?.length > 0) {
+    if (Array.isArray(item.delta?.tool_calls) && item.delta.tool_calls.length > 0) {
       return {
         data: item.delta.tool_calls.map((value, index): StreamToolCallChunkData => {
           if (stack && !stack.tool) {
