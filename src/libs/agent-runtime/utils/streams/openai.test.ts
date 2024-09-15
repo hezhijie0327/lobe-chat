@@ -437,5 +437,51 @@ describe('OpenAIStream', () => {
 
       expect(onToolCallMock).toHaveBeenCalledTimes(2);
     });
+
+    it('should not handle tool calls with empty array', async () => {
+      const mockOpenAIStream = new ReadableStream({
+        start(controller) {
+          controller.enqueue({
+            choices: [
+              {
+                "index": 0,
+                "delta": {
+                  "content": "Some content",
+                  "role": "",
+                  "tool_calls": []
+                },
+                "finish_reason": "",
+                "logprobs": ""
+              }
+            ],
+            id: '2',
+          });
+
+          controller.close();
+        },
+      });
+
+      const onToolCallMock = vi.fn();
+
+      const protocolStream = OpenAIStream(mockOpenAIStream, {
+        onToolCall: onToolCallMock,
+      });
+
+      const decoder = new TextDecoder();
+      const chunks = [];
+
+      // @ts-ignore
+      for await (const chunk of protocolStream) {
+        chunks.push(decoder.decode(chunk, { stream: true }));
+      }
+
+      expect(chunks).toEqual([
+        'id: 2\n',
+        'event: text\n',
+        `data: "Some content"\n`,
+      ]);
+
+      expect(onToolCallMock).toHaveBeenCalledTimes(1);
+    });
   });
 });
