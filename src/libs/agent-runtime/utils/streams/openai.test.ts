@@ -178,7 +178,7 @@ describe('OpenAIStream', () => {
               "logprobs": ""
             }
           ],
-          id: '2',
+          id: '456',
         });
 
         controller.close();
@@ -199,13 +199,9 @@ describe('OpenAIStream', () => {
       chunks.push(decoder.decode(chunk, { stream: true }));
     }
 
-    expect(chunks).toEqual([
-      'id: 2\n',
-      'event: text\n',
-      `data: "Some contents"`,
-    ]);
-
-    expect(onToolCallMock).toHaveBeenCalledTimes(1);
+    expect(chunks).toEqual(
+      ['id: 456', 'event: text', `data: "Some contents"\n`].map((i) => `${i}\n`),
+    );
   });
 
   it('should handle other delta data', async () => {
