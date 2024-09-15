@@ -170,7 +170,7 @@ describe('OpenAIStream', () => {
             {
               "index": 0,
               "delta": {
-                "content": "Some content",
+                "content": "Some contents",
                 "role": "",
                 "tool_calls": []
               },
@@ -202,7 +202,7 @@ describe('OpenAIStream', () => {
     expect(chunks).toEqual([
       'id: 2\n',
       'event: text\n',
-      `data: "Some content"\n`,
+      `data: "Some contents"`,
     ]);
 
     expect(onToolCallMock).toHaveBeenCalledTimes(1);
