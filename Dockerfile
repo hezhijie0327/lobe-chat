@@ -17,7 +17,7 @@ RUN \
     && apt autoremove -qy --purge \
     && apt clean -qy \
     # Add nextjs:nodejs to run the app
-    addgroup --system --gid 1001 nodejs \
+    && addgroup --system --gid 1001 nodejs \
     && adduser --system --home "/app" --gid 1001 -uid 1001 nextjs \
     # Set permission for nextjs:nodejs
     && chown -R nextjs:nodejs "/etc/proxychains4.conf" \
