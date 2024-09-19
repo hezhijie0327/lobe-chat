@@ -30,17 +30,10 @@ function parseUrl(url) {
 
 // Function to run the DB Migration script
 async function runDBMigrationScript() {
-  return new Promise((resolve, reject) => {
-    const dbMigrationProcess = spawn('node', [DB_MIGRATION_SCRIPT_PATH], { stdio: 'inherit' });
+  const server = spawn('node', [DB_MIGRATION_SCRIPT_PATH], { stdio: 'inherit' });
 
-    dbMigrationProcess.on('close', (code) => {
-      if (code !== 0) {
-        console.error(`DB Migration script failed with code ${code}`);
-        reject(new Error('DB Migration script failed.'));
-      } else {
-        resolve();
-      }
-    });
+  server.on('close', (code) => {
+    console.log(`Server exited with code ${code}`);
   });
 }
 
@@ -60,13 +53,13 @@ async function runProxyChainsConfGenerator(url) {
         // Get the resolved IP address
         ip = result.address;
 
-        console.log(`ProxyChains: Using ${protocol}://${ip}:${port}`)
+        console.log(`✅ ProxyChains: Using ${protocol}://${ip}:${port}`)
       } else {
-        console.error(`ProxyChains: ${host} has been resolved: "${result.address}", but it's not a valid IPv4 address.`);
+        console.error(`❌ ProxyChains: ${host} has been resolved: "${result.address}", but it's not a valid IPv4 address.`);
         process.exit(1);
       }
     } catch (error) {
-      console.error(`ProxyChains: Failed to resolve: ${host}, please check your DNS settings.`, error);
+      console.error(`❌ ProxyChains: Failed to resolve: ${host}, please check your DNS settings.`, error);
       process.exit(1);
     }
   }
