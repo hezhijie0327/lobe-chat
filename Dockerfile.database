@@ -16,6 +16,8 @@ RUN \
     && apt full-upgrade -qy \
     && apt autoremove -qy --purge \
     && apt clean -qy \
+    # Configure BusyBox
+    && busybox --install \
     # Add nextjs:nodejs to run the app
     && addgroup --system --gid 1001 nodejs \
     && adduser --system --home "/app" --gid 1001 -uid 1001 nextjs \
