@@ -52,6 +52,16 @@ function isValidSSL(url) {
   });
 }
 
+// Function to get env vars by keyword
+function getEnvVarsByKeyword(keyword) {
+  return Object.keys(process.env)
+    .filter(key => key.includes(keyword))
+    .reduce((acc, key) => {
+      acc[key] = process.env[key];
+      return acc;
+    }, {});
+}
+
 // Function to parse protocol, host and port from a URL
 function parseUrl(url) {
     const urlObj = new URL(url);
@@ -75,6 +85,17 @@ async function runDBMigrationScript() {
       }
     });
   });
+}
+
+// Function to run OSS connection checker
+async function runOSSConnChecker() {
+  isValidSSL(process.env.S3_ENDPOINT);
+  isValidSSL(process.env.S3_PUBLIC_DOMAIN);
+}
+
+// Function to run auth issuer connection checker
+async function runAuthIssuerConnChecker() {
+  let authIssuer = getEnvVarsByKeyword("_ISSUER");
 }
 
 // Function to run ProxyChains conf generator
@@ -142,6 +163,9 @@ async function runServer() {
   if (process.env.DATABASE_DRIVER) {
     // Run the DB Migration script first
     await runDBMigrationScript();
+
+    // Run OSS Connection Checker
+    await runOSSConnChecker();
 
     // If successful, proceed to run the server
     runServer();
