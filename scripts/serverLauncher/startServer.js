@@ -18,8 +18,8 @@ function isValidIP(ip) {
   return IP_REGEX.test(ip);
 }
 
-// Function to parse host and port from a URL
-function parseProxyUrl(url) {
+// Function to parse protocol, host and port from a URL
+function parseUrl(url) {
     const urlObj = new URL(url);
     return {
         protocol: urlObj.protocol.replace(':', ''),
@@ -44,34 +44,35 @@ async function runDBMigrationScript() {
   });
 }
 
-// Function to run the server
-async function runServer() {
-  if (PROXY_URL) {
-    // Parse the proxy URL
-    const { protocol, host, port } = parseProxyUrl(PROXY_URL);
+// Function to run ProxyChains conf generator
+async function runProxyChainsConfGenerator(url) {
+  // Parse the proxy URL
+  const { protocol, host, port } = parseUrl(url);
 
-    // assume host is an IP address
-    let ip = host
+  // assume host is an IP address
+  let ip = host
 
-    // If the host is not an IP, resolve it using DNS
-    if (!isValidIP(host)) {
-      try {
-        const result = await dns.lookup(host, { family: 4 });
-        if (isValidIP(result.address)) {
-          // Get the resolved IP address
-          ip = result.address;
-        } else {
-          console.error(`Proxy Mode: Resolved "${result.address}" is not a valid IPv4 address.`);
-          process.exit(1);
-        }
-      } catch (error) {
-        console.error(`Proxy Mode: Failed to resolve: ${host}`, error);
+  // If the host is not an IP, resolve it using DNS
+  if (!isValidIP(host)) {
+    try {
+      const result = await dns.lookup(host, { family: 4 });
+      if (isValidIP(result.address)) {
+        // Get the resolved IP address
+        ip = result.address;
+
+        console.log(`ProxyChains: Using ${protocol}://${ip}:${port}`)
+      } else {
+        console.error(`ProxyChains: ${host} has been resolved: "${result.address}", but it's not a valid IPv4 address.`);
         process.exit(1);
       }
+    } catch (error) {
+      console.error(`ProxyChains: Failed to resolve: ${host}, please check your DNS settings.`, error);
+      process.exit(1);
     }
+  }
 
-    // Generate the proxychains configuration file
-    const proxyChainsConfig = `
+  // Generate the proxychains configuration file
+  const proxyChainsConfig = `
 localnet 127.0.0.0/255.0.0.0
 localnet ::1/128
 proxy_dns
@@ -83,23 +84,28 @@ tcp_read_time_out 15000
 ${protocol} ${ip} ${port}
 `;
 
-    // Write configuration to the specified path
-    fs.writeFileSync(PROXYCHAINS_CONF_PATH, proxyChainsConfig.trim());
+  // Write configuration to the specified path
+  fs.writeFileSync(PROXYCHAINS_CONF_PATH, proxyChainsConfig.trim());
+}
+
+// Function to run the server
+async function runServer() {
+  let server
+
+  if (PROXY_URL) {
+    // Run ProxyChain Conf Generator first
+    await runProxyChainsConfGenerator();
 
     // Run the server using proxychains
-    const proxyChains = spawn('proxychains', ['-q', 'node', SERVER_SCRIPT_PATH], { stdio: 'inherit' });
-
-    proxyChains.on('close', (code) => {
-      console.log(`Server exited with code ${code}`);
-    });
+    server = spawn('proxychains', ['-q', 'node', SERVER_SCRIPT_PATH], { stdio: 'inherit' });
   } else {
     // No proxy, run the server directly
-    const server = spawn('node', [SERVER_SCRIPT_PATH], { stdio: 'inherit' });
-
-    server.on('close', (code) => {
-      console.log(`Server exited with code ${code}`);
-    });
+    server = spawn('node', [SERVER_SCRIPT_PATH], { stdio: 'inherit' });
   }
+
+  server.on('close', (code) => {
+    console.log(`Server exited with code ${code}`);
+  });
 }
 
 // Main
@@ -108,6 +114,7 @@ ${protocol} ${ip} ${port}
     try {
       // Run the DB Migration script first
       await runDBMigrationScript();
+
       // If successful, proceed to run the server
       runServer();
     } catch (error) {
