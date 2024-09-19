@@ -104,16 +104,11 @@ async function runServer() {
 // Main
 (async () => {
   if (process.env.DATABASE_DRIVER) {
-    try {
-      // Run the DB Migration script first
-      await runDBMigrationScript();
+    // Run the DB Migration script first
+    await runDBMigrationScript();
 
-      // If successful, proceed to run the server
-      runServer();
-    } catch (error) {
-      console.error('Exiting due to DB Migration script failure.');
-      process.exit(1);
-    }
+    // If successful, proceed to run the server
+    runServer();
   } else {
     // Non-database mode: Run server directly
     runServer();
