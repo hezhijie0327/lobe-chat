@@ -14,7 +14,7 @@ RUN \
     && apt update \
     && apt install proxychains-ng -qy \
     # Prepare required package to distroless
-    && mkdir -p /distroless/bin /distroless/lib \
+    && mkdir -p /distroless/bin /distroless/etc /distroless/lib \
     # Copy proxychains to distroless
     && cp /usr/lib/$(arch)-linux-gnu/libproxychains.so.4 /distroless/lib/libproxychains.so.4 \
     && cp /usr/lib/$(arch)-linux-gnu/libdl.so.2 /distroless/lib/libdl.so.2 \
