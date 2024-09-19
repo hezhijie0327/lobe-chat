@@ -53,13 +53,13 @@ async function runProxyChainsConfGenerator(url) {
         // Get the resolved IP address
         ip = result.address;
 
-        console.log(`✅ ProxyChains: Using ${protocol}://${ip}:${port}`)
+        console.log(`✅ ProxyChains: All outgoing traffic is now routed via ${protocol}://${ip}:${port}.`);
       } else {
-        console.error(`❌ ProxyChains: ${host} has been resolved: "${result.address}", but it's not a valid IPv4 address.`);
+        console.error(`❌ ProxyChains: The host "${host}" resolved to an address "${result.address}", but it is not a valid IPv4 address. Proxy setup aborted.`);
         process.exit(1);
       }
     } catch (error) {
-      console.error(`❌ ProxyChains: Failed to resolve: ${host}, please check your DNS settings.`, error);
+      console.error(`❌ ProxyChains: Unable to resolve the host "${host}". Please verify your DNS configuration. Error details:`, error);
       process.exit(1);
     }
   }
