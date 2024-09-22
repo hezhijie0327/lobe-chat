@@ -134,7 +134,6 @@ const runServer = async () => {
 
 // Main execution block
 (async () => {
-  console.log('🚀 Starting server...');
   console.log('🌐 DNS Server:', dns.getServers());
   console.log('-------------------------------------');
 
@@ -147,6 +146,9 @@ const runServer = async () => {
       process.exit(1);
     }
   }
+
+  console.log('🚀 Starting server...');
+  console.log('-------------------------------------');
 
   // Run the server in either database or non-database mode
   await runServer();
