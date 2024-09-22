@@ -114,6 +114,9 @@ ${protocol} ${ip} ${port}
 
 // Function to execute a script with child process spawn
 const runScript = (scriptPath, useProxy = false) => {
+  console.log('🚀 Starting server...');
+  console.log('-------------------------------------');
+
   const command = useProxy ? ['proxychains', '-q', 'node', scriptPath] : ['node', scriptPath];
   return new Promise((resolve, reject) => {
     const process = spawn(command.shift(), command, { stdio: 'inherit' });
@@ -146,9 +149,6 @@ const runServer = async () => {
       process.exit(1);
     }
   }
-
-  console.log('🚀 Starting server...');
-  console.log('-------------------------------------');
 
   // Run the server in either database or non-database mode
   await runServer();
