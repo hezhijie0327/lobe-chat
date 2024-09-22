@@ -56,8 +56,8 @@ const isValidTLS = (url = '') => {
   });
 };
 
-// Function to check connections for OSS and Auth Issuer
-const checkConnections = async () => {
+// Function to check TLS connections for OSS and Auth Issuer
+const checkTLSConnections = async () => {
   await Promise.all([
     isValidTLS(process.env.S3_ENDPOINT),
     isValidTLS(process.env.S3_PUBLIC_DOMAIN),
@@ -78,7 +78,7 @@ const parseUrl = (url) => {
   return { protocol: protocol.replace(':', ''), host, port: port || 443 };
 };
 
-// Helper function to resolve host IP via DNS
+// Function to resolve host IP via DNS
 const resolveHostIP = async (host) => {
   try {
     const { address } = await dns.lookup(host, { family: 4 });
@@ -143,7 +143,7 @@ const runServer = async () => {
   if (process.env.DATABASE_DRIVER) {
     try {
       await runScript(DB_MIGRATION_SCRIPT_PATH);
-      await checkConnections();
+      await checkTLSConnections();
     } catch (err) {
       console.error('❌ Error during migration or connection check:', err);
       process.exit(1);
