@@ -12,12 +12,6 @@ const PROXY_URL = process.env.PROXY_URL || ''; // Default empty string to avoid 
 // Function to check if a string is a valid IP address
 const isValidIP = (ip) => /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/.test(ip);
 
-// Function to parse protocol, host and port from a URL
-const parseUrl = (url) => {
-    const { protocol, hostname: host, port } = new URL(url);
-    return { protocol: protocol.replace(':', ''), host, port: port || 443 };
-};
-
 // Function to check TLS validity of a URL
 const isValidTLS = (url = '') => {
     if (!url) {
@@ -41,35 +35,57 @@ const isValidTLS = (url = '') => {
             socket.end();
         });
 
-        socket.on('error', (err) => handleTLSError(err, host, port, reject));
+        socket.on('error', (err) => {
+          const errMsg = `❌ TLS Check: Error for ${host}:${port}. Details:`;
+          switch (err.code) {
+              case 'DEPTH_ZERO_SELF_SIGNED_CERT':
+              case 'CERT_HAS_EXPIRED':
+                  console.error(`${errMsg} Certificate is not valid. Consider setting NODE_TLS_REJECT_UNAUTHORIZED="0".`);
+                  break;
+              case 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY':
+                  console.error(`${errMsg} Unable to verify issuer. Ensure correct mapping of /etc/ssl/certs.`);
+                  break;
+              default:
+                  console.error(`${errMsg} Network issue. Check firewall or DNS. Error:`, err);
+                  break;
+          }
+          reject(err);
+        }
     });
 };
 
-// Helper function for TLS error handling
-const handleTLSError = (err, host, port, reject) => {
-    const errMsg = `❌ TLS Check: Error for ${host}:${port}. Details:`;
-    switch (err.code) {
-        case 'DEPTH_ZERO_SELF_SIGNED_CERT':
-        case 'CERT_HAS_EXPIRED':
-            console.error(`${errMsg} Certificate is not valid. Consider setting NODE_TLS_REJECT_UNAUTHORIZED="0".`);
-            break;
-        case 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY':
-            console.error(`${errMsg} Unable to verify issuer. Ensure correct mapping of /etc/ssl/certs.`);
-            break;
-        default:
-            console.error(`${errMsg} Network issue. Check firewall or DNS. Error:`, err);
-            break;
+// Function to check connections for OSS and Auth Issuer
+const checkConnections = async () => {
+    await Promise.all([
+        isValidTLS(process.env.S3_ENDPOINT),
+        isValidTLS(process.env.S3_PUBLIC_DOMAIN),
+        isValidTLS(getEnvVarsByKeyword('_ISSUER')),
+    ]);
+};
+
+// Function to get environment variable by keyword
+const getEnvVarsByKeyword = (keyword) => {
+    return Object.entries(process.env)
+        .filter(([key, value]) => key.includes(keyword) && value)
+        .map(([, value]) => value)[0] || null;
+};
+
+// Function to parse protocol, host and port from a URL
+const parseUrl = (url) => {
+    const { protocol, hostname: host, port } = new URL(url);
+    return { protocol: protocol.replace(':', ''), host, port: port || 443 };
+};
+
+// Helper function to resolve host IP via DNS
+const resolveHostIP = async (host) => {
+    try {
+        const { address } = await dns.lookup(host, { family: 4 });
+        if (!isValidIP(address)) throw new Error(`Invalid resolved IP: ${address}`);
+        return address;
+    } catch (err) {
+        console.error(`❌ DNS Error: Could not resolve ${host}.`, err);
+        process.exit(1);
     }
-    reject(err);
-};
-
-// Function to execute a script with child process spawn
-const runScript = (scriptPath, args = [], useProxy = false) => {
-    const command = useProxy ? ['proxychains', '-q', 'node', scriptPath] : ['node', scriptPath];
-    return new Promise((resolve, reject) => {
-        const process = spawn(command.shift(), command, { stdio: 'inherit' });
-        process.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`Process exited with code ${code}`))));
-    });
 };
 
 // Function to generate proxychains configuration
@@ -93,16 +109,13 @@ ${protocol} ${ip} ${port}
     console.log(`✅ ProxyChains: All outgoing traffic routed via ${protocol}://${ip}:${port}.`);
 };
 
-// Helper function to resolve host IP via DNS
-const resolveHostIP = async (host) => {
-    try {
-        const { address } = await dns.lookup(host, { family: 4 });
-        if (!isValidIP(address)) throw new Error(`Invalid resolved IP: ${address}`);
-        return address;
-    } catch (err) {
-        console.error(`❌ DNS Error: Could not resolve ${host}.`, err);
-        process.exit(1);
-    }
+// Function to execute a script with child process spawn
+const runScript = (scriptPath, args = [], useProxy = false) => {
+    const command = useProxy ? ['proxychains', '-q', 'node', scriptPath] : ['node', scriptPath];
+    return new Promise((resolve, reject) => {
+        const process = spawn(command.shift(), command, { stdio: 'inherit' });
+        process.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`Process exited with code ${code}`))));
+    });
 };
 
 // Main function to run the server with optional proxy
@@ -114,26 +127,8 @@ const runServer = async () => {
     return runScript(SERVER_SCRIPT_PATH);
 };
 
-// Function to check connections for OSS and Auth Issuer
-const checkConnections = async () => {
-    await Promise.all([
-        isValidTLS(process.env.S3_ENDPOINT),
-        isValidTLS(process.env.S3_PUBLIC_DOMAIN),
-        isValidTLS(getEnvVarsByKeyword('_ISSUER')),
-    ]);
-};
-
-// Function to get environment variable by keyword
-const getEnvVarsByKeyword = (keyword) => {
-    return Object.entries(process.env)
-        .filter(([key, value]) => key.includes(keyword) && value)
-        .map(([, value]) => value)[0] || null;
-};
-
 // Main execution block
 (async () => {
-    console.log("✅ DNS Check:", "Current DNS Server:", dns.getServers());
-
     if (process.env.DATABASE_DRIVER) {
         try {
             await runScript(DB_MIGRATION_SCRIPT_PATH);
