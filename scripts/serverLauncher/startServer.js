@@ -82,7 +82,7 @@ const parseUrl = (url) => {
 const resolveHostIP = async (host) => {
   try {
     const { address } = await dns.lookup(host, { family: 4 });
-    if (!isValidIP(address)) throw new Error(`Invalid resolved IP: ${address}`);
+    if (!isValidIP(address)) console.error(`❌ DNS Error: Invalid resolved IP: ${address}`);
     return address;
   } catch (err) {
     console.error(`❌ DNS Error: Could not resolve ${host}.`, err);
@@ -95,12 +95,14 @@ const runProxyChainsConfGenerator = async (url) => {
   const { protocol, host, port } = parseUrl(url);
 
   if (!['http', 'socks4', 'socks5'].includes(protocol)) {
-    throw new Error(`❌ ProxyChains: Invalid protocol (${protocol}). Only supported 'http', 'socks4' and 'socks5'.`);
+    console.error(`❌ ProxyChains: Invalid protocol (${protocol}). Only supported 'http', 'socks4' and 'socks5'.`);
+    process.exit(1);
   }
 
   const validPort = parseInt(port, 10);
   if (isNaN(validPort) || validPort <= 0 || validPort > 65535) {
-    throw new Error(`❌ ProxyChains: Invalid port (${port}). Port must be a number between 1 and 65535.`);
+    console.error(`❌ ProxyChains: Invalid port (${port}). Port must be a number between 1 and 65535.`);
+    process.exit(1);
   }
 
   let ip = isValidIP(host) ? host : await resolveHostIP(host);
