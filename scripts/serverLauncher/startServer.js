@@ -135,7 +135,7 @@ const runServer = async () => {
 // Main execution block
 (async () => {
   console.log('🚀 Starting server...');
-  console.log('DNS Server:', dns.getServers());
+  console.log('🌐 DNS Server:', dns.getServers());
   console.log('-------------------------------------');
 
   if (process.env.DATABASE_DRIVER) {
