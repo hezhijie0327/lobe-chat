@@ -93,6 +93,16 @@ const resolveHostIP = async (host) => {
 // Function to generate proxychains configuration
 const runProxyChainsConfGenerator = async (url) => {
   const { protocol, host, port } = parseUrl(url);
+
+  if (!['http', 'socks4', 'socks5'].includes(protocol)) {
+    throw new Error(`❌ ProxyChains: Invalid protocol (${protocol}). Only supported 'http', 'socks4' and 'socks5'.`);
+  }
+
+  const validPort = parseInt(port, 10);
+  if (isNaN(validPort) || validPort <= 0 || validPort > 65535) {
+    throw new Error(`❌ ProxyChains: Invalid port (${port}). Port must be a number between 1 and 65535.`);
+  }
+
   let ip = isValidIP(host) ? host : await resolveHostIP(host);
 
   const configContent = `
