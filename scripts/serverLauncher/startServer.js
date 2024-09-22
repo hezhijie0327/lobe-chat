@@ -114,9 +114,6 @@ ${protocol} ${ip} ${port}
 
 // Function to execute a script with child process spawn
 const runScript = (scriptPath, useProxy = false) => {
-  console.log('🚀 Starting server...');
-  console.log('-------------------------------------');
-
   const command = useProxy ? ['proxychains', '-q', 'node', scriptPath] : ['node', scriptPath];
   return new Promise((resolve, reject) => {
     const process = spawn(command.shift(), command, { stdio: 'inherit' });
@@ -126,6 +123,11 @@ const runScript = (scriptPath, useProxy = false) => {
 
 // Main function to run the server with optional proxy
 const runServer = async () => {
+  console.log('🚀 Starting server...');
+  console.log('-------------------------------------');
+  console.log('🌐 DNS Server:', dns.getServers());
+  console.log('-------------------------------------');
+
   const PROXY_URL = process.env.PROXY_URL || ''; // Default empty string to avoid undefined errors
 
   if (PROXY_URL) {
@@ -137,15 +139,12 @@ const runServer = async () => {
 
 // Main execution block
 (async () => {
-  console.log('🌐 DNS Server:', dns.getServers());
-  console.log('-------------------------------------');
-
   if (process.env.DATABASE_DRIVER) {
     try {
       await runScript(DB_MIGRATION_SCRIPT_PATH);
       await checkTLSConnections();
     } catch (err) {
-      console.error('❌ Error during migration or connection check:', err);
+      console.error('❌ Error during TLS connection check or DB migration:', err);
       process.exit(1);
     }
   }
