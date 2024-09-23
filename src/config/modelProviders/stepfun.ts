@@ -14,8 +14,8 @@ const Stepfun: ModelProviderCard = {
     {
       description: '具备超长上下文处理能力，尤其适合长文档分析。',
       displayName: 'Step 1 256K',
-      id: 'step-1-256k',
       functionCall: true,
+      id: 'step-1-256k',
       tokens: 256_000,
     },
     {
