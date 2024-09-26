@@ -42,14 +42,12 @@ const Hunyuan: ModelProviderCard = {
     {
       description: '混元最新版角色扮演模型，混元官方精调训练推出的角色扮演模型，基于混元模型结合角色扮演场景数据集进行增训，在角色扮演场景具有更好的基础效果。',
       displayName: 'Hunyuan Role',
-      enabled: true,
       id: 'hunyuan-role',
       tokens: 4000,
     },
     {
       description: '混元最新 MOE 架构 FunctionCall 模型，经过高质量的 FunctionCall 数据训练，上下文窗口达 32K，在多个维度的评测指标上处于领先。',
       displayName: 'Hunyuan FunctionCall',
-      enabled: true,
       functionCall: true,
       id: 'hunyuan-functioncall',
       tokens: 28_000,
