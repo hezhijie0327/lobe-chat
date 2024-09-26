@@ -8,6 +8,7 @@ const SenseCore: ModelProviderCard = {
       description: '版本：V5.5。日日新系列目前的主力大模型，国内首个流式多模态交互大模型，显著提升数理逻辑和指令跟随能力，综合性能较「SenseChat-5」提升30%，交互效果和多项核心指标实现对标GPT-4o。',
       displayName: 'SenseChat 5',
       enabled: true,
+      functionCall: true,
       id: 'SenseChat-5',
       pricing: {
         currency: 'CNY',
