@@ -1,4 +1,4 @@
-import { ModelProvider } from '../types';
+import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 export const LobeSenseCoreAI = LobeOpenAICompatibleFactory({
