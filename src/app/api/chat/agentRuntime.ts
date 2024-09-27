@@ -255,6 +255,8 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
 
       const apiKey = createJWT<JWTPayload>({ sensecoreAccessKeyID, sensecoreAccessKeySecret });
 
+      console.log(apiKey)
+
       return { apiKey };
     }
   }
