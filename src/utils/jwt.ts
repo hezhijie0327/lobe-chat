@@ -44,8 +44,8 @@ export const encodeJwtTokenSenseCore = async (ak: any, sk: any): Promise<string>
         })
         .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
         .setIssuedAt()
-        .setExpirationTime('30m') // 30分钟有效期
-        .setNotBefore(-5) // 当前时间 - 5 秒
+        .setExpirationTime(1800) // 期望的有效时间，当前时间+30分钟
+        .setNotBefore(-5) // 期望的生效时间，当前时间-5秒
         .sign(secret);
 
     return jwt;
