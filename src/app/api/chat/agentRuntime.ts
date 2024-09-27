@@ -254,14 +254,24 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const sensecoreAccessKeySecret = payload?.sensecoreAccessKeySecret || SENSECORE_ACCESS_KEY_SECRET;
 
       const getApiKey = async (): Promise<{ apiKey: string }> => {
+          // Get the JWT token
           const apiKey = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
-          return { apiKey };
+          return { apiKey }; // Return the object with apiKey
       };
-  
-      // Handle Promise using .then()
+      
+      // Using the async/await pattern
+      const apiKeyObject = await getApiKey();
+
+      console.log(apiKeyObject);
+      
+      return apiKeyObject;  // This should correctly return { apiKey: 'your-jwt-token' }
+
+      /*
+      // Alternatively, if you want to use .then() pattern:
       return getApiKey().then(apiKeyResult => {
-          return apiKeyResult;  // Return the object containing the API Key
+          return apiKeyResult;  // Return the object { apiKey: 'your-jwt-token' }
       });
+      */
     }
   }
 };
