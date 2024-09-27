@@ -10,6 +10,8 @@ import {
 import { AgentRuntime, ChatStreamPayload, ModelProvider } from '@/libs/agent-runtime';
 import { TraceClient } from '@/libs/traces';
 
+import { encodeJwtTokenSenseCore } from '@/utils/jwt';
+
 import apiKeyManager from './apiKeyManager';
 
 export interface AgentChatOptions {
@@ -252,7 +254,9 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const sensecoreAccessKeyID = payload?.sensecoreAccessKeyID || SENSECORE_ACCESS_KEY_ID;
       const sensecoreAccessKeySecret = payload?.sensecoreAccessKeySecret || SENSECORE_ACCESS_KEY_SECRET;
 
-      return { sensecoreAccessKeyID, sensecoreAccessKeySecret };
+      const { apiKey } = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
+      console.log('Generated API Key:', apiKey); // Logs the generated API Key
+      return { apiKey }; // Return the object if needed
     }
   }
 };
