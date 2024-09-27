@@ -7,16 +7,13 @@ export const LobeSenseCoreAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.sensenova.cn/compatible-mode/v1',
   chatCompletion: {
     handlePayload: (payload: ChatStreamPayload) => {
-      const { frequency_penalty, top_p, ...rest } = payload;
+      const { frequency_penalty, temperature, top_p, ...rest } = payload;
     
       return {
         ...rest,
-        frequency_penalty: frequency_penalty !== undefined
-          ? Math.max( 0.0001, Math.min( 2, frequency_penalty ) )
-          : undefined,
-        top_p: top_p !== undefined
-          ? Math.max( 0.0001, Math.min( 0.9999, top_p ) )
-          : undefined,
+        frequency_penalty: (frequency_penalty > 0 && frequency_penalty <= 2) ? frequency_penalty : undefined,
+        temperature: (temperature > 0 || temperature <= 2) ? temperature : undefined,
+        top_p: (top_p > 0 || top_p < 1) ? top_p : undefined,
       } as OpenAI.ChatCompletionCreateParamsStreaming;
     }
   },
