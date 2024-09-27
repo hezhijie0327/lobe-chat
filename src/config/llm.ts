@@ -236,8 +236,9 @@ export const getLLMConfig = () => {
       ENABLED_AI21: !!process.env.AI21_API_KEY,
       AI21_API_KEY: process.env.AI21_API_KEY,
 
-      ENABLED_SENSECORE: !!process.env.SENSECORE_API_KEY,
-      SENSECORE_API_KEY: process.env.SENSECORE_API_KEY,
+      ENABLED_SENSECORE: !!process.env.SENSECORE_ACCESS_KEY_ID && !!process.env.SENSECORE_ACCESS_KEY_SECRET,
+      SENSECORE_ACCESS_KEY_ID: process.env.SENSECORE_ACCESS_KEY_ID,
+      SENSECORE_ACCESS_KEY_SECRET: process.env.SENSECORE_ACCESS_KEY_SECRET,
       SENSECORE_MODEL_LIST: process.env.SENSECORE_MODEL_LIST,
     },
   });
