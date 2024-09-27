@@ -255,12 +255,13 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
 
       const getApiKey = async (): Promise<{ apiKey: string }> => {
           const apiKey = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
-          return { apiKey };  // 返回包含实际 API Key 的对象
+          return { apiKey };
       };
-
-      const apiKeyResult = await getApiKey();  // 使用 await 等待结果
-
-      return apiKeyResult;  // 返回实际 API Key 的对象
+  
+      // Handle Promise using .then()
+      return getApiKey().then(apiKeyResult => {
+          return apiKeyResult;  // Return the object containing the API Key
+      });
     }
   }
 };
