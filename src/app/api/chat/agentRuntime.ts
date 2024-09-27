@@ -254,11 +254,15 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const sensecoreAccessKeySecret = payload?.sensecoreAccessKeySecret || SENSECORE_ACCESS_KEY_SECRET;
 
       (async () => {
-        const apiKey = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
-        console.log(apiKey);
-
-        return { apiKey };
+          try {
+              const apiKey = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
+              console.log(apiKey);  // 打印生成的 API Key
+          } catch (error) {
+              console.error('Error generating JWT:', error);
+          }
       })();
+
+      return { apiKey };
     }
   }
 };
