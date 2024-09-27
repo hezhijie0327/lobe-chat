@@ -9,7 +9,7 @@ import {
 } from '@/const/trace';
 import { AgentRuntime, ChatStreamPayload, ModelProvider } from '@/libs/agent-runtime';
 import { TraceClient } from '@/libs/traces';
-import { createJWT } from '@/utils/jwt';
+import { encodeJwtTokenSenseCore } from '@/utils/jwt';
 
 import apiKeyManager from './apiKeyManager';
 
@@ -253,11 +253,14 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const sensecoreAccessKeyID = payload?.sensecoreAccessKeyID || SENSECORE_ACCESS_KEY_ID;
       const sensecoreAccessKeySecret = payload?.sensecoreAccessKeySecret || SENSECORE_ACCESS_KEY_SECRET;
 
-      const apiKey = createJWT<JWTPayload>({ sensecoreAccessKeyID, sensecoreAccessKeySecret });
-
-      console.log(apiKey)
-
-      return { apiKey };
+      return encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret)
+      .then(apiKey => {
+          console.log(apiKey);
+          return { apiKey };
+      })
+      .catch(error => {
+          console.error('Error generating JWT:', error);
+      });
     }
   }
 };
