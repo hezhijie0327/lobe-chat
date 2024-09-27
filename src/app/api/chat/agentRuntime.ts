@@ -254,9 +254,9 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { apiKey };
     }
     case ModelProvider.SenseNova: {
-      const { SENSENORVA_API_KEY } = getLLMConfig();
+      const { SENSENOVA_API_KEY } = getLLMConfig();
 
-      const apiKey = apiKeyManager.pick(payload?.apiKey || SENSENORVA_API_KEY);
+      const apiKey = apiKeyManager.pick(payload?.apiKey || SENSENOVA_API_KEY);
 
       return { apiKey };
     }
