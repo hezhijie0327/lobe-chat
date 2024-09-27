@@ -36,6 +36,7 @@ export const createJWT = async <T>(payload: T) => {
     .sign(jwkSecretKey);
 };
 
+// https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
 export const encodeJwtTokenSenseCore = async (ak: any, sk: any): Promise<string> => {
     const secret = new TextEncoder().encode(sk);
     const jwt = await new SignJWT({
