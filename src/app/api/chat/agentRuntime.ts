@@ -12,6 +12,8 @@ import { TraceClient } from '@/libs/traces';
 
 import apiKeyManager from './apiKeyManager';
 
+import { sensecoreApiKey } from '@/libs/agent-runtime/sensecore/authToken';
+
 export interface AgentChatOptions {
   enableTrace?: boolean;
   provider: string;
@@ -254,9 +256,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { apiKey };
     }
     case ModelProvider.SenseCore: {
-      const { SENSECORE_API_KEY } = getLLMConfig();
-
-      const apiKey = apiKeyManager.pick(payload?.apiKey || SENSECORE_API_KEY);
+      const apiKey = await sensecoreApiKey();
 
       return { apiKey };
     }
