@@ -261,9 +261,12 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const sensecoreAccessKeyID = payload?.sensecoreAccessKeyID || SENSECORE_ACCESS_KEY_ID;
       const sensecoreAccessKeySecret = payload?.sensecoreAccessKeySecret || SENSECORE_ACCESS_KEY_SECRET;
 
-      const apiKey = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
-
-      return { apiKey };
+      return encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret).then(apiKey => {
+          return { apiKey };
+      }).catch(error => {
+          console.error('Error fetching SenseCore API key:', error);
+          throw error;
+      });
     }
   }
 };
