@@ -21,7 +21,6 @@ const SenseCore: ModelProviderCard = {
       description: 'SenseChat-5.0，支持128k上下文长度，在各项能力表现较为均衡，尤其在生成创作、角色扮演、安全能力、工具使用上表现较好。',
       displayName: 'SenseChat 5.0 128K',
       enabled: true,
-      functionCall: true,
       id: 'SenseChat-128K',
       pricing: {
         currency: 'CNY',
@@ -53,6 +52,7 @@ const SenseCore: ModelProviderCard = {
         output: 100,
       },
       tokens: 4096,
+      vision: true,
     },
     {
       description: '基于SenseChat-5.0专门为适应粤语语种地区的对话习惯、俚语及本地知识而设计，显著提升在粤语本土化对话理解方面的能力，支持32k长文本输入。',
@@ -69,7 +69,6 @@ const SenseCore: ModelProviderCard = {
       description: 'SenseChat-4.0，支持4k上下文长度，响应快，在各项能力表现较为均衡，尤其在生成创作、角色扮演、安全能力、工具使用上表现较好。',
       displayName: 'SenseChat 4.0',
       enabled: true,
-      functionCall: true,
       id: 'SenseChat',
       pricing: {
         currency: 'CNY',
@@ -82,7 +81,6 @@ const SenseCore: ModelProviderCard = {
       description: 'SenseChat-4.0，支持32k上下文长度，在各项能力表现较为均衡，尤其在生成创作、角色扮演、安全能力、工具使用上表现较好。',
       displayName: 'SenseChat 4.0 32K',
       enabled: true,
-      functionCall: true,
       id: 'SenseChat-32K',
       pricing: {
         currency: 'CNY',
