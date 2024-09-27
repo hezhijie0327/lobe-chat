@@ -10,7 +10,7 @@ import {
 import { AgentRuntime, ChatStreamPayload, ModelProvider } from '@/libs/agent-runtime';
 import { TraceClient } from '@/libs/traces';
 
-import { encodeJwtTokenSenseCore } from '@/utils/jwt';
+import { SignJWT } from 'jose';
 
 import apiKeyManager from './apiKeyManager';
 
@@ -249,16 +249,29 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { apiKey };
     }
     case ModelProvider.SenseCore: {
+      // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
+      const encodeJwtTokenSenseCore = async (ak: any, sk: any): Promise<string> => {
+          const secret = new TextEncoder().encode(sk);
+          const jwt = await new SignJWT({
+                  iss: ak,
+              })
+              .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+              .setIssuedAt()
+              .setExpirationTime(1800)
+              .setNotBefore(-5)
+              .sign(secret);
+
+          return jwt;
+      };
+
       const { SENSECORE_ACCESS_KEY_ID, SENSECORE_ACCESS_KEY_SECRET } = getLLMConfig();
 
       const sensecoreAccessKeyID = payload?.sensecoreAccessKeyID || SENSECORE_ACCESS_KEY_ID;
       const sensecoreAccessKeySecret = payload?.sensecoreAccessKeySecret || SENSECORE_ACCESS_KEY_SECRET;
 
-      (async () => {
-        const apiKey = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
-
-        console.log(apiKey);
-
+      let apiKey;
+      encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret).then((token) => {
+        apiKey = token;
         return { apiKey };
       })
     }
