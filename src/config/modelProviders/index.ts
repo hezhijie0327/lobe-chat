@@ -86,6 +86,7 @@ export const DEFAULT_MODEL_PROVIDER_LIST = [
   SparkProvider,
   ZhiPuProvider,
   ZeroOneProvider,
+  SenseNovaProvider,
   StepfunProvider,
   MoonshotProvider,
   BaichuanProvider,
@@ -93,7 +94,6 @@ export const DEFAULT_MODEL_PROVIDER_LIST = [
   Ai360Provider,
   TaichuProvider,
   SiliconCloudProvider,
-  SenseNovaProvider,
 ];
 
 export const filterEnabledModels = (provider: ModelProviderCard) => {
