@@ -36,7 +36,7 @@ export const createJWT = async <T>(payload: T) => {
     .sign(jwkSecretKey);
 };
 
-export const encodeJwtTokenSenseCore = async (ak: string, sk: string): Promise<string> => {
+export const encodeJwtTokenSenseCore = async (ak: any, sk: any): Promise<string> => {
     const secret = new TextEncoder().encode(sk);
     const jwt = await new SignJWT({
             iss: ak,
