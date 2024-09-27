@@ -12,7 +12,7 @@ import { TraceClient } from '@/libs/traces';
 
 import apiKeyManager from './apiKeyManager';
 
-import { sensecoreApiKey } from '@/libs/agent-runtime/sensecore/authToken';
+import { encodeJwtTokenSenseCore } from '@/libs/agent-runtime/sensecore/authToken';
 
 export interface AgentChatOptions {
   enableTrace?: boolean;
@@ -256,7 +256,12 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { apiKey };
     }
     case ModelProvider.SenseCore: {
-      const apiKey = await sensecoreApiKey();
+      const { SENSECORE_ACCESS_KEY_ID, SENSECORE_ACCESS_KEY_SECRET } = getLLMConfig();
+
+      const sensecoreAccessKeyID = payload?.sensecoreAccessKeyID || SENSECORE_ACCESS_KEY_ID;
+      const sensecoreAccessKeySecret = payload?.sensecoreAccessKeySecret || SENSECORE_ACCESS_KEY_SECRET;
+
+      const apiKey = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
 
       return { apiKey };
     }
