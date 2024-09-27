@@ -35,3 +35,17 @@ export const createJWT = async <T>(payload: T) => {
     .setExpirationTime(now + duration) // 设置 JWT 的 exp（过期时间）为 100 s
     .sign(jwkSecretKey);
 };
+
+export const encodeJwtTokenSenseCore = async (ak, sk) => {
+    const secret = new TextEncoder().encode(sk);
+    const jwt = await new SignJWT({
+            iss: ak,
+        })
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+        .setIssuedAt()
+        .setExpirationTime('30m') // 30分钟有效期
+        .setNotBefore(-5) // 当前时间 - 5 秒
+        .sign(secret);
+
+    return jwt;
+};
