@@ -35,18 +35,3 @@ export const createJWT = async <T>(payload: T) => {
     .setExpirationTime(now + duration) // 设置 JWT 的 exp（过期时间）为 100 s
     .sign(jwkSecretKey);
 };
-
-// https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
-export const encodeJwtTokenSenseCore = async (ak: any, sk: any): Promise<string> => {
-    const secret = new TextEncoder().encode(sk);
-    const apiKey = await new SignJWT({
-            iss: ak,
-        })
-        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-        .setIssuedAt()
-        .setExpirationTime(1800) // 期望的有效时间，当前时间+30分钟
-        .setNotBefore(-5) // 期望的生效时间，当前时间-5秒
-        .sign(secret);
-
-    return apiKey;
-};
