@@ -22,23 +22,23 @@ export const useSenseCoreProvider = (): ProviderItem => {
         children: (
           <Input.Password
             autoComplete={'new-password'}
-            placeholder={t(`${providerKey}.accessKeyID.placeholder`)}
+            placeholder={t(`${providerKey}.sensecoreAccessKeyID.placeholder`)}
           />
         ),
-        desc: t(`${providerKey}.accessKeyID.desc`),
-        label: t(`${providerKey}.accessKeyID.title`),
-        name: [KeyVaultsConfigKey, providerKey, 'accessKeyID'],
+        desc: t(`${providerKey}.sensecoreAccessKeyID.desc`),
+        label: t(`${providerKey}.sensecoreAccessKeyID.title`),
+        name: [KeyVaultsConfigKey, providerKey, 'sensecoreAccessKeyID'],
       },
       {
         children: (
           <Input.Password
             autoComplete={'new-password'}
-            placeholder={t(`${providerKey}.accessKeySecret.placeholder`)}
+            placeholder={t(`${providerKey}.sensecoreAccessKeySecret.placeholder`)}
           />
         ),
-        desc: t(`${providerKey}.accessKeySecret.desc`),
-        label: t(`${providerKey}.accessKeySecret.title`),
-        name: [KeyVaultsConfigKey, providerKey, 'accessKeySecret'],
+        desc: t(`${providerKey}.sensecoreAccessKeySecret.desc`),
+        label: t(`${providerKey}.sensecoreAccessKeySecret.title`),
+        name: [KeyVaultsConfigKey, providerKey, 'sensecoreAccessKeySecret'],
       },
     ],
     title: <Hunyuan.Combine size={32} type={'color'} />,
