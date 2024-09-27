@@ -9,6 +9,7 @@ import {
 } from '@/const/trace';
 import { AgentRuntime, ChatStreamPayload, ModelProvider } from '@/libs/agent-runtime';
 import { TraceClient } from '@/libs/traces';
+import { createJWT } from '@/utils/jwt';
 
 import apiKeyManager from './apiKeyManager';
 
@@ -247,9 +248,12 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { apiKey };
     }
     case ModelProvider.SenseCore: {
-      const { SENSECORE_API_KEY } = getLLMConfig();
+      const { SENSECORE_ACCESS_KEY_ID, SENSECORE_ACCESS_KEY_SECRET } = getLLMConfig();
 
-      const apiKey = apiKeyManager.pick(payload?.apiKey || SENSECORE_API_KEY);
+      const sensecoreAccessKeyID = payload?.sensecoreAccessKeyID || SENSECORE_ACCESS_KEY_ID;
+      const sensecoreAccessKeySecret = payload?.sensecoreAccessKeySecret || SENSECORE_ACCESS_KEY_SECRET;
+
+      const apiKey = await createJWT<JWTPayload>({ sensecoreAccessKeyID, sensecoreAccessKeySecret });
 
       return { apiKey };
     }
