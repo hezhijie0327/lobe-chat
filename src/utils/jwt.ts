@@ -37,7 +37,7 @@ export const createJWT = async <T>(payload: T) => {
 };
 
 // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
-export const encodeJwtTokenSenseCore = async (ak: any, sk: any): Promise<{ apiKey: string }> => {
+export const encodeJwtTokenSenseCore = async (ak: any, sk: any): Promise<string> => {
     const secret = new TextEncoder().encode(sk);
     const apiKey = await new SignJWT({
             iss: ak,
@@ -48,5 +48,5 @@ export const encodeJwtTokenSenseCore = async (ak: any, sk: any): Promise<{ apiKe
         .setNotBefore(-5) // 期望的生效时间，当前时间-5秒
         .sign(secret);
 
-    return { apiKey };
+    return apiKey;
 };
