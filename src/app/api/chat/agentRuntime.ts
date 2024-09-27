@@ -255,9 +255,16 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
 
       const apiKey = encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
 
-      return apiKey.then(token => {
-          return { apiKey: token };
-      });
+      (async () => {
+        try {
+          const apiKey = await encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret);
+          console.log(apiKey);
+
+          return { apiKey };
+        } catch (error) {
+          console.error('Error generating JWT:', error);
+        }
+      })();
     }
   }
 };
