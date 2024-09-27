@@ -119,7 +119,8 @@ export const getLLMConfig = () => {
       AI21_API_KEY: z.string().optional(),
 
       ENABLED_SENSECORE: z.boolean(),
-      SENSECORE_API_KEY: z.string().optional(),
+      SENSECORE_ACCESS_KEY_ID: z.string().optional(),
+      SENSECORE_ACCESS_KEY_SECRET: z.string().optional(),
       SENSECORE_MODEL_LIST: z.string().optional(),
     },
     runtimeEnv: {
