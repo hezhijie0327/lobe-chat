@@ -256,9 +256,9 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       let apiKey = '';
       encodeJwtTokenSenseCore(sensecoreAccessKeyID, sensecoreAccessKeySecret).then((token) => {
         apiKey = token;
-      });
 
-      return {apiKey};
+        return { apiKey };
+      });
     }
   }
 };
