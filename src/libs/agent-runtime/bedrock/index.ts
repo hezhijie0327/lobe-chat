@@ -49,7 +49,7 @@ export class LobeBedrockAI implements LobeRuntimeAI {
   async chat(payload: ChatStreamPayload, options?: ChatCompetitionOptions) {
     if (payload.model.startsWith('meta')) return this.invokeLlamaModel(payload, options);
 
-    if (payload.model.startsWith('command')) return this.invokeCohereModel(payload, options);
+    if (payload.model.startsWith('cohere')) return this.invokeCohereModel(payload, options);
 
     return this.invokeClaudeModel(payload, options);
   }
