@@ -22,7 +22,7 @@ interface AmazonBedrockInvocationMetrics {
 interface BedrockCohereStreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
   'finish_reason': string;
-  'text: string;
+  'text': string;
 }
 
 export const transformCohereStream = (
