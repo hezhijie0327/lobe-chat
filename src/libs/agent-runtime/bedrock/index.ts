@@ -129,7 +129,7 @@ export class LobeBedrockAI implements LobeRuntimeAI {
         frequency_penalty: frequency_penalty,
         max_tokens: max_tokens || 4096,
         message: messages[0].content,
-        p: top_p,
+        p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,,
         presence_penalty: presence_penalty,
         temperature: temperature,
       }),
