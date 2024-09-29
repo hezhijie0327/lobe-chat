@@ -21,8 +21,31 @@ interface AmazonBedrockInvocationMetrics {
 // https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-cohere-command-r-plus.html
 interface BedrockCohereStreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
+  'citations'?: {
+    'document_ids': string[];
+    'end': number;
+    'start': number;
+    'text': string;
+  }[];
   'finish_reason': string;
+  'generation_id': string;
+  'meta'?: {
+    'api_version': {
+      'version': string;
+    };
+    'billed_units': {
+      'input_tokens': number;
+      'output_tokens': number;
+    };
+  };
+  'response_id': string;
   'text': string;
+  'tool_calls'?: {
+    'name': string;
+    'parameters': {
+      [key: string]: string;
+    };
+  }[];
 }
 
 export const transformCohereStream = (
