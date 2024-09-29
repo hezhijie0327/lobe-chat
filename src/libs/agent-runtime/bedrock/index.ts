@@ -130,7 +130,7 @@ export class LobeBedrockAI implements LobeRuntimeAI {
         chat_history: chat_history,
         frequency_penalty: frequency_penalty,
         max_tokens: max_tokens || 4096,
-        message: messages[0],
+        message: messages[0].content,
         p: top_p,
         presence_penalty: presence_penalty,
         temperature: temperature,
