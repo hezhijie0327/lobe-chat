@@ -115,33 +115,13 @@ export class LobeBedrockAI implements LobeRuntimeAI {
   ): Promise<Response> => {
     const { frequency_penalty, max_tokens, messages, model, presence_penalty, temperature, tools, top_p } = payload;
 
-    // Convert roles and separate message
-    const chat_history = messages.slice(1).map(msg => {
-      const role = msg.role as 'assistant' | 'system' | 'user';
-
+    const chat_history = messages.map(msg => {
       return {
-        ...msg,
-        role: role === 'user' ? 'USER' : 'CHATBOT'
+        role: msg.role === 'user' ? 'USER' : 'CHATBOT',
+        message: msg.content
       };
     });
 
-    const cohereTools = tools.map(tool => {
-      const functionDef = tool.function;
-
-      return {
-        name: functionDef.name,
-        description: functionDef.description,
-        parameter_definitions: Object.entries(functionDef.parameters.properties).reduce((acc, [key, value]) => {
-          acc[key] = {
-            description: value.description,
-            type: value.type,
-            required: functionDef.parameters.required.includes(key)
-          };
-          return acc;
-        }, {})
-      };
-    });
-    
     const command = new InvokeModelWithResponseStreamCommand({
       accept: 'application/json',
       body: JSON.stringify({
@@ -152,7 +132,6 @@ export class LobeBedrockAI implements LobeRuntimeAI {
         p: top_p,
         presence_penalty: presence_penalty,
         temperature: temperature,
-        tools: cohereTools,
       }),
       contentType: 'application/json',
       modelId: model,
