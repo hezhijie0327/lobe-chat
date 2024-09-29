@@ -113,12 +113,12 @@ export class LobeBedrockAI implements LobeRuntimeAI {
     payload: ChatStreamPayload,
     options?: ChatCompetitionOptions,
   ): Promise<Response> => {
+    const { frequency_penalty, max_tokens, messages, model, presence_penalty, temperature, top_p } = payload;
+
     const roleMap: Record<LLMRoleType, 'user' | 'system'> = {
       'USER': 'user',
       'CHATBOT': 'system',
     };
-
-    const { frequency_penalty, max_tokens, messages, model, presence_penalty, temperature, top_p } = payload;
 
     const chat_history = messages.slice(1).map(msg => ({
       ...msg,
