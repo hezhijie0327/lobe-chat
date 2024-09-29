@@ -8,7 +8,7 @@ const base64UrlEncode = (obj: object) => {
 }
 
 // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
-export const generateJwtToken = (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter?: number = 1800, notBefore:? number = 5) => {
+export const generateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter?: number = 1800, notBefore:? number = 5) => {
       const headers = {
         alg: 'HS256',
         typ: 'JWT'
