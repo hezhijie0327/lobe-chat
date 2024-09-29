@@ -261,7 +261,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       let apiKey = apiKeyManager.pick(payload?.apiKey || SENSENOVA_API_KEY);
 
       if (apiKey.includes(':')) {
-        const [ sensenovaAccessKeyID, sensenovaAccessKeySecret ] = apiKey.split( ':' );
+        const [ sensenovaAccessKeyID, sensenovaAccessKeySecret ] = apiKey.split(':');
 
         apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 15, 5);
       }
