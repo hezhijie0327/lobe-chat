@@ -260,11 +260,10 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
 
       const sensenovaAccessKey = apiKeyManager.pick(payload?.apiKey || SENSENOVA_API_KEY);
 
+      // TODO: remove this after split accesskeyID & accesskeySecret (Only for functional verification)
       const [ sensenovaAccessKeyID, sensenovaAccessKeySecret ] = sensenovaAccessKey.split( ':' );
-      const tokenExpiredAfter = 15;
-      const tokenNotBefore = 5;
 
-      const apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, tokenExpiredAfter, tokenNotBefore)
+      const apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 15, 5);
 
       return { apiKey };
     }
