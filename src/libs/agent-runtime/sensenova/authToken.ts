@@ -8,20 +8,16 @@ const base64UrlEncode = (obj: object) => {
 }
 
 // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
-export const caculateJwtToken = (accessKeyID?: string, accessKeySecret?: string) => {
-      if (!accessKeyID || !accessKeySecret) {
-        throw new Error('accessKeyID and accessKeySecret must be provided');
-      }
-
+export const caculateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter?: int = 1800, notBefore:? int = 5) => {
       const headers = {
         alg: 'HS256',
         typ: 'JWT'
       }
 
       const payload = {
-        exp: Math.floor(Date.now() / 1000) + 1800, // Current Time + 30m
+        exp: Math.floor(Date.now() / 1000) + expiredAfter,
         iss: accessKeyID,
-        nbf: Math.floor(Date.now() / 1000) - 5     // Current Time - 5s
+        nbf: Math.floor(Date.now() / 1000) - notBefore,
       }
 
       const data = `${ base64UrlEncode(headers) }.${ base64UrlEncode(payload) }`
