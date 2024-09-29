@@ -9,6 +9,10 @@ const base64UrlEncode = (obj: object) => {
 
 // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
 export const caculateJwtToken = (accessKeyID?: string, accessKeySecret?: string) => {
+      if (!accessKeyID || !accessKeySecret) {
+        throw new Error('accessKeyID and accessKeySecret must be provided');
+      }
+
       const headers = {
         alg: 'HS256',
         typ: 'JWT'
