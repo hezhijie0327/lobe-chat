@@ -117,10 +117,9 @@ export class LobeBedrockAI implements LobeRuntimeAI {
 
     // Convert roles and separate message
     const chat_history = messages.slice(1).map(msg => {
-      const role = msg.role as 'USER' | 'CHATBOT' | 'other';
       return {
         ...msg,
-        role: role === 'USER' ? 'user' : role === 'CHATBOT' ? 'system' : role
+        role: role === 'user' ? 'USER' : 'CHATBOT'
       };
     });
 
