@@ -115,15 +115,14 @@ export class LobeBedrockAI implements LobeRuntimeAI {
   ): Promise<Response> => {
     const { frequency_penalty, max_tokens, messages, model, presence_penalty, temperature, top_p } = payload;
 
-    const roleMap: Record<LLMRoleType, 'user' | 'system'> = {
-      'USER': 'user',
-      'CHATBOT': 'system',
-    };
-
-    const chat_history = messages.slice(1).map(msg => ({
-      ...msg,
-      role: roleMap[msg.role as LLMRoleType] || msg.role, // Fallback to the original role if not mapped
-    }));
+    // Convert roles and separate message
+    const chat_history = messages.slice(1).map(msg => {
+      const role = msg.role as 'USER' | 'CHATBOT' | 'other';
+      return {
+        ...msg,
+        role: role === 'USER' ? 'user' : role === 'CHATBOT' ? 'system' : role
+      };
+    });
 
     const command = new InvokeModelWithResponseStreamCommand({
       accept: 'application/json',
