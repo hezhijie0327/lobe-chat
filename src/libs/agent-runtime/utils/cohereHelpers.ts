@@ -6,3 +6,8 @@ export const buildCohereChatHistory = (messages) => {
     };
   });
 };
+
+export const buildCohereMessage = (messages) => {
+  const userMessage = messages.find(msg => msg.role === 'user');
+  return userMessage ? userMessage.content : null;
+};
