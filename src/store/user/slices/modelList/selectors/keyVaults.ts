@@ -44,6 +44,6 @@ export const keyVaultsConfigSelectors = {
   ollamaConfig,
   openAIConfig,
   password,
-  wenxinConfig,
   sensenovaConfig,
+  wenxinConfig,
 };
