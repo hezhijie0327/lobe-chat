@@ -1,4 +1,4 @@
-export const buildCohereChatHistory = (messages) => {
+export const buildCohereChatHistory = (messages: any[]) => {
   return messages.map(msg => {
     return {
       message: msg.content,
@@ -7,7 +7,7 @@ export const buildCohereChatHistory = (messages) => {
   });
 };
 
-export const buildCohereMessage = (messages) => {
+export const buildCohereMessage = (messages: any[]) => {
   const userMessage = messages.find(msg => msg.role === 'user');
   return userMessage ? userMessage.content : null;
 };
