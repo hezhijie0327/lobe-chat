@@ -117,8 +117,8 @@ export class LobeBedrockAI implements LobeRuntimeAI {
 
     const chat_history = messages.map(msg => {
       return {
+        message: msg.content,
         role: msg.role === 'user' ? 'USER' : 'CHATBOT',
-        message: msg.content
       };
     });
 
