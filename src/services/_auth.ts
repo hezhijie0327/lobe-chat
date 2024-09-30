@@ -5,6 +5,8 @@ import { keyVaultsConfigSelectors, userProfileSelectors } from '@/store/user/sel
 import { GlobalLLMProviderKey } from '@/types/user/settings';
 import { createJWT } from '@/utils/jwt';
 
+import { generateJwtTokenSenseNova } from '@/libs/agent-runtime/sensenova/authToken';
+
 export const getProviderAuthPayload = (provider: string) => {
   switch (provider) {
     case ModelProvider.Bedrock: {
@@ -26,11 +28,16 @@ export const getProviderAuthPayload = (provider: string) => {
     }
 
     case ModelProvider.SenseNova: {
-      const config = keyVaultsConfigSelectors.sensenovaConfig(useUserStore.getState());
+      const { sensenovaAccessKeyID, sensenovaAccessKeySecret } = keyVaultsConfigSelectors.sensenovaConfig(
+        useUserStore.getState(),
+      );
+
+      const apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 5, 5);
 
       return { 
-        sensenovaAccessKeyID: config?.sensenovaAccessKeyID, 
-        sensenovaAccessKeySecret: config?.sensenovaAccessKeySecret, 
+        apiKey,
+        sensenovaAccessKeyID: sensenovaAccessKeyID, 
+        sensenovaAccessKeySecret: sensenovaAccessKeyID, 
       };
     }
 
