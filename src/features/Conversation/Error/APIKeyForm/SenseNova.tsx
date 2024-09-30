@@ -12,9 +12,9 @@ import { FormAction } from '../style';
 const SenseNovaForm = memo(() => {
   const { t } = useTranslation('modelProvider');
 
-  const [sensecoreAccessKeyID, sensecoreAccessKeySecret, setConfig] = useUserStore((s) => [
-    keyVaultsConfigSelectors.sensenovaConfig(s).sensecoreAccessKeyID,
-    keyVaultsConfigSelectors.sensenovaConfig(s).sensecoreAccessKeySecret,
+  const [sensenovaAccessKeyID, sensenovaAccessKeySecret, setConfig] = useUserStore((s) => [
+    keyVaultsConfigSelectors.sensenovaConfig(s).sensenovaAccessKeyID,
+    keyVaultsConfigSelectors.sensenovaConfig(s).sensenovaAccessKeySecret,
     s.updateKeyVaultConfig,
   ]);
 
@@ -27,20 +27,20 @@ const SenseNovaForm = memo(() => {
       <Input.Password
         autoComplete={'new-password'}
         onChange={(e) => {
-          setConfig(ModelProvider.SenseNova, { sensecoreAccessKeyID: e.target.value });
+          setConfig(ModelProvider.SenseNova, { sensenovaAccessKeyID: e.target.value });
         }}
-        placeholder={t('sensenova.sensecoreAccessKeyID.placeholder')}
+        placeholder={t('sensenova.sensenovaAccessKeyID.placeholder')}
         type={'block'}
-        value={sensecoreAccessKeyID}
+        value={sensenovaAccessKeyID}
       />
       <Input.Password
         autoComplete={'new-password'}
         onChange={(e) => {
-          setConfig(ModelProvider.SenseNova, { sensecoreAccessKeySecret: e.target.value });
+          setConfig(ModelProvider.SenseNova, { sensenovaAccessKeySecret: e.target.value });
         }}
-        placeholder={t('sensenova.sensecoreAccessKeySecret.placeholder')}
+        placeholder={t('sensenova.sensenovaAccessKeySecret.placeholder')}
         type={'block'}
-        value={sensecoreAccessKeySecret}
+        value={sensenovaAccessKeySecret}
       />
     </FormAction>
   );
