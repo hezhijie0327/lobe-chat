@@ -1,6 +1,6 @@
 const dns = require('dns').promises;
 const fs = require('fs').promises;
-const tls = require('tls');
+const https = require('https');
 const { spawn } = require('child_process');
 
 // Set file paths
@@ -38,18 +38,20 @@ const isValidTLS = (url = '') => {
     return Promise.resolve();
   }
 
-  const options = { host, port, servername: host };
+  const options = {
+    host,
+    port: port,
+  };
+
   return new Promise((resolve, reject) => {
-    const socket = tls.connect(options, () => {
+    const req = https.request(options, (res) => {
       console.log(`✅ TLS Check: Valid certificate for ${host}:${port}.`);
       console.log('-------------------------------------');
-
-      socket.end();
-
+      res.resume();
       resolve();
     });
 
-    socket.on('error', (err) => {
+    req.on('error', (err) => {
       const errMsg = `❌ TLS Check: Error for ${host}:${port}. Details:`;
       switch (err.code) {
         case 'CERT_HAS_EXPIRED':
@@ -67,6 +69,8 @@ const isValidTLS = (url = '') => {
       }
       reject(err);
     });
+
+    req.end();
   });
 };
 
