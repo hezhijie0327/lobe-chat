@@ -115,6 +115,18 @@ export default {
       title: '下载指定的 Ollama 模型',
     },
   },
+  sensenova: {
+    sensenovaAccessKeyID: {
+      desc: '填入 SenseNova Access Key ID',
+      placeholder: 'SenseNova Access Key ID',
+      title: 'SenseNova Access Key ID',
+    },
+    sensenovaAccessKeySecret: {
+      desc: '填入 SenseNova Access Key Secret',
+      placeholder: 'SenseNova Access Key Secret',
+      title: 'SenseNova Access Key Secret',
+    },
+  },
   wenxin: {
     accessKey: {
       desc: '填入百度千帆平台的 Access Key',
