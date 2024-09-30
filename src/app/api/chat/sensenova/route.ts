@@ -1,6 +1,6 @@
 import { getLLMConfig } from '@/config/llm';
 import { AgentRuntime } from '@/libs/agent-runtime';
-import LobeSenseNovaAI from '@/libs/agent-runtime/sensenova';
+import { LobeSenseNovaAI } from '@/libs/agent-runtime/sensenova';
 
 import { POST as UniverseRoute } from '../[provider]/route';
 
