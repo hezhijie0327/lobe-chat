@@ -256,15 +256,12 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { apiKey };
     }
     case ModelProvider.SenseNova: {
-      const { SENSENOVA_API_KEY } = getLLMConfig();
+      const { SENSENOVA_ACCESS_KEY_ID, SENSENOVA_ACCESS_KEY_SECRET } = getLLMConfig();
 
-      let apiKey = apiKeyManager.pick(payload?.apiKey || SENSENOVA_API_KEY);
+      const sensenovaAccessKeyID = payload?.sparkApiKey || SPARK_API_KEY;
+      const sensenovaAccessKeySecret = payload?.sparkApiSecret || SPARK_API_SECRET;
 
-      if (apiKey.includes(':')) {
-        const [ sensenovaAccessKeyID, sensenovaAccessKeySecret ] = apiKey.split(':');
-
-        apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 5, 5);
-      }
+      const apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 5, 5);
 
       return { apiKey };
     }
