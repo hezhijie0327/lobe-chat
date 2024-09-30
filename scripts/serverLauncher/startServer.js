@@ -55,10 +55,11 @@ const isValidTLS = (url = '') => {
         case 'CERT_HAS_EXPIRED':
         case 'DEPTH_ZERO_SELF_SIGNED_CERT':
         case 'ERR_TLS_CERT_ALTNAME_INVALID':
-          console.error(`${errMsg} Certificate is not valid. Consider setting NODE_TLS_REJECT_UNAUTHORIZED="0" or mapping /etc/ssl/certs/ca-certificates.crt.`);
+        case 'UNABLE_TO_VERIFY_LEAF_SIGNATURE:'
+          console.error(`${errMsg} Certificate is not valid. Consider setting NODE_EXTRA_CA_CERTS or NODE_TLS_REJECT_UNAUTHORIZED="0".`);
           break;
         case 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY':
-          console.error(`${errMsg} Unable to verify issuer. Ensure correct mapping of /etc/ssl/certs/ca-certificates.crt.`);
+          console.error(`${errMsg} Unable to verify issuer. Ensure correct mapping of ${process.env.SSL_CERT_DIR}.`);
           break;
         default:
           console.error(`${errMsg} Network issue. Check firewall or DNS.`);
