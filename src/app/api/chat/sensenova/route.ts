@@ -23,7 +23,7 @@ export const POST = async (req: Request) =>
         sensenovaAccessKeySecret = payload?.sensenovaAccessKeySecret;
       }
 
-      const apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 5, 5);
+      const apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 60, 15);
 
       const params = { apiKey };
       const instance = new LobeSenseNovaAI(params);
