@@ -55,7 +55,7 @@ const isValidTLS = (url = '') => {
         case 'CERT_HAS_EXPIRED':
         case 'DEPTH_ZERO_SELF_SIGNED_CERT':
         case 'ERR_TLS_CERT_ALTNAME_INVALID':
-        case 'UNABLE_TO_VERIFY_LEAF_SIGNATURE:'
+        case 'UNABLE_TO_VERIFY_LEAF_SIGNATURE':
           console.error(`${errMsg} Certificate is not valid. Consider setting NODE_EXTRA_CA_CERTS or NODE_TLS_REJECT_UNAUTHORIZED="0".`);
           break;
         case 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY':
