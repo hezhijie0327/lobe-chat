@@ -26,7 +26,7 @@ import {
 import { AgentRuntime } from '@/libs/agent-runtime';
 import { LobeStepfunAI } from '@/libs/agent-runtime/stepfun';
 import LobeWenxinAI from '@/libs/agent-runtime/wenxin';
-import LobeSenseNovaAI from '@/libs/agent-runtime/sensenova';
+import { LobeSenseNovaAI } from '@/libs/agent-runtime/sensenova';
 
 import { initAgentRuntimeWithUserPayload } from './agentRuntime';
 
