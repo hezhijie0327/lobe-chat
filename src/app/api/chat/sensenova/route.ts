@@ -4,6 +4,8 @@ import LobeSenseNovaAI from '@/libs/agent-runtime/sensenova';
 
 import { POST as UniverseRoute } from '../[provider]/route';
 
+import { generateJwtTokenSenseNova } from '@/libs/agent-runtime/sensenova/authToken';
+
 export const runtime = 'nodejs';
 
 export const maxDuration = 30;
@@ -21,7 +23,9 @@ export const POST = async (req: Request) =>
         sensenovaAccessKeySecret = payload?.sensenovaAccessKeySecret;
       }
 
-      const params = { sensenovaAccessKeyID, sensenovaAccessKeySecret };
+      const apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 5, 5);
+
+      const params = { apiKey };
       const instance = new LobeSenseNovaAI(params);
 
       return new AgentRuntime(instance);
