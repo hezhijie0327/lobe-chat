@@ -20,7 +20,12 @@ export const POST = async (req: Request) =>
 
       const apiKey = generateJwtTokenSenseNova(sensenovaAccessKeyID, sensenovaAccessKeySecret, 60, 15);
 
-      const params = { apiKey };
+      const params = {
+        apiKey,
+        sensenovaAccessKeyID,
+        sensenovaAccessKeySecret,
+      };
+
       const instance = new LobeSenseNovaAI(params);
 
       return new AgentRuntime(instance);
