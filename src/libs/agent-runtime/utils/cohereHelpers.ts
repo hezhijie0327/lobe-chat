@@ -12,7 +12,7 @@ export const buildCohereMessage = (messages: any[]) => {
   return userMessage ? userMessage.content : null;
 };
 
-export const buildCohereTools = (tools) => {
+export const transformToolsCohere = (tools: any) => {
   return tools?.map(tool => {
     const functionDef = tool.function;
 
@@ -22,7 +22,7 @@ export const buildCohereTools = (tools) => {
 
     return {
       description: functionDef.description,
-      name: functionDef.name.replace(/-/g, '_'),
+      name: functionDef.name.replace(/-/g, '_'), // 将 '-' 转换为 '_'
       parameter_definitions: Object.entries(functionDef.parameters.properties ?? {}).reduce((acc, [key, value]) => {
         const paramValue = value as { description: string; type: string };
         acc[key] = {
@@ -33,5 +33,5 @@ export const buildCohereTools = (tools) => {
         return acc;
       }, {} as Record<string, { description: string; required: boolean; type: string }>),
     };
-  }) ?? [];
+  }).filter(tool => tool !== null) ?? [];
 };
