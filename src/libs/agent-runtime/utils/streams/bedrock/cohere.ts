@@ -55,7 +55,7 @@ interface BedrockCohereStreamChunk {
     }[]; // Included to capture tool call details
   };
   'tool_call_delta'?: {
-    'index': number;
+    'index'?: number;
     'name'?: string; // Optional for tool calls
     'parameters'?: string; // Can be a string representation of parameters
   }; // To capture details for tool call deltas
