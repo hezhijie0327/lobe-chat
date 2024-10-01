@@ -55,9 +55,12 @@ interface BedrockCohereStreamChunk {
     }[]; // Included to capture tool call details
   };
   'tool_call_delta'?: {
+    'function': any;
+    'id'?: string;
     'index'?: number;
     'name'?: string; // Optional for tool calls
     'parameters'?: string; // Can be a string representation of parameters
+    'type'?: string;
   }; // To capture details for tool call deltas
   'text'?: string; // Optional text for certain events
 }
@@ -71,10 +74,8 @@ export const transformCohereStream = (
 
   // {"is_finished":false,"event_type":"tool-calls-generation","text":"I will use the 'Realtime Weather' tool to search for the current weather in Shanghai and relay this information to the user.","tool_calls":[{"name":"realtime_weather____fetchCurrentWeather","parameters":{"city":"Shanghai"}}]}
   if (chunk?.tool_call_delta) {
-    let tool_call = chunk.tool_call_delta;
-
     return {
-      data: tool_call?.map(
+      data: chunk.tool_call_delta?.map(
         (value: any, index: any): StreamToolCallChunkData => ({
           function: {
             arguments: JSON.stringify(value.parameters) || '{}', // Ensure it's a string
