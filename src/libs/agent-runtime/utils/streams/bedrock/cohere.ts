@@ -65,12 +65,12 @@ export const transformCohereStream = (
       data: chunk.tool_call_delta.map(
         (value, index): StreamToolCallChunkData => ({
           function: {
-            arguments: value?.parameters ?? '{}',
-            name: value?.name ?? null,
+            arguments: JSON.stringify(value.parameters) || '{}', // Ensure it's a string
+            name: value.name || null,
           },
-          id: value.id || generateToolCallId(index, value?.name),
+          id: generateToolCallId(index, value.name), // Generate ID
           index: typeof value.index !== 'undefined' ? value.index : index,
-          type: value.type || 'function',
+          type: value.type || 'function', // Default to 'function'
         }),
       ),
       id: stack.id,
