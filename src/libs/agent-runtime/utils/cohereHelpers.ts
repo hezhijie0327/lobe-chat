@@ -12,7 +12,7 @@ export const buildCohereMessage = (messages: any[]) => {
   return userMessage ? userMessage.content : null;
 };
 
-export const buildCohereTools = (tools: any[]) => {
+export const buildCohereTools = (tools: any[] | undefined) => {
   return tools?.map(tool => {
     const functionDef = tool.function;
 
