@@ -57,22 +57,22 @@ export const transformCohereStream = (
 
   // {"is_finished":false,"event_type":"tool-calls-generation","text":"I will use the 'Realtime Weather' tool to search for the current weather in Shanghai and relay this information to the user.","tool_calls":[{"name":"realtime_weather____fetchCurrentWeather","parameters":{"city":"Shanghai"}}]}
   if (chunk?.tool_call_delta) {
-      return {
-        data: chunk.tool_call_delta.map(
-          (value, index): StreamToolCallChunkData => ({
-            function: {
-              arguments: value.function?.parameters ?? '{}',
-              name: value.function?.name ?? null,
-            },
-            id: value.id || generateToolCallId(index, value.function?.name),
-            index: typeof value.index !== 'undefined' ? value.index : index,
-            type: value.type || 'function',
-          }),
-        ),
-        id: stack.id,
-        type: 'tool_calls',
-      } as StreamProtocolToolCallChunk;
-    }
+    return {
+      data: chunk.tool_call_delta.map(
+        (value, index): StreamToolCallChunkData => ({
+          function: {
+            arguments: value.function?.parameters ?? '{}',
+            name: value.function?.name ?? null,
+          },
+          id: value.id || generateToolCallId(index, value.function?.name),
+          index: typeof value.index !== 'undefined' ? value.index : index,
+          type: value.type || 'function',
+        }),
+      ),
+      id: stack.id,
+      type: 'tool_calls',
+    } as StreamProtocolToolCallChunk;
+  }
   
   if (chunk.finish_reason) {
     return { data: chunk.finish_reason, id: stack.id, type: 'stop' };
