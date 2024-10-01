@@ -13,7 +13,7 @@ export const buildCohereMessage = (messages: any[]) => {
 };
 
 export const buildCohereTools = (tools: any[]) => {
-  return tools?.map((tool: any) => {
+  return tools?.map(tool => {
     const functionDef = tool.function;
 
     if (!functionDef?.parameters) {
@@ -33,5 +33,5 @@ export const buildCohereTools = (tools: any[]) => {
         return acc;
       }, {} as Record<string, { description: string; required: boolean; type: string }>),
     };
-  }).filter((tool: any) => tool !== null) ?? [];
+  }).filter(tool => tool !== null) ?? [];
 };
