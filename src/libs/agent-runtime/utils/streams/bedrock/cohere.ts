@@ -72,8 +72,8 @@ export const transformCohereStream = (
   // {"is_finished":false,"event_type":"tool-calls-generation","text":"I will use the 'Realtime Weather' tool to search for the current weather in Shanghai and relay this information to the user.","tool_calls":[{"name":"realtime_weather____fetchCurrentWeather","parameters":{"city":"Shanghai"}}]}
   if (chunk?.tool_call_delta) {
     return {
-      data: chunk.tool_call_delta.map(
-        (value, index): StreamToolCallChunkData => ({
+      data: chunk.tool_call_delta?.map(
+        (value: any, index: any): StreamToolCallChunkData => ({
           function: {
             arguments: JSON.stringify(value.parameters) || '{}', // Ensure it's a string
             name: value.name || null,
