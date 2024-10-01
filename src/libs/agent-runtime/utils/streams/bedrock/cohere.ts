@@ -57,7 +57,6 @@ interface BedrockCohereStreamChunk {
   'text'?: string;
   'tool_call_delta'?: {
     'index'?: number;
-    'map'?: any;
     'name'?: string;
     'parameters'?: string;
   };
@@ -70,20 +69,17 @@ export const transformCohereStream = (
   // remove 'amazon-bedrock-invocationMetrics' from chunk
   delete chunk['amazon-bedrock-invocationMetrics'];
 
-  // {"is_finished":false,"event_type":"tool-calls-generation","text":"I will use the 'Realtime Weather' tool to search for the current weather in Shanghai and relay this information to the user.","tool_calls":[{"name":"realtime_weather____fetchCurrentWeather","parameters":{"city":"Shanghai"}}]}
   if (chunk?.tool_call_delta) {
     return {
-      data: chunk.tool_call_delta?.map(
-        (value: any, index: any): StreamToolCallChunkData => ({
-          function: {
-            arguments: JSON.stringify(value.parameters) || '{}', // Ensure it's a string
-            name: value.name || null,
-          },
-          id: generateToolCallId(index, value.name), // Generate ID
-          index: typeof value.index !== 'undefined' ? value.index : index,
-          type: value.type || 'function', // Default to 'function'
-        }),
-      ),
+      data: {
+        function: {
+          arguments: JSON.stringify(chunk.tool_call_delta.parameters) || '{}',
+          name: chunk.tool_call_delta.name || null,
+        },
+        id: generateToolCallId(chunk.tool_call_delta.index, chunk.tool_call_delta.name),
+        index: chunk.tool_call_delta.index,
+        type: 'function', // Default to 'function'
+      },
       id: stack.id,
       type: 'tool_calls',
     } as StreamProtocolToolCallChunk;
