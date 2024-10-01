@@ -71,24 +71,25 @@ export const transformCohereStream = (
 
   // Handle tool_call_delta if it exists
   if (chunk?.tool_call_delta) {
-    // Ensure the index is defined; you can set a default if it's undefined
-    const index = chunk.tool_call_delta.index ?? 0; // Fallback to 0 if undefined
+    const index = chunk.tool_call_delta.index ?? 0; // Default to 0 if undefined
+
+    const toolCallData: StreamToolCallChunkData = {
+      function: {
+        arguments: JSON.stringify(chunk.tool_call_delta.parameters) || '{}',
+        name: chunk.tool_call_delta.name || null,
+      },
+      id: generateToolCallId(index, chunk.tool_call_delta.name), // Generate ID
+      index, // Use the defined index
+      type: 'function', // Default to 'function'
+    };
 
     return {
-      data: {
-        function: {
-          arguments: JSON.stringify(chunk.tool_call_delta.parameters) || '{}',
-          name: chunk.tool_call_delta.name || null,
-        },
-        id: generateToolCallId(index, chunk.tool_call_delta.name),
-        index, // Use the defined index
-        type: 'function', // Default to 'function'
-      },
+      data: [toolCallData], // Wrap tool call data in an array
       id: stack.id,
       type: 'tool_calls',
     } as StreamProtocolToolCallChunk;
   }
-  
+
   if (chunk.finish_reason) {
     return { data: chunk.finish_reason, id: stack.id, type: 'stop' };
   }
