@@ -69,15 +69,19 @@ export const transformCohereStream = (
   // remove 'amazon-bedrock-invocationMetrics' from chunk
   delete chunk['amazon-bedrock-invocationMetrics'];
 
+  // Handle tool_call_delta if it exists
   if (chunk?.tool_call_delta) {
+    // Ensure the index is defined; you can set a default if it's undefined
+    const index = chunk.tool_call_delta.index ?? 0; // Fallback to 0 if undefined
+
     return {
       data: {
         function: {
           arguments: JSON.stringify(chunk.tool_call_delta.parameters) || '{}',
           name: chunk.tool_call_delta.name || null,
         },
-        id: generateToolCallId(chunk.tool_call_delta.index, chunk.tool_call_delta.name),
-        index: chunk.tool_call_delta.index,
+        id: generateToolCallId(index, chunk.tool_call_delta.name),
+        index, // Use the defined index
         type: 'function', // Default to 'function'
       },
       id: stack.id,
