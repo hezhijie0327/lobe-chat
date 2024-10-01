@@ -24,32 +24,42 @@ interface AmazonBedrockInvocationMetrics {
 // https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-cohere-command-r-plus.html
 interface BedrockCohereStreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
-  'citations'?: {
-    'document_ids': string[];
-    'end': number;
-    'start': number;
+  'event_type': string;
+  'finish_reason'?: string; // Optional if it can also exist outside response
+  'is_finished': boolean; // Change to boolean based on your stream example
+  'response'?: {
+    'chat_history': {
+      'message': string;
+      'role': string;
+    }[];
+    'generation_id': string;
+    'finish_reason': string;
+    'response_id': string;
     'text': string;
-  }[];
-  'finish_reason': string;
-  'generation_id': string;
-  'meta'?: {
-    'api_version': {
-      'version': string;
+    'meta'?: {
+      'api_version': {
+        'version': string;
+      };
+      'billed_units': {
+        'input_tokens': number;
+        'output_tokens': number;
+      };
+      'tokens': {
+        'input_tokens': number;
+        'output_tokens': number;
+      };
     };
-    'billed_units': {
-      'input_tokens': number;
-      'output_tokens': number;
-    };
+    'tool_calls'?: {
+      'name': string;
+      'parameters': { [key: string]: string };
+    }[]; // Included to capture tool call details
   };
-  'response_id': string;
-  'text': string;
   'tool_call_delta'?: {
     'index': number;
-    'name': string;
-    'parameters': {
-      [key: string]: string;
-    };
-  }[];
+    'name'?: string; // Optional for tool calls
+    'parameters'?: string; // Can be a string representation of parameters
+  }; // To capture details for tool call deltas
+  'text'?: string; // Optional text for certain events
 }
 
 export const transformCohereStream = (
