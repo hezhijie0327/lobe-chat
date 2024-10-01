@@ -43,7 +43,8 @@ interface BedrockCohereStreamChunk {
   };
   'response_id': string;
   'text': string;
-  'tool_calls'?: {
+  'tool_call_delta'?: {
+    'index': number;
     'name': string;
     'parameters': {
       [key: string]: string;
