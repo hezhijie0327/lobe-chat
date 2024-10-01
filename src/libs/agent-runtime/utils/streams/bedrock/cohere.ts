@@ -32,10 +32,8 @@ interface BedrockCohereStreamChunk {
       'message': string;
       'role': string;
     }[];
-    'generation_id': string;
     'finish_reason': string;
-    'response_id': string;
-    'text': string;
+    'generation_id': string;
     'meta'?: {
       'api_version': {
         'version': string;
@@ -49,18 +47,20 @@ interface BedrockCohereStreamChunk {
         'output_tokens': number;
       };
     };
+    'response_id': string;
+    'text': string;
     'tool_calls'?: {
       'name': string;
       'parameters': { [key: string]: string };
     }[];
   };
+  'text'?: string;
   'tool_call_delta'?: {
     'index'?: number;
     'map'?: any;
     'name'?: string;
     'parameters'?: string;
   };
-  'text'?: string;
 }
 
 export const transformCohereStream = (
