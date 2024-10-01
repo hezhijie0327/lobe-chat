@@ -58,6 +58,7 @@ interface BedrockCohereStreamChunk {
     'function': any;
     'id'?: string;
     'index'?: number;
+    'map'?: any;
     'name'?: string; // Optional for tool calls
     'parameters'?: string; // Can be a string representation of parameters
     'type'?: string;
