@@ -25,8 +25,8 @@ interface AmazonBedrockInvocationMetrics {
 interface BedrockCohereStreamChunk {
   'amazon-bedrock-invocationMetrics'?: AmazonBedrockInvocationMetrics;
   'event_type': string;
-  'finish_reason'?: string; // Optional if it can also exist outside response
-  'is_finished': boolean; // Change to boolean based on your stream example
+  'finish_reason'?: string;
+  'is_finished': boolean;
   'response'?: {
     'chat_history': {
       'message': string;
@@ -52,18 +52,15 @@ interface BedrockCohereStreamChunk {
     'tool_calls'?: {
       'name': string;
       'parameters': { [key: string]: string };
-    }[]; // Included to capture tool call details
+    }[];
   };
   'tool_call_delta'?: {
-    'function': any;
-    'id'?: string;
     'index'?: number;
     'map'?: any;
-    'name'?: string; // Optional for tool calls
-    'parameters'?: string; // Can be a string representation of parameters
-    'type'?: string;
-  }; // To capture details for tool call deltas
-  'text'?: string; // Optional text for certain events
+    'name'?: string;
+    'parameters'?: string;
+  };
+  'text'?: string;
 }
 
 export const transformCohereStream = (
