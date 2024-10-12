@@ -9,7 +9,7 @@ const generateJwtTokenSenseNova = (
   expiredAfter: number = 1800,
   notBefore: number = 5
 ): Promise<string> => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     try {
       const header = {
         alg: 'HS256',
@@ -26,13 +26,13 @@ const generateJwtTokenSenseNova = (
       const secret = new TextEncoder().encode(accessKeySecret);
 
       // Sign the JWT
-      const token = await new SignJWT(payload)
+      new SignJWT(payload)
         .setProtectedHeader(header)
-        .sign(secret);
-
-      resolve(token); // Resolve with the token
+        .sign(secret)
+        .then((token) => resolve(token)) // Resolve with the token once the promise is fulfilled
+        .catch((error) => reject(error)); // Reject if there's an error during the signing
     } catch (error) {
-      reject(error); // Reject if there's an error
+      reject(error); // Reject if there's an error in the try block
     }
   });
 };
