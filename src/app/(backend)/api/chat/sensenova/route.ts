@@ -16,7 +16,9 @@ export const POST = async (req: Request) =>
       let sensenovaAccessKeyID: string | undefined = payload?.sensenovaAccessKeyID || SENSENOVA_ACCESS_KEY_ID;
       let sensenovaAccessKeySecret: string | undefined = payload?.sensenovaAccessKeySecret || SENSENOVA_ACCESS_KEY_SECRET;
 
-      const apiKey = LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15);
+      LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID, sensenovaAccessKeySecret, 60, 15, (token) => {
+        apiKey = token; // Set the API key in the callback
+      });
 
       const params = {
         apiKey,
