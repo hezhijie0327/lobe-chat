@@ -11,8 +11,8 @@ const base64UrlEncode = (obj: object) => {
     .replaceAll('/', '_');
 };
 
-// Function to generate JWT token
-const generateJwtTokenSenseNova = async (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter: number = 1800, notBefore: number = 5) => {
+// Function to generate JWT token with a callback
+const generateJwtTokenSenseNova = (accessKeyID: string, accessKeySecret: string, expiredAfter: number = 1800, notBefore: number = 5, callback: (token: string) => void) => {
   const headers = {
     alg: 'HS256',
     typ: 'JWT',
@@ -28,24 +28,19 @@ const generateJwtTokenSenseNova = async (accessKeyID: string = '', accessKeySecr
 
   // Convert the secret key to a CryptoKey object
   const enc = new TextEncoder();
-  const key = await globalThis.crypto.subtle.importKey(
+  globalThis.crypto.subtle.importKey(
     'raw',
     enc.encode(accessKeySecret),
     { name: 'HMAC', hash: { name: 'SHA-256' } },
     false,
     ['sign']
-  );
-
-  // Create the HMAC SHA256 signature using the Web Crypto API
-  const signatureArrayBuffer = await globalThis.crypto.subtle.sign('HMAC', key, enc.encode(data));
-
-  // Convert the signature to base64 URL format
-  const signature = Buffer.from(signatureArrayBuffer).toString('base64url');
-
-  // Combine to create the JWT
-  const apiKey = `${data}.${signature}`;
-
-  return apiKey;
+  ).then((key) => {
+    return globalThis.crypto.subtle.sign('HMAC', key, enc.encode(data));
+  }).then((signatureArrayBuffer) => {
+    const signature = Buffer.from(signatureArrayBuffer).toString('base64url');
+    const apiKey = `${data}.${signature}`;
+    callback(apiKey); // Call the callback with the token
+  });
 };
 
 // LobeSenseNovaAI setup
