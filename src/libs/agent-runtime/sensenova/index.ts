@@ -61,10 +61,9 @@ export const LobeSenseNovaAI = (() => {
     provider: ModelProvider.SenseNova,
   });
 
-  return {
-    ...factory,
+  return Object.assign(factory, {
     generateJWTToken: (ak: string, sk: string, expiredAfter: number = 1800, notBefore: number = 5) => {
       return generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
     },
-  };
+  });
 })();
