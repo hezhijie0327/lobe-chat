@@ -8,9 +8,9 @@ const base64UrlEncode = (obj: object) => {
   const json = JSON.stringify(obj);
   const base64 = Buffer.from(json).toString('base64');
   return base64
-    .replace(/=+$/, '')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
+    .replaceAll(/=+$/, '')
+    .replaceAll(/\+/g, '-')
+    .replaceAll(/\//g, '_');
 };
 
 // Function to generate JWT token with a callback
@@ -33,7 +33,7 @@ const generateJwtTokenSenseNova = (accessKeyID: string, accessKeySecret: string,
   globalThis.crypto.subtle.importKey(
     'raw',
     enc.encode(accessKeySecret),
-    { name: 'HMAC', hash: { name: 'SHA-256' } },
+    { hash: { name: 'SHA-256' }, name: 'HMAC' },
     false,
     ['sign']
   ).then((key) => {
