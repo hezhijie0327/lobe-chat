@@ -17,14 +17,20 @@ export const POST = async (req: Request) =>
       let sensenovaAccessKeySecret: string | undefined = payload?.sensenovaAccessKeySecret || SENSENOVA_ACCESS_KEY_SECRET;
 
       let apiKey: string | undefined;
-      LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15, (token) => {
-        apiKey = token; // Set the API key in the callback
-      });
-
-      // Check if the API key is generated (optional)
-      if (!apiKey) {
-        throw new Error('Failed to generate API key');
-      }
+      LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15)
+        .then((token) => {
+          apiKey = token; // Set the API key
+      
+          // Check if the API key is generated
+          if (!apiKey) {
+            throw new Error('Failed to generate API key');
+          }
+      
+          console.log('Generated API Key:', apiKey); // Optional: Log the API key
+        })
+        .catch((error) => {
+          console.error('Error generating API key:', error); // Handle the error
+        });
 
       const params = {
         apiKey,
