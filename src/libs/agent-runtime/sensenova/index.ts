@@ -62,8 +62,15 @@ export const LobeSenseNovaAI = (() => {
 
   // Use Object.assign to add the generateJWTToken method
   return Object.assign(factory, {
-    generateJWTToken: (ak: string, sk: string, expiredAfter: number = 1800, notBefore: number = 5, callback: (token: string) => void) => {
-      generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore, callback);
+    generateJWTToken: async (ak: string, sk: string, expiredAfter: number = 1800, notBefore: number = 5): Promise<string> => {
+      try {
+        // Call the `generateJwtTokenSenseNova` function and return its result
+        const token = await generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
+        return token;
+      } catch (error) {
+        console.error('Error generating JWT token:', error);
+        throw error; // Re-throw the error to allow handling it outside
+      }
     },
   });
 })();
