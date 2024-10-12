@@ -1,5 +1,4 @@
 import OpenAI from 'openai';
-import CryptoJS from 'crypto-js';
 
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
@@ -13,7 +12,7 @@ const base64UrlEncode = (obj: object) => {
 };
 
 // Function to generate JWT token
-const generateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter: number = 1800, notBefore: number = 5) => {
+const generateJwtTokenSenseNova = async (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter: number = 1800, notBefore: number = 5) => {
   const headers = {
     alg: 'HS256',
     typ: 'JWT',
@@ -27,12 +26,23 @@ const generateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: st
 
   const data = `${base64UrlEncode(headers)}.${base64UrlEncode(payload)}`;
 
-  const signature = CryptoJS.HmacSHA256(data, accessKeySecret)
-    .toString(CryptoJS.enc.Base64)
-    .replaceAll('=', '')
-    .replaceAll('+', '-')
-    .replaceAll('/', '_');
+  // Convert the secret key to a CryptoKey object
+  const enc = new TextEncoder();
+  const key = await globalThis.crypto.subtle.importKey(
+    'raw',
+    enc.encode(accessKeySecret),
+    { name: 'HMAC', hash: { name: 'SHA-256' } },
+    false,
+    ['sign']
+  );
 
+  // Create the HMAC SHA256 signature using the Web Crypto API
+  const signatureArrayBuffer = await globalThis.crypto.subtle.sign('HMAC', key, enc.encode(data));
+
+  // Convert the signature to base64 URL format
+  const signature = Buffer.from(signatureArrayBuffer).toString('base64url');
+
+  // Combine to create the JWT
   const apiKey = `${data}.${signature}`;
 
   return apiKey;
