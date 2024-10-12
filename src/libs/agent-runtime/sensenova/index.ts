@@ -1,10 +1,10 @@
-import { JWT, JWK } from 'jose';
+import { SignJWT } from 'jose'; // Change to SignJWT
 import OpenAI from 'openai';
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 // Function to generate JWT token with jose
-const generateJwtTokenSenseNova = (
+const generateJwtTokenSenseNova = async (
   accessKeyID: string,
   accessKeySecret: string,
   expiredAfter: number = 1800,
@@ -25,11 +25,10 @@ const generateJwtTokenSenseNova = (
   // Create a secret key from the accessKeySecret
   const secret = new TextEncoder().encode(accessKeySecret);
 
-  // Sign the JWT
-  const token = JWT.sign(payload, secret, {
-    algorithm: 'HS256',
-    header,
-  });
+  // Sign the JWT using SignJWT
+  const token = await new SignJWT(payload)
+    .setProtectedHeader(header)
+    .sign(secret);
 
   callback(token); // Call the callback with the token
 };
