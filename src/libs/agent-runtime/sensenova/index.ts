@@ -1,21 +1,17 @@
+import { JWT, JWK } from 'jose';
 import OpenAI from 'openai';
-
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
-// Helper function for base64 URL encoding
-const base64UrlEncode = (obj: object) => {
-  const json = JSON.stringify(obj);
-  const base64 = Buffer.from(json).toString('base64');
-  return base64
-    .replaceAll(/=+$/, '')
-    .replaceAll(/\+/g, '-')
-    .replaceAll(/\//g, '_');
-};
-
-// Function to generate JWT token with a callback
-const generateJwtTokenSenseNova = (accessKeyID: string, accessKeySecret: string, expiredAfter: number = 1800, notBefore: number = 5, callback: (token: string) => void) => {
-  const headers = {
+// Function to generate JWT token with jose
+const generateJwtTokenSenseNova = (
+  accessKeyID: string,
+  accessKeySecret: string,
+  expiredAfter: number = 1800,
+  notBefore: number = 5,
+  callback: (token: string) => void
+) => {
+  const header = {
     alg: 'HS256',
     typ: 'JWT',
   };
@@ -26,23 +22,16 @@ const generateJwtTokenSenseNova = (accessKeyID: string, accessKeySecret: string,
     nbf: Math.floor(Date.now() / 1000) - notBefore,
   };
 
-  const data = `${base64UrlEncode(headers)}.${base64UrlEncode(payload)}`;
+  // Create a secret key from the accessKeySecret
+  const secret = new TextEncoder().encode(accessKeySecret);
 
-  // Convert the secret key to a CryptoKey object
-  const enc = new TextEncoder();
-  globalThis.crypto.subtle.importKey(
-    'raw',
-    enc.encode(accessKeySecret),
-    { hash: { name: 'SHA-256' }, name: 'HMAC' },
-    false,
-    ['sign']
-  ).then((key) => {
-    return globalThis.crypto.subtle.sign('HMAC', key, enc.encode(data));
-  }).then((signatureArrayBuffer) => {
-    const signature = Buffer.from(signatureArrayBuffer).toString('base64url');
-    const apiKey = `${data}.${signature}`;
-    callback(apiKey); // Call the callback with the token
+  // Sign the JWT
+  const token = JWT.sign(payload, secret, {
+    algorithm: 'HS256',
+    header,
   });
+
+  callback(token); // Call the callback with the token
 };
 
 // LobeSenseNovaAI setup
