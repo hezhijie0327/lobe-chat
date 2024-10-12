@@ -5,10 +5,12 @@ import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 // Helper function for base64 URL encoding
 const base64UrlEncode = (obj: object) => {
-  return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(obj)))
-    .replaceAll('=', '')
-    .replaceAll('+', '-')
-    .replaceAll('/', '_');
+  const json = JSON.stringify(obj);
+  const base64 = Buffer.from(json).toString('base64');
+  return base64
+    .replace(/=+$/, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
 };
 
 // Function to generate JWT token with a callback
