@@ -20,12 +20,7 @@ export const POST = async (req: Request) =>
       LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15)
         .then((token) => {
           apiKey = token; // Set the API key
-      
-          // Check if the API key is generated
-          if (!apiKey) {
-            throw new Error('Failed to generate API key');
-          }
-      
+
           console.log('Generated API Key:', apiKey); // Optional: Log the API key
         })
         .catch((error) => {
