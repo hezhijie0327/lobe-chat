@@ -70,7 +70,7 @@ export const LobeSenseNovaAI = (() => {
 
   // Use Object.assign to add the generateJWTToken method
   return Object.assign(factory, {
-    generateJWTToken: (ak: string, sk: string, expiredAfter: number = 1800, notBefore: number = 5) => {
+    generateJWTToken: (ak: string, sk: string, expiredAfter: number = 1800, notBefore: number = 5, callback: (token: string) => void) => {
       return generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
     },
   });
