@@ -21,6 +21,11 @@ export const POST = async (req: Request) =>
         apiKey = token; // Set the API key in the callback
       });
 
+      // Check if the API key is generated (optional)
+      if (!apiKey) {
+        throw new Error('Failed to generate API key');
+      }
+
       const params = {
         apiKey,
         sensenovaAccessKeyID,
