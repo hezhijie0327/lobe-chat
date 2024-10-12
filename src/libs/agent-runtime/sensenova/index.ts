@@ -1,7 +1,41 @@
+import CryptoJS from 'crypto-js';
 import OpenAI from 'openai';
 
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
+
+const base64UrlEncode = (obj: object) => {
+    return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(obj)))
+      .replaceAll('=', '')
+      .replaceAll('+', '-')
+      .replaceAll('/', '_')
+}
+
+// https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
+const generateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter: number = 1800, notBefore: number = 5) => {
+  const headers = {
+    alg: 'HS256',
+    typ: 'JWT',
+  };
+
+  const payload = {
+    exp: Math.floor(Date.now() / 1000) + expiredAfter,
+    iss: accessKeyID,
+    nbf: Math.floor(Date.now() / 1000) - notBefore,
+  };
+
+  const data = `${base64UrlEncode(headers)}.${base64UrlEncode(payload)}`;
+
+  const signature = CryptoJS.HmacSHA256(data, accessKeySecret)
+    .toString(CryptoJS.enc.Base64)
+    .replaceAll('=', '')
+    .replaceAll('+', '-')
+    .replaceAll('/', '_');
+
+  const apiKey = `${data}.${signature}`;
+
+  return apiKey;
+};
 
 export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.sensenova.cn/compatible-mode/v1',
@@ -19,6 +53,9 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
   },
   debug: {
     chatCompletion: () => process.env.DEBUG_SENSENOVA_CHAT_COMPLETION === '1',
+  },
+  generateJWTToken: (ak: string, sk: string, expiredAfter: number = 1800, notBefore: number = 5) => {
+    return generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
   },
   provider: ModelProvider.SenseNova,
 });
