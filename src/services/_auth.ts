@@ -30,7 +30,15 @@ export const getProviderAuthPayload = (provider: string) => {
         useUserStore.getState(),
       );
 
-      const apiKey = LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15);
+      let apiKey: string | undefined;
+      LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15, (token) => {
+        apiKey = token; // Set the API key in the callback
+      });
+
+      // Check if the API key is generated (optional)
+      if (!apiKey) {
+        throw new Error('Failed to generate API key');
+      }
 
       return { 
         apiKey,
