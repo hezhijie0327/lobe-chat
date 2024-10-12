@@ -16,10 +16,15 @@ export const POST = async (req: Request) =>
       let sensenovaAccessKeyID: string | undefined = payload?.sensenovaAccessKeyID || SENSENOVA_ACCESS_KEY_ID;
       let sensenovaAccessKeySecret: string | undefined = payload?.sensenovaAccessKeySecret || SENSENOVA_ACCESS_KEY_SECRET;
 
-      // Wait for the JWT token to be generated before continuing
-      const apiKey = await LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15);
-
-      console.log('Generated API Key:', apiKey); // Optional: Log the API key
+      let apiKey: string | undefined;
+      LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15)
+        .then((token) => {
+          apiKey = token; // Set the API key
+          console.log('Generated API Key:', apiKey); // Optional: Log the API key
+        })
+        .catch((error) => {
+          console.error('Error generating API key:', error); // Handle the error
+        });
 
       const params = {
         apiKey,
