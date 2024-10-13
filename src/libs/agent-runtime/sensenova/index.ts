@@ -1,23 +1,16 @@
+import { SignJWT } from 'jose'; 
 import OpenAI from 'openai';
-import CryptoJS from 'crypto-js';
 
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
-// Helper function for base64 URL encoding
-const base64UrlEncode = (obj: object) => {
-  return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(obj)))
-    .replaceAll('=', '')
-    .replaceAll('+', '-')
-    .replaceAll('/', '_');
-};
-
-// Function to generate JWT token
-const generateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter: number = 1800, notBefore: number = 5) => {
-  const headers = {
-    alg: 'HS256',
-    typ: 'JWT',
-  };
+const generateJwtTokenSenseNova = (
+  accessKeyID: string = '',
+  accessKeySecret: string = '',
+  expiredAfter: number = 1800,
+  notBefore: number = 5
+): string => {
+  const encoder = new TextEncoder();
 
   const payload = {
     exp: Math.floor(Date.now() / 1000) + expiredAfter,
@@ -25,17 +18,13 @@ const generateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: st
     nbf: Math.floor(Date.now() / 1000) - notBefore,
   };
 
-  const data = `${base64UrlEncode(headers)}.${base64UrlEncode(payload)}`;
+  // Using SignJWT and jose's synchronous signing API
+  const jwt = new SignJWT(payload)
+    .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+    .sign(encoder.encode(accessKeySecret));
 
-  const signature = CryptoJS.HmacSHA256(data, accessKeySecret)
-    .toString(CryptoJS.enc.Base64)
-    .replaceAll('=', '')
-    .replaceAll('+', '-')
-    .replaceAll('/', '_');
-
-  const apiKey = `${data}.${signature}`;
-
-  return apiKey;
+  // jose's sign method returns a Promise, so you can resolve it here and return the JWT directly
+  return jwt as unknown as string;  // Directly return the JWT
 };
 
 // LobeSenseNovaAI setup
