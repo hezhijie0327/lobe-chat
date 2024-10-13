@@ -39,7 +39,6 @@ const DEFAULT_BASE_URL = 'https://api.sensenova.cn/compatible-mode/v1';
 
 export class LobeSenseNovaAI implements LobeRuntimeAI {
   private client: OpenAI;
-
   baseURL: string;
 
   constructor(oai: OpenAI) {
@@ -82,7 +81,13 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
         debugStream(debug.toReadableStream()).catch(console.error);
       }
 
-      return StreamingResponse(OpenAIStream(prod, options?.callback), {
+      // Convert ChatStreamCallbacks to OpenAIStreamOptions
+      const openAIStreamOptions: OpenAIStreamOptions = {
+        onCompletion: options?.callback?.onCompletion,
+        onToken: options?.callback?.onToken,
+      };
+
+      return StreamingResponse(OpenAIStream(prod, openAIStreamOptions), {
         headers: options?.headers,
       });
     } catch (error) {
