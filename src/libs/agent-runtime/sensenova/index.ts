@@ -12,6 +12,13 @@ import { convertOpenAIMessages } from '../utils/openaiHelpers';
 import { StreamingResponse } from '../utils/response';
 import { OpenAIStream } from '../utils/streams';
 
+interface OpenAIStreamOptions {
+  onStart?: () => Promise<void> | void;
+  onToken?: (token: string) => Promise<void> | void;
+  onChunk?: (chunk: any) => Promise<void> | void;
+  onFinal?: (completion: string) => Promise<void> | void;
+}
+
 // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
 const generateJwtTokenSenseNova = async (
   apiKey: string = '',
