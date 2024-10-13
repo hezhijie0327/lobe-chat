@@ -4,12 +4,12 @@ import OpenAI from 'openai';
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
-const generateJwtTokenSenseNova = (
+const generateJwtTokenSenseNova = async (
   accessKeyID: string = '',
   accessKeySecret: string = '',
   expiredAfter: number = 1800,
   notBefore: number = 5
-): string => {
+): Promise<string> => {
   const encoder = new TextEncoder();
 
   const payload = {
@@ -18,18 +18,16 @@ const generateJwtTokenSenseNova = (
     nbf: Math.floor(Date.now() / 1000) - notBefore,
   };
 
-  // Using SignJWT and jose's synchronous signing API
-  const jwt = new SignJWT(payload)
+  const jwt = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
     .sign(encoder.encode(accessKeySecret));
 
-  // jose's sign method returns a Promise, so you can resolve it here and return the JWT directly
-  return jwt as unknown as string;  // Directly return the JWT
+  console.log(jwt)
+
+  return jwt;
 };
 
-// LobeSenseNovaAI setup
 export const LobeSenseNovaAI = (() => {
-  // Create the factory instance using LobeOpenAICompatibleFactory
   const factory = LobeOpenAICompatibleFactory({
     baseURL: 'https://api.sensenova.cn/compatible-mode/v1',
     chatCompletion: {
@@ -50,10 +48,14 @@ export const LobeSenseNovaAI = (() => {
     provider: ModelProvider.SenseNova,
   });
 
-  // Use Object.assign to add the generateJWTToken method
   return Object.assign(factory, {
-    generateJWTToken: (ak: string, sk: string, expiredAfter: number = 1800, notBefore: number = 5) => {
-      return generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
+    generateJWTToken: async (
+      ak: string,
+      sk: string,
+      expiredAfter: number = 1800,
+      notBefore: number = 5
+    ) => {
+      return await generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
     },
   });
 })();
