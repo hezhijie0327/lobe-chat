@@ -22,7 +22,7 @@ const generateJwtTokenSenseNova = async (
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
     .sign(encoder.encode(accessKeySecret));
 
-  console.log(jwt)
+  console.log(jwt);
 
   return jwt;
 };
@@ -55,7 +55,11 @@ export const LobeSenseNovaAI = (() => {
       expiredAfter: number = 1800,
       notBefore: number = 5
     ) => {
-      return await generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
+      const apiKey = await generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
+
+      console.log(apiKey);
+      
+      return apiKey;
     },
   });
 })();
