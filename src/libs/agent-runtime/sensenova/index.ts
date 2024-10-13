@@ -4,6 +4,7 @@ import OpenAI from 'openai';
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
+// https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
 const generateJwtTokenSenseNova = async (
   accessKeyID: string = '',
   accessKeySecret: string = '',
