@@ -13,6 +13,7 @@ const base64UrlEncode = (obj: object) => {
 };
 
 // Function to generate JWT token
+// https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
 const generateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: string = '', expiredAfter: number = 1800, notBefore: number = 5) => {
   const headers = {
     alg: 'HS256',
@@ -38,9 +39,7 @@ const generateJwtTokenSenseNova = (accessKeyID: string = '', accessKeySecret: st
   return apiKey;
 };
 
-// LobeSenseNovaAI setup
 export const LobeSenseNovaAI = (() => {
-  // Create the factory instance using LobeOpenAICompatibleFactory
   const factory = LobeOpenAICompatibleFactory({
     baseURL: 'https://api.sensenova.cn/compatible-mode/v1',
     chatCompletion: {
@@ -61,7 +60,6 @@ export const LobeSenseNovaAI = (() => {
     provider: ModelProvider.SenseNova,
   });
 
-  // Use Object.assign to add the generateJWTToken method
   return Object.assign(factory, {
     generateJWTToken: (ak: string, sk: string, expiredAfter: number = 1800, notBefore: number = 5) => {
       return generateJwtTokenSenseNova(ak, sk, expiredAfter, notBefore);
