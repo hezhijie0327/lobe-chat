@@ -104,7 +104,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
   }
 
   private async buildCompletionsParams(payload: ChatStreamPayload) {
-    const { messages, temperature, top_p, ...params } = payload;
+    const { frequency_penalty, messages, temperature, top_p, ...params } = payload;
 
     return {
       messages: await convertOpenAIMessages(messages as any),
