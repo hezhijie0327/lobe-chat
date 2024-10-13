@@ -3,21 +3,14 @@ import { SignJWT } from 'jose';
 
 import { LobeRuntimeAI } from '../BaseAI';
 import { AgentRuntimeErrorType } from '../error';
-import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from '../types';
+import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider, ChatStreamCallbacks, OpenAIChatMessage } from '../types';
 import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
 import { desensitizeUrl } from '../utils/desensitizeUrl';
 import { handleOpenAIError } from '../utils/handleOpenAIError';
 import { convertOpenAIMessages } from '../utils/openaiHelpers';
 import { StreamingResponse } from '../utils/response';
-import { OpenAIStream } from '../utils/streams';
-
-interface OpenAIStreamOptions {
-  onStart?: () => Promise<void> | void;
-  onToken?: (token: string) => Promise<void> | void;
-  onChunk?: (chunk: any) => Promise<void> | void;
-  onFinal?: (completion: string) => Promise<void> | void;
-}
+import { OpenAIStream, OpenAIStreamOptions } from '../utils/streams';
 
 // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
 const generateJwtTokenSenseNova = async (
@@ -89,10 +82,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
       }
 
       // Convert ChatStreamCallbacks to OpenAIStreamOptions
-      const openAIStreamOptions: OpenAIStreamOptions = {
-        onCompletion: options?.callback?.onCompletion,
-        onToken: options?.callback?.onToken,
-      };
+      const openAIStreamOptions = this.convertCallbacks(options?.callback);
 
       return StreamingResponse(OpenAIStream(prod, openAIStreamOptions), {
         headers: options?.headers,
