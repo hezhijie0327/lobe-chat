@@ -14,7 +14,7 @@ export const POST = async (req: Request) => {
   let sensenovaAccessKeyID: string | undefined = SENSENOVA_ACCESS_KEY_ID;
   let sensenovaAccessKeySecret: string | undefined = SENSENOVA_ACCESS_KEY_SECRET;
 
-  const apiKey = await LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '');
+  const apiKey = await LobeSenseNovaAI.generateJWTToken(sensenovaAccessKeyID || '', sensenovaAccessKeySecret || '', 60, 15);
 
   return UniverseRoute(req, {
     createRuntime: (payload) => {
