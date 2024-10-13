@@ -81,10 +81,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
         debugStream(debug.toReadableStream()).catch(console.error);
       }
 
-      // Convert ChatStreamCallbacks to OpenAIStreamOptions
-      const openAIStreamOptions = this.convertCallbacks(options?.callback);
-
-      return StreamingResponse(OpenAIStream(prod, openAIStreamOptions), {
+      return StreamingResponse(OpenAIStream(prod, options?.callback), {
         headers: options?.headers,
       });
     } catch (error) {
