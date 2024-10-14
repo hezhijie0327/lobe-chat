@@ -6,7 +6,7 @@ export const generateApiToken = async (apiKey?: string): Promise<string> => {
     throw new Error('Invalid apiKey');
   }
 
-  const [id, secret] = apiKey.split('.');
+  const [id, secret] = apiKey.split(':');
   if (!id || !secret) {
     throw new Error('Invalid apiKey');
   }
