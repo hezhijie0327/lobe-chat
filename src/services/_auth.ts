@@ -32,8 +32,6 @@ export const getProviderAuthPayload = (provider: string) => {
 
       const apiKey = (sensenovaAccessKeyID || '') + ':' + (sensenovaAccessKeySecret || '')
 
-      console.log(sensenovaAccessKeyID, sensenovaAccessKeySecret, apiKey);
-
       return { 
         apiKey,
         sensenovaAccessKeyID: sensenovaAccessKeyID, 
