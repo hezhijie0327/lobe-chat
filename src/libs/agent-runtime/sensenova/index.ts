@@ -59,9 +59,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
         debugStream(debug.toReadableStream()).catch(console.error);
       }
 
-      return StreamingResponse(OpenAIStream(prod, options?.callback), {
-        headers: options?.headers,
-      });
+      return StreamingResponse(OpenAIStream(prod, { headers: options?.headers });
     } catch (error) {
       const { errorResult, RuntimeError } = handleOpenAIError(error);
 
