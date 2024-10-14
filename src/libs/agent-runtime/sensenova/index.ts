@@ -9,7 +9,7 @@ import { desensitizeUrl } from '../utils/desensitizeUrl';
 import { handleOpenAIError } from '../utils/handleOpenAIError';
 import { convertOpenAIMessages } from '../utils/openaiHelpers';
 import { StreamingResponse } from '../utils/response';
-import { OpenAIStream } from '../utils/streams';
+import { OpenAIStream, OpenAIStreamOptions } from '../utils/streams';
 import { generateApiToken } from './authToken';
 
 const DEFAULT_BASE_URL = 'https://api.sensenova.cn/compatible-mode/v1';
@@ -64,7 +64,9 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
         debugStream(debug.toReadableStream()).catch(console.error);
       }
 
-      return StreamingResponse(OpenAIStream(prod), { headers: options?.headers });
+      return StreamingResponse(OpenAIStream(stream, streamOptions), {
+        headers: options?.headers,
+      });
     } catch (error) {
       const { errorResult, RuntimeError } = handleOpenAIError(error);
 
