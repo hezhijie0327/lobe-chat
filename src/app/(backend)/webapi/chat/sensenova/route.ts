@@ -25,9 +25,7 @@ export const POST = async (req: Request) =>
       console.log(apiKey);
 
       const params = {
-        apiKey,
-        sensenovaAccessKeyID,
-        sensenovaAccessKeySecret,
+        apiKey
       };
 
       const instance = new LobeSenseNovaAI(params);
