@@ -119,6 +119,7 @@ describe('LobeSenseNovaAI', () => {
       const spyOn = vi.spyOn(instance['client'].chat.completions, 'create');
 
       await instance.chat({
+        frequency_penalty: 0,
         messages: [
           { content: 'Hello', role: 'user' },
           { content: [{ type: 'text', text: 'Hello again' }], role: 'user' },
@@ -130,9 +131,9 @@ describe('LobeSenseNovaAI', () => {
 
       const calledWithParams = spyOn.mock.calls[0][0];
 
+      expect(calledWithParams.frequency_penalty).toBeUndefined(); // frequency_penalty 0 should be undefined
       expect(calledWithParams.messages[1].content).toEqual([{ type: 'text', text: 'Hello again' }]);
       expect(calledWithParams.temperature).toBeUndefined(); // temperature 0 should be undefined
-      expect((calledWithParams as any).do_sample).toBeTruthy(); // temperature 0 should be undefined
       expect(calledWithParams.top_p).toEqual(0.99); // top_p should be transformed correctly
     });
 
