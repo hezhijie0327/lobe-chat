@@ -39,6 +39,8 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
       throw invalidSenseNovaAPIKey;
     }
 
+    console.log(token);
+    
     const header = { Authorization: `Bearer ${token}` };
     const llm = new OpenAI({ apiKey, baseURL, defaultHeaders: header, ...res });
 
