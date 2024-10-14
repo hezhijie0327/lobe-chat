@@ -1,22 +1,22 @@
 import OpenAI, { ClientOptions } from 'openai';
-import { SignJWT } from 'jose'; 
 
 import { LobeRuntimeAI } from '../BaseAI';
 import { AgentRuntimeErrorType } from '../error';
-import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider, ChatStreamCallbacks, OpenAIChatMessage } from '../types';
+import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from '../types';
 import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
 import { desensitizeUrl } from '../utils/desensitizeUrl';
 import { handleOpenAIError } from '../utils/handleOpenAIError';
 import { convertOpenAIMessages } from '../utils/openaiHelpers';
 import { StreamingResponse } from '../utils/response';
-import { OpenAIStream, OpenAIStreamOptions } from '../utils/streams';
+import { OpenAIStream } from '../utils/streams';
 import { generateApiToken } from './authToken';
 
-const DEFAULT_BASE_URL = 'https://api.sensenova.cn/compatible-mode/v1';
+const DEFAULT_BASE_URL = 'https://open.bigmodel.cn/api/paas/v4';
 
-export class LobeSenseNovaAI implements LobeRuntimeAI {
+export class LobeZhipuAI implements LobeRuntimeAI {
   private client: OpenAI;
+
   baseURL: string;
 
   constructor(oai: OpenAI) {
@@ -25,24 +25,24 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
   }
 
   static async fromAPIKey({ apiKey, baseURL = DEFAULT_BASE_URL, ...res }: ClientOptions = {}) {
-    const invalidSenseNovaAPIKey = AgentRuntimeError.createError(
+    const invalidZhipuAPIKey = AgentRuntimeError.createError(
       AgentRuntimeErrorType.InvalidProviderAPIKey,
     );
 
-    if (!apiKey) throw invalidSenseNovaAPIKey;
+    if (!apiKey) throw invalidZhipuAPIKey;
 
     let token: string;
 
     try {
       token = await generateApiToken(apiKey);
     } catch {
-      throw invalidSenseNovaAPIKey;
+      throw invalidZhipuAPIKey;
     }
 
     const header = { Authorization: `Bearer ${token}` };
     const llm = new OpenAI({ apiKey, baseURL, defaultHeaders: header, ...res });
 
-    return new LobeSenseNovaAI(llm);
+    return new LobeZhipuAI(llm);
   }
 
   async chat(payload: ChatStreamPayload, options?: ChatCompetitionOptions) {
@@ -55,7 +55,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
 
       const [prod, debug] = response.tee();
 
-      if (process.env.DEBUG_SENSENOVA_CHAT_COMPLETION === '1') {
+      if (process.env.DEBUG_ZHIPU_CHAT_COMPLETION === '1') {
         debugStream(debug.toReadableStream()).catch(console.error);
       }
 
@@ -75,23 +75,25 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
         endpoint: desensitizedEndpoint,
         error: errorResult,
         errorType,
-        provider: ModelProvider.SenseNova,
+        provider: ModelProvider.ZhiPu,
       });
     }
   }
 
   private async buildCompletionsParams(payload: ChatStreamPayload) {
-    const { frequency_penalty, messages, temperature, top_p, ...params } = payload;
+    const { messages, temperature, top_p, ...params } = payload;
 
     return {
       messages: await convertOpenAIMessages(messages as any),
       ...params,
+      do_sample: temperature === 0,
       stream: true,
-      frequency_penalty: (frequency_penalty !== undefined && frequency_penalty > 0 && frequency_penalty <= 2) ? frequency_penalty : undefined,
-      temperature: (temperature !== undefined && temperature > 0 && temperature <= 2) ? temperature : undefined,
-      top_p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,
+      // 当前的模型侧不支持 top_p=1 和 temperature 为 0
+      // refs: https://zhipu-ai.feishu.cn/wiki/TUo0w2LT7iswnckmfSEcqTD0ncd
+      temperature: temperature === 0 ? undefined : temperature,
+      top_p: top_p === 1 ? 0.99 : top_p,
     };
   }
 }
 
-export default LobeSenseNovaAI;
+export default LobeZhipuAI;
