@@ -145,7 +145,7 @@ describe('LobeSenseNovaAI', () => {
           });
         } catch (e) {
           expect(e).toEqual({
-            endpoint: 'https://open.bigmodel.cn/api/paas/v4',
+            endpoint: 'https://api.sensenova.cn/compatible-mode/v1',
             error: {
               error: { message: 'Bad Request' },
               status: 400,
@@ -247,7 +247,7 @@ describe('LobeSenseNovaAI', () => {
           });
         } catch (e) {
           expect(e).toEqual({
-            endpoint: 'https://open.bigmodel.cn/api/paas/v4',
+            endpoint: 'https://api.sensenova.cn/compatible-mode/v1',
             errorType: 'AgentRuntimeError',
             provider: 'sensenova',
             error: {
