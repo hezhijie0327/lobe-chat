@@ -11,29 +11,7 @@ import { handleOpenAIError } from '../utils/handleOpenAIError';
 import { convertOpenAIMessages } from '../utils/openaiHelpers';
 import { StreamingResponse } from '../utils/response';
 import { OpenAIStream, OpenAIStreamOptions } from '../utils/streams';
-
-// https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
-const generateJwtTokenSenseNova = async (
-  apiKey: string = '',
-  expiredAfter: number = 1800,
-  notBefore: number = 5
-): Promise<string> => {
-  const encoder = new TextEncoder();
-
-  const [ accessKeyID, accessKeySecret ] = apiKey.split(':');
-
-  const payload = {
-    exp: Math.floor(Date.now() / 1000) + expiredAfter,
-    iss: accessKeyID,
-    nbf: Math.floor(Date.now() / 1000) - notBefore,
-  };
-
-  const jwt = await new SignJWT(payload)
-    .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-    .sign(encoder.encode(accessKeySecret));
-
-  return jwt;
-};
+import { generateApiToken } from './authToken';
 
 const DEFAULT_BASE_URL = 'https://api.sensenova.cn/compatible-mode/v1';
 
@@ -56,7 +34,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
     let token: string;
 
     try {
-      token = await generateJwtTokenSenseNova(apiKey);
+      token = await generateApiToken(apiKey);
     } catch {
       throw invalidSenseNovaAPIKey;
     }
