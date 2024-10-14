@@ -1,7 +1,7 @@
 import { SignJWT } from 'jose';
 
 // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
-const generateApiToken = async (apiKey?: string): Promise<string> => {
+export const generateApiToken = async (apiKey?: string): Promise<string> => {
   if (!apiKey) {
     throw new Error('Invalid apiKey');
   }
