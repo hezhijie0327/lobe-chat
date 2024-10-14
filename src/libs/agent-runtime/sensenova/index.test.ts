@@ -41,7 +41,7 @@ describe('LobeSenseNovaAI', () => {
     it('should return a StreamingTextResponse on successful API call', async () => {
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
-        model: 'glm-4',
+        model: 'SenseChat',
         temperature: 0,
       });
       expect(result).toBeInstanceOf(Response);
@@ -106,7 +106,7 @@ describe('LobeSenseNovaAI', () => {
           { content: 'Hello', role: 'user' },
           { content: [{ type: 'text', text: 'Hello again' }], role: 'user' },
         ],
-        model: 'glm-4',
+        model: 'SenseChat',
         temperature: 0,
         top_p: 1,
       });
