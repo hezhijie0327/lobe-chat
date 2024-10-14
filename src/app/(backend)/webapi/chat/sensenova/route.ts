@@ -13,10 +13,16 @@ export const POST = async (req: Request) =>
     createRuntime: (payload) => {
       const { SENSENOVA_ACCESS_KEY_ID, SENSENOVA_ACCESS_KEY_SECRET } = getLLMConfig();
 
+      console.log(SENSENOVA_ACCESS_KEY_ID, SENSENOVA_ACCESS_KEY_SECRET);
+      
       let sensenovaAccessKeyID: string | undefined = payload?.sensenovaAccessKeyID || SENSENOVA_ACCESS_KEY_ID;
       let sensenovaAccessKeySecret: string | undefined = payload?.sensenovaAccessKeySecret || SENSENOVA_ACCESS_KEY_SECRET;
 
+      console.log(sensenovaAccessKeyID, sensenovaAccessKeySecret);
+
       const apiKey = (sensenovaAccessKeyID || '') + ':' + (sensenovaAccessKeySecret || '');
+
+      console.log(apiKey);
 
       const params = {
         apiKey,
