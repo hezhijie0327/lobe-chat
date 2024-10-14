@@ -2,6 +2,8 @@ import { SignJWT } from 'jose';
 
 // https://console.sensecore.cn/help/docs/model-as-a-service/nova/overview/Authorization
 export const generateApiToken = async (apiKey?: string): Promise<string> => {
+  console.log(apiKey);
+  
   if (!apiKey) {
     throw new Error('Invalid apiKey');
   }
@@ -11,6 +13,8 @@ export const generateApiToken = async (apiKey?: string): Promise<string> => {
     throw new Error('Invalid apiKey');
   }
 
+  console.log(id, secret);
+  
   const encoder = new TextEncoder();
 
   const payload = {
@@ -22,6 +26,8 @@ export const generateApiToken = async (apiKey?: string): Promise<string> => {
   const jwt = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
     .sign(encoder.encode(secret));
+
+  console.log(jwt);
 
   return jwt;
 };
