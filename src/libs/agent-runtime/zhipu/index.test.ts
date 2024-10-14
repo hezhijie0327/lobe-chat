@@ -2,11 +2,11 @@
 import { OpenAI } from 'openai';
 import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ChatStreamCallbacks, LobeOpenAI } from '@/libs/agent-runtime';
+import { ChatStreamCallbacks, LobeOpenAI, LobeOpenAICompatibleRuntime } from '@/libs/agent-runtime';
 import * as debugStreamModule from '@/libs/agent-runtime/utils/debugStream';
 
 import * as authTokenModule from './authToken';
-import { LobeSenseNovaAI } from './index';
+import { LobeZhipuAI } from './index';
 
 const bizErrorType = 'ProviderBizError';
 const invalidErrorType = 'InvalidProviderAPIKey';
@@ -14,7 +14,7 @@ const invalidErrorType = 'InvalidProviderAPIKey';
 // Mock相关依赖
 vi.mock('./authToken');
 
-describe('LobeSenseNovaAI', () => {
+describe('LobeZhipuAI', () => {
   beforeEach(() => {
     // Mock generateApiToken
     vi.spyOn(authTokenModule, 'generateApiToken').mockResolvedValue('mocked_token');
@@ -24,28 +24,11 @@ describe('LobeSenseNovaAI', () => {
     vi.restoreAllMocks();
   });
 
-  describe('fromAPIKey', () => {
-    it('should correctly initialize with an API key', async () => {
-      const lobeSenseNovaAI = await LobeSenseNovaAI.fromAPIKey({ apiKey: 'test_api_key' });
-      expect(lobeSenseNovaAI).toBeInstanceOf(LobeSenseNovaAI);
-      expect(lobeSenseNovaAI.baseURL).toEqual('https://api.sensenova.cn/compatible-mode/v1');
-    });
-
-    it('should throw an error if API key is invalid', async () => {
-      vi.spyOn(authTokenModule, 'generateApiToken').mockRejectedValue(new Error('Invalid API Key'));
-      try {
-        await LobeSenseNovaAI.fromAPIKey({ apiKey: 'asd' });
-      } catch (e) {
-        expect(e).toEqual({ errorType: invalidErrorType });
-      }
-    });
-  });
-
   describe('chat', () => {
-    let instance: LobeSenseNovaAI;
+    let instance: LobeOpenAICompatibleRuntime;
 
     beforeEach(async () => {
-      instance = await LobeSenseNovaAI.fromAPIKey({
+      instance = new LobeZhipuAI({
         apiKey: 'test_api_key',
       });
 
@@ -58,7 +41,7 @@ describe('LobeSenseNovaAI', () => {
     it('should return a StreamingTextResponse on successful API call', async () => {
       const result = await instance.chat({
         messages: [{ content: 'Hello', role: 'user' }],
-        model: 'SenseChat',
+        model: 'glm-4',
         temperature: 0,
       });
       expect(result).toBeInstanceOf(Response);
@@ -97,7 +80,7 @@ describe('LobeSenseNovaAI', () => {
       const result = await instance.chat(
         {
           messages: [{ content: 'Hello', role: 'user' }],
-          model: 'SenseChat',
+          model: 'text-davinci-003',
           temperature: 0,
         },
         { callback: mockCallback, headers: mockHeaders },
@@ -123,7 +106,7 @@ describe('LobeSenseNovaAI', () => {
           { content: 'Hello', role: 'user' },
           { content: [{ type: 'text', text: 'Hello again' }], role: 'user' },
         ],
-        model: 'SenseChat',
+        model: 'glm-4',
         temperature: 0,
         top_p: 1,
       });
@@ -131,13 +114,13 @@ describe('LobeSenseNovaAI', () => {
       const calledWithParams = spyOn.mock.calls[0][0];
 
       expect(calledWithParams.messages[1].content).toEqual([{ type: 'text', text: 'Hello again' }]);
-      expect(calledWithParams.temperature).toBeUndefined(); // temperature 0 should be undefined
+      expect(calledWithParams.temperature).toBe(0); // temperature 0 should be undefined
       expect((calledWithParams as any).do_sample).toBeTruthy(); // temperature 0 should be undefined
-      expect(calledWithParams.top_p).toEqual(0.99); // top_p should be transformed correctly
+      expect(calledWithParams.top_p).toEqual(1); // top_p should be transformed correctly
     });
 
     describe('Error', () => {
-      it('should return SenseNovaAIBizError with an openai error response when OpenAI.APIError is thrown', async () => {
+      it('should return ZhipuAIBizError with an openai error response when OpenAI.APIError is thrown', async () => {
         // Arrange
         const apiError = new OpenAI.APIError(
           400,
@@ -157,25 +140,25 @@ describe('LobeSenseNovaAI', () => {
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
-            model: 'SenseChat',
+            model: 'text-davinci-003',
             temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
-            endpoint: 'https://api.sensenova.cn/compatible-mode/v1',
+            endpoint: 'https://open.bigmodel.cn/api/paas/v4',
             error: {
               error: { message: 'Bad Request' },
               status: 400,
             },
             errorType: bizErrorType,
-            provider: 'sensenova',
+            provider: 'zhipu',
           });
         }
       });
 
       it('should throw AgentRuntimeError with NoOpenAIAPIKey if no apiKey is provided', async () => {
         try {
-          await LobeSenseNovaAI.fromAPIKey({ apiKey: '' });
+          new LobeZhipuAI({ apiKey: '' });
         } catch (e) {
           expect(e).toEqual({ errorType: invalidErrorType });
         }
@@ -197,18 +180,18 @@ describe('LobeSenseNovaAI', () => {
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
-            model: 'SenseChat',
+            model: 'text-davinci-003',
             temperature: 0.2,
           });
         } catch (e) {
           expect(e).toEqual({
-            endpoint: 'https://api.sensenova.cn/compatible-mode/v1',
+            endpoint: 'https://open.bigmodel.cn/api/paas/v4',
             error: {
               cause: { message: 'api is undefined' },
               stack: 'abc',
             },
             errorType: bizErrorType,
-            provider: 'sensenova',
+            provider: 'zhipu',
           });
         }
       });
@@ -221,7 +204,7 @@ describe('LobeSenseNovaAI', () => {
         };
         const apiError = new OpenAI.APIError(400, errorInfo, 'module error', {});
 
-        instance = await LobeSenseNovaAI.fromAPIKey({
+        instance = new LobeZhipuAI({
           apiKey: 'test',
 
           baseURL: 'https://abc.com/v2',
@@ -244,7 +227,7 @@ describe('LobeSenseNovaAI', () => {
               stack: 'abc',
             },
             errorType: bizErrorType,
-            provider: 'sensenova',
+            provider: 'zhipu',
           });
         }
       });
@@ -259,14 +242,14 @@ describe('LobeSenseNovaAI', () => {
         try {
           await instance.chat({
             messages: [{ content: 'Hello', role: 'user' }],
-            model: 'SenseChat',
+            model: 'text-davinci-003',
             temperature: 0,
           });
         } catch (e) {
           expect(e).toEqual({
-            endpoint: 'https://api.sensenova.cn/compatible-mode/v1',
+            endpoint: 'https://open.bigmodel.cn/api/paas/v4',
             errorType: 'AgentRuntimeError',
-            provider: 'sensenova',
+            provider: 'zhipu',
             error: {
               name: genericError.name,
               cause: genericError.cause,
@@ -296,10 +279,10 @@ describe('LobeSenseNovaAI', () => {
         });
 
         // 保存原始环境变量值
-        const originalDebugValue = process.env.DEBUG_SENSENOVA_CHAT_COMPLETION;
+        const originalDebugValue = process.env.DEBUG_ZHIPU_CHAT_COMPLETION;
 
         // 模拟环境变量
-        process.env.DEBUG_SENSENOVA_CHAT_COMPLETION = '1';
+        process.env.DEBUG_ZHIPU_CHAT_COMPLETION = '1';
         vi.spyOn(debugStreamModule, 'debugStream').mockImplementation(() => Promise.resolve());
 
         // 执行测试
@@ -307,7 +290,7 @@ describe('LobeSenseNovaAI', () => {
         // 假设的测试函数调用，你可能需要根据实际情况调整
         await instance.chat({
           messages: [{ content: 'Hello', role: 'user' }],
-          model: 'SenseChat',
+          model: 'text-davinci-003',
           temperature: 0,
         });
 
@@ -315,7 +298,7 @@ describe('LobeSenseNovaAI', () => {
         expect(debugStreamModule.debugStream).toHaveBeenCalled();
 
         // 恢复原始环境变量值
-        process.env.DEBUG_SENSENOVA_CHAT_COMPLETION = originalDebugValue;
+        process.env.DEBUG_ZHIPU_CHAT_COMPLETION = originalDebugValue;
       });
     });
   });
