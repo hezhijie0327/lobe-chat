@@ -2,7 +2,7 @@
 import { OpenAI } from 'openai';
 import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ChatStreamCallbacks, LobeOpenAI, LobeOpenAICompatibleRuntime } from '@/libs/agent-runtime';
+import { ChatStreamCallbacks, LobeOpenAI } from '@/libs/agent-runtime';
 import * as debugStreamModule from '@/libs/agent-runtime/utils/debugStream';
 
 import * as authTokenModule from './authToken';
@@ -24,11 +24,28 @@ describe('LobeSenseNovaAI', () => {
     vi.restoreAllMocks();
   });
 
+  describe('fromAPIKey', () => {
+    it('should correctly initialize with an API key', async () => {
+      const lobeSenseNovaAI = await LobeSenseNovaAI.fromAPIKey({ apiKey: 'test_api_key' });
+      expect(lobeSenseNovaAI).toBeInstanceOf(LobeSenseNovaAI);
+      expect(lobeSenseNovaAI.baseURL).toEqual('https://api.sensenova.cn/compatible-mode/v1');
+    });
+
+    it('should throw an error if API key is invalid', async () => {
+      vi.spyOn(authTokenModule, 'generateApiToken').mockRejectedValue(new Error('Invalid API Key'));
+      try {
+        await LobeSenseNovaAI.fromAPIKey({ apiKey: 'asd' });
+      } catch (e) {
+        expect(e).toEqual({ errorType: invalidErrorType });
+      }
+    });
+  });
+
   describe('chat', () => {
-    let instance: LobeOpenAICompatibleRuntime;
+    let instance: LobeSenseNovaAI;
 
     beforeEach(async () => {
-      instance = new LobeSenseNovaAI({
+      instance = await LobeSenseNovaAI.fromAPIKey({
         apiKey: 'test_api_key',
       });
 
@@ -114,9 +131,9 @@ describe('LobeSenseNovaAI', () => {
       const calledWithParams = spyOn.mock.calls[0][0];
 
       expect(calledWithParams.messages[1].content).toEqual([{ type: 'text', text: 'Hello again' }]);
-      expect(calledWithParams.temperature).toBe(0); // temperature 0 should be undefined
+      expect(calledWithParams.temperature).toBeUndefined(); // temperature 0 should be undefined
       expect((calledWithParams as any).do_sample).toBeTruthy(); // temperature 0 should be undefined
-      expect(calledWithParams.top_p).toEqual(1); // top_p should be transformed correctly
+      expect(calledWithParams.top_p).toEqual(0.99); // top_p should be transformed correctly
     });
 
     describe('Error', () => {
@@ -158,7 +175,7 @@ describe('LobeSenseNovaAI', () => {
 
       it('should throw AgentRuntimeError with NoOpenAIAPIKey if no apiKey is provided', async () => {
         try {
-          new LobeSenseNovaAI({ apiKey: '' });
+          await LobeSenseNovaAI.fromAPIKey({ apiKey: '' });
         } catch (e) {
           expect(e).toEqual({ errorType: invalidErrorType });
         }
@@ -204,7 +221,7 @@ describe('LobeSenseNovaAI', () => {
         };
         const apiError = new OpenAI.APIError(400, errorInfo, 'module error', {});
 
-        instance = new LobeSenseNovaAI({
+        instance = await LobeSenseNovaAI.fromAPIKey({
           apiKey: 'test',
 
           baseURL: 'https://abc.com/v2',
