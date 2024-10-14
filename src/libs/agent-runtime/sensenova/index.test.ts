@@ -132,7 +132,7 @@ describe('LobeSenseNovaAI', () => {
       expect(calledWithParams.frequency_penalty).toBeUndefined(); // frequency_penalty 0 should be undefined
       expect(calledWithParams.messages[1].content).toEqual([{ type: 'text', text: 'Hello again' }]);
       expect(calledWithParams.temperature).toBeUndefined(); // temperature 0 should be undefined
-      expect(calledWithParams.top_p).toEqual(0.99); // top_p should be transformed correctly
+      expect(calledWithParams.top_p).toBeUndefined(); // top_p 1 should be undefined
     });
 
     describe('Error', () => {
