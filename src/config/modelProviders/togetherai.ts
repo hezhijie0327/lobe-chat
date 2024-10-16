@@ -1,7 +1,10 @@
 import { ModelProviderCard } from '@/types/llm';
 
-// ref :https://docs.together.ai/docs/chat-models
-// ref :https://www.together.ai/pricing
+// ref: https://docs.together.ai/docs/chat-models
+// ref: https://docs.together.ai/docs/vision-models
+// ref: https://docs.together.ai/docs/function-calling
+// ref: https://docs.together.ai/docs/language-and-code-models
+// ref: https://www.together.ai/pricing
 const TogetherAI: ModelProviderCard = {
   chatModels: [
     {
@@ -106,6 +109,12 @@ const TogetherAI: ModelProviderCard = {
       tokens: 4096,
     },
     {
+      description: '',
+      displayName: 'LLaMA-2 (70B)',
+      id: 'meta-llama/Llama-2-70b-hf',
+      tokens: 4096,
+    },
+    {
       description: 'Gemma 2 9B 由Google开发，提供高效的指令响应和综合能力。',
       displayName: 'Gemma 2 9B',
       enabled: true,
@@ -146,11 +155,23 @@ const TogetherAI: ModelProviderCard = {
       tokens: 8192,
     },
     {
+      description: '',
+      displayName: 'Mistral (7B)',
+      id: 'mistralai/Mistral-7B-v0.1',
+      tokens: 8192,
+    },
+    {
       description: 'Mixtral-8x7B Instruct (46.7B) 提供高容量的计算框架，适合大规模数据处理。',
       displayName: 'Mixtral-8x7B Instruct (46.7B)',
       enabled: true,
       functionCall: true,
       id: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
+      tokens: 32_768,
+    },
+    {
+      description: '',
+      displayName: 'Mixtral-8x7B (46.7B)',
+      id: 'mistralai/Mixtral-8x7B-v0.1',
       tokens: 32_768,
     },
     {
