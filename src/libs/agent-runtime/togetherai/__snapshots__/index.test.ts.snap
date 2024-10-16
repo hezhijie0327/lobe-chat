@@ -425,7 +425,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
   {
     "description": "instruct fine-tuned version of Mistral-7B-v0.1",
     "displayName": "Mistral (7B) Instruct",
-    "enabled": false,
+    "enabled": true,
     "functionCall": false,
     "id": "mistralai/Mistral-7B-Instruct-v0.1",
     "maxOutput": 4096,
