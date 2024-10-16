@@ -12,9 +12,35 @@ const TogetherAI: ModelProviderCard = {
       tokens: 131_072,
     },
     {
+      description: '',
+      displayName: 'Llama 3.2 11B Vision Instruct Turbo (Free)',
+      enabled: true,
+      id: 'meta-llama/Llama-Vision-Free',
+      tokens: 131_072,
+      vision: true,
+    },
+    {
+      description: '',
+      displayName: 'Llama 3.2 11B Vision Instruct Turbo',
+      enabled: true,
+      id: 'meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo',
+      tokens: 131_072,
+      vision: true,
+    },
+    {
+      description: '',
+      displayName: 'Llama 3.2 90B Vision Instruct Turbo',
+      enabled: true,
+      id: 'meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo',
+      tokens: 131_072,
+      vision: true,
+    },
+    {
       description:
         'Llama 3.1 8B 模型采用FP8量化，支持高达131,072个上下文标记，是开源模型中的佼佼者，适合复杂任务，表现优异于许多行业基准。',
       displayName: 'Llama 3.1 8B Instruct Turbo',
+      enabled: true,
+      functionCall: true,
       id: 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
       tokens: 131_072,
     },
@@ -22,6 +48,8 @@ const TogetherAI: ModelProviderCard = {
       description:
         'Llama 3.1 70B 模型经过精细调整，适用于高负载应用，量化至FP8提供更高效的计算能力和准确性，确保在复杂场景中的卓越表现。',
       displayName: 'Llama 3.1 70B Instruct Turbo',
+      enabled: true,
+      functionCall: true,
       id: 'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo',
       tokens: 131_072,
     },
@@ -29,6 +57,8 @@ const TogetherAI: ModelProviderCard = {
       description:
         '405B 的 Llama 3.1 Turbo 模型，为大数据处理提供超大容量的上下文支持，在超大规模的人工智能应用中表现突出。',
       displayName: 'Llama 3.1 405B Instruct Turbo',
+      enabled: true,
+      functionCall: true,
       id: 'meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo',
       tokens: 8192,
     },
@@ -98,7 +128,6 @@ const TogetherAI: ModelProviderCard = {
     {
       description: 'Mistral (7B) Instruct v0.3 提供高效的计算能力和自然语言理解，适合广泛的应用。',
       displayName: 'Mistral (7B) Instruct v0.3',
-      enabled: true,
       id: 'mistralai/Mistral-7B-Instruct-v0.3',
       tokens: 32_768,
     },
@@ -111,6 +140,8 @@ const TogetherAI: ModelProviderCard = {
     {
       description: 'Mistral (7B) Instruct 以高性能著称，适用于多种语言任务。',
       displayName: 'Mistral (7B) Instruct',
+      enabled: true,
+      functionCall: true,
       id: 'mistralai/Mistral-7B-Instruct-v0.1',
       tokens: 8192,
     },
@@ -118,6 +149,7 @@ const TogetherAI: ModelProviderCard = {
       description: 'Mixtral-8x7B Instruct (46.7B) 提供高容量的计算框架，适合大规模数据处理。',
       displayName: 'Mixtral-8x7B Instruct (46.7B)',
       enabled: true,
+      functionCall: true,
       id: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
       tokens: 32_768,
     },
