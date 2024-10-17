@@ -59,7 +59,7 @@ const TogetherAI: ModelProviderCard = {
       enabled: true,
       functionCall: true,
       id: 'meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo',
-      tokens: 8192,
+      tokens: 130_815,
     },
     {
       description: 'Llama 3 8B Instruct Turbo 是一款高效能的大语言模型，支持广泛的应用场景。',
