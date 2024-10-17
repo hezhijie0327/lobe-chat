@@ -1,21 +1,18 @@
 import { ModelProviderCard } from '@/types/llm';
 
 // ref: https://docs.together.ai/docs/chat-models
-// ref: https://docs.together.ai/docs/vision-models
-// ref: https://docs.together.ai/docs/function-calling
-// ref: https://docs.together.ai/docs/language-and-code-models
 // ref: https://www.together.ai/pricing
 const TogetherAI: ModelProviderCard = {
   chatModels: [
     {
-      description: '',
+      description: 'LLaMA 3.2 旨在处理结合视觉和文本数据的任务。它在图像描述和视觉问答等任务中表现出色，跨越了语言生成和视觉推理之间的鸿沟。',
       displayName: 'Llama 3.2 8B Instruct Turbo',
       enabled: true,
       id: 'meta-llama/Llama-3.2-3B-Instruct-Turbo',
       tokens: 131_072,
     },
     {
-      description: '',
+      description: 'LLaMA 3.2 旨在处理结合视觉和文本数据的任务。它在图像描述和视觉问答等任务中表现出色，跨越了语言生成和视觉推理之间的鸿沟。',
       displayName: 'Llama 3.2 11B Vision Instruct Turbo (Free)',
       enabled: true,
       id: 'meta-llama/Llama-Vision-Free',
@@ -23,15 +20,14 @@ const TogetherAI: ModelProviderCard = {
       vision: true,
     },
     {
-      description: '',
+      description: 'LLaMA 3.2 旨在处理结合视觉和文本数据的任务。它在图像描述和视觉问答等任务中表现出色，跨越了语言生成和视觉推理之间的鸿沟。',
       displayName: 'Llama 3.2 11B Vision Instruct Turbo',
-      enabled: true,
       id: 'meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo',
       tokens: 131_072,
       vision: true,
     },
     {
-      description: '',
+      description: 'LLaMA 3.2 旨在处理结合视觉和文本数据的任务。它在图像描述和视觉问答等任务中表现出色，跨越了语言生成和视觉推理之间的鸿沟。',
       displayName: 'Llama 3.2 90B Vision Instruct Turbo',
       enabled: true,
       id: 'meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo',
@@ -109,7 +105,7 @@ const TogetherAI: ModelProviderCard = {
       tokens: 4096,
     },
     {
-      description: '',
+      description: 'LLaMA-2 提供优秀的语言处理能力和出色的交互体验。',
       displayName: 'LLaMA-2 (70B)',
       id: 'meta-llama/Llama-2-70b-hf',
       tokens: 4096,
@@ -137,6 +133,7 @@ const TogetherAI: ModelProviderCard = {
     {
       description: 'Mistral (7B) Instruct v0.3 提供高效的计算能力和自然语言理解，适合广泛的应用。',
       displayName: 'Mistral (7B) Instruct v0.3',
+      enabled: true,
       id: 'mistralai/Mistral-7B-Instruct-v0.3',
       tokens: 32_768,
     },
@@ -149,13 +146,12 @@ const TogetherAI: ModelProviderCard = {
     {
       description: 'Mistral (7B) Instruct 以高性能著称，适用于多种语言任务。',
       displayName: 'Mistral (7B) Instruct',
-      enabled: true,
       functionCall: true,
       id: 'mistralai/Mistral-7B-Instruct-v0.1',
       tokens: 8192,
     },
     {
-      description: '',
+      description: 'Mistral 7B是一款紧凑但高性能的模型，擅长批量处理和简单任务，如分类和文本生成，具有良好的推理能力。',
       displayName: 'Mistral (7B)',
       id: 'mistralai/Mistral-7B-v0.1',
       tokens: 8192,
@@ -169,7 +165,7 @@ const TogetherAI: ModelProviderCard = {
       tokens: 32_768,
     },
     {
-      description: '',
+      description: 'Mixtral 8x7B是一个稀疏专家模型，利用多个参数提高推理速度，适合处理多语言和代码生成任务。',
       displayName: 'Mixtral-8x7B (46.7B)',
       id: 'mistralai/Mixtral-8x7B-v0.1',
       tokens: 32_768,
@@ -189,14 +185,14 @@ const TogetherAI: ModelProviderCard = {
       tokens: 4096,
     },
     {
-      description: '',
+      description: 'Qwen2.5 是全新的大型语言模型系列，旨在优化指令式任务的处理。',
       displayName: 'Qwen 2.5 7B Instruct Turbo',
       enabled: true,
       id: 'Qwen/Qwen2.5-7B-Instruct-Turbo',
       tokens: 32_768,
     },
     {
-      description: '',
+      description: 'Qwen2.5 是全新的大型语言模型系列，旨在优化指令式任务的处理。',
       displayName: 'Qwen 2.5 72B Instruct Turbo',
       enabled: true,
       id: 'Qwen/Qwen2.5-72B-Instruct-Turbo',
@@ -257,7 +253,7 @@ const TogetherAI: ModelProviderCard = {
       tokens: 32_768,
     },
   ],
-  checkModel: 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
+  checkModel: 'meta-llama/Llama-Vision-Free',
   description:
     'Together AI 致力于通过创新的 AI 模型实现领先的性能，提供广泛的自定义能力，包括快速扩展支持和直观的部署流程，满足企业的各种需求。',
   id: 'togetherai',
