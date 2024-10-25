@@ -1,3 +1,4 @@
+#DEV
 ## Base image for all building stages
 FROM node:20-slim AS base
 
