@@ -31,6 +31,7 @@ import {
   TaichuProviderCard,
   TogetherAIProviderCard,
   UpstageProviderCard,
+  WenxinProviderCard,
   ZeroOneProviderCard,
   ZhiPuProviderCard,
 } from '@/config/modelProviders';
