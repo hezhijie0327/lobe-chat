@@ -17,7 +17,7 @@ export const AgentRuntimeErrorType = {
 
   InvalidGithubToken: 'InvalidGithubToken',
 
-  InvalidSenseNovaArgs: 'InvalidSenseNovaArgs'
+  InvalidSenseNovaArgs: 'InvalidSenseNovaArgs',
 
   /**
    * @deprecated
