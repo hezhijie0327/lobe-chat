@@ -109,6 +109,8 @@ export default {
     OllamaServiceUnavailable:
       'Ollama 服务连接失败，请检查 Ollama 是否运行正常，或是否正确设置 Ollama 的跨域配置',
 
+    InvalidSenseNovaArgs: '无效参数，请检查 SenseNova 参数后重试或如你在使用视觉模型，请切换至数据库模式 ',
+
     AgentRuntimeError: 'Lobe AI Runtime 执行出错，请根据以下信息排查或重试',
 
     // cloud
