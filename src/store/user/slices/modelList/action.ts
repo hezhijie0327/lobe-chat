@@ -126,7 +126,7 @@ export const createModelListSlice: StateCreator<
 
       providers.forEach(({ id, name }) => {
         const provider = draft.find((d) => d.id === id);
-        if (provider) provider.chatModels = mergeModels(name, provider.chatModels);
+        if (provider) provider.chatModels = mergeModels(name as any, provider.chatModels);
       });
     });
 
