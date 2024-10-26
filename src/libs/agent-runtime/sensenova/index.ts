@@ -7,12 +7,24 @@ import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
 import { desensitizeUrl } from '../utils/desensitizeUrl';
 import { handleOpenAIError } from '../utils/handleOpenAIError';
-import { convertOpenAIMessages } from '../utils/openaiHelpers';
 import { StreamingResponse } from '../utils/response';
 import { OpenAIStream } from '../utils/streams';
+
 import { generateApiToken } from './authToken';
 
 const DEFAULT_BASE_URL = 'https://api.sensenova.cn/compatible-mode/v1';
+
+const convertSenseNovaMessages = async (messages: OpenAI.ChatCompletionMessageParam[]) => {
+  return (await Promise.all(
+    messages.map(async (message) => ({
+      ...message,
+      content:
+        typeof message.content === 'string'
+          ? message.content
+          : (message.content || []).join(''), // Assuming the array elements are strings
+    })),
+  )) as OpenAI.ChatCompletionMessageParam[];
+};
 
 export class LobeSenseNovaAI implements LobeRuntimeAI {
   private client: OpenAI;
@@ -85,7 +97,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
     const { frequency_penalty, messages, temperature, top_p, ...params } = payload;
 
     return {
-      messages: await convertOpenAIMessages(messages as any),
+      messages: await convertSenseNovaMessages(messages as any),
       ...params,
       frequency_penalty: (frequency_penalty !== undefined && frequency_penalty > 0 && frequency_penalty <= 2) ? frequency_penalty : undefined,
       stream: true,
