@@ -73,7 +73,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
         desensitizedEndpoint = desensitizeUrl(this.baseURL);
       }
 
-      if (errorResult?.includes('invalid arguments')) {
+      if (error instanceof Error && error.message?.includes('invalid arguments')) {
         throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidSenseNovaArgs);
       }
 
