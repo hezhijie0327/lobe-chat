@@ -91,7 +91,7 @@ export const createModelListSlice: StateCreator<
     const defaultModelProviderList = produce(DEFAULT_MODEL_PROVIDER_LIST, (draft) => {
       const providers = Object.values(ModelProvider).map((id) => ({
         id,
-        name: id.toLowerCase(),
+        name: id,
       }));
 
       providers.forEach(({ id, name }) => {
