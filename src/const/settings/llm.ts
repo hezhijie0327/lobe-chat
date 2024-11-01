@@ -4,6 +4,7 @@ import {
   AnthropicProviderCard,
   BaichuanProviderCard,
   BedrockProviderCard,
+  CohereProviderCard,
   DeepSeekProviderCard,
   FireworksAIProviderCard,
   GithubProviderCard,
@@ -58,6 +59,10 @@ export const DEFAULT_LLM_CONFIG: UserModelProviderConfig = {
   bedrock: {
     enabled: false,
     enabledModels: filterEnabledModels(BedrockProviderCard),
+  },
+  cohere: {
+    enabled: false,
+    enabledModels: filterEnabledModels(CohereProviderCard),
   },
   deepseek: {
     enabled: false,
