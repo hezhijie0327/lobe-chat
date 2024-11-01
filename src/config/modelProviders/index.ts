@@ -6,6 +6,7 @@ import AnthropicProvider from './anthropic';
 import AzureProvider from './azure';
 import BaichuanProvider from './baichuan';
 import BedrockProvider from './bedrock';
+import CohereProvider from './cohere';
 import DeepSeekProvider from './deepseek';
 import FireworksAIProvider from './fireworksai';
 import GithubProvider from './github';
@@ -52,6 +53,7 @@ export const LOBE_DEFAULT_MODEL_LIST: ChatModelCard[] = [
   PerplexityProvider.chatModels,
   AnthropicProvider.chatModels,
   HuggingFaceProvider.chatModels,
+  CohereProvider.chatModels,
   ZeroOneProvider.chatModels,
   StepfunProvider.chatModels,
   NovitaProvider.chatModels,
@@ -86,6 +88,7 @@ export const DEFAULT_MODEL_PROVIDER_LIST = [
   MistralProvider,
   Ai21Provider,
   UpstageProvider,
+  CohereProvider,
   QwenProvider,
   WenxinProvider,
   HunyuanProvider,
@@ -117,6 +120,7 @@ export { default as AnthropicProviderCard } from './anthropic';
 export { default as AzureProviderCard } from './azure';
 export { default as BaichuanProviderCard } from './baichuan';
 export { default as BedrockProviderCard } from './bedrock';
+export { default as CohereProviderCard } from './cohere';
 export { default as DeepSeekProviderCard } from './deepseek';
 export { default as FireworksAIProviderCard } from './fireworksai';
 export { default as GithubProviderCard } from './github';
