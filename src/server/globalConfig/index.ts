@@ -9,6 +9,7 @@ import {
   AnthropicProviderCard,
   BaichuanProviderCard,
   BedrockProviderCard,
+  CohereProviderCard,
   DeepSeekProviderCard,
   FireworksAIProviderCard,
   GithubProviderCard,
@@ -143,6 +144,9 @@ export const getServerGlobalConfig = () => {
 
     ENABLED_HUGGINGFACE,
     HUGGINGFACE_MODEL_LIST,
+
+    ENABLED_COHERE,
+    COHERE_MODEL_LIST,
   } = getLLMConfig();
 
   const config: GlobalServerConfig = {
@@ -200,6 +204,14 @@ export const getServerGlobalConfig = () => {
         serverModelCards: transformToChatModelCards({
           defaultChatModels: BedrockProviderCard.chatModels,
           modelString: AWS_BEDROCK_MODEL_LIST,
+        }),
+      },
+      cohere: {
+        enabled: ENABLED_COHERE,
+        enabledModels: extractEnabledModels(COHERE_MODEL_LIST),
+        serverModelCards: transformToChatModelCards({
+          defaultChatModels: CohereProviderCard.chatModels,
+          modelString: COHERE_MODEL_LIST,
         }),
       },
       deepseek: {
