@@ -273,6 +273,13 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
 
       return { apiKey };
     }
+    case ModelProvider.Cohere: {
+      const { COHERE_API_KEY } = getLLMConfig();
+
+      const apiKey = apiKeyManager.pick(payload?.apiKey || COHERE_API_KEY);
+
+      return { apiKey };
+    }
   }
 };
 
