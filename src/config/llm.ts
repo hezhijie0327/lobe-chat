@@ -149,6 +149,10 @@ export const getLLMConfig = () => {
       SENSENOVA_ACCESS_KEY_ID: z.string().optional(),
       SENSENOVA_ACCESS_KEY_SECRET: z.string().optional(),
       SENSENOVA_MODEL_LIST: z.string().optional(),
+
+      ENABLED_COHERE: z.boolean(),
+      COHERE_API_KEY: z.string().optional(),
+      COHERE_MODEL_LIST: z.string().optional(),
     },
     runtimeEnv: {
       API_KEY_SELECT_MODE: process.env.API_KEY_SELECT_MODE,
@@ -295,6 +299,10 @@ export const getLLMConfig = () => {
       SENSENOVA_ACCESS_KEY_ID: process.env.SENSENOVA_ACCESS_KEY_ID,
       SENSENOVA_ACCESS_KEY_SECRET: process.env.SENSENOVA_ACCESS_KEY_SECRET,
       SENSENOVA_MODEL_LIST: process.env.SENSENOVA_MODEL_LIST,
+
+      ENABLED_COHERE: !!process.env.COHERE_API_KEY,
+      COHERE_API_KEY: process.env.COHERE_API_KEY,
+      COHERE_MODEL_LIST: process.env.COHERE_MODEL_LIST,
     },
   });
 };
