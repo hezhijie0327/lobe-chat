@@ -33,7 +33,7 @@ import {
   TogetherAIProviderCard,
   UpstageProviderCard,
   WenxinProviderCard,
-  xAIProviderCard,
+  XAIProviderCard,
   ZeroOneProviderCard,
   ZhiPuProviderCard,
 } from '@/config/modelProviders';
@@ -403,7 +403,7 @@ export const getServerGlobalConfig = () => {
         enabled: ENABLED_XAI,
         enabledModels: extractEnabledModels(XAI_MODEL_LIST),
         serverModelCards: transformToChatModelCards({
-          defaultChatModels: xAIProviderCard.chatModels,
+          defaultChatModels: XAIProviderCard.chatModels,
           modelString: XAI_MODEL_LIST,
         }),
       },
