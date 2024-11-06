@@ -324,7 +324,7 @@ class AgentRuntime {
         break;
       }
 
-      case ModelProvider.xAI: {
+      case ModelProvider.XAI: {
         runtimeModel = new LobeXAI(params.xai);
         break;
       }
