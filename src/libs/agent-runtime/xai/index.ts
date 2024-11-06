@@ -6,5 +6,5 @@ export const LobeXAI = LobeOpenAICompatibleFactory({
   debug: {
     chatCompletion: () => process.env.DEBUG_XAI_CHAT_COMPLETION === '1',
   },
-  provider: ModelProvider.xAI,
+  provider: ModelProvider.XAI,
 });
