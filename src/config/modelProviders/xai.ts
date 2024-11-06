@@ -1,6 +1,6 @@
 import { ModelProviderCard } from '@/types/llm';
 
-const xAI: ModelProviderCard = {
+const XAI: ModelProviderCard = {
   chatModels: [
     {
       description: 'Comparable performance to Grok 2 but with improved efficiency, speed and capabilities.',
@@ -23,4 +23,4 @@ const xAI: ModelProviderCard = {
   url: 'https://console.x.ai',
 };
 
-export default xAI;
+export default XAI;
