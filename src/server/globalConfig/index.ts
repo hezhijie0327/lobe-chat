@@ -35,21 +35,23 @@ export const generateLanguageModelConfig = () => {
     };
 
     switch (id) {
-      case 'azure':
+      case 'azure': {
         config[id].serverModelCards = {
           ...config[id].serverModelCards,
-          withDeploymentName: true
+          withDeploymentName: true,
         };
         break;
-
-      case 'bedrock':
+      }
+      case 'bedrock': {
         config[id].enabled = process.env.AWS_BEDROCK_ENABLED;
         config[id].enabledModels = extractEnabledModels(process.env.AWS_BEDROCK_MODEL_LIST);
+        config[id].envModelList = process.env.AWS_BEDROCK_MODEL_LIST;
         break;
-
-      case 'ollama':
+      }
+      case 'ollama': {
         config[id].fetchOnClient = !process.env.OLLAMA_PROXY_URL;
         break;
+      }
     }
   });
 
