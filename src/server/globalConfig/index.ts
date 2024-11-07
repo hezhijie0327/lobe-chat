@@ -2,40 +2,7 @@ import { appEnv, getAppConfig } from '@/config/app';
 import { authEnv } from '@/config/auth';
 import { fileEnv } from '@/config/file';
 import { langfuseEnv } from '@/config/langfuse';
-import { getLLMConfig } from '@/config/llm';
-import {
-  Ai21ProviderCard,
-  Ai360ProviderCard,
-  AnthropicProviderCard,
-  BaichuanProviderCard,
-  BedrockProviderCard,
-  DeepSeekProviderCard,
-  FireworksAIProviderCard,
-  GithubProviderCard,
-  GoogleProviderCard,
-  GroqProviderCard,
-  HuggingFaceProviderCard,
-  HunyuanProviderCard,
-  MinimaxProviderCard,
-  MistralProviderCard,
-  MoonshotProviderCard,
-  NovitaProviderCard,
-  OllamaProviderCard,
-  OpenAIProviderCard,
-  OpenRouterProviderCard,
-  PerplexityProviderCard,
-  QwenProviderCard,
-  SenseNovaProviderCard,
-  SiliconCloudProviderCard,
-  SparkProviderCard,
-  StepfunProviderCard,
-  TaichuProviderCard,
-  TogetherAIProviderCard,
-  UpstageProviderCard,
-  WenxinProviderCard,
-  ZeroOneProviderCard,
-  ZhiPuProviderCard,
-} from '@/config/modelProviders';
+
 import { enableNextAuth } from '@/const/auth';
 import { parseSystemAgent } from '@/server/globalConfig/parseSystemAgent';
 import { GlobalServerConfig } from '@/types/serverConfig';
