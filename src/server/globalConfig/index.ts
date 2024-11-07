@@ -20,13 +20,11 @@ export const generateLanguageModelConfig = () => {
     const upperId = id.toUpperCase();
     const modelEnabled = process.env[`ENABLED_${upperId}`] ?? false;
     const modelList = process.env[`${upperId}_MODEL_LIST`];
-  
-    // 查找 providerCard
+
     const providerCard = DEFAULT_MODEL_PROVIDER_LIST.find(
       (provider) => provider.constructor.name === `${key}ProviderCard`
     );
-  
-    // 初始化 config[id]
+
     config[id] = {
       enabled: modelEnabled,
       enabledModels: extractEnabledModels(modelList),
@@ -35,25 +33,19 @@ export const generateLanguageModelConfig = () => {
         modelString: modelList,
       }),
     };
-  
-    // 使用 switch 语句为特定 provider 添加自定义字段
+
     switch (id) {
       case 'azure':
         config[id].serverModelCards.withDeploymentName = true;
         break;
-  
+
       case 'bedrock':
         config[id].enabled = process.env.AWS_BEDROCK_ENABLED;
         config[id].enabledModels = extractEnabledModels(process.env.AWS_BEDROCK_MODEL_LIST);
-        config[id].envModelList = process.env.AWS_BEDROCK_MODEL_LIST;
         break;
-  
+
       case 'ollama':
         config[id].fetchOnClient = !process.env.OLLAMA_PROXY_URL;
-        break;
-  
-      // 其他 provider 可按需添加 case
-      default:
         break;
     }
   });
