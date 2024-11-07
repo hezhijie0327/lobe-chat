@@ -18,12 +18,12 @@ export const generateLanguageModelConfig = () => {
 
   Object.entries(ModelProvider).forEach(([key, id]) => {
     const upperId = id.toUpperCase();
+
     const modelEnabled = process.env[`ENABLED_${upperId}`] ?? false;
     const modelList = process.env[`${upperId}_MODEL_LIST`];
-    const providerCardName = `${key}ProviderCard`;
 
     const providerCard = DEFAULT_MODEL_PROVIDER_LIST.find(
-      (provider) => provider.constructor.name === providerCardName
+      (provider) => provider.constructor.name === `${key}ProviderCard`
     );
 
     config[id] = {
