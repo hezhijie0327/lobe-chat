@@ -36,7 +36,10 @@ export const generateLanguageModelConfig = () => {
 
     switch (id) {
       case 'azure':
-        config[id].serverModelCards.withDeploymentName = true;
+        config[id].serverModelCards = {
+          ...config[id].serverModelCards,
+          withDeploymentName: true
+        };
         break;
 
       case 'bedrock':
