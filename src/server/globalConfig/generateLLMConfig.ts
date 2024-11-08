@@ -5,19 +5,11 @@ import { ModelProvider } from '@/libs/agent-runtime';
 
 import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
 
-export const generateLLMConfig = () => {
-  const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
-
+export const generateLLMConfig = (
+  providerSpecificConfigs: Partial<Record<ModelProvider, Record<string, any>>>
+) => {
   const llmConfig = getLLMConfig() as Record<string, any>;
-
-  const providerSpecificConfigs: Partial<Record<ModelProvider, Record<string, any>>> = {
-    [ModelProvider.Azure]: { serverModelCards: { withDeploymentName: true } },
-    [ModelProvider.Bedrock]: {
-      enabled: llmConfig['ENABLED_AWS_BEDROCK'],
-      modelList: llmConfig['AWS_BEDROCK_MODEL_LIST'],
-    },
-    [ModelProvider.Ollama]: { fetchOnClient: !llmConfig.OLLAMA_PROXY_URL },
-  };
+  const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
 
   Object.values(ModelProvider).forEach((provider) => {
     const enabledKey = `ENABLED_${provider.toUpperCase()}`;
