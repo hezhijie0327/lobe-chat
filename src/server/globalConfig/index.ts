@@ -15,12 +15,7 @@ import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
 import { ModelProviderCard } from '@/types/llm';
 
-// Type guard to check if an object is of type ModelProviderCard
-function isModelProviderCard(card: any): card is ModelProviderCard {
-  return card && typeof card === 'object' && 'chatModels' in card;
-}
-
-const generateLanguageModelConfig = () => {
+export const generateLanguageModelConfig = () => {
   const llmConfig = getLLMConfig() as Record<string, any>;
   const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
 
@@ -39,10 +34,12 @@ const generateLanguageModelConfig = () => {
 
     const cardKey = `${provider.charAt(0).toUpperCase()}${provider.slice(1)}ProviderCard`;
     const providerCard = ProviderCards[cardKey as keyof typeof ProviderCards];
-    
+
+    const hasChatModels = providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard;
+
     const isAzure = provider === ModelProvider.Azure;
     const isOllama = provider === ModelProvider.Ollama;
-    
+
     config[provider] = {
       enabled: llmConfig[enabledKey],
       enabledModels: extractEnabledModels(
@@ -50,7 +47,7 @@ const generateLanguageModelConfig = () => {
         isAzure
       ),
       serverModelCards: transformToChatModelCards({
-        defaultChatModels: isAzure ? [] : (isModelProviderCard(providerCard) ? providerCard.chatModels : []),
+        defaultChatModels: isAzure ? [] : (hasChatModels ? providerCard.chatModels : []),
         modelString: llmConfig[modelListKey],
         ...(isAzure && { withDeploymentName: true }),
       }),
