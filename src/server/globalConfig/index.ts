@@ -16,8 +16,9 @@ import * as ProviderCards from '@/config/modelProviders';
 import { ModelProviderCard } from '@/types/llm';
 
 export const generateLanguageModelConfig = () => {
-  const llmConfig = getLLMConfig() as Record<string, any>;
   const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
+
+  const llmConfig = getLLMConfig() as Record<string, any>;
 
   const providerSpecificConfigs: Partial<Record<ModelProvider, Record<string, any>>> = {
     [ModelProvider.Azure]: { serverModelCards: { withDeploymentName: true } },
@@ -37,8 +38,6 @@ export const generateLanguageModelConfig = () => {
 
     const hasChatModels = providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard;
 
-    const specificConfig = providerSpecificConfigs[provider] || {};
-
     config[provider] = {
       enabled: llmConfig[enabledKey],
       enabledModels: extractEnabledModels(llmConfig[modelListKey]),
@@ -46,7 +45,7 @@ export const generateLanguageModelConfig = () => {
         defaultChatModels: hasChatModels ? providerCard.chatModels : [],
         modelString: llmConfig[modelListKey],
       }),
-      ...(specificConfig[provider] || {}),
+      ...(providerSpecificConfigs[provider] || {}),
     };
   });
 
