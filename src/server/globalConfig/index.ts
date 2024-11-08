@@ -33,7 +33,7 @@ export const generateLanguageModelConfig = () => {
     const enabledKey = `ENABLED_${provider.toUpperCase()}`;
     const modelListKey = `${provider.toUpperCase()}_MODEL_LIST`;
 
-    const cardKey = `${provider.charAt(0).toUpperCase()}${provider.slice(1)}ProviderCard`;
+    const cardKey = `${provider}ProviderCard`;
     const providerCard = ProviderCards[cardKey as keyof typeof ProviderCards];
 
     const hasChatModels = providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard;
