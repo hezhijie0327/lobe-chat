@@ -13,7 +13,6 @@ import { parseAgentConfig } from './parseDefaultAgent';
 import { ModelProvider } from '@/libs/agent-runtime';
 import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
-import { ModelProviderCard } from '@/types/llm';
 
 export const generateLanguageModelConfig = () => {
   const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
