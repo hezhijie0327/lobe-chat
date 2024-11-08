@@ -13,11 +13,19 @@ import * as ProviderCards from '@/config/modelProviders';
 import { ModelProvider } from '@/libs/agent-runtime';
 import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
 
-export const generateLLMConfig = (
-  providerSpecificConfigs: Partial<Record<ModelProvider, Record<string, any>>>
-) => {
-  const llmConfig = getLLMConfig() as Record<string, any>;
+export const generateLLMConfig = () => {
   const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
+
+  const llmConfig = getLLMConfig() as Record<string, any>;
+
+  const providerSpecificConfigs = {
+    [ModelProvider.Azure]: { serverModelCards: { withDeploymentName: true } },
+    [ModelProvider.Bedrock]: {
+      enabled: llmConfig['ENABLED_AWS_BEDROCK'],
+      modelList: llmConfig['AWS_BEDROCK_MODEL_LIST'],
+    },
+    [ModelProvider.Ollama]: { fetchOnClient: !llmConfig.OLLAMA_PROXY_URL },
+  }
 
   Object.values(ModelProvider).forEach((provider) => {
     const enabledKey = `ENABLED_${provider.toUpperCase()}`;
@@ -51,14 +59,7 @@ export const getServerGlobalConfig = () => {
     enableUploadFileToServer: !!fileEnv.S3_SECRET_ACCESS_KEY,
     enabledAccessCode: ACCESS_CODES?.length > 0,
     enabledOAuthSSO: enableNextAuth,
-    languageModel: generateLLMConfig({
-      [ModelProvider.Azure]: { serverModelCards: { withDeploymentName: true } },
-      [ModelProvider.Bedrock]: {
-        enabled: llmConfig['ENABLED_AWS_BEDROCK'],
-        modelList: llmConfig['AWS_BEDROCK_MODEL_LIST'],
-      },
-      [ModelProvider.Ollama]: { fetchOnClient: !llmConfig.OLLAMA_PROXY_URL },
-    }),
+    languageModel: generateLLMConfig(),
     oAuthSSOProviders: authEnv.NEXT_AUTH_SSO_PROVIDERS.trim().split(/[,，]/),
     systemAgent: parseSystemAgent(appEnv.SYSTEM_AGENT),
     telemetry: {
