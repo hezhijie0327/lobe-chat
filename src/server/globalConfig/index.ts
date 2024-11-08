@@ -2,40 +2,7 @@ import { appEnv, getAppConfig } from '@/config/app';
 import { authEnv } from '@/config/auth';
 import { fileEnv } from '@/config/file';
 import { langfuseEnv } from '@/config/langfuse';
-import { getLLMConfig } from '@/config/llm';
-import {
-  Ai21ProviderCard,
-  Ai360ProviderCard,
-  AnthropicProviderCard,
-  BaichuanProviderCard,
-  BedrockProviderCard,
-  DeepSeekProviderCard,
-  FireworksAIProviderCard,
-  GithubProviderCard,
-  GoogleProviderCard,
-  GroqProviderCard,
-  HuggingFaceProviderCard,
-  HunyuanProviderCard,
-  MinimaxProviderCard,
-  MistralProviderCard,
-  MoonshotProviderCard,
-  NovitaProviderCard,
-  OllamaProviderCard,
-  OpenAIProviderCard,
-  OpenRouterProviderCard,
-  PerplexityProviderCard,
-  QwenProviderCard,
-  SenseNovaProviderCard,
-  SiliconCloudProviderCard,
-  SparkProviderCard,
-  StepfunProviderCard,
-  TaichuProviderCard,
-  TogetherAIProviderCard,
-  UpstageProviderCard,
-  WenxinProviderCard,
-  ZeroOneProviderCard,
-  ZhiPuProviderCard,
-} from '@/config/modelProviders';
+
 import { enableNextAuth } from '@/const/auth';
 import { parseSystemAgent } from '@/server/globalConfig/parseSystemAgent';
 import { GlobalServerConfig } from '@/types/serverConfig';
@@ -44,50 +11,55 @@ import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseMo
 import { parseAgentConfig } from './parseDefaultAgent';
 
 import { ModelProvider } from '@/libs/agent-runtime';
+import { getLLMConfig } from '@/config/llm';
+import * as ProviderCards from '@/config/modelProviders';
 
-export const generateLanguageModelConfig = () => {
+const generateLanguageModelConfig = () => {
   const llmConfig = getLLMConfig();
+  const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
 
-  const config: Record<string, any> = {};
+  // 特殊配置键映射
+  const specialConfigKeys: Partial<Record<ModelProvider, { enabled: string; modelList: string }>> = {
+    [ModelProvider.Bedrock]: {
+      enabled: 'ENABLED_AWS_BEDROCK',
+      modelList: 'AWS_BEDROCK_MODEL_LIST',
+    },
+  };
 
-  Object.entries(ModelProvider).forEach(([key, id]) => {
-    const upperId = id.toUpperCase();
-    const modelEnabled = llmConfig[`ENABLED_${upperId}`];
-    const modelList = llmConfig[`${upperId}_MODEL_LIST`];
-    const providerCard = `${key}ProviderCard`;
-
-    config[id] = {
-      enabled: modelEnabled,
-      enabledModels: extractEnabledModels(modelList),
-      serverModelCards: transformToChatModelCards({
-        defaultChatModels: providerCard?.chatModels || [],
-        modelString: modelList,
-      }),
+  Object.values(ModelProvider).forEach((provider) => {
+    // 获取配置键名
+    const { enabled: enabledKey, modelList: modelListKey } = specialConfigKeys[provider] ?? {
+      enabled: `ENABLED_${provider.toUpperCase()}`,
+      modelList: `${provider.toUpperCase()}_MODEL_LIST`,
     };
 
-    switch (id) {
-      case 'azure': {
-        config[id].serverModelCards = {
-          ...config[id].serverModelCards,
-          withDeploymentName: true,
-        };
-        break;
-      }
-      case 'bedrock': {
-        config[id].enabled = llmConfig.AWS_BEDROCK_ENABLED;
-        config[id].enabledModels = extractEnabledModels(llmConfig.AWS_BEDROCK_MODEL_LIST);
-        break;
-      }
-      case 'ollama': {
-        config[id].fetchOnClient = !llmConfig.OLLAMA_PROXY_URL;
-        break;
-      }
-    }
+    // 获取 ProviderCard
+    const cardKey = `${provider.charAt(0).toUpperCase()}${provider.slice(1)}ProviderCard`;
+    const providerCard = ProviderCards[cardKey as keyof typeof ProviderCards];
+    
+    // 特殊情况处理
+    const isAzure = provider === ModelProvider.Azure;
+    const isOllama = provider === ModelProvider.Ollama;
+    
+    config[provider] = {
+      enabled: llmConfig[enabledKey],
+      enabledModels: extractEnabledModels(
+        llmConfig[modelListKey],
+        isAzure
+      ),
+      serverModelCards: transformToChatModelCards({
+        defaultChatModels: isAzure ? [] : providerCard.chatModels,
+        modelString: llmConfig[modelListKey],
+        ...(isAzure && { withDeploymentName: true }),
+      }),
+      ...(isOllama && {
+        fetchOnClient: !llmConfig.OLLAMA_PROXY_URL,
+      }),
+    };
   });
 
   return config;
 };
-
 
 export const getServerGlobalConfig = () => {
   const { ACCESS_CODES, DEFAULT_AGENT_CONFIG } = getAppConfig();
