@@ -36,7 +36,6 @@ export const generateLLMConfig = () => {
       enabled: llmConfig[enabledKey],
       enabledModels: extractEnabledModels(llmConfig[modelListKey]),
       serverModelCards: transformToChatModelCards({
-        // eslint-disable-next-line unicorn/no-useless-fallback-in-spread
         defaultChatModels: providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard
           ? providerCard.chatModels
           : [],
