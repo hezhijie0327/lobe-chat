@@ -32,9 +32,7 @@ export const generateLanguageModelConfig = () => {
   Object.values(ModelProvider).forEach((provider) => {
     const enabledKey = `ENABLED_${provider.toUpperCase()}`;
     const modelListKey = `${provider.toUpperCase()}_MODEL_LIST`;
-
-    const cardKey = `${provider}ProviderCard`;
-    const providerCard = ProviderCards[cardKey as keyof typeof ProviderCards];
+    const providerCard = ProviderCards[`${provider}ProviderCard` as keyof typeof ProviderCards];
 
     config[provider] = {
       enabled: llmConfig[enabledKey],
