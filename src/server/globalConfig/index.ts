@@ -13,7 +13,7 @@ import { parseAgentConfig } from './parseDefaultAgent';
 import { ModelProvider } from '@/libs/agent-runtime';
 import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
-import { ChatModelCard } from '@/types/llm';
+import { ModelProviderCard } from '@/types/llm';
 
 // Type guard to check if an object is of type ModelProviderCard
 function isModelProviderCard(card: any): card is ModelProviderCard {
