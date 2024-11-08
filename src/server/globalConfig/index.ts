@@ -14,8 +14,13 @@ import { ModelProvider } from '@/libs/agent-runtime';
 import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
 
+// Type guard to check if an object is of type ModelProviderCard
+function isModelProviderCard(card: any): card is ModelProviderCard {
+  return card && typeof card === 'object' && 'chatModels' in card;
+}
+
 const generateLanguageModelConfig = () => {
-  const llmConfig = getLLMConfig() as Record<string, any>; // Type assertion for dynamic indexing
+  const llmConfig = getLLMConfig() as Record<string, any>;
   const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
 
   const specialConfigKeys: Partial<Record<ModelProvider, { enabled: string; modelList: string }>> = {
@@ -44,7 +49,7 @@ const generateLanguageModelConfig = () => {
         isAzure
       ),
       serverModelCards: transformToChatModelCards({
-        defaultChatModels: isAzure ? [] : providerCard?.chatModels || [], // Optional chaining for `chatModels`
+        defaultChatModels: isAzure ? [] : (isModelProviderCard(providerCard) ? providerCard.chatModels : []),
         modelString: llmConfig[modelListKey],
         ...(isAzure && { withDeploymentName: true }),
       }),
