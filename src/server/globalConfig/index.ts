@@ -19,41 +19,28 @@ export const generateLanguageModelConfig = () => {
   const llmConfig = getLLMConfig() as Record<string, any>;
   const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
 
-  const specialConfigKeys: Partial<Record<ModelProvider, { enabled: string; modelList: string }>> = {
-    [ModelProvider.Bedrock]: {
-      enabled: 'ENABLED_AWS_BEDROCK',
-      modelList: 'AWS_BEDROCK_MODEL_LIST',
-    },
-  };
-
   Object.values(ModelProvider).forEach((provider) => {
-    const { enabled: enabledKey, modelList: modelListKey } = specialConfigKeys[provider] ?? {
-      enabled: `ENABLED_${provider.toUpperCase()}`,
-      modelList: `${provider.toUpperCase()}_MODEL_LIST`,
-    };
+    const enabledKey = `ENABLED_${provider.toUpperCase()}`;
+    const modelListKey = `${provider.toUpperCase()}_MODEL_LIST`;
 
     const cardKey = `${provider.charAt(0).toUpperCase()}${provider.slice(1)}ProviderCard`;
     const providerCard = ProviderCards[cardKey as keyof typeof ProviderCards];
 
     const hasChatModels = providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard;
 
-    const isAzure = provider === ModelProvider.Azure;
-    const isOllama = provider === ModelProvider.Ollama;
-
     config[provider] = {
       enabled: llmConfig[enabledKey],
-      enabledModels: extractEnabledModels(
-        llmConfig[modelListKey],
-        isAzure
-      ),
+      enabledModels: extractEnabledModels(llmConfig[modelListKey]),
       serverModelCards: transformToChatModelCards({
         defaultChatModels: isAzure ? [] : (hasChatModels ? providerCard.chatModels : []),
         modelString: llmConfig[modelListKey],
-        ...(isAzure && { withDeploymentName: true }),
+        ...(provider === ModelProvider.Azure && { withDeploymentName: true }),
       }),
-      ...(isOllama && {
-        fetchOnClient: !llmConfig.OLLAMA_PROXY_URL,
+      ...(provider === ModelProvider.Bedrock && {
+        enabled: llmConfig['ENABLED_AWS_BEDROCK'],
+        modelList: llmConfig['AWS_BEDROCK_MODEL_LIST'],
       }),
+      ...(provider === ModelProvider.Ollama && { fetchOnClient: !llmConfig.OLLAMA_PROXY_URL }),
     };
   });
 
