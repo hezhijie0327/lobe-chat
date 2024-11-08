@@ -20,7 +20,14 @@ export const getServerGlobalConfig = () => {
     enableUploadFileToServer: !!fileEnv.S3_SECRET_ACCESS_KEY,
     enabledAccessCode: ACCESS_CODES?.length > 0,
     enabledOAuthSSO: enableNextAuth,
-    languageModel: generateLLMConfig(),
+    languageModel: generateLLMConfig({
+      [ModelProvider.Azure]: { serverModelCards: { withDeploymentName: true } },
+      [ModelProvider.Bedrock]: {
+        enabled: llmConfig['ENABLED_AWS_BEDROCK'],
+        modelList: llmConfig['AWS_BEDROCK_MODEL_LIST'],
+      },
+      [ModelProvider.Ollama]: { fetchOnClient: !llmConfig.OLLAMA_PROXY_URL },
+    }),
     oAuthSSOProviders: authEnv.NEXT_AUTH_SSO_PROVIDERS.trim().split(/[,，]/),
     systemAgent: parseSystemAgent(appEnv.SYSTEM_AGENT),
     telemetry: {
