@@ -15,10 +15,9 @@ import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
 
 const generateLanguageModelConfig = () => {
-  const llmConfig = getLLMConfig();
+  const llmConfig = getLLMConfig() as Record<string, any>; // Type assertion for dynamic indexing
   const config: Record<ModelProvider, any> = {} as Record<ModelProvider, any>;
 
-  // 特殊配置键映射
   const specialConfigKeys: Partial<Record<ModelProvider, { enabled: string; modelList: string }>> = {
     [ModelProvider.Bedrock]: {
       enabled: 'ENABLED_AWS_BEDROCK',
@@ -27,17 +26,14 @@ const generateLanguageModelConfig = () => {
   };
 
   Object.values(ModelProvider).forEach((provider) => {
-    // 获取配置键名
     const { enabled: enabledKey, modelList: modelListKey } = specialConfigKeys[provider] ?? {
       enabled: `ENABLED_${provider.toUpperCase()}`,
       modelList: `${provider.toUpperCase()}_MODEL_LIST`,
     };
 
-    // 获取 ProviderCard
     const cardKey = `${provider.charAt(0).toUpperCase()}${provider.slice(1)}ProviderCard`;
     const providerCard = ProviderCards[cardKey as keyof typeof ProviderCards];
     
-    // 特殊情况处理
     const isAzure = provider === ModelProvider.Azure;
     const isOllama = provider === ModelProvider.Ollama;
     
@@ -48,7 +44,7 @@ const generateLanguageModelConfig = () => {
         isAzure
       ),
       serverModelCards: transformToChatModelCards({
-        defaultChatModels: isAzure ? [] : providerCard.chatModels,
+        defaultChatModels: isAzure ? [] : providerCard?.chatModels || [], // Optional chaining for `chatModels`
         modelString: llmConfig[modelListKey],
         ...(isAzure && { withDeploymentName: true }),
       }),
