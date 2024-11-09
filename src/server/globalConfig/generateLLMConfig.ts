@@ -8,15 +8,15 @@ export const generateLLMConfig = () => {
   const llmConfig = getLLMConfig() as Record<string, any>;
 
   const specificConfig: Record<ModelProvider, any> = {
-    Azure: {
+    azure: {
       enabledKey: 'ENABLED_AZURE_OPENAI',
       withDeploymentName: true,
     },
-    Bedrock: {
+    bedrock: {
       enabledKey: 'ENABLED_AWS_BEDROCK',
       modelListKey: 'AWS_BEDROCK_MODEL_LIST',
     },
-    Ollama: {
+    ollama: {
       fetchOnClient: !llmConfig.OLLAMA_PROXY_URL,
     },
   };
