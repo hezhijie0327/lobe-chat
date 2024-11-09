@@ -37,7 +37,9 @@ export const generateLLMConfig = () => {
       enabled: llmConfig[enabledKey],
       enabledModels: extractEnabledModels(llmConfig[modelListKey]),
       serverModelCards: transformToChatModelCards({
-        defaultChatModels: providerCard?.chatModels ?? [],
+        defaultChatModels: providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard
+          ? providerCard.chatModels
+          : [],
         modelString: llmConfig[modelListKey],
       }),
       ...(providerSpecificConfigs[provider] || {}),
