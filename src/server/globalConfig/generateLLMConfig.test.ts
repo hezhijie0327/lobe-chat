@@ -1,3 +1,5 @@
+import { describe, expect, vi } from 'vitest';
+
 import { generateLLMConfig } from './generateLLMConfig';
 
 import * as ProviderCards from '@/config/modelProviders';
