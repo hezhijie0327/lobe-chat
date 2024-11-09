@@ -32,7 +32,7 @@ export const generateLLMConfig = () => {
         ? extractEnabledModels(llmConfig.AWS_BEDROCK_MODEL_LIST)
         : extractEnabledModels(llmConfig[`${provider.toUpperCase()}_MODEL_LIST`]),
       serverModelCards: transformToChatModelCards({
-        defaultChatModels: providerCard?.chatModels || [],
+        defaultChatModels: (providerCard as ModelProviderCard)?.chatModels || [],
         modelString: llmConfig[`${provider.toUpperCase()}_MODEL_LIST`],
         ...(provider === ModelProvider.Azure && { withDeploymentName: true }),
       }),
