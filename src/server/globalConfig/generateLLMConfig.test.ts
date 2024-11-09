@@ -1,30 +1,45 @@
 import { generateLLMConfig } from './generateLLMConfig';
 import { describe, expect, it, vi } from 'vitest';
 
-// 使用 importOriginal 保持原始导出,只模拟我们需要的部分
-vi.mock('@/config/modelProviders', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual, // 保持其他 provider cards 不变
-    bedrockProviderCard: {
-      ...actual.bedrockProviderCard,
-      chatModels: ['bedrockModel1', 'bedrockModel2'],
-    },
-    ollamaProviderCard: {
-      ...actual.ollamaProviderCard,
-      chatModels: ['ollamaModel1', 'ollamaModel2'],
-    },
-  };
-});
+// Mock ModelProvider enum
+vi.mock('@/libs/agent-runtime', () => ({
+  ModelProvider: {
+    Azure: 'azure',
+    Bedrock: 'bedrock',
+    Ollama: 'ollama',
+  }
+}));
 
-vi.mock('@/utils/env', () => ({
-  ENABLED_AZURE_OPENAI: true,
-  ENABLED_AWS_BEDROCK: true, 
-  ENABLED_OLLAMA: true,
-  AZURE_MODEL_LIST: 'azureModels',
-  AWS_BEDROCK_MODEL_LIST: 'bedrockModels',
-  OLLAMA_MODEL_LIST: 'ollamaModels',
-  OLLAMA_PROXY_URL: '',
+// Mock ProviderCards
+vi.mock('@/config/modelProviders', () => ({
+  azureProviderCard: {
+    chatModels: [],
+  },
+  bedrockProviderCard: {
+    chatModels: ['bedrockModel1', 'bedrockModel2'],
+  },
+  ollamaProviderCard: {
+    chatModels: ['ollamaModel1', 'ollamaModel2'],
+  },
+}));
+
+// Mock LLM config
+vi.mock('@/config/llm', () => ({
+  getLLMConfig: () => ({
+    ENABLED_AZURE_OPENAI: true,
+    ENABLED_AWS_BEDROCK: true,
+    ENABLED_OLLAMA: true,
+    AZURE_MODEL_LIST: 'azureModels',
+    AWS_BEDROCK_MODEL_LIST: 'bedrockModels',
+    OLLAMA_MODEL_LIST: 'ollamaModels',
+    OLLAMA_PROXY_URL: '',
+  }),
+}));
+
+// Mock parse models utils
+vi.mock('@/utils/parseModels', () => ({
+  extractEnabledModels: (modelString: string, withDeploymentName?: boolean) => [modelString],
+  transformToChatModelCards: ({ defaultChatModels, modelString, withDeploymentName }: any) => defaultChatModels,
 }));
 
 describe('generateLLMConfig', () => {
