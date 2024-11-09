@@ -1,8 +1,9 @@
 import { generateLLMConfig } from './generateLLMConfig';
 
+import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
 import { ModelProvider } from '@/libs/agent-runtime';
-import { getLLMConfig } from '@/config/llm';
+import { ModelProviderCard } from '@/types/llm';
 import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
 
 jest.mock('@/config/llm', () => ({
