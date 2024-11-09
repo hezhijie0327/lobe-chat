@@ -1,6 +1,5 @@
 import { describe, expect, vi, beforeEach, it } from 'vitest';
 import { generateLLMConfig } from './generateLLMConfig';
-import * as ProviderCards from '@/config/modelProviders';
 import { ModelProvider } from '@/libs/agent-runtime';
 import { getLLMConfig } from '@/config/llm';
 import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
@@ -43,7 +42,7 @@ describe('generateLLMConfig', () => {
   let mockLLMConfig: LLMConfig;
 
   beforeEach(() => {
-    // Setup mock return values for getLLMConfig with proper typing
+    // Setup mock return values for getLLMConfig
     mockLLMConfig = {
       ENABLED_AZURE_OPENAI: true,
       ENABLED_AWS_BEDROCK: false,
@@ -94,8 +93,8 @@ describe('generateLLMConfig', () => {
     });
   });
 
-  it('should handle empty or undefined model list correctly', () => {
-    mockLLMConfig.AZURE_MODEL_LIST = '';
+  it('should handle empty or undefined model list correctly for Azure provider', () => {
+    mockLLMConfig.AZURE_MODEL_LIST = ''; // No models for Azure
     const config = generateLLMConfig();
     expect(config[ModelProvider.Azure]).toEqual<ProviderConfig>({
       enabled: true,
@@ -104,7 +103,7 @@ describe('generateLLMConfig', () => {
     });
   });
 
-  it('should return correct enabled models and serverModelCards for each provider', () => {
+  it('should return correct enabled models for each provider', () => {
     const config = generateLLMConfig();
     expect(config[ModelProvider.Azure].enabledModels).toEqual(['azureModel1', 'azureModel2']);
     expect(config[ModelProvider.Bedrock].enabledModels).toEqual(['bedrockModel1']);
