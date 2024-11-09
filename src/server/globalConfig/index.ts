@@ -8,7 +8,7 @@ import { GlobalServerConfig } from '@/types/serverConfig';
 
 import { parseAgentConfig } from './parseDefaultAgent';
 
-import { getLLMConfig } from './generateLLMConfig'
+import { generateLLMConfig } from './generateLLMConfig'
 
 export const getServerGlobalConfig = () => {
   const { ACCESS_CODES, DEFAULT_AGENT_CONFIG } = getAppConfig();
