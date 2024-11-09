@@ -38,7 +38,7 @@ export const generateLLMConfig = () => {
       enabled: llmConfig[enabledKey],
       enabledModels: extractEnabledModels(
         llmConfig[modelListKey],
-        isAzure
+        providerFlags.isAzure
       ),
       serverModelCards: transformToChatModelCards({
         defaultChatModels: providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard
