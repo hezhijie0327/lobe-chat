@@ -26,25 +26,21 @@ export const generateLLMConfig = () => {
       isOllama: provider === ModelProvider.Ollama,
     };
 
-    const { 
-      enabled: enabledKey,
-      modelList: modelListKey
-    } = providerFlags.isAzure
-      ? { enabled: 'ENABLED_AZURE_OPENAI', modelList: 'AZURE_MODEL_LIST' }
-      : providerFlags.isBedrock
-      ? { enabled: 'ENABLED_AWS_BEDROCK', modelList: 'AWS_BEDROCK_MODEL_LIST' }
-      : {
-          enabled: `ENABLED_${provider.toUpperCase()}`,
-          modelList: `${provider.toUpperCase()}_MODEL_LIST`,
-        };
+    const enabledKey = `ENABLED_${provider.toUpperCase()}`;
+    const modelListKey = `${provider.toUpperCase()}_MODEL_LIST`;
     const providerCard = ProviderCards[`${provider}ProviderCard` as keyof typeof ProviderCards];
 
     config[provider] = {
-      enabled: llmConfig[enabledKey],
-      enabledModels: extractEnabledModels(
-        llmConfig[modelListKey],
-        providerFlags.isAzure
-      ),
+      enabled: providerFlags.isAzure 
+        ? llmConfig.ENABLED_AZURE_OPENAI 
+        : providerFlags.isBedrock 
+        ? llmConfig.ENABLED_AWS_BEDROCK 
+        : llmConfig[enabledKey],
+      enabledModels: providerFlags.isAzure 
+        ? extractEnabledModels(llmConfig['AZURE_MODEL_LIST'], true)
+        : providerFlags.isBedrock 
+        ? extractEnabledModels(llmConfig['AWS_BEDROCK_MODEL_LIST'])
+        : extractEnabledModels(llmConfig[modelListKey]),
       serverModelCards: transformToChatModelCards({
         defaultChatModels: providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard
           ? (providerCard as ModelProviderCard).chatModels
