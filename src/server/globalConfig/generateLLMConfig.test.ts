@@ -7,7 +7,7 @@ import { ModelProvider } from '@/libs/agent-runtime';
 import { getLLMConfig } from '@/config/llm';
 import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
 
-// Mock dependencies
+// mock dependencies
 vi.mock('@/config/llm', () => ({
   getLLMConfig: vi.fn(),
 }));
@@ -38,9 +38,9 @@ describe('generateLLMConfig', () => {
       OLLAMA_PROXY_URL: '',
     };
 
-    (getLLMConfig as vi.Mock).mockReturnValue(mockLLMConfig);
-    (extractEnabledModels as vi.Mock).mockImplementation((modelsList: string) => modelsList.split(',').map(model => model.trim()));
-    (transformToChatModelCards as vi.Mock).mockImplementation(({ defaultChatModels }: { defaultChatModels: string[] }) => defaultChatModels);
+    (getLLMConfig as vi.mock).mockReturnValue(mockLLMConfig);
+    (extractEnabledModels as vi.mock).mockImplementation((modelsList: string) => modelsList.split(',').map(model => model.trim()));
+    (transformToChatModelCards as vi.mock).mockImplementation(({ defaultChatModels }: { defaultChatModels: string[] }) => defaultChatModels);
   });
 
   it('should return correct configuration for Azure provider', () => {
