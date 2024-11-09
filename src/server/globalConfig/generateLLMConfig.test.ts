@@ -27,6 +27,7 @@ vi.mock('@/config/modelProviders', () => ({
 
 // 创建基础配置对象
 const createBaseLLMConfig = () => ({
+  // 基本服务开关
   ENABLED_OPENAI: false,
   ENABLED_AZURE_OPENAI: false,
   ENABLED_ZHIPU: false,
@@ -45,7 +46,21 @@ const createBaseLLMConfig = () => ({
   ENABLED_XINFERENCE: false,
   ENABLED_TONGYI: false,
   ENABLED_SENSENOVA: false,
+  ENABLED_GITHUB: false,
+  ENABLED_OPENROUTER: false,
+  ENABLED_ZEROONE: false,
+  ENABLED_TOGETHERAI: false,
+  ENABLED_CLAUDE: false,
+  ENABLED_PALM: false,
+  ENABLED_DATABRICKS: false,
+  ENABLED_COHERE: false,
+  ENABLED_HUGGINGFACE: false,
+  ENABLED_REPLICATE: false,
+  ENABLED_AWS_CLAUDE: false,
+  ENABLED_VERTEX_AI: false,
+  ENABLED_YI: false,
   
+  // API 密钥和配置
   OPENAI_API_KEY: '',
   AZURE_API_VERSION: '',
   AZURE_API_KEY: '',
@@ -66,7 +81,17 @@ const createBaseLLMConfig = () => ({
   CLOUDFLARE_API_KEY: '',
   TONGYI_API_KEY: '',
   SENSENOVA_API_KEY: '',
+  GITHUB_API_KEY: '',
+  OPENROUTER_API_KEY: '',
+  ZEROONE_API_KEY: '',
+  TOGETHERAI_API_KEY: '',
+  DATABRICKS_ACCESS_TOKEN: '',
+  COHERE_API_KEY: '',
+  HUGGINGFACE_API_KEY: '',
+  REPLICATE_API_TOKEN: '',
+  VERTEX_PROJECT_ID: '',
   
+  // 模型列表配置
   OPENAI_MODEL_LIST: '',
   AZURE_MODEL_LIST: '',
   ZHIPU_MODEL_LIST: '',
@@ -84,8 +109,27 @@ const createBaseLLMConfig = () => ({
   CLOUDFLARE_MODEL_LIST: '',
   XINFERENCE_MODEL_LIST: '',
   TONGYI_MODEL_LIST: '',
-  SENSENOVA_MODEL_LIST: ''
-});
+  SENSENOVA_MODEL_LIST: '',
+  GITHUB_MODEL_LIST: '',
+  OPENROUTER_MODEL_LIST: '',
+  ZEROONE_MODEL_LIST: '',
+  TOGETHERAI_MODEL_LIST: '',
+  CLAUDE_MODEL_LIST: '',
+  PALM_MODEL_LIST: '',
+  DATABRICKS_MODEL_LIST: '',
+  COHERE_MODEL_LIST: '',
+  HUGGINGFACE_MODEL_LIST: '',
+  REPLICATE_MODEL_LIST: '',
+  AWS_CLAUDE_MODEL_LIST: '',
+  VERTEX_AI_MODEL_LIST: '',
+  YI_MODEL_LIST: '',
+  
+  // 额外配置
+  OPENAI_PROXY_URL: '',
+  ANTHROPIC_PROXY_URL: '',
+  AZURE_API_ENDPOINT: '',
+  OLLAMA_PROXY_URL: ''
+}) as const;
 
 describe('generateLLMConfig', () => {
   beforeEach(() => {
