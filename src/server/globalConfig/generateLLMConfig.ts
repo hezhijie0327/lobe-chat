@@ -7,7 +7,7 @@ import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseMo
 export const generateLLMConfig = () => {
   const llmConfig = getLLMConfig() as Record<string, any>;
 
-  const specificConfig = {
+  const specificConfig: Record<ModelProvider, any> = {
     Azure: {
       enabledKey: 'ENABLED_AZURE_OPENAI',
       withDeploymentName: true,
