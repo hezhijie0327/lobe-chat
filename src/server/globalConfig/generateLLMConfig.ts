@@ -10,7 +10,6 @@ export const generateLLMConfig = () => {
   const specificConfig = {
     Azure: {
       enabledKey: 'ENABLED_AZURE_OPENAI',
-      modelListKey: 'AZURE_MODEL_LIST',
       withDeploymentName: true,
     },
     Bedrock: {
