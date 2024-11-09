@@ -26,7 +26,12 @@ export const generateLLMConfig = () => {
       isOllama: provider === ModelProvider.Ollama,
     };
 
-    const { enabled: enabledKey, modelList: modelListKey } = providerFlags.isBedrock
+    const { 
+      enabled: enabledKey,
+      modelList: modelListKey
+    } = providerFlags.isAzure
+      ? { enabled: 'ENABLED_AZURE_OPENAI', modelList: 'AZURE_MODEL_LIST' }
+      : providerFlags.isBedrock
       ? { enabled: 'ENABLED_AWS_BEDROCK', modelList: 'AWS_BEDROCK_MODEL_LIST' }
       : {
           enabled: `ENABLED_${provider.toUpperCase()}`,
