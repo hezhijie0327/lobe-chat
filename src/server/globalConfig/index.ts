@@ -36,11 +36,9 @@ export const generateLLMConfig = () => {
         : providerFlags.isBedrock 
         ? llmConfig.ENABLED_AWS_BEDROCK 
         : llmConfig[enabledKey],
-      enabledModels: providerFlags.isAzure 
-        ? extractEnabledModels(llmConfig['AZURE_MODEL_LIST'], true)
-        : providerFlags.isBedrock 
-        ? extractEnabledModels(llmConfig['AWS_BEDROCK_MODEL_LIST'])
-        : extractEnabledModels(llmConfig[modelListKey]),
+      enabledModels: providerFlags.isBedrock 
+        ? extractEnabledModels(llmConfig.AWS_BEDROCK_MODEL_LIST)
+        : extractEnabledModels(llmConfig[modelListKey], providerFlags.isAzure),
       serverModelCards: transformToChatModelCards({
         defaultChatModels: providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard
           ? (providerCard as ModelProviderCard).chatModels
