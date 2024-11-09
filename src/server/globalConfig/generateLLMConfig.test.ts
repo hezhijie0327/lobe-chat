@@ -33,11 +33,10 @@ vi.mock('@/config/llm', () => ({
   getLLMConfig: vi.fn<[], LLMConfig>(),
 }));
 
-vi.mock('@/config/modelProviders', () => ({
-  AzureProviderCard: { chatModels: ['azureModel1', 'azureModel2'] },
-  BedrockProviderCard: { chatModels: ['bedrockModel1'] },
-  OllamaProviderCard: { chatModels: ['ollamaModel1'] },
-}));
+vi.mock('@/config/modelProviders', async (importOriginal) => {
+  const actual = await importOriginal();
+  return actual;
+});
 
 vi.mock('@/utils/parseModels', () => ({
   extractEnabledModels: vi.fn<[string], string[]>(),
