@@ -19,30 +19,37 @@ export const generateLLMConfig = () => {
 
   const llmConfig = getLLMConfig() as Record<string, any>;
 
-  const providerSpecificConfigs: Partial<Record<ModelProvider, Record<string, any>>> = {
-    [ModelProvider.Azure]: { serverModelCards: { withDeploymentName: true } },
-    [ModelProvider.Bedrock]: {
-      enabled: llmConfig['ENABLED_AWS_BEDROCK'],
-      modelList: llmConfig['AWS_BEDROCK_MODEL_LIST'],
-    },
-    [ModelProvider.Ollama]: { fetchOnClient: !llmConfig.OLLAMA_PROXY_URL },
-  };
-
   Object.values(ModelProvider).forEach((provider) => {
-    const enabledKey = `ENABLED_${provider.toUpperCase()}`;
-    const modelListKey = `${provider.toUpperCase()}_MODEL_LIST`;
+    const providerFlags = {
+      isAzure: provider === ModelProvider.Azure,
+      isBedrock: provider === ModelProvider.Bedrock,
+      isOllama: provider === ModelProvider.Ollama,
+    };
+
+    const { enabled: enabledKey, modelList: modelListKey } = providerFlags.isBedrock
+      ? { enabled: 'ENABLED_AWS_BEDROCK', modelList: 'AWS_BEDROCK_MODEL_LIST' }
+      : {
+          enabled: `ENABLED_${provider.toUpperCase()}`,
+          modelList: `${provider.toUpperCase()}_MODEL_LIST`,
+        };
     const providerCard = ProviderCards[`${provider}ProviderCard` as keyof typeof ProviderCards];
 
     config[provider] = {
       enabled: llmConfig[enabledKey],
-      enabledModels: extractEnabledModels(llmConfig[modelListKey]),
+      enabledModels: extractEnabledModels(
+        llmConfig[modelListKey],
+        isAzure
+      ),
       serverModelCards: transformToChatModelCards({
         defaultChatModels: providerCard && typeof providerCard === 'object' && 'chatModels' in providerCard
           ? (providerCard as ModelProviderCard).chatModels
           : [],
         modelString: llmConfig[modelListKey],
+        ...(providerFlags.isAzure && { withDeploymentName: true }),
       }),
-      ...providerSpecificConfigs[provider],
+      ...(providerFlags.isOllama && {
+        fetchOnClient: !llmConfig.OLLAMA_PROXY_URL,
+      }),
     };
   });
 
