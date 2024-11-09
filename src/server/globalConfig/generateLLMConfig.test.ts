@@ -1,11 +1,10 @@
-import { describe, expect, vi, beforeEach, it } from 'vitest';
+import { describe, expect, beforeEach, it } from 'vitest';
 import { generateLLMConfig } from './generateLLMConfig';
-import * as ProviderCards from '@/config/modelProviders';
-import { ModelProvider } from '@/libs/agent-runtime';  // Real import
-import { getLLMConfig } from '@/config/llm';
-import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
+import { ModelProvider } from '@/libs/agent-runtime'; // Real import
+import { getLLMConfig } from '@/config/llm'; // Real import
+import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels'; // Real imports
 
-// Define types for the mocked functions and their return values
+// Define types for the return value of getLLMConfig
 type LLMConfig = {
   ENABLED_AZURE_OPENAI: boolean;
   ENABLED_AWS_BEDROCK: boolean;
@@ -23,24 +22,6 @@ type ProviderConfig = {
   fetchOnClient?: boolean;
 };
 
-// Mock dependencies
-/*
-vi.mock('@/config/llm', () => ({
-  getLLMConfig: vi.fn<[], LLMConfig>(),
-}));
-
-vi.mock('@/config/modelProviders', () => ({
-  AzureProviderCard: { chatModels: ['azureModel1', 'azureModel2'] },
-  BedrockProviderCard: { chatModels: ['bedrockModel1'] },
-  OllamaProviderCard: { chatModels: ['ollamaModel1'] },
-}));
-
-vi.mock('@/utils/parseModels', () => ({
-  extractEnabledModels: vi.fn<[string], string[]>(),
-  transformToChatModelCards: vi.fn<[{ defaultChatModels: string[] }], string[]>(),
-}));
-*/
-
 describe('generateLLMConfig', () => {
   let mockLLMConfig: LLMConfig;
 
@@ -56,13 +37,8 @@ describe('generateLLMConfig', () => {
       OLLAMA_PROXY_URL: '',
     };
 
-    (getLLMConfig as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockLLMConfig);
-    (extractEnabledModels as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-      (modelsList: string) => modelsList.split(',').map(model => model.trim())
-    );
-    (transformToChatModelCards as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-      ({ defaultChatModels }: { defaultChatModels: string[] }) => defaultChatModels
-    );
+    // Make sure getLLMConfig is returning mock config in real scenario
+    getLLMConfig.mockReturnValue(mockLLMConfig);  // Use mock return here if needed
   });
 
   it('should return correct configuration for Azure provider', () => {
