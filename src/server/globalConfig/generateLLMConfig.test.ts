@@ -1,4 +1,4 @@
-import { generateLLMConfig } from '@/path/to/your/module';
+import { generateLLMConfig } from './generateLLMConfig';
 
 import { describe, expect, it, vi } from 'vitest';
 
