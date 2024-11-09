@@ -64,7 +64,7 @@ describe('generateLLMConfig', () => {
       (modelsList: string) => modelsList.split(',').map(model => model.trim())
     );
     (transformToChatModelCards as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-      ({ defaultChatModels }: { defaultChatModels: string[] }) => defaultChatModelcards
+      ({ defaultChatModels }: { defaultChatModels: string[] }) => defaultChatModels
     );
   });
 
