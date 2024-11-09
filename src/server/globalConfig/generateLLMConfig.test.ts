@@ -1,28 +1,28 @@
 import { generateLLMConfig } from './generateLLMConfig';
 
-import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
 import { ModelProvider } from '@/libs/agent-runtime';
-import { ModelProviderCard } from '@/types/llm';
+import { getLLMConfig } from '@/config/llm';
 import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
 
-jest.mock('@/config/llm', () => ({
-  getLLMConfig: jest.fn(),
+// Mock dependencies
+vi.mock('@/config/llm', () => ({
+  getLLMConfig: vi.fn(),
 }));
 
-jest.mock('@/config/modelProviders', () => ({
+vi.mock('@/config/modelProviders', () => ({
   AzureProviderCard: { chatModels: ['azureModel1', 'azureModel2'] },
   BedrockProviderCard: { chatModels: ['bedrockModel1'] },
   OllamaProviderCard: { chatModels: ['ollamaModel1'] },
 }));
 
-jest.mock('@/utils/parseModels', () => ({
-  extractEnabledModels: jest.fn(),
-  transformToChatModelCards: jest.fn(),
+vi.mock('@/utils/parseModels', () => ({
+  extractEnabledModels: vi.fn(),
+  transformToChatModelCards: vi.fn(),
 }));
 
 describe('generateLLMConfig', () => {
-  let mockLLMConfig;
+  let mockLLMConfig: Record<string, any>; // Add type here to resolve implicit 'any' errors
 
   beforeEach(() => {
     // Setup mock return values for getLLMConfig
@@ -36,9 +36,9 @@ describe('generateLLMConfig', () => {
       OLLAMA_PROXY_URL: '',
     };
 
-    (getLLMConfig as jest.Mock).mockReturnValue(mockLLMConfig);
-    (extractEnabledModels as jest.Mock).mockImplementation((modelsList) => modelsList.split(',').map(model => model.trim()));
-    (transformToChatModelCards as jest.Mock).mockImplementation(({ defaultChatModels }) => defaultChatModels);
+    (getLLMConfig as vi.Mock).mockReturnValue(mockLLMConfig);
+    (extractEnabledModels as vi.Mock).mockImplementation((modelsList: string) => modelsList.split(',').map(model => model.trim()));
+    (transformToChatModelCards as vi.Mock).mockImplementation(({ defaultChatModels }: { defaultChatModels: string[] }) => defaultChatModels);
   });
 
   it('should return correct configuration for Azure provider', () => {
