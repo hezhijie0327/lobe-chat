@@ -26,7 +26,7 @@ const ModelProvider = {
   Azure: 'azure',
   Bedrock: 'bedrock',
   Ollama: 'ollama',
-};
+} as const; // Using `as const` to enforce literal types
 
 // Mock only the necessary dependencies
 vi.mock('@/config/llm', () => ({
@@ -64,12 +64,12 @@ describe('generateLLMConfig', () => {
       (modelsList: string) => modelsList.split(',').map(model => model.trim())
     );
     (transformToChatModelCards as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-      ({ defaultChatModels }: { defaultChatModels: string[] }) => defaultChatModels
+      ({ defaultChatModels }: { defaultChatModels: string[] }) => defaultChatModelcards
     );
   });
 
   it('should return correct configuration for Azure provider', () => {
-    const config = generateLLMConfig();
+    const config: Record<string, ProviderConfig> = generateLLMConfig(); // Type the config explicitly
     expect(config[ModelProvider.Azure]).toEqual<ProviderConfig>({
       enabled: true,
       enabledModels: ['azureModel1', 'azureModel2'],
@@ -80,7 +80,7 @@ describe('generateLLMConfig', () => {
 
   it('should return correct configuration for Bedrock provider', () => {
     mockLLMConfig.ENABLED_AWS_BEDROCK = true;
-    const config = generateLLMConfig();
+    const config: Record<string, ProviderConfig> = generateLLMConfig();
     expect(config[ModelProvider.Bedrock]).toEqual<ProviderConfig>({
       enabled: true,
       enabledModels: ['bedrockModel1'],
@@ -90,7 +90,7 @@ describe('generateLLMConfig', () => {
 
   it('should return correct configuration for Ollama provider', () => {
     mockLLMConfig.ENABLED_OLLAMA = true;
-    const config = generateLLMConfig();
+    const config: Record<string, ProviderConfig> = generateLLMConfig();
     expect(config[ModelProvider.Ollama]).toEqual<ProviderConfig>({
       enabled: true,
       enabledModels: ['ollamaModel1'],
@@ -101,7 +101,7 @@ describe('generateLLMConfig', () => {
 
   it('should handle empty or undefined model list correctly for Azure provider', () => {
     mockLLMConfig.AZURE_MODEL_LIST = ''; // No models for Azure
-    const config = generateLLMConfig();
+    const config: Record<string, ProviderConfig> = generateLLMConfig();
     expect(config[ModelProvider.Azure]).toEqual<ProviderConfig>({
       enabled: true,
       enabledModels: [],
@@ -110,7 +110,7 @@ describe('generateLLMConfig', () => {
   });
 
   it('should return correct enabled models for each provider', () => {
-    const config = generateLLMConfig();
+    const config: Record<string, ProviderConfig> = generateLLMConfig();
     expect(config[ModelProvider.Azure].enabledModels).toEqual(['azureModel1', 'azureModel2']);
     expect(config[ModelProvider.Bedrock].enabledModels).toEqual(['bedrockModel1']);
     expect(config[ModelProvider.Ollama].enabledModels).toEqual(['ollamaModel1']);
