@@ -1,113 +1,141 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { generateLLMConfig } from './generateLLMConfig';
 
+import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
 import { ModelProvider } from '@/libs/agent-runtime';
-import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
-import { getLLMConfig } from '@/config/llm';
 
-vi.mock('@/config/llm', () => ({
-  getLLMConfig: vi.fn(),
-}));
-
+// Mock the config and provider cards
+vi.mock('@/config/llm');
 vi.mock('@/config/modelProviders', () => ({
   AzureProviderCard: {
-    chatModels: ['gpt-3.5', 'gpt-4'],
+    chatModels: [
+      { name: 'gpt-4', label: 'GPT-4' },
+      { name: 'gpt-35-turbo', label: 'GPT-3.5 Turbo' }
+    ]
   },
   BedrockProviderCard: {
-    chatModels: ['bedrock-1', 'bedrock-2'],
+    chatModels: [
+      { name: 'anthropic.claude-v2', label: 'Claude V2' }
+    ]
   },
-}));
-
-vi.mock('@/utils/parseModels', () => ({
-  extractEnabledModels: vi.fn(),
-  transformToChatModelCards: vi.fn(),
+  OllamaProviderCard: {
+    chatModels: [
+      { name: 'llama2', label: 'Llama 2' }
+    ]
+  }
 }));
 
 describe('generateLLMConfig', () => {
-  it('should generate LLM configuration with Azure provider correctly', () => {
-    const mockConfig = {
-      ENABLED_AZURE_OPENAI: true,
-      AZURE_MODEL_LIST: 'gpt-4, gpt-3.5',
-    };
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
-    getLLMConfig.mockReturnValue(mockConfig);
-    extractEnabledModels.mockReturnValue(['gpt-4', 'gpt-3.5']);
-    transformToChatModelCards.mockReturnValue([
-      { model: 'gpt-4' },
-      { model: 'gpt-3.5' },
-    ]);
+  it('应该正确处理 Azure 配置', () => {
+    vi.mocked(getLLMConfig).mockReturnValue({
+      ENABLED_AZURE_OPENAI: true,
+      AZURE_MODEL_LIST: 'gpt-4,gpt-35-turbo',
+    });
 
     const config = generateLLMConfig();
 
     expect(config[ModelProvider.Azure]).toEqual({
       enabled: true,
-      enabledModels: ['gpt-4', 'gpt-3.5'],
-      serverModelCards: [
-        { model: 'gpt-4' },
-        { model: 'gpt-3.5' },
-      ],
-      fetchOnClient: undefined,
+      enabledModels: ['gpt-4', 'gpt-35-turbo'],
+      serverModelCards: expect.arrayContaining([
+        expect.objectContaining({
+          name: 'gpt-4',
+          label: 'GPT-4',
+        }),
+        expect.objectContaining({
+          name: 'gpt-35-turbo',
+          label: 'GPT-3.5 Turbo',
+        }),
+      ]),
     });
   });
 
-  it('should generate LLM configuration with Bedrock provider correctly', () => {
-    const mockConfig = {
+  it('应该正确处理 Bedrock 配置', () => {
+    vi.mocked(getLLMConfig).mockReturnValue({
       ENABLED_AWS_BEDROCK: true,
-      AWS_BEDROCK_MODEL_LIST: 'bedrock-1, bedrock-2',
-    };
-
-    getLLMConfig.mockReturnValue(mockConfig);
-    extractEnabledModels.mockReturnValue(['bedrock-1', 'bedrock-2']);
-    transformToChatModelCards.mockReturnValue([
-      { model: 'bedrock-1' },
-      { model: 'bedrock-2' },
-    ]);
+      AWS_BEDROCK_MODEL_LIST: 'anthropic.claude-v2',
+    });
 
     const config = generateLLMConfig();
 
     expect(config[ModelProvider.Bedrock]).toEqual({
       enabled: true,
-      enabledModels: ['bedrock-1', 'bedrock-2'],
-      serverModelCards: [
-        { model: 'bedrock-1' },
-        { model: 'bedrock-2' },
-      ],
+      enabledModels: ['anthropic.claude-v2'],
+      serverModelCards: expect.arrayContaining([
+        expect.objectContaining({
+          name: 'anthropic.claude-v2',
+          label: 'Claude V2',
+        }),
+      ]),
     });
   });
 
-  it('should handle OLLAMA provider configuration correctly', () => {
-    const mockConfig = {
+  it('应该正确处理 Ollama 配置', () => {
+    vi.mocked(getLLMConfig).mockReturnValue({
       ENABLED_OLLAMA: true,
-      OLLAMA_PROXY_URL: '',
-    };
-
-    getLLMConfig.mockReturnValue(mockConfig);
+      OLLAMA_MODEL_LIST: 'llama2',
+      OLLAMA_PROXY_URL: 'http://localhost:11434',
+    });
 
     const config = generateLLMConfig();
 
     expect(config[ModelProvider.Ollama]).toEqual({
       enabled: true,
-      enabledModels: undefined,
-      serverModelCards: [],
-      fetchOnClient: true,
+      enabledModels: ['llama2'],
+      serverModelCards: expect.arrayContaining([
+        expect.objectContaining({
+          name: 'llama2',
+          label: 'Llama 2',
+        }),
+      ]),
+      fetchOnClient: false,
     });
   });
 
-  it('should handle the case when no provider is enabled', () => {
-    const mockConfig = {
-      ENABLED_AZURE_OPENAI: false,
-      ENABLED_AWS_BEDROCK: false,
-      ENABLED_OLLAMA: false,
-    };
-
-    getLLMConfig.mockReturnValue(mockConfig);
+  it('当 OLLAMA_PROXY_URL 未设置时，fetchOnClient 应为 true', () => {
+    vi.mocked(getLLMConfig).mockReturnValue({
+      ENABLED_OLLAMA: true,
+      OLLAMA_MODEL_LIST: 'llama2',
+    });
 
     const config = generateLLMConfig();
 
-    expect(config[ModelProvider.Azure].enabled).toBe(false);
-    expect(config[ModelProvider.Bedrock].enabled).toBe(false);
-    expect(config[ModelProvider.Ollama].enabled).toBe(false);
+    expect(config[ModelProvider.Ollama].fetchOnClient).toBe(true);
+  });
+
+  it('应该处理禁用的提供商', () => {
+    vi.mocked(getLLMConfig).mockReturnValue({
+      ENABLED_AZURE_OPENAI: false,
+      AZURE_MODEL_LIST: '',
+    });
+
+    const config = generateLLMConfig();
+
+    expect(config[ModelProvider.Azure]).toEqual({
+      enabled: false,
+      enabledModels: [],
+      serverModelCards: [],
+    });
+  });
+
+  it('应该处理空的模型列表', () => {
+    vi.mocked(getLLMConfig).mockReturnValue({
+      ENABLED_AZURE_OPENAI: true,
+      AZURE_MODEL_LIST: '',
+    });
+
+    const config = generateLLMConfig();
+
+    expect(config[ModelProvider.Azure]).toEqual({
+      enabled: true,
+      enabledModels: [],
+      serverModelCards: [],
+    });
   });
 });
