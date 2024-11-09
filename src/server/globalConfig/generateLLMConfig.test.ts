@@ -23,9 +23,9 @@ type ProviderConfig = {
 
 // Custom ModelProvider mock
 const ModelProvider = {
-  Azure: 'Azure',
-  Bedrock: 'Bedrock',
-  Ollama: 'Ollama',
+  Azure: 'azure',
+  Bedrock: 'bedrock',
+  Ollama: 'ollama',
 };
 
 // Mock only the necessary dependencies
