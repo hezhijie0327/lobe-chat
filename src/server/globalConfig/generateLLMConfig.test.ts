@@ -1,6 +1,5 @@
 import { describe, expect, vi, beforeEach, it } from 'vitest';
 import { generateLLMConfig } from './generateLLMConfig';
-import { ModelProvider } from '@/libs/agent-runtime';
 import { getLLMConfig } from '@/config/llm';
 import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
 
@@ -22,7 +21,14 @@ type ProviderConfig = {
   fetchOnClient?: boolean;
 };
 
-// Mock dependencies with proper typing
+// Custom ModelProvider mock
+const ModelProvider = {
+  Azure: 'Azure',
+  Bedrock: 'Bedrock',
+  Ollama: 'Ollama',
+};
+
+// Mock only the necessary dependencies
 vi.mock('@/config/llm', () => ({
   getLLMConfig: vi.fn<[], LLMConfig>(),
 }));
