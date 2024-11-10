@@ -3,7 +3,7 @@ import { ModelProvider } from '@/libs/agent-runtime';
 import { ModelProviderCard } from '@/types/llm';
 import { UserModelProviderConfig } from '@/types/user/settings';
 
-export const DEFAULT_LLM_CONFIG: UserModelProviderConfig = Object.keys(ModelProvider).reduce((config, providerKey) => {
+export const DEFAULT_LLM_CONFIG: any = Object.keys(ModelProvider).reduce((config, providerKey) => {
   const providerCard = ProviderCards[`${providerKey}ProviderCard` as keyof typeof ProviderCards] as ModelProviderCard;
 
   config[providerKey] = {
