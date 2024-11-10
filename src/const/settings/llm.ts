@@ -8,7 +8,7 @@ export const DEFAULT_LLM_CONFIG: UserModelProviderConfig = Object.keys(ModelProv
   const providerCard = ProviderCards[`${providerKey}ProviderCard` as keyof typeof ProviderCards] as ModelProviderCard;
 
   config[provider] = {
-    enabled: [ModelProvider.Ollama, ModelProvider.OpenAI].includes(provider),
+    enabled: provider === ModelProvider.Ollama || provider === ModelProvider.OpenAI,
     enabledModels: providerCard ? ProviderCards.filterEnabledModels(providerCard) : [],
     ...(provider === ModelProvider.Ollama && { fetchOnClient: true }),
   };
