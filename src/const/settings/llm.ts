@@ -3,15 +3,16 @@ import { ModelProvider } from '@/libs/agent-runtime';
 import { ModelProviderCard } from '@/types/llm';
 import { UserModelProviderConfig } from '@/types/user/settings';
 
-export const DEFAULT_LLM_CONFIG: UserModelProviderConfig = Object.keys(ModelProvider).reduce((config, providerKey) => {
-  const provider = ModelProvider[providerKey as keyof typeof ModelProvider];
-  const providerCard = ProviderCards[`${providerKey}ProviderCard` as keyof typeof ProviderCards] as ModelProviderCard;
+export const DEFAULT_LLM_CONFIG: UserModelProviderConfig = Object.keys(ModelProvider).reduce((config, provider) => {
+  const providerCard = ProviderCards[`${provider}ProviderCard` as keyof typeof ProviderCards] as ModelProviderCard;
 
   config[provider] = {
-    enabled: provider === ModelProvider.Ollama || provider === ModelProvider.OpenAI,
+    enabled: provider === 'Ollama' || provider === 'OpenAI',
     enabledModels: providerCard ? ProviderCards.filterEnabledModels(providerCard) : [],
-    ...(provider === ModelProvider.Ollama && { fetchOnClient: true }),
+    ...(provider === 'Ollama' && { fetchOnClient: true }),
   };
+
+  console.log(config[provider])
 
   return config;
 }, {} as UserModelProviderConfig);
