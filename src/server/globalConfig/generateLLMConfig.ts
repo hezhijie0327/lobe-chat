@@ -9,14 +9,25 @@ import { ModelProviderCard } from '@/types/llm';
 import { UserModelProviderConfig } from '@/types/user/settings';
 
 export const getDefaultLLMConfig = (): UserModelProviderConfig => {
+  const specificConfig: Record<any, any> = {
+    openai: {
+      enabled: true,
+    },
+    ollama: {
+      enabled: true,
+      fetchOnClient: true,
+    },
+  };
+
   return Object.keys(ModelProvider).reduce((config, providerKey) => {
     const provider = ModelProvider[providerKey as keyof typeof ModelProvider];
     const providerCard = ProviderCards[`${providerKey}ProviderCard` as keyof typeof ProviderCards] as ModelProviderCard;
+    const providerConfig = specificConfig[provider as keyof typeof specificConfig] || {};
 
     config[provider] = {
-      enabled: provider === ModelProvider.Ollama || provider === ModelProvider.OpenAI,
-      enabledModels: providerCard ? ProviderCards.filterEnabledModels(providerCard) : [],
-      ...(provider === ModelProvider.Ollama && { fetchOnClient: true }),
+      enabled: providerConfig.enabled !== undefined ? providerConfig.enabled : false,
+      enabledModels: providerCard ? providerCard.chatModels.filter(model => model.enabled) : [],
+      ...(providerConfig.fetchOnClient !== undefined && { fetchOnClient: providerConfig.fetchOnClient }),
     };
 
     return config;
