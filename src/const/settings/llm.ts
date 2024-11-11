@@ -1,6 +1,6 @@
 import { ModelProvider } from '@/libs/agent-runtime';
 
-import { genUserLLMConfig } from '@/server/globalConfig/generateLLMConfig'
+import { genUserLLMConfig } from '@/utils/genLLMConfig'
 
 export const DEFAULT_LLM_CONFIG = genUserLLMConfig();
 
