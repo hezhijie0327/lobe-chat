@@ -1,8 +1,27 @@
 import { getLLMConfig } from '@/config/llm';
 import * as ProviderCards from '@/config/modelProviders';
+
 import { ModelProvider } from '@/libs/agent-runtime';
-import { ModelProviderCard } from '@/types/llm';
+
 import { extractEnabledModels, transformToChatModelCards } from '@/utils/parseModels';
+
+import { ModelProviderCard } from '@/types/llm';
+import { UserModelProviderConfig } from '@/types/user/settings';
+
+export const getDefaultLLMConfig = (): UserModelProviderConfig => {
+  return Object.keys(ModelProvider).reduce((config, providerKey) => {
+    const provider = ModelProvider[providerKey as keyof typeof ModelProvider];
+    const providerCard = ProviderCards[`${providerKey}ProviderCard` as keyof typeof ProviderCards] as ModelProviderCard;
+
+    config[provider] = {
+      enabled: provider === ModelProvider.Ollama || provider === ModelProvider.OpenAI,
+      enabledModels: providerCard ? ProviderCards.filterEnabledModels(providerCard) : [],
+      ...(provider === ModelProvider.Ollama && { fetchOnClient: true }),
+    };
+
+    return config;
+  }, {} as UserModelProviderConfig);
+};
 
 export const generateLLMConfig = () => {
   const llmConfig = getLLMConfig() as Record<string, any>;
