@@ -50,12 +50,12 @@ export const genServerLLMConfig = () => {
 
 export const genUserLLMConfig = (): UserModelProviderConfig => {
   const specificConfig: Record<any, any> = {
-    openai: {
-      enabled: true,
-    },
     ollama: {
       enabled: true,
       fetchOnClient: true,
+    },
+    openai: {
+      enabled: true,
     },
   };
 
