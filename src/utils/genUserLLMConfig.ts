@@ -5,17 +5,7 @@ import { ModelProvider } from '@/libs/agent-runtime';
 import { ModelProviderCard } from '@/types/llm';
 import { UserModelProviderConfig } from '@/types/user/settings';
 
-export const genUserLLMConfig = (): UserModelProviderConfig => {
-  const specificConfig: Record<any, any> = {
-    ollama: {
-      enabled: true,
-      fetchOnClient: true,
-    },
-    openai: {
-      enabled: true,
-    },
-  };
-
+export const genUserLLMConfig = (specificConfig: Record<any, any>): UserModelProviderConfig => {
   return Object.keys(ModelProvider).reduce((config, providerKey) => {
     const provider = ModelProvider[providerKey as keyof typeof ModelProvider];
     const providerCard = ProviderCards[`${providerKey}ProviderCard` as keyof typeof ProviderCards] as ModelProviderCard;
