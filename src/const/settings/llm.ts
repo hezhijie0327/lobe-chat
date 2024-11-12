@@ -1,6 +1,6 @@
 import { ModelProvider } from '@/libs/agent-runtime';
 
-import { genUserLLMConfig } from '@/utils/genLLMConfig'
+import { genUserLLMConfig } from '@/utils/server/genLLMConfig'
 
 export const DEFAULT_LLM_CONFIG = genUserLLMConfig({
   ollama: {
