@@ -2,6 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { genUserLLMConfig } from './genUserLLMConfig';
 
+import { ModelProviderCard } from '@/types/llm';
+
 // Mock ModelProvider enum
 vi.mock('@/libs/agent-runtime', () => ({
   ModelProvider: {
@@ -18,7 +20,7 @@ vi.mock('@/config/modelProviders', () => ({
   OpenAIProviderCard: {
     chatModels: ['openaiModel1', 'openaiModel2'],
   },
-  filterEnabledModels: (providerCard) => providerCard.chatModels,
+  filterEnabledModels: (providerCard: ModelProviderCard) => providerCard.chatModels,
 }));
 
 describe('genUserLLMConfig', () => {
