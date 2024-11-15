@@ -134,6 +134,8 @@ export const getLLMConfig = () => {
 
       ENABLED_XAI: z.boolean(),
       XAI_API_KEY: z.string().optional(),
+
+      ...providerModelListEnv,
     },
     runtimeEnv: {
       API_KEY_SELECT_MODE: process.env.API_KEY_SELECT_MODE,
@@ -257,7 +259,7 @@ export const getLLMConfig = () => {
       ENABLED_XAI: !!process.env.XAI_API_KEY,
       XAI_API_KEY: process.env.XAI_API_KEY,
 
-      ...providerModelListEnv
+      ...providerModelListEnv,
     },
   });
 };
