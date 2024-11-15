@@ -20,60 +20,77 @@ export const getLLMConfig = () => {
       ENABLED_OPENAI: z.boolean(),
       OPENAI_API_KEY: z.string().optional(),
       OPENAI_PROXY_URL: z.string().optional(),
+      OPENAI_MODEL_LIST: z.string().optional(),
 
       ENABLED_AZURE_OPENAI: z.boolean(),
       AZURE_API_KEY: z.string().optional(),
       AZURE_API_VERSION: z.string().optional(),
       AZURE_ENDPOINT: z.string().optional(),
+      AZURE_MODEL_LIST: z.string().optional(),
 
       ENABLED_ZHIPU: z.boolean(),
       ZHIPU_API_KEY: z.string().optional(),
+      ZHIPU_MODEL_LIST: z.string().optional(),
 
       ENABLED_DEEPSEEK: z.boolean(),
       DEEPSEEK_API_KEY: z.string().optional(),
+      DEEPSEEK_MODEL_LIST: z.string().optional(),
 
       ENABLED_GOOGLE: z.boolean(),
       GOOGLE_API_KEY: z.string().optional(),
       GOOGLE_PROXY_URL: z.string().optional(),
+      GOOGLE_MODEL_LIST: z.string().optional(),
 
       ENABLED_MOONSHOT: z.boolean(),
       MOONSHOT_API_KEY: z.string().optional(),
+      MOONSHOT_MODEL_LIST: z.string().optional(),
       MOONSHOT_PROXY_URL: z.string().optional(),
 
       ENABLED_PERPLEXITY: z.boolean(),
       PERPLEXITY_API_KEY: z.string().optional(),
+      PERPLEXITY_MODEL_LIST: z.string().optional(),
       PERPLEXITY_PROXY_URL: z.string().optional(),
 
       ENABLED_ANTHROPIC: z.boolean(),
       ANTHROPIC_API_KEY: z.string().optional(),
+      ANTHROPIC_MODEL_LIST: z.string().optional(),
       ANTHROPIC_PROXY_URL: z.string().optional(),
 
       ENABLED_MINIMAX: z.boolean(),
+      MINIMAX_MODEL_LIST: z.string().optional(),
       MINIMAX_API_KEY: z.string().optional(),
 
       ENABLED_MISTRAL: z.boolean(),
       MISTRAL_API_KEY: z.string().optional(),
+      MISTRAL_MODEL_LIST: z.string().optional(),
 
       ENABLED_GROQ: z.boolean(),
       GROQ_API_KEY: z.string().optional(),
+      GROQ_MODEL_LIST: z.string().optional(),
       GROQ_PROXY_URL: z.string().optional(),
 
       ENABLED_GITHUB: z.boolean(),
       GITHUB_TOKEN: z.string().optional(),
+      GITHUB_MODEL_LIST: z.string().optional(),
 
       ENABLED_OPENROUTER: z.boolean(),
       OPENROUTER_API_KEY: z.string().optional(),
+      OPENROUTER_MODEL_LIST: z.string().optional(),
 
       ENABLED_ZEROONE: z.boolean(),
       ZEROONE_API_KEY: z.string().optional(),
+      ZEROONE_MODEL_LIST: z.string().optional(),
 
       ENABLED_TOGETHERAI: z.boolean(),
       TOGETHERAI_API_KEY: z.string().optional(),
+      TOGETHERAI_MODEL_LIST: z.string().optional(),
 
       ENABLED_FIREWORKSAI: z.boolean(),
       FIREWORKSAI_API_KEY: z.string().optional(),
+      FIREWORKSAI_MODEL_LIST: z.string().optional(),
 
       ENABLED_AWS_BEDROCK: z.boolean(),
+      AWS_BEDROCK_MODEL_LIST: z.string().optional(),
       AWS_REGION: z.string().optional(),
       AWS_ACCESS_KEY_ID: z.string().optional(),
       AWS_SECRET_ACCESS_KEY: z.string().optional(),
@@ -82,60 +99,75 @@ export const getLLMConfig = () => {
       ENABLED_WENXIN: z.boolean(),
       WENXIN_ACCESS_KEY: z.string().optional(),
       WENXIN_SECRET_KEY: z.string().optional(),
+      WENXIN_MODEL_LIST: z.string().optional(),
 
       ENABLED_OLLAMA: z.boolean(),
       OLLAMA_PROXY_URL: z.string().optional(),
+      OLLAMA_MODEL_LIST: z.string().optional(),
 
       ENABLED_QWEN: z.boolean(),
       QWEN_API_KEY: z.string().optional(),
+      QWEN_MODEL_LIST: z.string().optional(),
 
       ENABLED_STEPFUN: z.boolean(),
       STEPFUN_API_KEY: z.string().optional(),
+      STEPFUN_MODEL_LIST: z.string().optional(),
 
       ENABLED_NOVITA: z.boolean(),
       NOVITA_API_KEY: z.string().optional(),
+      NOVITA_MODEL_LIST: z.string().optional(),
 
       ENABLED_BAICHUAN: z.boolean(),
       BAICHUAN_API_KEY: z.string().optional(),
+      BAICHUAN_MODEL_LIST: z.string().optional(),
 
       ENABLED_TAICHU: z.boolean(),
       TAICHU_API_KEY: z.string().optional(),
+      TAICHU_MODEL_LIST: z.string().optional(),
 
       ENABLED_CLOUDFLARE: z.boolean(),
       CLOUDFLARE_API_KEY: z.string().optional(),
       CLOUDFLARE_BASE_URL_OR_ACCOUNT_ID: z.string().optional(),
+      CLOUDFLARE_MODEL_LIST: z.string().optional(),
 
       ENABLED_AI360: z.boolean(),
       AI360_API_KEY: z.string().optional(),
+      AI360_MODEL_LIST: z.string().optional(),
 
       ENABLED_SILICONCLOUD: z.boolean(),
       SILICONCLOUD_API_KEY: z.string().optional(),
+      SILICONCLOUD_MODEL_LIST: z.string().optional(),
       SILICONCLOUD_PROXY_URL: z.string().optional(),
 
       ENABLED_UPSTAGE: z.boolean(),
       UPSTAGE_API_KEY: z.string().optional(),
+      UPSTAGE_MODEL_LIST: z.string().optional(),
 
       ENABLED_SPARK: z.boolean(),
       SPARK_API_KEY: z.string().optional(),
+      SPARK_MODEL_LIST: z.string().optional(),
 
       ENABLED_AI21: z.boolean(),
       AI21_API_KEY: z.string().optional(),
+      AI21_MODEL_LIST: z.string().optional(),
 
       ENABLED_HUNYUAN: z.boolean(),
       HUNYUAN_API_KEY: z.string().optional(),
+      HUNYUAN_MODEL_LIST: z.string().optional(),
 
       ENABLED_HUGGINGFACE: z.boolean(),
       HUGGINGFACE_API_KEY: z.string().optional(),
       HUGGINGFACE_PROXY_URL: z.string().optional(),
+      HUGGINGFACE_MODEL_LIST: z.string().optional(),
 
       ENABLED_SENSENOVA: z.boolean(),
       SENSENOVA_ACCESS_KEY_ID: z.string().optional(),
       SENSENOVA_ACCESS_KEY_SECRET: z.string().optional(),
+      SENSENOVA_MODEL_LIST: z.string().optional(),
 
       ENABLED_XAI: z.boolean(),
       XAI_API_KEY: z.string().optional(),
-
-      ...providerModelListEnv,
+      XAI_MODEL_LIST: z.string().optional(),
     },
     runtimeEnv: {
       API_KEY_SELECT_MODE: process.env.API_KEY_SELECT_MODE,
