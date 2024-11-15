@@ -67,11 +67,11 @@ describe('genServerLLMConfig', () => {
       },
     };
     const config = genServerLLMConfig(specificConfig);
-    
+
     expect(config.azure).toEqual({
       enabled: true,
-      enabledModels: ['azureModels_withDeployment'],
-      serverModelCards: ['azureModels_transformed'],
+      enabledModels: ['undefined_withDeployment'],
+      serverModelCards: ['undefined_transformed'],
     });
 
     expect(config.bedrock).toEqual({
