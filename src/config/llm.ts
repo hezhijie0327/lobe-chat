@@ -2,7 +2,17 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
+import { ModelProvider } from '@/libs/agent-runtime';
+
+export const getProviderModelListEnv: any = Object.values(ModelProvider).reduce((config: any, provider: any) => {
+  config[provider] = process.env[`${provider.toUpperCase()}_MODEL_LIST`];
+
+  return config;
+}, {} as any);
+
 export const getLLMConfig = () => {
+  const providerModelListEnv = getProviderModelListEnv();
+
   return createEnv({
     server: {
       API_KEY_SELECT_MODE: z.string().optional(),
@@ -124,6 +134,8 @@ export const getLLMConfig = () => {
 
       ENABLED_XAI: z.boolean(),
       XAI_API_KEY: z.string().optional(),
+
+      ...providerModelListEnv,
     },
     runtimeEnv: {
       API_KEY_SELECT_MODE: process.env.API_KEY_SELECT_MODE,
@@ -131,77 +143,60 @@ export const getLLMConfig = () => {
       ENABLED_OPENAI: process.env.ENABLED_OPENAI !== '0',
       OPENAI_API_KEY: process.env.OPENAI_API_KEY,
       OPENAI_PROXY_URL: process.env.OPENAI_PROXY_URL,
-      OPENAI_MODEL_LIST: process.env.OPENAI_MODEL_LIST,
 
       ENABLED_AZURE_OPENAI: !!process.env.AZURE_API_KEY,
       AZURE_API_KEY: process.env.AZURE_API_KEY,
       AZURE_API_VERSION: process.env.AZURE_API_VERSION,
       AZURE_ENDPOINT: process.env.AZURE_ENDPOINT,
-      AZURE_MODEL_LIST: process.env.AZURE_MODEL_LIST,
 
       ENABLED_ZHIPU: !!process.env.ZHIPU_API_KEY,
       ZHIPU_API_KEY: process.env.ZHIPU_API_KEY,
-      ZHIPU_MODEL_LIST: process.env.ZHIPU_MODEL_LIST,
 
       ENABLED_DEEPSEEK: !!process.env.DEEPSEEK_API_KEY,
       DEEPSEEK_API_KEY: process.env.DEEPSEEK_API_KEY,
-      DEEPSEEK_MODEL_LIST: process.env.DEEPSEEK_MODEL_LIST,
 
       ENABLED_GOOGLE: !!process.env.GOOGLE_API_KEY,
       GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
       GOOGLE_PROXY_URL: process.env.GOOGLE_PROXY_URL,
-      GOOGLE_MODEL_LIST: process.env.GOOGLE_MODEL_LIST,
 
       ENABLED_PERPLEXITY: !!process.env.PERPLEXITY_API_KEY,
       PERPLEXITY_API_KEY: process.env.PERPLEXITY_API_KEY,
-      PERPLEXITY_MODEL_LIST: process.env.PERPLEXITY_MODEL_LIST,
       PERPLEXITY_PROXY_URL: process.env.PERPLEXITY_PROXY_URL,
 
       ENABLED_ANTHROPIC: !!process.env.ANTHROPIC_API_KEY,
       ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
-      ANTHROPIC_MODEL_LIST: process.env.ANTHROPIC_MODEL_LIST,
       ANTHROPIC_PROXY_URL: process.env.ANTHROPIC_PROXY_URL,
 
       ENABLED_MINIMAX: !!process.env.MINIMAX_API_KEY,
       MINIMAX_API_KEY: process.env.MINIMAX_API_KEY,
-      MINIMAX_MODEL_LIST: process.env.MINIMAX_MODEL_LIST,
 
       ENABLED_MISTRAL: !!process.env.MISTRAL_API_KEY,
       MISTRAL_API_KEY: process.env.MISTRAL_API_KEY,
-      MISTRAL_MODEL_LIST: process.env.MISTRAL_MODEL_LIST,
 
       ENABLED_OPENROUTER: !!process.env.OPENROUTER_API_KEY,
       OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
-      OPENROUTER_MODEL_LIST: process.env.OPENROUTER_MODEL_LIST,
 
       ENABLED_TOGETHERAI: !!process.env.TOGETHERAI_API_KEY,
       TOGETHERAI_API_KEY: process.env.TOGETHERAI_API_KEY,
-      TOGETHERAI_MODEL_LIST: process.env.TOGETHERAI_MODEL_LIST,
 
       ENABLED_FIREWORKSAI: !!process.env.FIREWORKSAI_API_KEY,
       FIREWORKSAI_API_KEY: process.env.FIREWORKSAI_API_KEY,
-      FIREWORKSAI_MODEL_LIST: process.env.FIREWORKSAI_MODEL_LIST,
 
       ENABLED_MOONSHOT: !!process.env.MOONSHOT_API_KEY,
       MOONSHOT_API_KEY: process.env.MOONSHOT_API_KEY,
-      MOONSHOT_MODEL_LIST: process.env.MOONSHOT_MODEL_LIST,
       MOONSHOT_PROXY_URL: process.env.MOONSHOT_PROXY_URL,
 
       ENABLED_GROQ: !!process.env.GROQ_API_KEY,
       GROQ_API_KEY: process.env.GROQ_API_KEY,
-      GROQ_MODEL_LIST: process.env.GROQ_MODEL_LIST,
       GROQ_PROXY_URL: process.env.GROQ_PROXY_URL,
 
       ENABLED_GITHUB: !!process.env.GITHUB_TOKEN,
       GITHUB_TOKEN: process.env.GITHUB_TOKEN,
-      GITHUB_MODEL_LIST: process.env.GITHUB_MODEL_LIST,
 
       ENABLED_ZEROONE: !!process.env.ZEROONE_API_KEY,
       ZEROONE_API_KEY: process.env.ZEROONE_API_KEY,
-      ZEROONE_MODEL_LIST: process.env.ZEROONE_MODEL_LIST,
 
       ENABLED_AWS_BEDROCK: process.env.ENABLED_AWS_BEDROCK === '1',
-      AWS_BEDROCK_MODEL_LIST: process.env.AWS_BEDROCK_MODEL_LIST,
       AWS_REGION: process.env.AWS_REGION,
       AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
       AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
@@ -210,76 +205,61 @@ export const getLLMConfig = () => {
       ENABLED_WENXIN: !!process.env.WENXIN_ACCESS_KEY && !!process.env.WENXIN_SECRET_KEY,
       WENXIN_ACCESS_KEY: process.env.WENXIN_ACCESS_KEY,
       WENXIN_SECRET_KEY: process.env.WENXIN_SECRET_KEY,
-      WENXIN_MODEL_LIST: process.env.WENXIN_MODEL_LIST,
 
       ENABLED_OLLAMA: process.env.ENABLED_OLLAMA !== '0',
       OLLAMA_PROXY_URL: process.env.OLLAMA_PROXY_URL || '',
-      OLLAMA_MODEL_LIST: process.env.OLLAMA_MODEL_LIST,
 
       ENABLED_QWEN: !!process.env.QWEN_API_KEY,
       QWEN_API_KEY: process.env.QWEN_API_KEY,
-      QWEN_MODEL_LIST: process.env.QWEN_MODEL_LIST,
 
       ENABLED_STEPFUN: !!process.env.STEPFUN_API_KEY,
       STEPFUN_API_KEY: process.env.STEPFUN_API_KEY,
-      STEPFUN_MODEL_LIST: process.env.STEPFUN_MODEL_LIST,
 
       ENABLED_NOVITA: !!process.env.NOVITA_API_KEY,
       NOVITA_API_KEY: process.env.NOVITA_API_KEY,
-      NOVITA_MODEL_LIST: process.env.NOVITA_MODEL_LIST,
 
       ENABLED_BAICHUAN: !!process.env.BAICHUAN_API_KEY,
       BAICHUAN_API_KEY: process.env.BAICHUAN_API_KEY,
-      BAICHUAN_MODEL_LIST: process.env.BAICHUAN_MODEL_LIST,
 
       ENABLED_TAICHU: !!process.env.TAICHU_API_KEY,
       TAICHU_API_KEY: process.env.TAICHU_API_KEY,
-      TAICHU_MODEL_LIST: process.env.TAICHU_MODEL_LIST,
 
       ENABLED_CLOUDFLARE:
         !!process.env.CLOUDFLARE_API_KEY && !!process.env.CLOUDFLARE_BASE_URL_OR_ACCOUNT_ID,
       CLOUDFLARE_API_KEY: process.env.CLOUDFLARE_API_KEY,
       CLOUDFLARE_BASE_URL_OR_ACCOUNT_ID: process.env.CLOUDFLARE_BASE_URL_OR_ACCOUNT_ID,
-      CLOUDFLARE_MODEL_LIST: process.env.CLOUDFLARE_MODEL_LIST,
 
       ENABLED_AI360: !!process.env.AI360_API_KEY,
       AI360_API_KEY: process.env.AI360_API_KEY,
-      AI360_MODEL_LIST: process.env.AI360_MODEL_LIST,
 
       ENABLED_SILICONCLOUD: !!process.env.SILICONCLOUD_API_KEY,
       SILICONCLOUD_API_KEY: process.env.SILICONCLOUD_API_KEY,
-      SILICONCLOUD_MODEL_LIST: process.env.SILICONCLOUD_MODEL_LIST,
       SILICONCLOUD_PROXY_URL: process.env.SILICONCLOUD_PROXY_URL,
 
       ENABLED_UPSTAGE: !!process.env.UPSTAGE_API_KEY,
       UPSTAGE_API_KEY: process.env.UPSTAGE_API_KEY,
-      UPSTAGE_MODEL_LIST: process.env.UPSTAGE_MODEL_LIST,
 
       ENABLED_SPARK: !!process.env.SPARK_API_KEY,
       SPARK_API_KEY: process.env.SPARK_API_KEY,
-      SPARK_MODEL_LIST: process.env.SPARK_MODEL_LIST,
 
       ENABLED_AI21: !!process.env.AI21_API_KEY,
       AI21_API_KEY: process.env.AI21_API_KEY,
-      AI21_MODEL_LIST: process.env.AI21_MODEL_LIST,
 
       ENABLED_HUNYUAN: !!process.env.HUNYUAN_API_KEY,
       HUNYUAN_API_KEY: process.env.HUNYUAN_API_KEY,
-      HUNYUAN_MODEL_LIST: process.env.HUNYUAN_MODEL_LIST,
 
       ENABLED_HUGGINGFACE: !!process.env.HUGGINGFACE_API_KEY,
       HUGGINGFACE_API_KEY: process.env.HUGGINGFACE_API_KEY,
       HUGGINGFACE_PROXY_URL: process.env.HUGGINGFACE_PROXY_URL,
-      HUGGINGFACE_MODEL_LIST: process.env.HUGGINGFACE_MODEL_LIST,
 
       ENABLED_SENSENOVA: !!process.env.SENSENOVA_ACCESS_KEY_ID && !!process.env.SENSENOVA_ACCESS_KEY_SECRET,
       SENSENOVA_ACCESS_KEY_ID: process.env.SENSENOVA_ACCESS_KEY_ID,
       SENSENOVA_ACCESS_KEY_SECRET: process.env.SENSENOVA_ACCESS_KEY_SECRET,
-      SENSENOVA_MODEL_LIST: process.env.SENSENOVA_MODEL_LIST,
 
       ENABLED_XAI: !!process.env.XAI_API_KEY,
       XAI_API_KEY: process.env.XAI_API_KEY,
-      XAI_MODEL_LIST: process.env.XAI_MODEL_LIST,
+
+      ...providerModelListEnv,
     },
   });
 };
