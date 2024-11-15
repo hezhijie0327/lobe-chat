@@ -93,7 +93,7 @@ export const getLLMConfig = () => {
 
       ENABLED_CLOUDFLARE: z.boolean(),
       CLOUDFLARE_API_KEY: z.string().optional(),
-      CLOUDFLARE_BASE_URL_OR_configOUNT_ID: z.string().optional(),
+      CLOUDFLARE_BASE_URL_OR_ACCOUNT_ID: z.string().optional(),
 
       ENABLED_AI360: z.boolean(),
       AI360_API_KEY: z.string().optional(),
