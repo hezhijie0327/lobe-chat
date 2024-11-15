@@ -4,11 +4,11 @@ import { z } from 'zod';
 
 import { ModelProvider } from '@/libs/agent-runtime';
 
-export const getProviderModelListEnv: Record<string, string | undefined> = Object.values(ModelProvider).reduce((config, provider) => {
+export const getProviderModelListEnv: any = Object.values(ModelProvider).reduce((config: any, provider: any) => {
   config[provider] = process.env[`${provider.toUpperCase()}_MODEL_LIST`];
 
   return config;
-}, {} as Record<string, string | undefined>);
+}, {} as any);
 
 export const getLLMConfig = () => {
   const providerModelListEnv = getProviderModelListEnv();
