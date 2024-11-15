@@ -255,7 +255,7 @@ export const getLLMConfig = () => {
       ENABLED_XAI: !!process.env.XAI_API_KEY,
       XAI_API_KEY: process.env.XAI_API_KEY,
 
-      ...providerModelListEnv()
+      ...getProviderModelListEnv()
     },
   });
 };
