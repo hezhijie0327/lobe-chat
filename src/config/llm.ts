@@ -11,6 +11,8 @@ export const getProviderModelListEnv: Record<string, string | undefined> = Objec
 }, {} as Record<string, string | undefined>);
 
 export const getLLMConfig = () => {
+  const providerModelListEnv = getProviderModelListEnv();
+
   return createEnv({
     server: {
       API_KEY_SELECT_MODE: z.string().optional(),
@@ -255,7 +257,7 @@ export const getLLMConfig = () => {
       ENABLED_XAI: !!process.env.XAI_API_KEY,
       XAI_API_KEY: process.env.XAI_API_KEY,
 
-      ...getProviderModelListEnv()
+      ...providerModelListEnv
     },
   });
 };
