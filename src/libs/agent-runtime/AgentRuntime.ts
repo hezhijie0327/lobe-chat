@@ -339,7 +339,7 @@ class AgentRuntime {
       }
 
       case ModelProvider.InternLM: {
-        runtimeModel = new LobeHunyuanAI(params.internlm);
+        runtimeModel = new LobeInternLMAI(params.internlm);
         break;
       }
     }
