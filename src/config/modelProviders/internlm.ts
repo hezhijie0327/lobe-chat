@@ -18,6 +18,7 @@ const InternLM: ModelProviderCard = {
     {
       description: '我们仍在维护的老版本模型，有 7B、20B 多种模型参数量可选。',
       displayName: 'InternLM2 Pro Chat',
+      functionCall: true,
       id: 'internlm2-pro-chat',
       maxOutput: 4096,
       pricing: {
