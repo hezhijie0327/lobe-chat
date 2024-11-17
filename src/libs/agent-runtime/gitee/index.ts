@@ -9,8 +9,11 @@ export const LobeGiteeAI = LobeOpenAICompatibleFactory({
     handlePayload: ({ model, top_p, ...payload }: ChatStreamPayload) =>
       ({
         ...payload,
+        model,
         ...(model === "code-raccoon-v1" ? {
           top_p: undefined
+        } : {
+          top_p,
         }),
       }) as OpenAI.ChatCompletionCreateParamsStreaming,
   },
