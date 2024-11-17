@@ -1,8 +1,19 @@
+import OpenAI from 'openai';
+
 import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 export const LobeGiteeAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://ai.gitee.com/v1',
+  chatCompletion: {
+    handlePayload: ({ model, top_p, ...payload }: ChatStreamPayload) =>
+      ({
+        ...payload,
+        ...(model === "code-raccoon-v1" ? {
+          top_p: undefined
+        }),
+      }) as OpenAI.ChatCompletionCreateParamsStreaming,
+  },
   debug: {
     chatCompletion: () => process.env.DEBUG_GITEE_CHAT_COMPLETION === '1',
   },
