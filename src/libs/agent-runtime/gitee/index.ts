@@ -11,7 +11,7 @@ export const LobeGiteeAI = LobeOpenAICompatibleFactory({
         ...payload,
         model,
         ...(model === "code-raccoon-v1" ? {
-          top_p: undefined
+          top_p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,
         } : {
           top_p,
         }),
