@@ -11,7 +11,7 @@ import {
 import * as debugStreamModule from '../utils/debugStream';
 import { LobeGiteeAI } from './index';
 
-const provider = ModelProvider.Gitee;
+const provider = ModelProvider.GiteeAI;
 const defaultBaseURL = 'https://ai.gitee.com/v1';
 
 const bizErrorType = 'ProviderBizError';
