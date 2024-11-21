@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 
+import { getLLMConfig } from '@/config/llm';
 import { ChatErrorType } from '@/types/fetch';
 
 // create OpenAI instance
