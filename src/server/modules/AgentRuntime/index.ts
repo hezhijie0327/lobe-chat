@@ -69,9 +69,10 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
     case ModelProvider.Moonshot: {
       const { MOONSHOT_API_KEY } = getLLMConfig();
       const apiKey = apiKeyManager.pick(payload?.apiKey || MOONSHOT_API_KEY);
+      const baseURL = payload?.endpoint || process.env.MOONSHOT_PROXY_URL;
       return {
         apiKey,
-        baseURL: process.env.MOONSHOT_PROXY_URL,
+        baseURL,
       };
     }
     case ModelProvider.Bedrock: {
