@@ -33,6 +33,10 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
     default: {
       const upperProvider = provider.toUpperCase();
 
+      if (!llmConfig[`${upperProvider}_API_KEY`]) {
+        throw new Error(`Unknown provider: ${provider}`);
+      }
+
       const apiKey = apiKeyManager.pick(payload?.apiKey || llmConfig[`${upperProvider}_API_KEY`]);
       const baseURL = payload?.endpoint || process.env[`${upperProvider}_PROXY_URL`];
 
