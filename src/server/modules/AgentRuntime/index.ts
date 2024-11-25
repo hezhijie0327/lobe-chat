@@ -67,6 +67,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       }
       return { accessKeyId, accessKeySecret, region, sessionToken };
     }
+
     case ModelProvider.Cloudflare: {
       const { CLOUDFLARE_API_KEY, CLOUDFLARE_BASE_URL_OR_ACCOUNT_ID } = llmConfig;
 
