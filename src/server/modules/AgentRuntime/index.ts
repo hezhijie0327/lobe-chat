@@ -27,9 +27,10 @@ export interface AgentChatOptions {
  * @returns The options object.
  */
 const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
+  const llmConfig = getLLMConfig() as Record<string, any>;
+
   switch (provider) {
     default: {
-      const llmConfig = getLLMConfig() as Record<string, any>;
       const upperProvider = provider.toUpperCase();
 
       const apiKey = apiKeyManager.pick(payload?.apiKey || llmConfig[`${upperProvider}_API_KEY`]);
@@ -38,7 +39,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { apiKey, baseURL };
     }
     case ModelProvider.Azure: {
-      const { AZURE_API_KEY, AZURE_API_VERSION, AZURE_ENDPOINT } = getLLMConfig();
+      const { AZURE_API_KEY, AZURE_API_VERSION, AZURE_ENDPOINT } = llmConfig;
       const apiKey = apiKeyManager.pick(payload?.apiKey || AZURE_API_KEY);
       const endpoint = payload?.endpoint || AZURE_ENDPOINT;
       const apiVersion = payload?.azureApiVersion || AZURE_API_VERSION;
@@ -50,7 +51,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
     }
     case ModelProvider.Bedrock: {
       const { AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SESSION_TOKEN } =
-        getLLMConfig();
+        llmConfig;
       let accessKeyId: string | undefined = AWS_ACCESS_KEY_ID;
       let accessKeySecret: string | undefined = AWS_SECRET_ACCESS_KEY;
       let region = AWS_REGION;
@@ -69,14 +70,14 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { baseURL };
     }
     case ModelProvider.Github: {
-      const { GITHUB_TOKEN } = getLLMConfig();
+      const { GITHUB_TOKEN } = llmConfig;
 
       const apiKey = apiKeyManager.pick(payload?.apiKey || GITHUB_TOKEN);
 
       return { apiKey };
     }
     case ModelProvider.Cloudflare: {
-      const { CLOUDFLARE_API_KEY, CLOUDFLARE_BASE_URL_OR_ACCOUNT_ID } = getLLMConfig();
+      const { CLOUDFLARE_API_KEY, CLOUDFLARE_BASE_URL_OR_ACCOUNT_ID } = llmConfig;
 
       const apiKey = apiKeyManager.pick(payload?.apiKey || CLOUDFLARE_API_KEY);
       const baseURLOrAccountID =
@@ -87,14 +88,14 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       return { apiKey, baseURLOrAccountID };
     }
     case ModelProvider.GiteeAI: {
-      const { GITEE_AI_API_KEY } = getLLMConfig();
+      const { GITEE_AI_API_KEY } = llmConfig;
 
       const apiKey = apiKeyManager.pick(payload?.apiKey || GITEE_AI_API_KEY);
 
       return { apiKey };
     }
     case ModelProvider.SenseNova: {
-      const { SENSENOVA_ACCESS_KEY_ID, SENSENOVA_ACCESS_KEY_SECRET } = getLLMConfig();
+      const { SENSENOVA_ACCESS_KEY_ID, SENSENOVA_ACCESS_KEY_SECRET } = llmConfig;
 
       const sensenovaAccessKeyID = apiKeyManager.pick(
         payload?.sensenovaAccessKeyID || SENSENOVA_ACCESS_KEY_ID,
