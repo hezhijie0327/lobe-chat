@@ -34,7 +34,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       const upperProvider = provider.toUpperCase();
 
       const apiKey = apiKeyManager.pick(payload?.apiKey || llmConfig[`${upperProvider}_API_KEY`]);
-      const baseURL = payload?.endpoint || llmConfig[`${upperProvider}_PROXY_URL`];
+      const baseURL = payload?.endpoint || process.env[`${upperProvider}_PROXY_URL`];
 
       return { apiKey, baseURL };
     }
