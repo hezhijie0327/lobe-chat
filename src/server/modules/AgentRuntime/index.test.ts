@@ -27,6 +27,8 @@ import { AgentRuntime } from '@/libs/agent-runtime';
 import { LobeStepfunAI } from '@/libs/agent-runtime/stepfun';
 import LobeWenxinAI from '@/libs/agent-runtime/wenxin';
 
+import { initAgentRuntimeWithUserPayload } from './index';
+
 // 模拟依赖项
 vi.mock('@/config/llm', () => ({
   getLLMConfig: vi.fn(() => ({
@@ -274,6 +276,10 @@ describe('initAgentRuntimeWithUserPayload method', () => {
     it('Qwen AI provider: without endpoint', async () => {
       const jwtPayload: JWTPayload = { apiKey: 'user-qwen-key' };
       const runtime = await initAgentRuntimeWithUserPayload(ModelProvider.Qwen, jwtPayload);
+
+      // 假设 LobeQwenAI 是 Qwen 提供者的实现类
+      expect(runtime['_runtime']).toBeInstanceOf(LobeQwenAI);
+      // endpoint 不存在，应返回 Undefined
       expect(runtime['_runtime'].baseURL).toBeUndefined();
     });
 
