@@ -377,31 +377,60 @@ describe('initAgentRuntimeWithUserPayload method', () => {
     });
   });
 
-  describe('getLlmOptionsFromPayload - default case', () => {
-    const provider = 'OpenAI'; // example provider
-    const payload: JWTPayload = {
-      apiKey: 'test-api-key', // mock JWT payload with apiKey
-      endpoint: 'https://api.example.com', // mock endpoint (baseURL)
-    };
+describe('getLlmOptionsFromPayload - default case', () => {
+  const provider = 'OpenAI'; // example provider
+  const payload: JWTPayload = {
+    apiKey: 'test-api-key', // mock JWT payload with apiKey
+    endpoint: 'https://api.example.com', // mock endpoint (baseURL)
+  };
 
-    it('should return both apiKey and baseURL when baseURL is provided', () => {
-      // Mocking the apiKeyManager.pick method
-      apiKeyManager.pick.mockReturnValue('test-api-key');
+  it('should return both apiKey and baseURL when baseURL is provided', () => {
+    // Mocking the apiKeyManager.pick method
+    apiKeyManager.pick.mockReturnValue('test-api-key');
 
-      const result = getLlmOptionsFromPayload(provider, payload);
+    const result = getLlmOptionsFromPayload(provider, payload);
 
-      expect(result).toEqual({
-        apiKey: 'test-api-key',
-        baseURL: 'https://api.example.com',
-      });
+    expect(result).toEqual({
+      apiKey: 'test-api-key',
+      baseURL: 'https://api.example.com',
     });
+  });
 
-    it('should return only apiKey when baseURL is not provided', () => {
+  it('should return only apiKey when baseURL is not provided', () => {
       // Mocking the apiKeyManager.pick method
       apiKeyManager.pick.mockReturnValue('test-api-key');
 
       // No endpoint in the payload to test the fallback logic
       const result = getLlmOptionsFromPayload(provider, { apiKey: 'test-api-key' });
+
+      expect(result).toEqual({
+        apiKey: 'test-api-key',
+      });
+    });
+
+    it('should use the environment variable for baseURL if provided', () => {
+      // Mocking the environment variable for the OpenAI provider
+      vi.stubEnv('OPENAI_PROXY_URL', 'https://proxy.openai.com');
+
+      // Mocking the apiKeyManager.pick method
+      apiKeyManager.pick.mockReturnValue('test-api-key');
+
+      const result = getLlmOptionsFromPayload('OpenAI', { apiKey: 'test-api-key' });
+
+      expect(result).toEqual({
+        apiKey: 'test-api-key',
+        baseURL: 'https://proxy.openai.com',
+      });
+    });
+
+    it('should return only apiKey when environment variable for baseURL is not set', () => {
+      // Ensure the environment variable is not set (for the case when it's not available)
+      vi.stubEnv('OPENAI_PROXY_URL', undefined);
+
+      // Mocking the apiKeyManager.pick method
+      apiKeyManager.pick.mockReturnValue('test-api-key');
+
+      const result = getLlmOptionsFromPayload('OpenAI', { apiKey: 'test-api-key' });
 
       expect(result).toEqual({
         apiKey: 'test-api-key',
