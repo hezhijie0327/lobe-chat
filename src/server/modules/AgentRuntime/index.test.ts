@@ -27,10 +27,6 @@ import { AgentRuntime } from '@/libs/agent-runtime';
 import { LobeStepfunAI } from '@/libs/agent-runtime/stepfun';
 import LobeWenxinAI from '@/libs/agent-runtime/wenxin';
 
-import { getLlmOptionsFromPayload } from './index';
-
-import apiKeyManager from './apiKeyManager';
-
 // 模拟依赖项
 vi.mock('@/config/llm', () => ({
   getLLMConfig: vi.fn(() => ({
@@ -61,10 +57,6 @@ vi.mock('@/config/llm', () => ({
     WENXIN_ACCESS_KEY: 'test-wenxin-access-key',
     WENXIN_SECRET_KEY: 'test-wenxin-secret-key',
   })),
-}));
-
-vi.mock('./apiKeyManager', () => ({
-  pick: vi.fn() as jest.Mock, // Explicitly cast to jest.Mock to allow mock functions like `mockReturnValue`
 }));
 
 /**
@@ -382,55 +374,43 @@ describe('initAgentRuntimeWithUserPayload method', () => {
       apiKey: 'test-api-key', // mock JWT payload with apiKey
       endpoint: 'https://api.example.com', // mock endpoint (baseURL)
     };
-  
+
     it('should return both apiKey and baseURL when baseURL is provided', () => {
-      // Mocking the apiKeyManager.pick method
-      (apiKeyManager.pick as jest.Mock).mockReturnValue('test-api-key');
-  
-      const result = getLlmOptionsFromPayload(provider, payload);
-  
+      const result = await initAgentRuntimeWithUserPayload(provider, payload);
+
       expect(result).toEqual({
         apiKey: 'test-api-key',
         baseURL: 'https://api.example.com',
       });
     });
-  
+
     it('should return only apiKey when baseURL is not provided', () => {
-      // Mocking the apiKeyManager.pick method
-      (apiKeyManager.pick as jest.Mock).mockReturnValue('test-api-key');
-  
       // No endpoint in the payload to test the fallback logic
-      const result = getLlmOptionsFromPayload(provider, { apiKey: 'test-api-key' });
-  
+      const result = await initAgentRuntimeWithUserPayload(provider, { apiKey: 'test-api-key' });
+
       expect(result).toEqual({
         apiKey: 'test-api-key',
       });
     });
-  
+
     it('should use the environment variable for baseURL if provided', () => {
       // Mocking the environment variable for the OpenAI provider
       vi.stubEnv('OPENAI_PROXY_URL', 'https://proxy.openai.com');
-      
-      // Mocking the apiKeyManager.pick method
-      (apiKeyManager.pick as jest.Mock).mockReturnValue('test-api-key');
-      
-      const result = getLlmOptionsFromPayload('OpenAI', { apiKey: 'test-api-key' });
-  
+
+      const result = await initAgentRuntimeWithUserPayload('OpenAI', { apiKey: 'test-api-key' });
+
       expect(result).toEqual({
         apiKey: 'test-api-key',
         baseURL: 'https://proxy.openai.com',
       });
     });
-  
+
     it('should return only apiKey when environment variable for baseURL is not set', () => {
       // Ensure the environment variable is not set (for the case when it's not available)
       vi.stubEnv('OPENAI_PROXY_URL', undefined);
-      
-      // Mocking the apiKeyManager.pick method
-      (apiKeyManager.pick as jest.Mock).mockReturnValue('test-api-key');
-  
-      const result = getLlmOptionsFromPayload('OpenAI', { apiKey: 'test-api-key' });
-  
+
+      const result = await initAgentRuntimeWithUserPayload('OpenAI', { apiKey: 'test-api-key' });
+
       expect(result).toEqual({
         apiKey: 'test-api-key',
       });
