@@ -29,6 +29,9 @@ import LobeWenxinAI from '@/libs/agent-runtime/wenxin';
 
 import { initAgentRuntimeWithUserPayload } from './index';
 
+import { JWTPayload } from '@/const/auth';
+import apiKeyManager from './apiKeyManager';
+
 // 模拟依赖项
 vi.mock('@/config/llm', () => ({
   getLLMConfig: vi.fn(() => ({
@@ -59,6 +62,10 @@ vi.mock('@/config/llm', () => ({
     WENXIN_ACCESS_KEY: 'test-wenxin-access-key',
     WENXIN_SECRET_KEY: 'test-wenxin-secret-key',
   })),
+}));
+
+vi.mock('./apiKeyManager', () => ({
+  pick: vi.fn(),
 }));
 
 /**
@@ -367,6 +374,38 @@ describe('initAgentRuntimeWithUserPayload method', () => {
       // 根据实际实现，你可能需要检查是否返回了默认的 runtime 实例，或者是否抛出了异常
       // 例如，如果默认使用 OpenAI:
       expect(runtime['_runtime']).toBeInstanceOf(LobeOpenAI);
+    });
+  });
+
+  describe('getLlmOptionsFromPayload - default case', () => {
+    const provider = 'OpenAI'; // example provider
+    const payload: JWTPayload = {
+      apiKey: 'test-api-key', // mock JWT payload with apiKey
+      endpoint: 'https://api.example.com', // mock endpoint (baseURL)
+    };
+
+    it('should return both apiKey and baseURL when baseURL is provided', () => {
+      // Mocking the apiKeyManager.pick method
+      apiKeyManager.pick.mockReturnValue('test-api-key');
+
+      const result = getLlmOptionsFromPayload(provider, payload);
+
+      expect(result).toEqual({
+        apiKey: 'test-api-key',
+        baseURL: 'https://api.example.com',
+      });
+    });
+
+    it('should return only apiKey when baseURL is not provided', () => {
+      // Mocking the apiKeyManager.pick method
+      apiKeyManager.pick.mockReturnValue('test-api-key');
+
+      // No endpoint in the payload to test the fallback logic
+      const result = getLlmOptionsFromPayload(provider, { apiKey: 'test-api-key' });
+
+      expect(result).toEqual({
+        apiKey: 'test-api-key',
+      });
     });
   });
 });
