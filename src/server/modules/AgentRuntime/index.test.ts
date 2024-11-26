@@ -29,7 +29,6 @@ import LobeWenxinAI from '@/libs/agent-runtime/wenxin';
 
 import { initAgentRuntimeWithUserPayload } from './index';
 
-import { JWTPayload } from '@/const/auth';
 import apiKeyManager from './apiKeyManager';
 
 // 模拟依赖项
