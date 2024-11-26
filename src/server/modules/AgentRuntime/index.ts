@@ -34,7 +34,7 @@ const getLlmOptionsFromPayload = (provider: string, payload: JWTPayload) => {
       let upperProvider = provider.toUpperCase();
 
       if (!llmConfig[`${upperProvider}_API_KEY`]) {
-        upperProvider = "OPENAI"
+        upperProvider = ModelProvider.OpenAI.toUpperCase(); // Use OpenAI options as default
       }
 
       const apiKey = apiKeyManager.pick(payload?.apiKey || llmConfig[`${upperProvider}_API_KEY`]);
