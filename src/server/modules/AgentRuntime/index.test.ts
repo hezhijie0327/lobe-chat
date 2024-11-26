@@ -271,6 +271,12 @@ describe('initAgentRuntimeWithUserPayload method', () => {
       expect(runtime['_runtime']).toBeInstanceOf(LobeQwenAI);
     });
 
+    it('Qwen AI provider: without endpoint', async () => {
+      const jwtPayload: JWTPayload = { apiKey: 'user-qwen-key' };
+      const runtime = await initAgentRuntimeWithUserPayload(ModelProvider.Qwen, jwtPayload);
+      expect(runtime['_runtime'].baseURL).toBeUndefined();
+    });
+
     it('Bedrock AI provider: without apikey', async () => {
       const jwtPayload = {};
       const runtime = await initAgentRuntimeWithUserPayload(ModelProvider.Bedrock, jwtPayload);
@@ -365,55 +371,6 @@ describe('initAgentRuntimeWithUserPayload method', () => {
       // 根据实际实现，你可能需要检查是否返回了默认的 runtime 实例，或者是否抛出了异常
       // 例如，如果默认使用 OpenAI:
       expect(runtime['_runtime']).toBeInstanceOf(LobeOpenAI);
-    });
-  });
-
-  describe('getLlmOptionsFromPayload - default case', () => {
-    const provider = 'OpenAI'; // example provider
-    const payload: JWTPayload = {
-      apiKey: 'test-api-key', // mock JWT payload with apiKey
-      endpoint: 'https://api.example.com', // mock endpoint (baseURL)
-    };
-
-    it('should return both apiKey and baseURL when baseURL is provided', () => {
-      const result = await initAgentRuntimeWithUserPayload(provider, payload);
-
-      expect(result).toEqual({
-        apiKey: 'test-api-key',
-        baseURL: 'https://api.example.com',
-      });
-    });
-
-    it('should return only apiKey when baseURL is not provided', () => {
-      // No endpoint in the payload to test the fallback logic
-      const result = await initAgentRuntimeWithUserPayload(provider, { apiKey: 'test-api-key' });
-
-      expect(result).toEqual({
-        apiKey: 'test-api-key',
-      });
-    });
-
-    it('should use the environment variable for baseURL if provided', () => {
-      // Mocking the environment variable for the OpenAI provider
-      vi.stubEnv('OPENAI_PROXY_URL', 'https://proxy.openai.com');
-
-      const result = await initAgentRuntimeWithUserPayload('OpenAI', { apiKey: 'test-api-key' });
-
-      expect(result).toEqual({
-        apiKey: 'test-api-key',
-        baseURL: 'https://proxy.openai.com',
-      });
-    });
-
-    it('should return only apiKey when environment variable for baseURL is not set', () => {
-      // Ensure the environment variable is not set (for the case when it's not available)
-      vi.stubEnv('OPENAI_PROXY_URL', undefined);
-
-      const result = await initAgentRuntimeWithUserPayload('OpenAI', { apiKey: 'test-api-key' });
-
-      expect(result).toEqual({
-        apiKey: 'test-api-key',
-      });
     });
   });
 });
