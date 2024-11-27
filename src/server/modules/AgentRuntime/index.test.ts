@@ -283,6 +283,16 @@ describe('initAgentRuntimeWithUserPayload method', () => {
       expect(runtime['_runtime'].baseURL).toBe('https://dashscope.aliyuncs.com/compatible-mode/v1');
     });
 
+    it('Qwen AI provider: without apiKey and endpoint', async () => {
+      const jwtPayload: JWTPayload = {};
+      const runtime = await initAgentRuntimeWithUserPayload(ModelProvider.Qwen, jwtPayload);
+
+      // 假设 LobeQwenAI 是 Qwen 提供者的实现类
+      expect(runtime['_runtime']).toBeInstanceOf(LobeQwenAI);
+      // endpoint 不存在，应返回 DEFAULT_BASE_URL
+      expect(runtime['_runtime'].baseURL).toBe('https://dashscope.aliyuncs.com/compatible-mode/v1');
+    });
+
     it('Bedrock AI provider: without apikey', async () => {
       const jwtPayload = {};
       const runtime = await initAgentRuntimeWithUserPayload(ModelProvider.Bedrock, jwtPayload);
