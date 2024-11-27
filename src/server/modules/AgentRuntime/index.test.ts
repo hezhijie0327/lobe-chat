@@ -387,6 +387,8 @@ describe('initAgentRuntimeWithUserPayload method', () => {
       // 根据实际实现，你可能需要检查是否返回了默认的 runtime 实例，或者是否抛出了异常
       // 例如，如果默认使用 OpenAI:
       expect(runtime['_runtime']).toBeInstanceOf(LobeOpenAI);
+      // 应返回 OpenAI BaseURL
+      expect(runtime['_runtime'].baseURL).toBe('https://api.openai.com/v1');
     });
   });
 });
