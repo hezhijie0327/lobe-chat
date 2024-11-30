@@ -172,6 +172,13 @@ const FireworksAI: ModelProviderCard = {
       tokens: 32_768,
     },
     {
+      description: 'Qwen2.5 Coder 32B Instruct 是阿里云发布的代码特定大语言模型系列的最新版本。该模型在 Qwen2.5 的基础上，通过 5.5 万亿个 tokens 的训练，显著提升了代码生成、推理和修复能力。它不仅增强了编码能力，还保持了数学和通用能力的优势。模型为代码智能体等实际应用提供了更全面的基础',
+      displayName: 'Qwen2.5 Coder 32B Instruct',
+      enabled: false,
+      id: 'accounts/fireworks/models/qwen2p5-coder-32b-instruct',
+      tokens: 32_768,
+    },
+    {
       description: 'Yi-Large 模型，具备卓越的多语言处理能力，可用于各类语言生成和理解任务。',
       displayName: 'Yi-Large',
       enabled: true,
