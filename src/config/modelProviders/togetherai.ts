@@ -185,6 +185,13 @@ const TogetherAI: ModelProviderCard = {
       tokens: 4096,
     },
     {
+      description: 'QwQ模型是由 Qwen 团队开发的实验性研究模型，专注于增强 AI 推理能力。',
+      displayName: 'QwQ-32B-Preview',
+      enabled: true,
+      id: 'Qwen/QwQ-32B-Preview',
+      tokens: 32_768,
+    },
+    {
       description: 'Qwen2.5 是全新的大型语言模型系列，旨在优化指令式任务的处理。',
       displayName: 'Qwen 2.5 7B Instruct Turbo',
       enabled: true,
