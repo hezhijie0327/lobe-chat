@@ -1,5 +1,5 @@
-## Set Global Build ENV
-ARG DOCKER_PLATFORM=$TARGETPLATFORM
+## Set global build ENV
+ARG BUILDER_PLATFORM=$TARGETPLATFORM
 ARG NODEJS_VERSION="20"
 
 ## Base image for all building stages
@@ -34,7 +34,7 @@ RUN \
     && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ## Builder image, install all the dependencies and build the app
-FROM --platform=${DOCKER_PLATFORM} base AS builder
+FROM --platform=${BUILDER_PLATFORM} base AS builder
 
 ARG USE_CN_MIRROR
 ARG NEXT_PUBLIC_BASE_PATH
