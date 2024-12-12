@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           build-args: |
-            DOCKER_PLATFORM="linux/amd64"
+            BUILDER_PLATFORM="linux/amd64"
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
