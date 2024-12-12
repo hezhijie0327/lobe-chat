@@ -38,6 +38,8 @@ jobs:
         with:
           build-args: |
             BUILDER_PLATFORM="linux/amd64"
+            NODEJS_VERSION="20"
+            USE_CN_MIRROR="false"
           context: .
           file: ./Dockerfile.database  # 指定使用 Dockerfile.database 文件
           platforms: linux/amd64,linux/arm64
