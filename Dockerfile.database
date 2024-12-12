@@ -2,8 +2,8 @@
 ARG BUILDER_PLATFORM=$TARGETPLATFORM
 ARG NODEJS_VERSION="20"
 
-## Base image for all building stages
-FROM node:${NODEJS_VERSION}-slim AS base
+## Distroless image
+FROM node:${NODEJS_VERSION}-slim AS distroless
 
 ARG USE_CN_MIRROR
 
@@ -34,7 +34,7 @@ RUN \
     && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 ## Builder image, install all the dependencies and build the app
-FROM --platform=${BUILDER_PLATFORM} base AS builder
+FROM --platform=${BUILDER_PLATFORM} node:${NODEJS_VERSION}-slim AS builder
 
 ARG USE_CN_MIRROR
 ARG NEXT_PUBLIC_BASE_PATH
