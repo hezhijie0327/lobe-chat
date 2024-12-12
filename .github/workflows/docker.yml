@@ -37,9 +37,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           build-args: |
-            BUILDER_PLATFORM='linux/amd64'
-            NODEJS_VERSION="20"
-            USE_CN_MIRROR="false"
+            BUILDER_PLATFORM=linux/amd64
+            NODEJS_VERSION=20
+            USE_CN_MIRROR=false
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
