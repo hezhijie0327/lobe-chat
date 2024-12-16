@@ -3,6 +3,7 @@ import { ChatModelCard, ModelProviderCard } from '@/types/llm';
 import Ai21Provider from './ai21';
 import Ai360Provider from './ai360';
 import AnthropicProvider from './anthropic';
+import AntGroupProvider from './antgroup';
 import AzureProvider from './azure';
 import BaichuanProvider from './baichuan';
 import BedrockProvider from './bedrock';
@@ -75,6 +76,7 @@ export const LOBE_DEFAULT_MODEL_LIST: ChatModelCard[] = [
   SenseNovaProvider.chatModels,
   InternLMProvider.chatModels,
   HigressProvider.chatModels,
+  AntGroupProvider.chatModels,
 ].flat();
 
 export const DEFAULT_MODEL_PROVIDER_LIST = [
@@ -115,6 +117,7 @@ export const DEFAULT_MODEL_PROVIDER_LIST = [
   SiliconCloudProvider,
   HigressProvider,
   GiteeAIProvider,
+  AntGroupProvider,
 ];
 
 export const filterEnabledModels = (provider: ModelProviderCard) => {
@@ -129,6 +132,7 @@ export const isProviderDisableBroswerRequest = (id: string) => {
 export { default as Ai21ProviderCard } from './ai21';
 export { default as Ai360ProviderCard } from './ai360';
 export { default as AnthropicProviderCard } from './anthropic';
+export { default as AntGroupProviderCard } from './antgroup';
 export { default as AzureProviderCard } from './azure';
 export { default as BaichuanProviderCard } from './baichuan';
 export { default as BedrockProviderCard } from './bedrock';
