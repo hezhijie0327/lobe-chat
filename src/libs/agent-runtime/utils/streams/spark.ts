@@ -16,9 +16,11 @@ export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
     start(controller) {
       const chunk: OpenAI.ChatCompletionChunk = {
         choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => {
-          const toolCallsArray = Array.isArray(choice.message.tool_calls)
-            ? choice.message.tool_calls
-            : [choice.message.tool_calls]; // 如果不是数组，包装成数组
+          const toolCallsArray = choice.message.tool_calls
+            ? Array.isArray(choice.message.tool_calls)
+              ? choice.message.tool_calls
+              : [choice.message.tool_calls]
+            : []; // 如果不是数组，包装成数组
 
           return {
             delta: {
