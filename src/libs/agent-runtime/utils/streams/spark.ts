@@ -11,6 +11,60 @@ import {
   generateToolCallId,
 } from './protocol';
 
+export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
+  return new ReadableStream({
+    start(controller) {
+      const toolCallsArray = Array.isArray(choice.message.tool_calls)
+        ? item.delta.tool_calls
+        : [item.delta.tool_calls]; // 如果不是数组，包装成数组
+      
+      const chunk: OpenAI.ChatCompletionChunk = {
+        choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => ({
+          delta: {
+            content: choice.message.content,
+            role: choice.message.role,
+            tool_calls: toolCallsArray.map(
+              (tool, index): OpenAI.ChatCompletionChunk.Choice.Delta.ToolCall => ({
+                function: tool.function,
+                id: tool.id,
+                index,
+                type: tool.type,
+              }),
+            ),
+          },
+          finish_reason: null,
+          index: choice.index,
+          logprobs: choice.logprobs,
+        })),
+        created: data.created,
+        id: data.id,
+        model: data.model,
+        object: 'chat.completion.chunk',
+      };
+
+      controller.enqueue(chunk);
+
+      controller.enqueue({
+        choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => ({
+          delta: {
+            content: null,
+            role: choice.message.role,
+          },
+          finish_reason: choice.finish_reason,
+          index: choice.index,
+          logprobs: choice.logprobs,
+        })),
+        created: data.created,
+        id: data.id,
+        model: data.model,
+        object: 'chat.completion.chunk',
+        system_fingerprint: data.system_fingerprint,
+      } as OpenAI.ChatCompletionChunk);
+      controller.close();
+    },
+  });
+}
+
 export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamProtocolChunk => {
   const item = chunk.choices[0];
 
