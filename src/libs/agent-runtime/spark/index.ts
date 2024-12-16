@@ -31,19 +31,28 @@ export class LobeSparkAI implements LobeRuntimeAI {
     try {
       const params = await this.buildCompletionsParams(payload);
 
-      const response = await this.client.chat.completions.create(
-        params as unknown as OpenAI.ChatCompletionCreateParamsStreaming,
-      );
+      const response = await this.createChatCompletion(params);
 
-      const [prod, debug] = response.tee();
+      if (params.stream) {
+        const [prod, debug] = response.tee();
 
-      if (process.env.DEBUG_SPARK_CHAT_COMPLETION === '1') {
-        debugStream(debug.toReadableStream()).catch(console.error);
+        if (process.env.DEBUG_SPARK_CHAT_COMPLETION === '1') {
+          debugStream(debug.toReadableStream()).catch(console.error);
+        }
+
+        return StreamingResponse(OpenAIStream(prod), {
+          headers: options?.headers,
+        });
+      } else {
+        if (process.env.DEBUG_SPARK_CHAT_COMPLETION === '1') {
+          console.debug('Non-streamed response:', response);
+        }
+
+        return {
+          data: response,
+          headers: options?.headers,
+        };
       }
-
-      return StreamingResponse(SparkAIStream(prod), {
-        headers: options?.headers,
-      });
     } catch (error) {
       const { errorResult, RuntimeError } = handleOpenAIError(error);
 
