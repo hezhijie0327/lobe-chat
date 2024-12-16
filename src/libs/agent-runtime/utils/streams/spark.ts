@@ -13,29 +13,20 @@ import {
 
 export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
   return new ReadableStream({
-    start(controller) {      
+    start(controller) {
       const chunk: OpenAI.ChatCompletionChunk = {
         choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => ({
           delta: {
             content: choice.message.content,
             role: choice.message.role,
-            tool_calls: choice.message.tool_calls
-              ? Array.isArray(choice.message.tool_calls)
-                ? choice.message.tool_calls.map(
-                    (tool, index): OpenAI.ChatCompletionChunk.Choice.Delta.ToolCall => ({
-                      function: tool.function,
-                      id: tool.id,
-                      index,
-                      type: tool.type,
-                    })
-                  )
-                : [{
-                    function: (choice.message.tool_calls as OpenAI.ChatCompletion.Choice.ToolCall).function,
-                    id: (choice.message.tool_calls as OpenAI.ChatCompletion.Choice.ToolCall).id,
-                    index: 0, // Or appropriate index
-                    type: (choice.message.tool_calls as OpenAI.ChatCompletion.Choice.ToolCall).type,
-                  }]
-              : [],
+            tool_calls: choice.message.tool_calls?.map(
+              (tool, index): OpenAI.ChatCompletionChunk.Choice.Delta.ToolCall => ({
+                function: tool.function,
+                id: tool.id,
+                index,
+                type: tool.type,
+              }),
+            ),
           },
           finish_reason: null,
           index: choice.index,
@@ -65,7 +56,6 @@ export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
         object: 'chat.completion.chunk',
         system_fingerprint: data.system_fingerprint,
       } as OpenAI.ChatCompletionChunk);
-      
       controller.close();
     },
   });
