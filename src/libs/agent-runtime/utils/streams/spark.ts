@@ -22,15 +22,17 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
   }
 
   if (item.delta?.tool_calls) {
+    const toolCall = item.delta.tool_calls;
+
     return {
-      data: item.delta.tool_calls.map(
-        (value, index): StreamToolCallChunkData => ({
-          function: value.function,
-          id: value.id || generateToolCallId(index, value.function?.name),
-          index: typeof value.index !== 'undefined' ? value.index : index,
-          type: value.type || 'function',
-        }),
-      ),
+      data: [
+        {
+          function: toolCall.function,
+          id: toolCall.id || generateToolCallId(0, toolCall.function?.name),
+          index: typeof toolCall.index !== 'undefined' ? toolCall.index : 0,
+          type: toolCall.type || 'function',
+        },
+      ],
       id: chunk.id,
       type: 'tool_calls',
     } as StreamProtocolToolCallChunk;
