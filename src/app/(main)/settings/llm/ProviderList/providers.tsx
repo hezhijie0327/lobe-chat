@@ -4,6 +4,7 @@ import {
   Ai21ProviderCard,
   Ai360ProviderCard,
   AnthropicProviderCard,
+  AntGroupProviderCard,
   BaichuanProviderCard,
   DeepSeekProviderCard,
   FireworksAIProviderCard,
@@ -92,6 +93,7 @@ export const useProviderList = (): ProviderItem[] => {
       SiliconCloudProviderCard,
       HigressProviderCard,
       GiteeAIProviderCard,
+      AntGroupProviderCard,
     ],
     [
       AzureProvider,
