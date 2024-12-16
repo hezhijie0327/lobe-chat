@@ -35,22 +35,21 @@ export class LobeSparkAI implements LobeRuntimeAI {
         params as unknown as OpenAI.ChatCompletionCreateParamsStreaming,
       );
 
-      console.log(response);
+      if (params.stream) {
+        const [prod, debug] = response.tee();
 
-      let result
-      if (payload.tools) {
-        result = response;
-      } else {
-        result = response.tee();
+        if (process.env.DEBUG_SKARK_CHAT_COMPLETION === '1') {
+          debugStream(debug.toReadableStream()).catch(console.error);
+        }
+
+        return StreamingResponse(SparkAIStream(prod, options?.callback), {
+          headers: options?.headers,
+        });
       }
 
-      const [prod, debug] = result as any;
+      const stream = transformResponseToStream(response as unknown as OpenAI.ChatCompletion);
 
-      if (process.env.DEBUG_SPARK_CHAT_COMPLETION === '1') {
-        debugStream(debug.toReadableStream()).catch(console.error);
-      }
-
-      return StreamingResponse(SparkAIStream(prod), {
+      return StreamingResponse(SparkAIStream(stream, options?.callback), {
         headers: options?.headers,
       });
     } catch (error) {
