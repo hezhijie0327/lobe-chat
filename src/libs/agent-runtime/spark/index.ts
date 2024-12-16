@@ -35,6 +35,8 @@ export class LobeSparkAI implements LobeRuntimeAI {
         params as unknown as OpenAI.ChatCompletionCreateParamsStreaming,
       );
 
+      console.log(response);
+      
       const [prod, debug] = response.tee();
 
       if (process.env.DEBUG_SPARK_CHAT_COMPLETION === '1') {
