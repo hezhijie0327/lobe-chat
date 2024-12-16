@@ -15,23 +15,29 @@ export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
   return new ReadableStream({
     start(controller) {
       const chunk: OpenAI.ChatCompletionChunk = {
-        choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => ({
-          delta: {
-            content: choice.message.content,
-            role: choice.message.role,
-            tool_calls: choice.message.tool_calls?.map(
-              (tool, index): OpenAI.ChatCompletionChunk.Choice.Delta.ToolCall => ({
-                function: tool.function,
-                id: tool.id,
-                index,
-                type: tool.type,
-              }),
-            ),
-          },
-          finish_reason: null,
-          index: choice.index,
-          logprobs: choice.logprobs,
-        })),
+        choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => {
+          const toolCallsArray = Array.isArray(choice.message.tool_calls)
+            ? choice.message.tool_calls
+            : [choice.message.tool_calls]; // 如果不是数组，包装成数组
+
+          return {
+            delta: {
+              content: choice.message.content,
+              role: choice.message.role,
+              tool_calls: toolCallsArray.map(
+                (tool, index): OpenAI.ChatCompletionChunk.Choice.Delta.ToolCall => ({
+                  function: tool.function,
+                  id: tool.id,
+                  index,
+                  type: tool.type,
+                }),
+              ),
+            },
+            finish_reason: null,
+            index: choice.index,
+            logprobs: choice.logprobs,
+          };
+        }),
         created: data.created,
         id: data.id,
         model: data.model,
