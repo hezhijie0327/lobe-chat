@@ -147,6 +147,8 @@ ENV \
     AI21_API_KEY="" AI21_MODEL_LIST="" \
     # Ai360
     AI360_API_KEY="" AI360_MODEL_LIST="" \
+    # AntGroup
+    ANTGROUP_API_KEY="" ANTGROUP_MODEL_LIST="" \
     # Anthropic
     ANTHROPIC_API_KEY="" ANTHROPIC_MODEL_LIST="" ANTHROPIC_PROXY_URL="" \
     # Amazon Bedrock
