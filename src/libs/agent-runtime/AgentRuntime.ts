@@ -6,6 +6,7 @@ import { LobeRuntimeAI } from './BaseAI';
 import { LobeAi21AI } from './ai21';
 import { LobeAi360AI } from './ai360';
 import { LobeAnthropicAI } from './anthropic';
+import { LobeAntGroupAI } from './antgroup';
 import { LobeAzureOpenAI } from './azureOpenai';
 import { LobeBaichuanAI } from './baichuan';
 import { LobeBedrockAI, LobeBedrockAIParams } from './bedrock';
@@ -132,6 +133,7 @@ class AgentRuntime {
     params: Partial<{
       ai21: Partial<ClientOptions>;
       ai360: Partial<ClientOptions>;
+      antgroup: Partial<ClientOptions>;
       anthropic: Partial<ClientOptions>;
       azure: { apiVersion?: string; apikey?: string; endpoint?: string };
       baichuan: Partial<ClientOptions>;
@@ -354,6 +356,11 @@ class AgentRuntime {
 
       case ModelProvider.Higress: {
         runtimeModel = new LobeHigressAI(params.higress);
+        break;
+      }
+
+      case ModelProvider.AntGroup: {
+        runtimeModel = new LobeAntGroupAI(params.antgroup);
         break;
       }
     }
