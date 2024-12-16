@@ -24,6 +24,7 @@ export interface CreateChatCompletionOptions {
 export enum ModelProvider {
   Ai21 = 'ai21',
   Ai360 = 'ai360',
+  AntGroup = 'antgroup',
   Anthropic = 'anthropic',
   Azure = 'azure',
   Baichuan = 'baichuan',
