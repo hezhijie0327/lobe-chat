@@ -48,7 +48,7 @@ export class LobeSparkAI implements LobeRuntimeAI {
         });
       }
 
-      const stream = transformResponseToStream(response as unknown as OpenAI.ChatCompletion);
+      const stream = transformSparkResponseToStream(response as unknown as OpenAI.ChatCompletion);
 
       return StreamingResponse(SparkAIStream(stream, options?.callback), {
         headers: options?.headers,
