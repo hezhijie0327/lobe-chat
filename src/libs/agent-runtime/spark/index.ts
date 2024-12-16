@@ -68,7 +68,7 @@ export class LobeSparkAI implements LobeRuntimeAI {
     return {
       messages: await convertOpenAIMessages(messages as any),
       ...params,
-      stream: !payload.tools,
+      stream: true,
     };
   }
 }
