@@ -30,10 +30,10 @@ export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
                     })
                   )
                 : [{
-                    function: choice.message.tool_calls.function,
-                    id: choice.message.tool_calls.id,
+                    function: (choice.message.tool_calls as OpenAI.ChatCompletion.Choice.ToolCall).function,
+                    id: (choice.message.tool_calls as OpenAI.ChatCompletion.Choice.ToolCall).id,
                     index: 0, // Or appropriate index
-                    type: choice.message.tool_calls.type,
+                    type: (choice.message.tool_calls as OpenAI.ChatCompletion.Choice.ToolCall).type,
                   }]
               : [],
           },
