@@ -21,6 +21,7 @@ export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
               ? choice.message.tool_calls
               : [choice.message.tool_calls]
             : []; // 如果不是数组，包装成数组
+
           return {
             delta: {
               content: choice.message.content,
