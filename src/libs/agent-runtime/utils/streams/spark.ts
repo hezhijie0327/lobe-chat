@@ -1,13 +1,10 @@
-import { ChatCompletionContentPartText } from 'ai/prompts';
 import OpenAI from 'openai';
-import { ChatCompletionContentPart } from 'openai/resources/index.mjs';
 import type { Stream } from 'openai/streaming';
 
 import { ChatStreamCallbacks } from '../../types';
 import {
   StreamProtocolChunk,
   StreamProtocolToolCallChunk,
-  StreamToolCallChunkData,
   convertIterableToStream,
   createCallbacksTransformer,
   createSSEProtocolTransformer,
