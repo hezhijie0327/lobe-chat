@@ -50,10 +50,6 @@ export class LobeSparkAI implements LobeRuntimeAI {
 
       const stream = transformSparkResponseToStream(response as unknown as OpenAI.ChatCompletion);
 
-      if (process.env.DEBUG_SPARK_CHAT_COMPLETION === '1') {
-        debugStream(stream.toReadableStream()).catch(console.error);
-      }
-
       return StreamingResponse(SparkAIStream(stream, options?.callback), {
         headers: options?.headers,
       });
