@@ -40,7 +40,7 @@ export class LobeSparkAI implements LobeRuntimeAI {
           debugStream(debug.toReadableStream()).catch(console.error);
         }
 
-        return StreamingResponse(OpenAIStream(prod), {
+        return StreamingResponse(SparkAIStream(prod), {
           headers: options?.headers,
         });
       } else {
