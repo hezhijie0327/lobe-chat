@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import {
   Ai21ProviderCard,
   Ai360ProviderCard,
-  AnthropicProviderCard,
   AntGroupProviderCard,
+  AnthropicProviderCard,
   BaichuanProviderCard,
   DeepSeekProviderCard,
   FireworksAIProviderCard,
