@@ -37,11 +37,14 @@ export class LobeSparkAI implements LobeRuntimeAI {
 
       console.log(response);
 
+      let result
       if (payload.tools) {
-        const [prod, debug] = response;
+        result = response;
       } else {
-        const [prod, debug] = response.tee();
+        result = response.tee();
       }
+
+      const [prod, debug] = result;
 
       if (process.env.DEBUG_SPARK_CHAT_COMPLETION === '1') {
         debugStream(debug.toReadableStream()).catch(console.error);
