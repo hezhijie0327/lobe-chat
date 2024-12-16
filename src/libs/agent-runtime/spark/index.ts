@@ -9,7 +9,7 @@ import { desensitizeUrl } from '../utils/desensitizeUrl';
 import { handleOpenAIError } from '../utils/handleOpenAIError';
 import { convertOpenAIMessages } from '../utils/openaiHelpers';
 import { StreamingResponse } from '../utils/response';
-import { SparkAIStream } from '../utils/streams';
+import { OpenAIStream } from '../utils/streams';
 
 const DEFAULT_BASE_URL = 'https://spark-api-open.xf-yun.com/v1';
 
@@ -41,7 +41,7 @@ export class LobeSparkAI implements LobeRuntimeAI {
         debugStream(debug.toReadableStream()).catch(console.error);
       }
 
-      return StreamingResponse(SparkAIStream(prod), {
+      return StreamingResponse(OpenAIStream(prod), {
         headers: options?.headers,
       });
     } catch (error) {
