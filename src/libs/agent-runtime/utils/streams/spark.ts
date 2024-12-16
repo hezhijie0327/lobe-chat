@@ -81,16 +81,18 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
       ? item.delta.tool_calls
       : [item.delta.tool_calls]; // 如果不是数组，包装成数组
 
-    return {
-      data: toolCallsArray.map((toolCall, index) => ({
-        function: toolCall.function,
-        id: toolCall.id || generateToolCallId(index, toolCall.function?.name),
-        index: typeof toolCall.index !== 'undefined' ? toolCall.index : index,
-        type: toolCall.type || 'function',
-      })),
-      id: chunk.id,
-      type: 'tool_calls',
-    } as StreamProtocolToolCallChunk;
+    if (toolCallsArray.length > 0) {
+      return {
+        data: toolCallsArray.map((toolCall, index) => ({
+          function: toolCall.function,
+          id: toolCall.id || generateToolCallId(index, toolCall.function?.name),
+          index: typeof toolCall.index !== 'undefined' ? toolCall.index : index,
+          type: toolCall.type || 'function',
+        })),
+        id: chunk.id,
+        type: 'tool_calls',
+      } as StreamProtocolToolCallChunk;
+    }
   }
 
   if (item.finish_reason) {
