@@ -15,31 +15,16 @@ export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
   return new ReadableStream({
     start(controller) {
       const chunk: OpenAI.ChatCompletionChunk = {
-        choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => {
-          const toolCallsArray = choice.message.tool_calls
-            ? Array.isArray(choice.message.tool_calls)
-              ? choice.message.tool_calls
-              : [choice.message.tool_calls]
-            : []; // 如果不是数组，包装成数组
-
-          return {
-            delta: {
-              content: choice.message.content,
-              role: choice.message.role,
-              tool_calls: toolCallsArray.map(
-                (tool, index): OpenAI.ChatCompletionChunk.Choice.Delta.ToolCall => ({
-                  function: tool.function,
-                  id: tool.id,
-                  index,
-                  type: tool.type,
-                }),
-              ),
-            },
-            finish_reason: null,
-            index: choice.index,
-            logprobs: choice.logprobs,
-          };
-        }),
+        choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => ({
+          delta: {
+            content: choice.message.content,
+            role: choice.message.role,
+            tool_calls: [choice.message.tool_calls],
+          },
+          finish_reason: null,
+          index: choice.index,
+          logprobs: choice.logprobs,
+        })),
         created: data.created,
         id: data.id,
         model: data.model,
@@ -77,17 +62,8 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
   }
 
   if (item.delta?.tool_calls) {
-    const toolCallsArray = Array.isArray(item.delta.tool_calls)
-      ? item.delta.tool_calls
-      : [item.delta.tool_calls]; // 如果不是数组，包装成数组
-
     return {
-      data: toolCallsArray.map((toolCall, index) => ({
-        function: toolCall.function,
-        id: toolCall.id || generateToolCallId(index, toolCall.function?.name),
-        index: typeof toolCall.index !== 'undefined' ? toolCall.index : index,
-        type: toolCall.type || 'function',
-      })),
+      data: [item.delta.tool_calls],
       id: chunk.id,
       type: 'tool_calls',
     } as StreamProtocolToolCallChunk;
