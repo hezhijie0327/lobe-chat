@@ -13,7 +13,7 @@ import { OpenAIStream } from '../utils/streams';
 
 const DEFAULT_BASE_URL = 'https://spark-api-open.xf-yun.com/v1';
 
-export class LobeSenseNovaAI implements LobeRuntimeAI {
+export class LobeSparkAI implements LobeRuntimeAI {
   client: OpenAI;
   baseURL: string;
 
@@ -37,7 +37,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
 
       const [prod, debug] = response.tee();
 
-      if (process.env.DEBUG_SENSENOVA_CHAT_COMPLETION === '1') {
+      if (process.env.DEBUG_SPARK_CHAT_COMPLETION === '1') {
         debugStream(debug.toReadableStream()).catch(console.error);
       }
 
@@ -57,7 +57,7 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
         endpoint: desensitizedEndpoint,
         error: errorResult,
         errorType,
-        provider: ModelProvider.SenseNova,
+        provider: ModelProvider.Spark,
       });
     }
   }
@@ -73,4 +73,4 @@ export class LobeSenseNovaAI implements LobeRuntimeAI {
   }
 }
 
-export default LobeSenseNovaAI;
+export default LobeSparkAI;
