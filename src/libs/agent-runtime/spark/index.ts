@@ -7,10 +7,10 @@ import { AgentRuntimeError } from '../utils/createError';
 import { debugStream } from '../utils/debugStream';
 import { desensitizeUrl } from '../utils/desensitizeUrl';
 import { handleOpenAIError } from '../utils/handleOpenAIError';
-import { transformResponseToStream } from '../utils/openaiCompatibleFactory';
 import { convertOpenAIMessages } from '../utils/openaiHelpers';
 import { StreamingResponse } from '../utils/response';
 import { SparkAIStream } from '../utils/streams';
+import { transformSparkResponseToStream } from '../utils/streams/spark'
 
 const DEFAULT_BASE_URL = 'https://spark-api-open.xf-yun.com/v1';
 
