@@ -72,12 +72,23 @@ export class LobeSparkAI implements LobeRuntimeAI {
   }
 
   private async buildCompletionsParams(payload: ChatStreamPayload) {
-    const { messages, ...params } = payload;
+    const { messages, tools, ...params } = payload;
 
     return {
       messages: await convertOpenAIMessages(messages as any),
       ...params,
       stream: true,
+      ...(tools && {
+        tools: [
+          ...tools,
+          {
+            type: "web_search",
+            web_search: {
+              enable: false,
+            },
+          },
+        ],
+      }),
     };
   }
 }
