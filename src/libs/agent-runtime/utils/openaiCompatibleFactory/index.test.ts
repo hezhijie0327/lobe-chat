@@ -902,6 +902,7 @@ describe('LobeOpenAICompatibleFactory', () => {
               content: 'Test response',
               refusal: null
             },
+            logprobs: null,
             finish_reason: 'stop',
           },
         ],
