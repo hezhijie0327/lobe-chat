@@ -62,7 +62,10 @@ interface OpenAICompatibleFactoryOptions<T extends Record<string, any> = any> {
       payload: ChatStreamPayload,
       options: ConstructorOptions<T>,
     ) => OpenAI.ChatCompletionCreateParamsStreaming;
-    handleStream?: (stream: ReadableStream<any>, options: OpenAIStreamOptions) => StreamingResponse;
+    handleStream?: (
+      stream: Stream<OpenAI.ChatCompletionChunk> | ReadableStream<any>,
+      options: OpenAIStreamOptions,
+    ) => StreamingResponse;
     handleStreamBizErrorType?: (error: {
       message: string;
       name: string;
@@ -222,20 +225,23 @@ export const LobeOpenAICompatibleFactory = <T extends Record<string, any> = any>
         if (postPayload.stream) {
           const [prod, useForDebug] = response.tee();
 
+          const processedStream =
+            prod instanceof ReadableStream ? prod : prod.toReadableStream?.() ?? prod;
+
           if (debug?.chatCompletion?.()) {
-            const useForDebugStream =
+            const debugStreamInstance =
               useForDebug instanceof ReadableStream ? useForDebug : useForDebug.toReadableStream();
 
-            debugStream(useForDebugStream).catch(console.error);
+            debugStream(debugStreamInstance).catch(console.error);
           }
 
           if (chatCompletion?.handleStream) {
-            return StreamingResponse(chatCompletion.handleStream(prod, streamOptions), {
+            return StreamingResponse(chatCompletion.handleStream(processedStream, streamOptions), {
               headers: options?.headers,
             });
           }
 
-          return StreamingResponse(OpenAIStream(prod, streamOptions), {
+          return StreamingResponse(OpenAIStream(processedStream, streamOptions), {
             headers: options?.headers,
           });
         }
