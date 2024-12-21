@@ -12,6 +12,7 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
       return {
         ...rest,
         frequency_penalty: undefined,
+        model,
         stream: !payload.tools,
         temperature: (temperature !== undefined && temperature > 0 && temperature <= 2) ? temperature : undefined,
         top_p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,
