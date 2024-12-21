@@ -5,6 +5,7 @@ import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   AgentRuntimeErrorType,
   ChatStreamCallbacks,
+  ChatStreamPayload,
   LobeOpenAICompatibleRuntime,
   ModelProvider,
 } from '@/libs/agent-runtime';
@@ -798,11 +799,12 @@ describe('LobeOpenAICompatibleFactory', () => {
     });
 
     it('should use custom stream handler when provided', async () => {
-      // Create a custom stream handler
-      const customStreamHandler = vi.fn((stream: ReadableStream) => {
+      // Create a custom stream handler that handles both ReadableStream and OpenAI Stream
+      const customStreamHandler = vi.fn((stream: ReadableStream | Stream<OpenAI.ChatCompletionChunk>) => {
+        const readableStream = stream instanceof ReadableStream ? stream : stream.toReadableStream();
         return new ReadableStream({
           start(controller) {
-            const reader = stream.getReader();
+            const reader = readableStream.getReader();
             const process = async () => {
               try {
                 while (true) {
@@ -847,10 +849,13 @@ describe('LobeOpenAICompatibleFactory', () => {
         tee: () => [mockStream, mockStream],
       } as any);
 
-      await instance.chat({
+      const payload: ChatStreamPayload = {
         messages: [{ content: 'Test', role: 'user' }],
         model: 'test-model',
-      });
+        temperature: 0.7,
+      };
+
+      await instance.chat(payload);
 
       expect(customStreamHandler).toHaveBeenCalled();
     });
@@ -890,7 +895,11 @@ describe('LobeOpenAICompatibleFactory', () => {
         choices: [
           {
             index: 0,
-            message: { role: 'assistant', content: 'Test response' },
+            message: { 
+              role: 'assistant', 
+              content: 'Test response',
+              refusal: false 
+            },
             finish_reason: 'stop',
           },
         ],
@@ -904,13 +913,14 @@ describe('LobeOpenAICompatibleFactory', () => {
         mockResponse as any,
       );
 
-      await instance.chat(
-        {
-          messages: [{ content: 'Test', role: 'user' }],
-          model: 'test-model',
-          stream: false,
-        },
-      );
+      const payload: ChatStreamPayload = {
+        messages: [{ content: 'Test', role: 'user' }],
+        model: 'test-model',
+        temperature: 0.7,
+        stream: false,
+      };
+
+      await instance.chat(payload);
 
       expect(customTransformHandler).toHaveBeenCalledWith(mockResponse);
     });
