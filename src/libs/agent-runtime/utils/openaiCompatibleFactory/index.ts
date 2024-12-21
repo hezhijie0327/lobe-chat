@@ -63,9 +63,12 @@ interface OpenAICompatibleFactoryOptions<T extends Record<string, any> = any> {
       options: ConstructorOptions<T>,
     ) => OpenAI.ChatCompletionCreateParamsStreaming;
     handleStream?: (
-      stream: Stream<OpenAI.Chat.Completions.ChatCompletionChunk> | ReadableStream,
-      options: OpenAIStreamOptions,
+      stream: Stream<OpenAI.ChatCompletionChunk> | ReadableStream,
+      callbacks?: ChatStreamCallbacks,
     ) => ReadableStream;
+    handleStreamResponse?: (
+      data: OpenAI.ChatCompletion,
+    ) => ReadableStream<OpenAI.ChatCompletionChunk>;
     handleStreamBizErrorType?: (error: {
       message: string;
       name: string;
