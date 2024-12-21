@@ -5,11 +5,10 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.sensenova.cn/compatible-mode/v1',
   chatCompletion: {
     handlePayload: (payload) => {
-      const { frequency_penalty, messages, temperature, top_p, ...params } = payload;
+      const { frequency_penalty, temperature, top_p, ...rest } = payload;
 
       return {
-        messages: await convertOpenAIMessages(messages as any),
-        ...params,
+        ...rest,
         frequency_penalty: (frequency_penalty !== undefined && frequency_penalty > 0 && frequency_penalty <= 2) ? frequency_penalty : undefined,
         stream: true,
         temperature: (temperature !== undefined && temperature > 0 && temperature <= 2) ? temperature : undefined,
