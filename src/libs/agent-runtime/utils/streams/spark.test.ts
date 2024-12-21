@@ -6,7 +6,7 @@ describe('SparkAIStream', () => {
   beforeAll(() => {});
 
   it('should transform non-streaming response to stream', async () => {
-    const mockResponse: OpenAI.ChatCompletion = {
+    const mockResponse = {
       id: "cha000ceba6@dx193d200b580b8f3532",
       object: "chat.completion",
       created: 1734395014,
@@ -36,7 +36,7 @@ describe('SparkAIStream', () => {
         completion_tokens: 0,
         total_tokens: 8
       }
-    };
+    } as unknown as OpenAI.ChatCompletion;
 
     const stream = transformSparkResponseToStream(mockResponse);
     const decoder = new TextDecoder();
