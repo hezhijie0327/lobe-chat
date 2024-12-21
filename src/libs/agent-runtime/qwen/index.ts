@@ -1,4 +1,6 @@
-import { ModelProvider } from '../types';
+import OpenAI from 'openai';
+
+import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 import { QwenAIStream } from '../utils/streams';
@@ -6,11 +8,16 @@ import { QwenAIStream } from '../utils/streams';
 export const LobeQwenAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
   chatCompletion: {
-    handlePayload: (payload) => {
+    handlePayload: (payload: ChatStreamPayload) => {
+      const { temperature, top_p, ...rest } = payload;
+
       return {
-        ...payload,
+        ...rest,
+        frequency_penalty: undefined,
         stream: !payload.tools,
-      } as any;
+        temperature: (temperature !== undefined && temperature > 0 && temperature <= 2) ? temperature : undefined,
+        top_p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,
+      } as OpenAI.ChatCompletionCreateParamsStreaming;
     },
     handleStream: QwenAIStream,
   },
