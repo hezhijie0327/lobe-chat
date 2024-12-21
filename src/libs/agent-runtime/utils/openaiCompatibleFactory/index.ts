@@ -222,20 +222,36 @@ export const LobeOpenAICompatibleFactory = <T extends Record<string, any> = any>
         if (postPayload.stream) {
           const [prod, useForDebug] = response.tee();
 
+          // 调试流处理
           if (debug?.chatCompletion?.()) {
-            const debugStream = useForDebug instanceof ReadableStream ? useForDebug : useForDebug.body;
+            const debugStream =
+              useForDebug instanceof ReadableStream
+                ? useForDebug
+                : useForDebug.toReadableStream?.() || useForDebug;
+
             if (!debugStream) {
               throw new Error('Debug stream is null or undefined');
             }
             debugStream(debugStream).catch(console.error);
           }
 
-          const responseBody = prod.body;
-          if (!responseBody) {
-            throw new Error('Response body is null or undefined');
+          const readableStream = prod.toReadableStream?.() || (prod as unknown as ReadableStream);
+
+          if (!readableStream) {
+            throw new Error('Failed to convert Stream<ChatCompletionChunk> to ReadableStream');
           }
 
-          return StreamingResponse(OpenAIStream(responseBody, streamOptions), {
+          // 如果提供了 chatCompletion.handleStream，则调用处理逻辑
+          if (chatCompletion?.handleStream) {
+            const handledStream = chatCompletion.handleStream(readableStream, streamOptions);
+        
+            return StreamingResponse(handledStream, {
+              headers: options?.headers,
+            });
+          }
+
+          // 默认流处理逻辑
+          return StreamingResponse(OpenAIStream(readableStream, streamOptions), {
             headers: options?.headers,
           });
         }
