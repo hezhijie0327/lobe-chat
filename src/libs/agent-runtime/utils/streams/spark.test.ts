@@ -85,7 +85,7 @@ describe('SparkAIStream', () => {
               index: 0
             }
           ]
-        } as OpenAI.ChatCompletionChunk);
+        } as unknown as OpenAI.ChatCompletionChunk);
         controller.close();
       }
     });
