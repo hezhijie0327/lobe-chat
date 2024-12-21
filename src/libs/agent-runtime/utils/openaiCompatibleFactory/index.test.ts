@@ -1,5 +1,7 @@
 // @vitest-environment node
 import OpenAI from 'openai';
+import type { Stream } from 'openai/streaming';
+
 import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
@@ -897,8 +899,7 @@ describe('LobeOpenAICompatibleFactory', () => {
             index: 0,
             message: { 
               role: 'assistant', 
-              content: 'Test response',
-              refusal: false 
+              content: 'Test response'
             },
             finish_reason: 'stop',
           },
