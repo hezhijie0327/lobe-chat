@@ -62,7 +62,10 @@ interface OpenAICompatibleFactoryOptions<T extends Record<string, any> = any> {
       payload: ChatStreamPayload,
       options: ConstructorOptions<T>,
     ) => OpenAI.ChatCompletionCreateParamsStreaming;
-    handleStream?: (stream: ReadableStream<any>, options: OpenAIStreamOptions) => ReturnType<typeof StreamingResponse>;
+    handleStream?: (
+      stream: Stream<OpenAI.Chat.Completions.ChatCompletionChunk> | ReadableStream,
+      options: OpenAIStreamOptions,
+    ) => ReadableStream;
     handleStreamBizErrorType?: (error: {
       message: string;
       name: string;
@@ -222,36 +225,15 @@ export const LobeOpenAICompatibleFactory = <T extends Record<string, any> = any>
         if (postPayload.stream) {
           const [prod, useForDebug] = response.tee();
 
-          // 调试流处理
           if (debug?.chatCompletion?.()) {
-            const debugStream =
-              useForDebug instanceof ReadableStream
-                ? useForDebug
-                : useForDebug.toReadableStream?.() || useForDebug;
+            const useForDebugStream =
+              useForDebug instanceof ReadableStream ? useForDebug : useForDebug.toReadableStream();
 
-            if (!debugStream) {
-              throw new Error('Debug stream is null or undefined');
-            }
-            debugStream(debugStream).catch(console.error);
+            debugStream(useForDebugStream).catch(console.error);
           }
 
-          const readableStream = prod.toReadableStream?.() || (prod as unknown as ReadableStream);
-
-          if (!readableStream) {
-            throw new Error('Failed to convert Stream<ChatCompletionChunk> to ReadableStream');
-          }
-
-          // 如果提供了 chatCompletion.handleStream，则调用处理逻辑
-          if (chatCompletion?.handleStream) {
-            const handledStream = chatCompletion.handleStream(readableStream, streamOptions);
-        
-            return StreamingResponse(handledStream, {
-              headers: options?.headers,
-            });
-          }
-
-          // 默认流处理逻辑
-          return StreamingResponse(OpenAIStream(readableStream, streamOptions), {
+          const streamHandler = chatCompletion?.handleStream || OpenAIStream;
+          return StreamingResponse(streamHandler(prod, streamOptions), {
             headers: options?.headers,
           });
         }
@@ -264,7 +246,8 @@ export const LobeOpenAICompatibleFactory = <T extends Record<string, any> = any>
 
         const stream = transformResponseToStream(response as unknown as OpenAI.ChatCompletion);
 
-        return StreamingResponse(OpenAIStream(stream, streamOptions), {
+        const streamHandler = chatCompletion?.handleStream || OpenAIStream;
+        return StreamingResponse(streamHandler(stream, streamOptions), {
           headers: options?.headers,
         });
       } catch (error) {
