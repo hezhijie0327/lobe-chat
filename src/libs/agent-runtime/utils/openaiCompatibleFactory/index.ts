@@ -25,6 +25,7 @@ import { handleOpenAIError } from '../handleOpenAIError';
 import { convertOpenAIMessages } from '../openaiHelpers';
 import { StreamingResponse } from '../response';
 import { OpenAIStream, OpenAIStreamOptions } from '../streams';
+import { ChatStreamCallbacks } from '../../types';
 
 // the model contains the following keywords is not a chat model, so we should filter them out
 export const CHAT_MODELS_BLOCK_LIST = [
