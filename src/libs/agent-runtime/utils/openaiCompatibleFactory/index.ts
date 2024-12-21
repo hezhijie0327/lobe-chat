@@ -67,13 +67,13 @@ interface OpenAICompatibleFactoryOptions<T extends Record<string, any> = any> {
       stream: Stream<OpenAI.ChatCompletionChunk> | ReadableStream,
       callbacks?: ChatStreamCallbacks,
     ) => ReadableStream;
-    handleStreamResponse?: (
-      data: OpenAI.ChatCompletion,
-    ) => ReadableStream<OpenAI.ChatCompletionChunk>;
     handleStreamBizErrorType?: (error: {
       message: string;
       name: string;
     }) => ILobeAgentRuntimeErrorType | undefined;
+    handleStreamResponse?: (
+      data: OpenAI.ChatCompletion,
+    ) => ReadableStream<OpenAI.ChatCompletionChunk>;
     noUserId?: boolean;
   };
   constructorOptions?: ConstructorOptions<T>;
