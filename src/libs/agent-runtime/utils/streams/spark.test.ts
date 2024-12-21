@@ -16,6 +16,7 @@ describe('SparkAIStream', () => {
           message: {
             role: "assistant",
             content: "",
+            refusal: null,
             tool_calls: [{
               type: "function",
               function: {
@@ -26,7 +27,7 @@ describe('SparkAIStream', () => {
             }]
           },
           index: 0,
-          finish_reason: null
+          finish_reason: "tool_calls"
         }
       ],
       usage: {
