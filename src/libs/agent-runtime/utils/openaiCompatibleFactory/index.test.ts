@@ -797,6 +797,124 @@ describe('LobeOpenAICompatibleFactory', () => {
       });
     });
 
+    it('should use custom stream handler when provided', async () => {
+      // Create a custom stream handler
+      const customStreamHandler = vi.fn((stream: ReadableStream) => {
+        return new ReadableStream({
+          start(controller) {
+            const reader = stream.getReader();
+            const process = async () => {
+              try {
+                while (true) {
+                  const { done, value } = await reader.read();
+                  if (done) break;
+                  controller.enqueue(value);
+                }
+              } finally {
+                controller.close();
+              }
+            };
+            process();
+          },
+        });
+      });
+
+      const LobeMockProvider = LobeOpenAICompatibleFactory({
+        baseURL: 'https://api.test.com/v1',
+        chatCompletion: {
+          handleStream: customStreamHandler,
+        },
+        provider: ModelProvider.OpenAI,
+      });
+
+      const instance = new LobeMockProvider({ apiKey: 'test' });
+
+      // Create a mock stream
+      const mockStream = new ReadableStream({
+        start(controller) {
+          controller.enqueue({
+            id: 'test-id',
+            choices: [{ delta: { content: 'Hello' }, index: 0 }],
+            created: Date.now(),
+            model: 'test-model',
+            object: 'chat.completion.chunk',
+          });
+          controller.close();
+        },
+      });
+
+      vi.spyOn(instance['client'].chat.completions, 'create').mockResolvedValue({
+        tee: () => [mockStream, mockStream],
+      } as any);
+
+      await instance.chat({
+        messages: [{ content: 'Test', role: 'user' }],
+        model: 'test-model',
+      });
+
+      expect(customStreamHandler).toHaveBeenCalled();
+    });
+
+    it('should use custom transform handler for non-streaming response', async () => {
+      const customTransformHandler = vi.fn((data: OpenAI.ChatCompletion): ReadableStream => {
+        return new ReadableStream({
+          start(controller) {
+            // Transform the completion to chunk format
+            controller.enqueue({
+              id: data.id,
+              choices: data.choices.map((choice) => ({
+                delta: { content: choice.message.content },
+                index: choice.index,
+              })),
+              created: data.created,
+              model: data.model,
+              object: 'chat.completion.chunk',
+            });
+            controller.close();
+          },
+        });
+      });
+
+      const LobeMockProvider = LobeOpenAICompatibleFactory({
+        baseURL: 'https://api.test.com/v1',
+        chatCompletion: {
+          handleTtransformResponseToStream: customTransformHandler,
+        },
+        provider: ModelProvider.OpenAI,
+      });
+
+      const instance = new LobeMockProvider({ apiKey: 'test' });
+
+      const mockResponse: OpenAI.ChatCompletion = {
+        id: 'test-id',
+        choices: [
+          {
+            index: 0,
+            message: { role: 'assistant', content: 'Test response' },
+            finish_reason: 'stop',
+          },
+        ],
+        created: Date.now(),
+        model: 'test-model',
+        object: 'chat.completion',
+        usage: { completion_tokens: 2, prompt_tokens: 1, total_tokens: 3 },
+      };
+
+      vi.spyOn(instance['client'].chat.completions, 'create').mockResolvedValue(
+        mockResponse as any,
+      );
+
+      await instance.chat(
+        {
+          messages: [{ content: 'Test', role: 'user' }],
+          model: 'test-model',
+          stream: false,
+        },
+      );
+
+      expect(customTransformHandler).toHaveBeenCalledWith(mockResponse);
+    });
+
     describe('DEBUG', () => {
       it('should call debugStream and return StreamingTextResponse when DEBUG_OPENROUTER_CHAT_COMPLETION is 1', async () => {
         // Arrange
