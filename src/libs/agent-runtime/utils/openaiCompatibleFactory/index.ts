@@ -222,23 +222,20 @@ export const LobeOpenAICompatibleFactory = <T extends Record<string, any> = any>
         if (postPayload.stream) {
           const [prod, useForDebug] = response.tee();
 
-          const processedStream =
-            prod instanceof ReadableStream ? prod : prod.toReadableStream?.() ?? prod;
-
           if (debug?.chatCompletion?.()) {
-            const debugStreamInstance =
-              useForDebug instanceof ReadableStream ? useForDebug : useForDebug.toReadableStream();
-
-            debugStream(debugStreamInstance).catch(console.error);
+            const debugStream = useForDebug instanceof ReadableStream ? useForDebug : useForDebug.body;
+            if (!debugStream) {
+              throw new Error('Debug stream is null or undefined');
+            }
+            debugStream(debugStream).catch(console.error);
           }
 
-          if (chatCompletion?.handleStream) {
-            return StreamingResponse(chatCompletion.handleStream(processedStream, streamOptions), {
-              headers: options?.headers,
-            });
+          const responseBody = prod.body;
+          if (!responseBody) {
+            throw new Error('Response body is null or undefined');
           }
 
-          return StreamingResponse(OpenAIStream(processedStream, streamOptions), {
+          return StreamingResponse(OpenAIStream(responseBody, streamOptions), {
             headers: options?.headers,
           });
         }
