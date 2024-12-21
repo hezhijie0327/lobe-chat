@@ -62,10 +62,7 @@ interface OpenAICompatibleFactoryOptions<T extends Record<string, any> = any> {
       payload: ChatStreamPayload,
       options: ConstructorOptions<T>,
     ) => OpenAI.ChatCompletionCreateParamsStreaming;
-    handleStream?: (
-      stream: Stream<OpenAI.ChatCompletionChunk> | ReadableStream<any>,
-      options: OpenAIStreamOptions,
-    ) => StreamingResponse;
+    handleStream?: (stream: ReadableStream<any>, options: OpenAIStreamOptions) => ReturnType<typeof StreamingResponse>;
     handleStreamBizErrorType?: (error: {
       message: string;
       name: string;
