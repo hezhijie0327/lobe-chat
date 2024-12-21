@@ -1,28 +1,32 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { SparkAIStream, transformSparkResponseToStream } from './spark';
+import type OpenAI from 'openai';
 
 describe('SparkAIStream', () => {
   beforeAll(() => {});
 
   it('should transform non-streaming response to stream', async () => {
-    const mockResponse = {
-      code: 0,
-      message: "Success",
-      sid: "cha000ceba6@dx193d200b580b8f3532",
+    const mockResponse: OpenAI.ChatCompletion = {
+      id: "cha000ceba6@dx193d200b580b8f3532",
+      object: "chat.completion",
+      created: 1734395014,
+      model: "spark-v2",
       choices: [
         {
           message: {
             role: "assistant",
             content: "",
-            tool_calls: {
+            tool_calls: [{
               type: "function",
               function: {
                 arguments: '{"city":"Shanghai"}',
                 name: "realtime-weather____fetchCurrentWeather"
-              }
-            }
+              },
+              id: "call_1"
+            }]
           },
-          index: 0
+          index: 0,
+          finish_reason: null
         }
       ],
       usage: {
@@ -47,7 +51,7 @@ describe('SparkAIStream', () => {
         arguments: '{"city":"Shanghai"}',
         name: "realtime-weather____fetchCurrentWeather"
       },
-      id: undefined,
+      id: "call_1",
       index: 0,
       type: "function"
     }]);
@@ -58,28 +62,28 @@ describe('SparkAIStream', () => {
     const mockStream = new ReadableStream({
       start(controller) {
         controller.enqueue({
-          code: 0,
-          message: "Success",
-          sid: "cha000b0bf9@dx193d1ffa61cb894532",
           id: "cha000b0bf9@dx193d1ffa61cb894532",
+          object: "chat.completion.chunk",
           created: 1734395014,
+          model: "spark-v2",
           choices: [
             {
               delta: {
                 role: "assistant",
                 content: "",
-                tool_calls: {
+                tool_calls: [{
                   type: "function",
                   function: {
                     arguments: '{"city":"Shanghai"}',
                     name: "realtime-weather____fetchCurrentWeather"
-                  }
-                }
+                  },
+                  id: "call_1"
+                }]
               },
               index: 0
             }
           ]
-        });
+        } as OpenAI.ChatCompletionChunk);
         controller.close();
       }
     });
@@ -101,7 +105,7 @@ describe('SparkAIStream', () => {
     expect(chunks).toEqual([
       'id: cha000b0bf9@dx193d1ffa61cb894532\n',
       'event: tool_calls\n',
-      `data: [{"function":{"name":"realtime-weather____fetchCurrentWeather","arguments":"{\\"city\\":\\"Shanghai\\"}"},"type":"function","index":0}]\n\n`
+      `data: [{"function":{"name":"realtime-weather____fetchCurrentWeather","arguments":"{\\"city\\":\\"Shanghai\\"}"},"id":"call_1","type":"function","index":0}]\n\n`
     ]);
 
     expect(onToolCallMock).toHaveBeenCalledTimes(1);
@@ -112,6 +116,9 @@ describe('SparkAIStream', () => {
       start(controller) {
         controller.enqueue({
           id: "test-id",
+          object: "chat.completion.chunk",
+          created: 1734395014,
+          model: "spark-v2",
           choices: [
             {
               delta: {
@@ -121,9 +128,12 @@ describe('SparkAIStream', () => {
               index: 0
             }
           ]
-        });
+        } as OpenAI.ChatCompletionChunk);
         controller.enqueue({
           id: "test-id",
+          object: "chat.completion.chunk",
+          created: 1734395014,
+          model: "spark-v2",
           choices: [
             {
               delta: {
@@ -133,7 +143,7 @@ describe('SparkAIStream', () => {
               index: 0
             }
           ]
-        });
+        } as OpenAI.ChatCompletionChunk);
         controller.close();
       }
     });
