@@ -899,7 +899,8 @@ describe('LobeOpenAICompatibleFactory', () => {
             index: 0,
             message: { 
               role: 'assistant', 
-              content: 'Test response'
+              content: 'Test response',
+              refusal: false
             },
             finish_reason: 'stop',
           },
