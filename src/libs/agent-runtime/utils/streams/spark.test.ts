@@ -27,6 +27,7 @@ describe('SparkAIStream', () => {
             }]
           },
           index: 0,
+          logprobs: null,
           finish_reason: "tool_calls"
         }
       ],
