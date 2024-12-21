@@ -10,21 +10,21 @@ describe('SparkAIStream', () => {
       id: "cha000ceba6@dx193d200b580b8f3532",
       object: "chat.completion",
       created: 1734395014,
-      model: "spark-v2",
+      model: "max-32k",
       choices: [
         {
           message: {
             role: "assistant",
             content: "",
             refusal: null,
-            tool_calls: [{
+            tool_calls: {
               type: "function",
               function: {
                 arguments: '{"city":"Shanghai"}',
                 name: "realtime-weather____fetchCurrentWeather"
               },
               id: "call_1"
-            }]
+            }
           },
           index: 0,
           logprobs: null,
@@ -67,20 +67,20 @@ describe('SparkAIStream', () => {
           id: "cha000b0bf9@dx193d1ffa61cb894532",
           object: "chat.completion.chunk",
           created: 1734395014,
-          model: "spark-v2",
+          model: "max-32k",
           choices: [
             {
               delta: {
                 role: "assistant",
                 content: "",
-                tool_calls: [{
+                tool_calls: {
                   type: "function",
                   function: {
                     arguments: '{"city":"Shanghai"}',
                     name: "realtime-weather____fetchCurrentWeather"
                   },
                   id: "call_1"
-                }]
+                }
               },
               index: 0
             }
@@ -120,7 +120,7 @@ describe('SparkAIStream', () => {
           id: "test-id",
           object: "chat.completion.chunk",
           created: 1734395014,
-          model: "spark-v2",
+          model: "max-32k",
           choices: [
             {
               delta: {
@@ -135,7 +135,7 @@ describe('SparkAIStream', () => {
           id: "test-id",
           object: "chat.completion.chunk",
           created: 1734395014,
-          model: "spark-v2",
+          model: "max-32k",
           choices: [
             {
               delta: {
