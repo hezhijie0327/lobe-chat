@@ -25,11 +25,11 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
         ...rest,
         frequency_penalty: undefined,
         model,
-        presence_penalty: 
-          QwenLegacyModels.includes(model) 
-            ? undefined 
-            : (presence_penalty !== undefined && presence_penalty >= -2 && presence_penalty <= 2) 
-              ? presence_penalty 
+        presence_penalty:
+          QwenLegacyModels.has(model)
+            ? undefined
+            : (presence_penalty !== undefined && presence_penalty >= -2 && presence_penalty <= 2)
+              ? presence_penalty
               : undefined,
         stream: !payload.tools,
         temperature: (temperature !== undefined && temperature >= 0 && temperature < 2) ? temperature : undefined,
