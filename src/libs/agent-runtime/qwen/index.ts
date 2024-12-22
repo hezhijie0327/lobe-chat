@@ -3,13 +3,17 @@ import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 import { QwenAIStream } from '../utils/streams';
 
-export const QwenOpenSourceModels = [
+/*
+  QwenLegacyModels: A set of legacy Qwen models that do not support presence_penalty.
+  Currently, presence_penalty is only supported on Qwen commercial models and open-source models starting from Qwen 1.5 and later.
+*/
+export const QwenLegacyModels = new Set([
   'qwen-72b-chat',
   'qwen-14b-chat',
   'qwen-7b-chat',
   'qwen-1.8b-chat',
   'qwen-1.8b-longcontext-chat',
-];
+]);
 
 export const LobeQwenAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
@@ -22,7 +26,7 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
         frequency_penalty: undefined,
         model,
         presence_penalty: 
-          QwenOpenSourceModels.includes(model) 
+          QwenLegacyModels.includes(model) 
             ? undefined 
             : (presence_penalty !== undefined && presence_penalty >= -2 && presence_penalty <= 2) 
               ? presence_penalty 
