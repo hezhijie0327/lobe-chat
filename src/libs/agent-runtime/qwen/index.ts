@@ -3,7 +3,7 @@ import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 import { QwenAIStream } from '../utils/streams';
 
-const QWEN_MODELS_WITHOUT_PRESENCE_PENALTY = [
+export const QwenOpenSourceModels = [
   'qwen-72b-chat',
   'qwen-14b-chat',
   'qwen-7b-chat',
@@ -15,14 +15,14 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
   chatCompletion: {
     handlePayload: (payload) => {
-      const { model, temperature, top_p, ...rest } = payload;
+      const { model, presence_penalty, temperature, top_p, ...rest } = payload;
 
       return {
         ...rest,
         frequency_penalty: undefined,
         model,
         presence_penalty: 
-          QWEN_MODELS_WITHOUT_PRESENCE_PENALTY.includes(model) 
+          QwenOpenSourceModels.includes(model) 
             ? undefined 
             : (presence_penalty !== undefined && presence_penalty >= -2 && presence_penalty <= 2) 
               ? presence_penalty 
