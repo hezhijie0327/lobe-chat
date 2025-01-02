@@ -63,7 +63,6 @@ const TopicItem = memo<ConfigCellProps>(({ title, active, id, fav, threadId }) =
         align={'center'}
         className={cx(styles.container, 'topic-item', active && !threadId && styles.active)}
         distribution={'space-between'}
-        footer={null}
         horizontal
         onClick={() => {
           toggleTopic(id);
