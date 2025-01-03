@@ -19,6 +19,11 @@ export const transformGiteeAIStream = (chunk: OpenAI.ChatCompletionChunk): Strea
     return { data: chunk, id: chunk.id, type: 'data' };
   }
 
+  // code-raccoon-v1
+  if (typeof item.delta === 'string') {
+    return { data: item.delta, id: chunk.id, type: 'text' };
+  }
+
   if (item.delta?.tool_calls) {
     return {
       data: item.delta.tool_calls.map(
