@@ -15,12 +15,13 @@ import {
 export const transformGiteeAIStream = (chunk: OpenAI.ChatCompletionChunk): StreamProtocolChunk => {
   let item = chunk.choices[0];
 
-  if (!item) {
-    item = chunk.data.choices[0];
+  // Handle cases where chunk might be wrapped inside a `data` field
+  if (!item && (chunk as any).data?.choices) {
+    item = (chunk as any).data.choices[0];
+  }
 
-    if (!item) {
-      return { data: chunk, id: chunk.id, type: 'data' };
-    }
+  if (!item) {
+    return { data: chunk, id: chunk.id, type: 'data' };
   }
 
   if (item.delta?.tool_calls) {
