@@ -13,15 +13,14 @@ import {
 } from './protocol';
 
 export const transformGiteeAIStream = (chunk: OpenAI.ChatCompletionChunk): StreamProtocolChunk => {
-  const item = chunk.choices[0];
+  let item = chunk.choices[0];
 
   if (!item) {
-    return { data: chunk, id: chunk.id, type: 'data' };
-  }
+    item = chunk.data.choices[0];
 
-  // code-raccoon-v1
-  if (typeof item.delta === 'string') {
-    return { data: item.delta, id: chunk.id, type: 'text' };
+    if (!item) {
+      return { data: chunk, id: chunk.id, type: 'data' };
+    }
   }
 
   if (item.delta?.tool_calls) {
@@ -37,6 +36,10 @@ export const transformGiteeAIStream = (chunk: OpenAI.ChatCompletionChunk): Strea
       id: chunk.id,
       type: 'tool_calls',
     } as StreamProtocolToolCallChunk;
+  }
+
+  if (typeof item.delta === 'string') {
+    return { data: item.delta, id: chunk.id, type: 'text' };
   }
 
   if (typeof item.delta?.content === 'string') {
