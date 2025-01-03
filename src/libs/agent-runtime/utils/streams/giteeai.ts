@@ -66,6 +66,6 @@ export const GiteeAIStream = (
     stream instanceof ReadableStream ? stream : convertIterableToStream(stream);
 
   return readableStream
-    .pipeThrough(createSSEProtocolTransformer(transformGiteeStream))
+    .pipeThrough(createSSEProtocolTransformer(transformGiteeAIStream))
     .pipeThrough(createCallbacksTransformer(callbacks));
 };
