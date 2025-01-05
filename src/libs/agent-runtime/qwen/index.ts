@@ -48,7 +48,7 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
         } : {
           top_p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,
         }),
-        ...(process.env.QWEN_ENABLE_SEARCH !== '0' && QwenEnableSearchModelSeries.some(prefix => model.startsWith(prefix)) && {
+        ...(process.env.QWEN_ENABLE_SEARCH === '1' && QwenEnableSearchModelSeries.some(prefix => model.startsWith(prefix)) && {
           enable_search: true,
           search_options: {
             citation_format: process.env.QWEN_CITATION_FORMAT || '[<number>]', // [<number>] or [ref_<number>]
