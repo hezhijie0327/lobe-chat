@@ -48,7 +48,16 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
         } : {
           top_p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,
         }),
-        ...(process.env.QWEN_ENABLE_SEARCH !== '0' && QwenEnableSearchModelSeries.some(prefix => model.startsWith(prefix)) && { enable_search: true }),
+        ...(process.env.QWEN_ENABLE_SEARCH !== '0' && QwenEnableSearchModelSeries.some(prefix => model.startsWith(prefix)) && {
+          enable_search: true,
+          search_options: {
+            citation_format: process.env.QWEN_CITATION_FORMAT || '[<number>]', // [<number>] or [ref_<number>]
+            enable_citation: process.env.QWEN_ENABLE_CITATION === '1',
+            enable_source: process.env.QWEN_ENABLE_SOURCE === '1',
+            forced_search: process.env.QWEN_FORCED_SEARCH === '1',
+            search_strategy: process.env.QWEN_SEARCH_STRATEGY || 'standard', // standard or pro
+          }
+        }),
       } as any;
     },
     handleStream: QwenAIStream,
