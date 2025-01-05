@@ -48,7 +48,7 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
         } : {
           top_p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,
         }),
-        ...(QwenEnableSearchModels.has(model) && { enable_search: true }),
+        ...(Array.from(QwenEnableSearchModels).some(prefix => model.startsWith(prefix)) && { enable_search: true }),
       } as any;
     },
     handleStream: QwenAIStream,
