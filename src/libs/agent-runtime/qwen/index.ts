@@ -4,6 +4,16 @@ import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 import { QwenAIStream } from '../utils/streams';
 
 /*
+  QwenEnableSearchModels: A set of Qwen models that support the enable_search parameter.
+  Currently, enable_search is not supported on Qwen open-source series, Qwen-VL series, and Qwen-Long.
+*/
+export const QwenEnableSearchModels = new Set([
+  'qwen-max',
+  'qwen-plus',
+  'qwen-turbo',
+]);
+
+/*
   QwenLegacyModels: A set of legacy Qwen models that do not support presence_penalty.
   Currently, presence_penalty is only supported on Qwen commercial models and open-source models starting from Qwen 1.5 and later.
 */
@@ -38,7 +48,7 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
         } : {
           top_p: (top_p !== undefined && top_p > 0 && top_p < 1) ? top_p : undefined,
         }),
-        ...(['qwen-max', 'qwen-plus', 'qwen-turbo'].some(prefix => model.startsWith(prefix)) && { enable_search: true }), // Note: Qwen-VL, Qwen open-source, and Qwen-Long currently do not support configuring this parameter.
+        ...(QwenEnableSearchModels.has(model) && { enable_search: true }),
       } as any;
     },
     handleStream: QwenAIStream,
