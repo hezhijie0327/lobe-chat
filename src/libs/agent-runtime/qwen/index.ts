@@ -4,7 +4,7 @@ import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 import { QwenAIStream } from '../utils/streams';
 
 /*
-  QwenEnableSearchModels: An array of Qwen model series that support the enable_search parameter.
+  QwenEnableSearchModelSeries: An array of Qwen model series that support the enable_search parameter.
   Currently, enable_search is only supported on Qwen commercial series, excluding Qwen-VL series and Qwen-Long.
 */
 export const QwenEnableSearchModelSeries = [
