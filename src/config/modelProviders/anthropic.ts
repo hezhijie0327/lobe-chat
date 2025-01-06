@@ -134,9 +134,6 @@ const Anthropic: ModelProviderCard = {
   id: 'anthropic',
   modelsUrl: 'https://docs.anthropic.com/en/docs/about-claude/models#model-names',
   name: 'Anthropic',
-  proxyUrl: {
-    placeholder: 'https://api.anthropic.com',
-  },
   settings: {
     proxyUrl: {
       placeholder: 'https://api.anthropic.com',
@@ -146,10 +143,6 @@ const Anthropic: ModelProviderCard = {
       speed: 5,
       text: true,
     },
-  },
-  smoothing: {
-    speed: 5,
-    text: true,
   },
   url: 'https://anthropic.com',
 };
