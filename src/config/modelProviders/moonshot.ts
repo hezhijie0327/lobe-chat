@@ -37,22 +37,16 @@ const Moonshot: ModelProviderCard = {
   id: 'moonshot',
   modelsUrl: 'https://platform.moonshot.cn/docs/intro',
   name: 'Moonshot',
-  proxyUrl: {
-    placeholder: 'https://api.moonshot.cn/v1',
-  },
   settings: {
     proxyUrl: {
       placeholder: 'https://api.moonshot.cn/v1',
     },
     sdkType: 'openai',
+    showModelFetcher: true,
     smoothing: {
       speed: 2,
       text: true,
     },
-  },
-  smoothing: {
-    speed: 2,
-    text: true,
   },
   url: 'https://www.moonshot.cn',
 };

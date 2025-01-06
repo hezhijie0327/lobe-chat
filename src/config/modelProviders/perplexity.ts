@@ -62,9 +62,6 @@ const Perplexity: ModelProviderCard = {
   id: 'perplexity',
   modelsUrl: 'https://docs.perplexity.ai/guides/model-cards',
   name: 'Perplexity',
-  proxyUrl: {
-    placeholder: 'https://api.perplexity.ai',
-  },
   settings: {
     proxyUrl: {
       placeholder: 'https://api.perplexity.ai',
