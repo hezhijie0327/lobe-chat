@@ -36,5 +36,6 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
             : undefined,
       };
     },
+  },
   provider: ModelProvider.Ai360,
 });
