@@ -14,7 +14,7 @@ export const LobeXAI = LobeOpenAICompatibleFactory({
   },
   models: {
     transformModel: (m) => {
-      const model = m as unknown as Ai360ModelCard;
+      const model = m as unknown as XAIModelCard;
 
       return {
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
