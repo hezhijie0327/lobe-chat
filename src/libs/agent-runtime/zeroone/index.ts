@@ -18,7 +18,9 @@ export const LobeZeroOneAI = LobeOpenAICompatibleFactory({
 
       return {
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
+        functionCall: model.id.includes('fc'),
         id: model.id,
+        vision: model.id.includes('vision'),
       };
     },
   },
