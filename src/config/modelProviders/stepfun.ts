@@ -126,7 +126,11 @@ const Stepfun: ModelProviderCard = {
   checkModel: 'step-1-flash',
   description:
     '阶级星辰大模型具备行业领先的多模态及复杂推理能力，支持超长文本理解和强大的自主调度搜索引擎功能。',
+  // after test, currently https://api.stepfun.com/v1/chat/completions has the CORS issue
+  // So we should close the browser request mode
+  disableBrowserRequest: true,
   id: 'stepfun',
+  modelList: { showModelFetcher: true },
   modelsUrl: 'https://platform.stepfun.com/docs/llm/text',
   name: 'Stepfun',
   settings: {
@@ -137,6 +141,10 @@ const Stepfun: ModelProviderCard = {
       speed: 2,
       text: true,
     },
+  },
+  smoothing: {
+    speed: 2,
+    text: true,
   },
   url: 'https://stepfun.com',
 };
