@@ -98,7 +98,6 @@ const Baichuan: ModelProviderCard = {
   name: 'Baichuan',
   settings: {
     sdkType: 'openai',
-    showModelFetcher: true,
     smoothing: {
       speed: 2,
       text: true,
