@@ -38,7 +38,12 @@ export const LobeGroq = LobeOpenAICompatibleFactory({
       return {
         contextWindowTokens: model.context_window,
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
-        functionCall: model.id.includes('tool'),
+        functionCall: model.id.includes('tool') ||
+                      model.id.includes('llama-3.3') ||
+                      model.id.includes('llama-3.1') ||
+                      model.id.includes('llama3-') ||
+                      model.id.includes('mixtral-8x7b-32768') ||
+                      model.id.includes('gemma2-9b-it'),
         id: model.id,
         vision: model.id.includes('vision'),
       };
