@@ -594,6 +594,9 @@ const SiliconCloud: ModelProviderCard = {
   id: 'siliconcloud',
   modelsUrl: 'https://siliconflow.cn/zh-cn/models',
   name: 'SiliconCloud',
+  proxyUrl: {
+    placeholder: 'https://api.siliconflow.cn/v1',
+  },
   settings: {
     proxyUrl: {
       placeholder: 'https://api.siliconflow.cn/v1',

@@ -139,6 +139,7 @@ const GiteeAI: ModelProviderCard = {
   ],
   checkModel: 'Qwen2.5-72B-Instruct',
   description: 'Gitee AI 的 Serverless API 为 AI 开发者提供开箱即用的大模型推理 API 服务。',
+  disableBrowserRequest: true,
   id: 'giteeai',
   modelsUrl: 'https://ai.gitee.com/docs/openapi/v1#tag/serverless/POST/chat/completions',
   name: 'Gitee AI',

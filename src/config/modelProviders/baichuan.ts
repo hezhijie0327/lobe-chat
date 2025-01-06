@@ -102,6 +102,10 @@ const Baichuan: ModelProviderCard = {
       text: true,
     },
   },
+  smoothing: {
+    speed: 2,
+    text: true,
+  },
   url: 'https://platform.baichuan-ai.com',
 };
 

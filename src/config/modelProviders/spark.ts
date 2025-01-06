@@ -75,6 +75,10 @@ const Spark: ModelProviderCard = {
       text: true,
     },
   },
+  smoothing: {
+    speed: 2,
+    text: true,
+  },
   url: 'https://www.xfyun.cn',
 };
 
