@@ -274,9 +274,6 @@ const Google: ModelProviderCard = {
   id: 'google',
   modelsUrl: 'https://ai.google.dev/gemini-api/docs/models/gemini',
   name: 'Google',
-  proxyUrl: {
-    placeholder: 'https://generativelanguage.googleapis.com',
-  },
   settings: {
     proxyUrl: {
       placeholder: 'https://generativelanguage.googleapis.com',
@@ -286,10 +283,6 @@ const Google: ModelProviderCard = {
       speed: 2,
       text: true,
     },
-  },
-  smoothing: {
-    speed: 2,
-    text: true,
   },
   url: 'https://ai.google.dev',
 };
