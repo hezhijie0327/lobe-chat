@@ -30,6 +30,7 @@ export const LobeMoonshotAI = LobeOpenAICompatibleFactory({
 
       return {
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
+        functionCall: true,
         id: model.id,
       };
     },
