@@ -2,7 +2,12 @@ import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
-import { Ai360ModelCard } from './type';
+
+export interface Ai360ModelCard {
+  id: string;
+  max_tokens: number;
+  total_tokens: number;
+}
 
 export const LobeAi360AI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.360.cn/v1',
