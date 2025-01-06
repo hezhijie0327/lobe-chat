@@ -34,7 +34,6 @@ const Ai21: ModelProviderCard = {
   name: 'Ai21Labs',
   settings: {
     sdkType: 'openai',
-    showModelFetcher: true,
   },
   url: 'https://studio.ai21.com',
 };
