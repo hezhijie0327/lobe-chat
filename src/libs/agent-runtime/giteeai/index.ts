@@ -27,7 +27,6 @@ export const LobeGiteeAI = LobeOpenAICompatibleFactory({
       const model = m as unknown as GiteeAIModelCard;
 
       return {
-        contextWindowTokens: model.total_tokens,
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
         functionCall: functionCallKeywords.some(keyword => model.id.includes(keyword)) && !model.id.includes('Qwen2.5-Coder'),
         id: model.id,
