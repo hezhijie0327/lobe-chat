@@ -43,7 +43,7 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
         return {
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
           //functionCall: model.id,
-          id: model.model,
+          id: model.id,
         };
       })
       .filter(Boolean) as ChatModelCard[];
