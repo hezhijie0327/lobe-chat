@@ -8,7 +8,6 @@ import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
 
 export interface BaichuanModelCard {
   function_call: boolean;
-  id: string;
   max_input_length: number;
   max_tokens: number;
   model: string;
