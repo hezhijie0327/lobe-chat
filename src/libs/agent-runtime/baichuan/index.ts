@@ -3,6 +3,7 @@ import OpenAI from 'openai';
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
+import type { ChatModelCard } from '@/types/llm';
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
 
 export interface BaichuanModelCard {
@@ -31,28 +32,25 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
   debug: {
     chatCompletion: () => process.env.DEBUG_BAICHUAN_CHAT_COMPLETION === '1',
   },
-  models: {
-    transformModel: (m) => {
-      const model = { ...m } as unknown as BaichuanModelCard;
+  models: async ({ client }) => {
+    const models = await client.models.list();
 
-      console.log(model)
+    return models.data
+      .map((model) => {
+        const baichuanModel = { ...model } as BaichuanModelCard;
 
-      model.id = model.model;
-
-      console.log(model)
-
-      return {
-        contextWindowTokens: model.max_input_length,
-        displayName: model.model_show_name,
-        enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
-        functionCall: model.function_call,
-        id: model.id,
-        maxTokens:
-          typeof model.max_tokens === 'number'
-            ? model.max_tokens
-            : undefined,
-      };
-    },
+        return {
+          contextWindowTokens: baichuanModel.max_input_length,
+          displayName: baichuanModel.model_show_name,
+          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => baichuanModel.model.endsWith(m.id))?.enabled || false,
+          functionCall: baichuanModel.function_call,
+          id: baichuanModel.model,
+          maxTokens:
+            typeof model.max_tokens === 'number'
+              ? model.max_tokens
+              : undefined,
+        };
+      });
   },
   provider: ModelProvider.Baichuan,
 });
