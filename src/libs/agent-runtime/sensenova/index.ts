@@ -33,7 +33,7 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
     chatCompletion: () => process.env.DEBUG_SENSENOVA_CHAT_COMPLETION === '1',
   },
   models: async ({ client }) => {
-    const customClient = { ...client, baseURL: 'https://api.sensenova.cn/v1/llm' };
+    const customClient = { ...client, baseURL: 'https://api.sensenova.cn/v1/llm/models' };
 
     const modelsPage = await customClient.models.list() as any;
     const modelList: SenseNovaModelCard[] = modelsPage.data;
