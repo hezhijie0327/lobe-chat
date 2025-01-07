@@ -5,6 +5,14 @@ const Minimax: ModelProviderCard = {
   chatModels: [
     {
       contextWindowTokens: 245_760,
+      description: '相对于abab6.5系列模型在长文、数学、写作等能力有大幅度提升。',
+      displayName: 'abab7-chat-preview',
+      enabled: true,
+      functionCall: true,
+      id: 'abab7-chat-preview',
+    },
+    {
+      contextWindowTokens: 245_760,
       description: '适用于广泛的自然语言处理任务，包括文本生成、对话系统等。',
       displayName: 'abab6.5s',
       enabled: true,
