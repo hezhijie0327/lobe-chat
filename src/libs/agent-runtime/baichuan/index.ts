@@ -34,10 +34,12 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
     transformModel: (m) => {
       const model = m as unknown as BaichuanModelCard;
 
+      console.log(model)
+
       return {
         contextWindowTokens: model.max_input_length,
         displayName: model.model_show_name,
-        enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.model))?.enabled || false,
+        enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.model_show_name.endsWith(m.id))?.enabled || false,
         functionCall: model.function_call,
         id: model.model,
         maxTokens:
