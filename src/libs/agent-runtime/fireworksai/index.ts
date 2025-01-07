@@ -23,7 +23,7 @@ export const LobeFireworksAI = LobeOpenAICompatibleFactory({
         contextWindowTokens: model.context_length,
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
         functionCall: model.supports_tools,
-        id: model.model,
+        id: model.id,
         vision: model.supports_image_input,
       };
     },
