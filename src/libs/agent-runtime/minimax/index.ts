@@ -11,7 +11,7 @@ export const LobeMinimaxAI = LobeOpenAICompatibleFactory({
         ...rest,
         frequency_penalty: undefined,
         presence_penalty: undefined,
-        stream: true,
+        stream: !payload.tools,
         temperature: temperature === undefined || temperature <= 0 ? undefined : temperature / 2,
         top_p: top_p !== undefined && top_p > 0 && top_p <= 1 ? top_p : undefined,
       } as any;
