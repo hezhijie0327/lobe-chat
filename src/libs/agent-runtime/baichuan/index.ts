@@ -38,7 +38,6 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
       console.log(model)
 
       model.id = model.model;
-      delete model.model;
 
       console.log(model)
 
