@@ -41,7 +41,6 @@ export const LobeSiliconCloudAI = LobeOpenAICompatibleFactory({
       const model = m as unknown as SiliconCloudModelCard;
 
       return {
-        contextWindowTokens: model.total_tokens,
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
         functionCall: functionCallKeywords.some(keyword => model.id.includes(keyword)),
         id: model.id,
