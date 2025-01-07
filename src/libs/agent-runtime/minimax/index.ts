@@ -1,6 +1,21 @@
 import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
+export const getMaxTokens = (model: string): number | undefined => {
+  switch (model) {
+    case 'abab6.5t-chat':
+    case 'abab6.5g-chat':
+    case 'abab5.5s-chat':
+    case 'abab5.5-chat':
+      return 4096;
+    case 'abab7-chat-preview':
+    case 'abab6.5s-chat':
+      return 8192;
+    default:
+      return undefined;
+  }
+};
+
 export const LobeMinimaxAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.minimax.chat/v1',
   chatCompletion: {
@@ -10,6 +25,7 @@ export const LobeMinimaxAI = LobeOpenAICompatibleFactory({
       return {
         ...params,
         frequency_penalty: undefined,
+        max_tokens: payload.max_tokens !== undefined ? payload.max_tokens : getMaxTokens(payload.model),
         presence_penalty: undefined,
         stream: true,
         temperature: temperature === undefined || temperature <= 0 ? undefined : temperature / 2,
