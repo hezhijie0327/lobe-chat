@@ -9,6 +9,7 @@ const Minimax: ModelProviderCard = {
       displayName: 'abab7-chat-preview',
       enabled: true,
       functionCall: true,
+      maxOutput: 245_760,
       id: 'abab7-chat-preview',
     },
     {
@@ -17,6 +18,7 @@ const Minimax: ModelProviderCard = {
       displayName: 'abab6.5s',
       enabled: true,
       functionCall: true,
+      maxOutput: 245_760,
       id: 'abab6.5s-chat',
     },
     {
@@ -25,6 +27,7 @@ const Minimax: ModelProviderCard = {
       displayName: 'abab6.5g',
       enabled: true,
       functionCall: true,
+      maxOutput: 8192,
       id: 'abab6.5g-chat',
     },
     {
@@ -33,18 +36,21 @@ const Minimax: ModelProviderCard = {
       displayName: 'abab6.5t',
       enabled: true,
       functionCall: true,
+      maxOutput: 8192,
       id: 'abab6.5t-chat',
     },
     {
       contextWindowTokens: 16_384,
       description: '面向生产力场景，支持复杂任务处理和高效文本生成，适用于专业领域应用。',
       displayName: 'abab5.5',
+      maxOutput: 16_384,
       id: 'abab5.5-chat',
     },
     {
       contextWindowTokens: 8192,
       description: '专为中文人设对话场景设计，提供高质量的中文对话生成能力，适用于多种应用场景。',
       displayName: 'abab5.5s',
+      maxOutput: 8192,
       id: 'abab5.5s-chat',
     },
   ],
