@@ -33,6 +33,10 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
     chatCompletion: () => process.env.DEBUG_SENSENOVA_CHAT_COMPLETION === '1',
   },
   models: async ({ client }) => {
+    const functionCallKeywords = [
+      'SenseChat-5',
+    ];
+
     client.baseURL = 'https://api.sensenova.cn/v1/llm';
 
     const modelsPage = await client.models.list() as any;
@@ -42,8 +46,9 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
       .map((model) => {
         return {
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
-          //functionCall: model.id,
+          functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
           id: model.id,
+          vision: model.id.toLowerCase().includes('vision'),
         };
       })
       .filter(Boolean) as ChatModelCard[];
