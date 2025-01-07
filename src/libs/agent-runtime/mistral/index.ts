@@ -5,7 +5,6 @@ import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
 
 export interface MistralModelCard {
   capabilities: {
-    completion_chat: boolean;
     function_calling: boolean;
     vision: boolean;
   };
