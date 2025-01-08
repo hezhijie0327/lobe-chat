@@ -59,7 +59,7 @@ export class LobeGoogleAI implements LobeRuntimeAI {
     if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidProviderAPIKey);
 
     this.client = new GoogleGenerativeAI(apiKey);
-    this.baseURL = baseURL;
+    this.baseURL = baseURL || DEFAULT_BASE_URL;
     this.apiKey = apiKey;
   }
 
@@ -130,7 +130,7 @@ export class LobeGoogleAI implements LobeRuntimeAI {
   }
 
   async models() {
-    const url = `${DEFAULT_BASE_URL}/v1beta/models?key=${this.apiKey}`;
+    const url = `${this.baseURL}/v1beta/models?key=${this.apiKey}`;
     const response = await fetch(url, {
       method: 'GET',
     });
