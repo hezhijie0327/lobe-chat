@@ -14,7 +14,7 @@ import { StreamingResponse } from '../utils/response';
 import { AnthropicStream } from '../utils/streams';
 
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
-import { ChatModelCard } from '@/types/llm';
+import type { ChatModelCard } from '@/types/llm';
 
 export interface AnthropicModelCard {
   display_name: string;
@@ -113,7 +113,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
   }
 }
 
-async models(): Promise<ChatModelCard[]> {
+async models() {
   const url = `${DEFAULT_BASE_URL}/v1/models`;
   const response = await fetch(url, {
     headers: {
