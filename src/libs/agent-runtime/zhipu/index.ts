@@ -36,7 +36,7 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
   },
   constructorOptions: {
     defaultHeaders: {
-      'Bigmodel-Organization': 'lobechat',
+      'Bigmodel-Organization': 'lobehub',
       'Bigmodel-project': 'lobechat',
     },
   },
