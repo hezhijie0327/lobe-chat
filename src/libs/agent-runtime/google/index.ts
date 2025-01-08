@@ -27,8 +27,6 @@ import { StreamingResponse } from '../utils/response';
 import { GoogleGenerativeAIStream, convertIterableToStream } from '../utils/streams';
 import { parseDataUri } from '../utils/uriParser';
 
-const DEFAULT_BASE_URL = 'https://generativelanguage.googleapis.com';
-
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
 import type { ChatModelCard } from '@/types/llm';
 
@@ -49,6 +47,8 @@ enum HarmCategory {
 enum HarmBlockThreshold {
   BLOCK_NONE = 'BLOCK_NONE',
 }
+
+const DEFAULT_BASE_URL = 'https://generativelanguage.googleapis.com';
 
 export class LobeGoogleAI implements LobeRuntimeAI {
   private client: GoogleGenerativeAI;
