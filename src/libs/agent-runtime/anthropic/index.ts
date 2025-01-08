@@ -27,6 +27,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
   private client: Anthropic;
 
   baseURL: string;
+  apiKey?: string;
 
   constructor({ apiKey, baseURL = DEFAULT_BASE_URL, ...res }: ClientOptions = {}) {
     if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidProviderAPIKey);
