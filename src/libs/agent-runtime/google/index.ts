@@ -27,6 +27,8 @@ import { StreamingResponse } from '../utils/response';
 import { GoogleGenerativeAIStream, convertIterableToStream } from '../utils/streams';
 import { parseDataUri } from '../utils/uriParser';
 
+const DEFAULT_BASE_URL = 'https://generativelanguage.googleapis.com';
+
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
 import type { ChatModelCard } from '@/types/llm';
 
@@ -53,7 +55,7 @@ export class LobeGoogleAI implements LobeRuntimeAI {
   baseURL?: string;
   apiKey?: string;
 
-  constructor({ apiKey, baseURL }: { apiKey?: string; baseURL?: string } = {}) {
+  constructor({ apiKey, baseURL = DEFAULT_BASE_URL }: { apiKey?: string; baseURL?: string } = {}) {
     if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidProviderAPIKey);
 
     this.client = new GoogleGenerativeAI(apiKey);
@@ -128,7 +130,7 @@ export class LobeGoogleAI implements LobeRuntimeAI {
   }
 
   async models() {
-    const url = `${this.baseURL}/v1beta/models?key=${this.apiKey}`;
+    const url = `${DEFAULT_BASE_URL}/v1beta/models?key=${this.apiKey}`;
     const response = await fetch(url, {
       method: 'GET',
     });
