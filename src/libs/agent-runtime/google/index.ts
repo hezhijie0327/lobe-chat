@@ -148,7 +148,7 @@ export class LobeGoogleAI implements LobeRuntimeAI {
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => modelName.endsWith(m.id))?.enabled || false,
           functionCall: modelName.toLowerCase().includes('gemini'),
           id: modelName,
-          vision: modelName.toLowerCase().includes('gemini') && !modelName.toLowerCase().includes('gemini-1.0'),
+          vision: modelName.toLowerCase().includes('vision') || modelName.toLowerCase().includes('gemini') && !modelName.toLowerCase().includes('gemini-1.0'),
         };
       })
       .filter(Boolean) as ChatModelCard[];
