@@ -55,9 +55,9 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
           description: model.description,
           displayName: model.modelName,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode.endsWith(m.id))?.enabled || false,
-          functionCall: model.modelCode.toLowerCase().includes('glm-4-'),
+          functionCall: model.modelCode.toLowerCase().includes('glm-4') && !model.modelCode.toLowerCase().includes('glm-4v'),
           id: model.modelCode,
-          vision: model.modelCode.toLowerCase().includes('glm-4v-'),
+          vision: model.modelCode.toLowerCase().includes('glm-4v'),
         };
       })
       .filter(Boolean) as ChatModelCard[];
