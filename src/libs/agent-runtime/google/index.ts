@@ -146,9 +146,9 @@ export class LobeGoogleAI implements LobeRuntimeAI {
           contextWindowTokens: model.inputTokenLimit + model.outputTokenLimit,
           displayName: model.displayName,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => modelName.endsWith(m.id))?.enabled || false,
-          functionCall: model.id.toLowerCase().includes('gemini'),
+          functionCall: modelName.toLowerCase().includes('gemini'),
           id: modelName,
-          vision: model.id.toLowerCase().includes('gemini') && !model.id.toLowerCase().includes('gemini-1.0'),
+          vision: modelName.toLowerCase().includes('gemini') && !modelName.toLowerCase().includes('gemini-1.0'),
         };
       })
       .filter(Boolean) as ChatModelCard[];
