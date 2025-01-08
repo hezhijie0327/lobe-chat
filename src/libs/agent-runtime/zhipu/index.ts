@@ -3,6 +3,15 @@ import OpenAI from 'openai';
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
+import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
+import type { ChatModelCard } from '@/types/llm';
+
+export interface ZhipuModelCard {
+  description: string;
+  modelCode: string;
+  modelName: string;
+}
+
 export const LobeZhipuAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://open.bigmodel.cn/api/paas/v4',
   chatCompletion: {
@@ -25,8 +34,33 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
             }),
       }) as OpenAI.ChatCompletionCreateParamsStreaming,
   },
+  constructorOptions: {
+    defaultHeaders: {
+      'Bigmodel-Organization': 'lobechat',
+      'Bigmodel-project': 'lobechat',
+    },
+  },
   debug: {
     chatCompletion: () => process.env.DEBUG_ZHIPU_CHAT_COMPLETION === '1',
+  },
+  models: async ({ client }) => {
+    client.baseURL = 'https://open.bigmodel.cn/api/fine-tuning/model_center/list?pageSize=100&pageNum=1';
+
+    const modelsPage = await client.models.list() as any;
+    const modelList: ZhipuModelCard[] = modelsPage.data;
+
+    return modelList
+      .map((model) => {
+        return {
+          description: model.description,
+          displayName: model.modelName,
+          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode.endsWith(m.id))?.enabled || false,
+          functionCall: !model.modelCode.toLowerCase().includes('-4v-') && !model.modelCode.toLowerCase().includes('-zero-'),
+          id: model.modelCode,
+          vision: model.modelCode.toLowerCase().includes('-4v-'),
+        };
+      })
+      .filter(Boolean) as ChatModelCard[];
   },
   provider: ModelProvider.ZhiPu,
 });
