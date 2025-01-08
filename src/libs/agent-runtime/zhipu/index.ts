@@ -47,7 +47,7 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
     client.baseURL = 'https://open.bigmodel.cn/api/fine-tuning/model_center/list?pageSize=100&pageNum=1';
 
     const modelsPage = await client.models.list() as any;
-    const modelList: ZhipuModelCard[] = modelsPage.data;
+    const modelList: ZhipuModelCard[] = modelsPage.body.rows;
 
     return modelList
       .map((model) => {
@@ -55,9 +55,9 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
           description: model.description,
           displayName: model.modelName,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode.endsWith(m.id))?.enabled || false,
-          functionCall: !model.modelCode.toLowerCase().includes('-4v-') && !model.modelCode.toLowerCase().includes('-zero-'),
+          functionCall: model.modelCode.toLowerCase().includes('glm-4-'),
           id: model.modelCode,
-          vision: model.modelCode.toLowerCase().includes('-4v-'),
+          vision: model.modelCode.toLowerCase().includes('glm-4v-'),
         };
       })
       .filter(Boolean) as ChatModelCard[];
