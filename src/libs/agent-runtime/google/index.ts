@@ -27,6 +27,16 @@ import { StreamingResponse } from '../utils/response';
 import { GoogleGenerativeAIStream, convertIterableToStream } from '../utils/streams';
 import { parseDataUri } from '../utils/uriParser';
 
+import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
+import type { ChatModelCard } from '@/types/llm';
+
+export interface GoogleModelCard {
+  displayName: string;
+  inputTokenLimit: number;
+  name: string;
+  outputTokenLimit: number;
+}
+
 enum HarmCategory {
   HARM_CATEGORY_DANGEROUS_CONTENT = 'HARM_CATEGORY_DANGEROUS_CONTENT',
   HARM_CATEGORY_HARASSMENT = 'HARM_CATEGORY_HARASSMENT',
@@ -41,12 +51,14 @@ enum HarmBlockThreshold {
 export class LobeGoogleAI implements LobeRuntimeAI {
   private client: GoogleGenerativeAI;
   baseURL?: string;
+  apiKey?: string;
 
   constructor({ apiKey, baseURL }: { apiKey?: string; baseURL?: string } = {}) {
     if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidProviderAPIKey);
 
     this.client = new GoogleGenerativeAI(apiKey);
     this.baseURL = baseURL;
+    this.apiKey = apiKey;
   }
 
   async chat(rawPayload: ChatStreamPayload, options?: ChatCompetitionOptions) {
@@ -113,6 +125,31 @@ export class LobeGoogleAI implements LobeRuntimeAI {
 
       throw AgentRuntimeError.chat({ error, errorType, provider: ModelProvider.Google });
     }
+  }
+
+  async models() {
+    const url = `${this.baseURL}/v1beta/models?key=${this.apiKey}`;
+    const response = await fetch(url, {
+      method: 'GET',
+    });
+    const json = await response.json();
+  
+    const modelList: GoogleModelCard[] = json['models'];
+
+    return modelList
+      .map((model) => {
+        const modelName = model.name.replace(/^models\//, '');
+
+        return {
+          contextWindowTokens: model.inputTokenLimit + model.outputTokenLimit,
+          displayName: model.displayName,
+          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => modelName.endsWith(m.id))?.enabled || false,
+          functionCall: true,
+          id: modelName,
+          vision: true,
+        };
+      })
+      .filter(Boolean) as ChatModelCard[];
   }
 
   private buildPayload(payload: ChatStreamPayload) {
