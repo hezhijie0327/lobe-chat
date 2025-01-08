@@ -44,6 +44,7 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
     chatCompletion: () => process.env.DEBUG_ZHIPU_CHAT_COMPLETION === '1',
   },
   models: async ({ client }) => {
+    // ref: https://open.bigmodel.cn/console/modelcenter/square
     client.baseURL = 'https://open.bigmodel.cn/api/fine-tuning/model_center/list?pageSize=100&pageNum=1';
 
     const modelsPage = await client.models.list() as any;
