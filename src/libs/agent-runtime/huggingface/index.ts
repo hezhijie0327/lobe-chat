@@ -65,7 +65,7 @@ export const LobeHuggingFaceAI = LobeOpenAICompatibleFactory({
     return modelList
       .map((model) => {
         return {
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode.endsWith(m.id))?.enabled || false,
+          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
           functionCall: model.tags.some(tag => tag.toLowerCase().includes('function-calling')),
           id: model.id,
           vision: model.tags.some(tag => tag.toLowerCase().includes('vision')),
