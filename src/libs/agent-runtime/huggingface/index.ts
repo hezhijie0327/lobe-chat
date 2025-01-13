@@ -6,6 +6,14 @@ import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 import { convertIterableToStream } from '../utils/streams';
 
+import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
+import type { ChatModelCard } from '@/types/llm';
+
+export interface HuggingFaceModelCard {
+  id: string;
+  tags: string[];
+}
+
 export const LobeHuggingFaceAI = LobeOpenAICompatibleFactory({
   chatCompletion: {
     handleStreamBizErrorType: (error) => {
@@ -46,6 +54,24 @@ export const LobeHuggingFaceAI = LobeOpenAICompatibleFactory({
   },
   debug: {
     chatCompletion: () => process.env.DEBUG_HUGGINGFACE_CHAT_COMPLETION === '1',
+  },
+  models: async ({ client }) => {
+    // ref: https://huggingface.co/docs/hub/api
+    client.baseURL = 'https://huggingface.co/api';
+
+    const modelsPage = await client.models.list() as any;
+    const modelList: HuggingFaceModelCard[] = modelsPage.body;
+
+    return modelList
+      .map((model) => {
+        return {
+          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode.endsWith(m.id))?.enabled || false,
+          functionCall: model.tags.some(tag => tag.toLowerCase().includes('function-calling')),
+          id: model.id,
+          vision: model.tags.some(tag => tag.toLowerCase().includes('vision')),
+        };
+      })
+      .filter(Boolean) as ChatModelCard[];
   },
   provider: ModelProvider.HuggingFace,
 });
