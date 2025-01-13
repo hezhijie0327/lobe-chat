@@ -55,12 +55,15 @@ export const LobeHuggingFaceAI = LobeOpenAICompatibleFactory({
   debug: {
     chatCompletion: () => process.env.DEBUG_HUGGINGFACE_CHAT_COMPLETION === '1',
   },
-  models: async ({ client }) => {
+  models: async () => {
     // ref: https://huggingface.co/docs/hub/api
-    client.baseURL = 'https://huggingface.co/api';
+    const url = 'https://huggingface.co/api/models';
+    const response = await fetch(url, {
+      method: 'GET',
+    });
+    const json = await response.json();
 
-    const modelsPage = await client.models.list() as any;
-    const modelList: HuggingFaceModelCard[] = modelsPage.body;
+    const modelList: HuggingFaceModelCard[] = json;
 
     return modelList
       .map((model) => {
