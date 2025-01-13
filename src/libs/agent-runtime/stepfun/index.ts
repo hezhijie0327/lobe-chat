@@ -22,6 +22,7 @@ export const LobeStepfunAI = LobeOpenAICompatibleFactory({
   },
   models: {
     transformModel: (m) => {
+      // ref: https://platform.stepfun.com/docs/llm/modeloverview
       const functionCallKeywords = [
         'step-1-',
         'step-2-',
