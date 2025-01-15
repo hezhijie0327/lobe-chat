@@ -68,6 +68,7 @@ const moonshotChatModels: AIChatModelCard[] = [
       input: 12,
       output: 12,
     },
+    releasedAt: '2025-01-14',
     type: 'chat',
   },
   {
@@ -86,6 +87,7 @@ const moonshotChatModels: AIChatModelCard[] = [
       input: 24,
       output: 24,
     },
+    releasedAt: '2025-01-14',
     type: 'chat',
   },
   {
@@ -104,6 +106,7 @@ const moonshotChatModels: AIChatModelCard[] = [
       input: 60,
       output: 60,
     },
+    releasedAt: '2025-01-14',
     type: 'chat',
   },
 ];
