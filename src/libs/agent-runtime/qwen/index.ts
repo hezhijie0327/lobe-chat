@@ -67,7 +67,7 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
   debug: {
     chatCompletion: () => process.env.DEBUG_QWEN_CHAT_COMPLETION === '1',
   },
-    models: {
+  models: {
     transformModel: (m) => {
       const functionCallKeywords = [
         'qwen-max',
