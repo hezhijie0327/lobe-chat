@@ -26,6 +26,7 @@ const Page = () => {
           placeholder: 'http://127.0.0.1:11434',
           title: t('ollama.endpoint.title'),
         },
+        showApiKey: false,
       }}
     />
   );
