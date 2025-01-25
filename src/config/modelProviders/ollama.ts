@@ -333,8 +333,14 @@ const Ollama: ModelProviderCard = {
   modelList: { showModelFetcher: true },
   modelsUrl: 'https://ollama.com/library',
   name: 'Ollama',
+  proxyUrl: {
+    placeholder: 'http://127.0.0.1:11434',
+  },
   settings: {
     defaultShowBrowserRequest: true,
+    proxyUrl: {
+      placeholder: 'http://127.0.0.1:11434',
+    },
     sdkType: 'ollama',
     showApiKey: false,
     showModelFetcher: true,
