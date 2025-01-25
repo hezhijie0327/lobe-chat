@@ -60,7 +60,7 @@ export const LobeQwenAI = LobeOpenAICompatibleFactory({
             search_strategy: process.env.QWEN_SEARCH_STRATEGY || 'standard', // standard or pro
           }
         }),
-        ...(payload.tools) && {
+        ...(payload.tools && {
           parallel_tool_calls: true,
         }),
       } as any;
