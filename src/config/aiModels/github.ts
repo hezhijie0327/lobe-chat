@@ -3,7 +3,6 @@ import { AIChatModelCard } from '@/types/aiModel';
 const githubChatModels: AIChatModelCard[] = [
   {
     abilities: {
-      functionCall: false,
       vision: true,
     },
     contextWindowTokens: 200_000,
@@ -18,7 +17,6 @@ const githubChatModels: AIChatModelCard[] = [
   },
   {
     abilities: {
-      functionCall: false,
       vision: true,
     },
     contextWindowTokens: 128_000,
@@ -31,7 +29,6 @@ const githubChatModels: AIChatModelCard[] = [
   },
   {
     abilities: {
-      functionCall: false,
       vision: true,
     },
     contextWindowTokens: 200_000,
@@ -45,7 +42,6 @@ const githubChatModels: AIChatModelCard[] = [
   },
   {
     abilities: {
-      functionCall: false,
       vision: true,
     },
     contextWindowTokens: 128_000,
