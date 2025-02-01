@@ -11,6 +11,11 @@ export const o1Models = new Set([
   'o1-2024-12-17',
 ]);
 
+export const o3Models = new Set([
+  'o3-mini',
+  'o3-mini-2025-01-31',
+]);
+
 export const pruneO1Payload = (payload: ChatStreamPayload) => ({
   ...payload,
   frequency_penalty: 0,
