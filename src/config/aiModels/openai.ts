@@ -9,9 +9,6 @@ import {
 
 export const openaiChatModels: AIChatModelCard[] = [
   {
-    abilities: {
-      vision: true,
-    },
     contextWindowTokens: 200_000,
     description:
       'o3-mini 是我们最新的小型推理模型，在与 o1-mini 相同的成本和延迟目标下提供高智能。',
