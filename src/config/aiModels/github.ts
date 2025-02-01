@@ -8,11 +8,12 @@ const githubChatModels: AIChatModelCard[] = [
     },
     contextWindowTokens: 200_000,
     description:
-      '专注于高级推理和解决复杂问题，包括数学和科学任务。非常适合需要深入上下文理解和代理工作流程的应用程序。',
-    displayName: 'OpenAI o1',
+      'o3-mini 是我们最新的小型推理模型，在与 o1-mini 相同的成本和延迟目标下提供高智能。',
+    displayName: 'OpenAI o3-mini',
     enabled: true,
-    id: 'o1',
+    id: 'o3-mini',
     maxOutput: 100_000,
+    releasedAt: '2025-01-31',
     type: 'chat',
   },
   {
@@ -26,6 +27,20 @@ const githubChatModels: AIChatModelCard[] = [
     enabled: true,
     id: 'o1-mini',
     maxOutput: 65_536,
+    type: 'chat',
+  },
+  {
+    abilities: {
+      functionCall: false,
+      vision: true,
+    },
+    contextWindowTokens: 200_000,
+    description:
+      'o1是OpenAI新的推理模型，支持图文输入并输出文本，适用于需要广泛通用知识的复杂任务。该模型具有200K上下文和2023年10月的知识截止日期。',
+    displayName: 'OpenAI o1',
+    enabled: true,
+    id: 'o1',
+    maxOutput: 100_000,
     type: 'chat',
   },
   {
