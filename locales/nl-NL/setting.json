@@ -216,6 +216,15 @@
       "desc": "Hoe hoger de waarde, hoe waarschijnlijker het is dat het gesprek naar nieuwe onderwerpen wordt uitgebreid",
       "title": "Onderwerpnieuwheid"
     },
+    "reasoningEffort": {
+      "desc": "Hoe hoger de waarde, hoe sterker het redeneervermogen, maar dit kan de responstijd en het tokenverbruik verhogen.",
+      "options": {
+        "high": "Hoog",
+        "low": "Laag",
+        "medium": "Gemiddeld"
+      },
+      "title": "Redeneersterkte"
+    },
     "temperature": {
       "desc": "Hoe hoger de waarde, hoe willekeuriger de reactie",
       "title": "Willekeurigheid",

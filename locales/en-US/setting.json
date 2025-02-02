@@ -216,6 +216,15 @@
       "desc": "The higher the value, the more likely it is to expand to new topics",
       "title": "Topic Freshness"
     },
+    "reasoningEffort": {
+      "desc": "The higher the value, the stronger the reasoning ability, but it may increase response time and token consumption.",
+      "options": {
+        "high": "High",
+        "low": "Low",
+        "medium": "Medium"
+      },
+      "title": "Reasoning Intensity"
+    },
     "temperature": {
       "desc": "The higher the value, the more random the response",
       "title": "Randomness",

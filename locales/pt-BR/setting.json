@@ -216,6 +216,15 @@
       "desc": "Quanto maior o valor, maior a probabilidade de expandir para novos tópicos",
       "title": "Penalidade de novidade do tópico"
     },
+    "reasoningEffort": {
+      "desc": "Quanto maior o valor, mais forte será a capacidade de raciocínio, mas isso pode aumentar o tempo de resposta e o consumo de tokens.",
+      "options": {
+        "high": "Alto",
+        "low": "Baixo",
+        "medium": "Médio"
+      },
+      "title": "Intensidade de Raciocínio"
+    },
     "temperature": {
       "desc": "Quanto maior o valor, mais aleatória será a resposta",
       "title": "Aleatoriedade",
