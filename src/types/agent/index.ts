@@ -69,15 +69,16 @@ export interface LobeAgentChatConfig {
   enableMaxTokens?: boolean;
 
   /**
+   * 自定义推理强度
+   */
+  enableReasoningEffort?: boolean;
+
+  /**
    * 历史消息条数
    */
   historyCount?: number;
   inputTemplate?: string;
 
-  /**
-   * 自定义推理强度
-   */
-  enableReasoningEffort?: boolean;
 }
 
 export const AgentChatConfigSchema = z.object({
