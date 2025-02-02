@@ -90,7 +90,7 @@ const ParameterList = memo<ParameterListProps>(({ data }) => {
       icon: Glasses,
       key: 'reasoning_effort',
       label: t('models.parameterList.reasoning_effort.title'),
-      //range: data?.meta?.reasoning_effort ? [0, formatTokenNumber(data.meta.maxOutput)] : undefined,
+      range: ['low', 'high'],
       type: 'string',
     },
   ];
