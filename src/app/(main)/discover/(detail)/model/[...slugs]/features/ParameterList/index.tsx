@@ -5,7 +5,7 @@ import {
   ChartColumnBig,
   Delete,
   FileMinus,
-  Glasses,
+  Pickaxe,
   LucideIcon,
   MessageSquareText,
   Thermometer,
@@ -87,7 +87,7 @@ const ParameterList = memo<ParameterListProps>(({ data }) => {
     {
       defaultValue: '--',
       desc: t('models.parameterList.reasoning_effort.desc'),
-      icon: Glasses,
+      icon: Pickaxe,
       key: 'reasoning_effort',
       label: t('models.parameterList.reasoning_effort.title'),
       range: ['low', 'high'],
