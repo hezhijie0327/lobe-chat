@@ -17,14 +17,9 @@ const AgentModal = memo(() => {
   const { t } = useTranslation('setting');
   const [form] = Form.useForm();
 
-  const [enableMaxTokens, updateConfig] = useStore((s) => {
+  const [enableMaxTokens, enableReasoningEffort, updateConfig] = useStore((s) => {
     const config = selectors.chatConfig(s);
-    return [config.enableMaxTokens, s.setAgentConfig];
-  });
-
-  const [enableReasoningEffort, updateConfig] = useStore((s) => {
-    const config = selectors.chatConfig(s);
-    return [config.enableReasoningEffort, s.setAgentConfig];
+    return [config.enableMaxTokens, config.enableReasoningEffort, s.setAgentConfig];
   });
 
   const providerName = useProviderName(useStore((s) => s.config.provider) as string);
