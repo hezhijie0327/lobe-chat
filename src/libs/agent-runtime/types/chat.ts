@@ -1,6 +1,6 @@
 import { MessageToolCall } from '@/types/message';
 
-export type LLMRoleType = 'developer' | 'user' | 'system' | 'assistant' | 'function' | 'tool';
+export type LLMRoleType = 'user' | 'system' | 'assistant' | 'function' | 'tool';
 
 interface UserMessageContentPartText {
   text: string;
