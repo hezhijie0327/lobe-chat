@@ -82,6 +82,7 @@ export const AgentChatConfigSchema = z.object({
   enableCompressHistory: z.boolean().optional(),
   enableHistoryCount: z.boolean().optional(),
   enableMaxTokens: z.boolean().optional(),
+  enableReasoningEffort: z.boolean().optional(),
   historyCount: z.number().optional(),
 });
 
