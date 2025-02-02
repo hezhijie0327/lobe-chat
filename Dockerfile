@@ -79,6 +79,8 @@ RUN \
     fi \
     # Set the registry for corepack
     && export COREPACK_NPM_REGISTRY=$(npm config get registry | sed 's/\/$//') \
+    # Update corepack to latest version
+    && npm install -g corepack@latest \
     # Enable corepack
     && corepack enable \
     # Use pnpm for corepack
