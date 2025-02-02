@@ -78,7 +78,6 @@ export interface LobeAgentChatConfig {
    */
   historyCount?: number;
   inputTemplate?: string;
-
 }
 
 export const AgentChatConfigSchema = z.object({
