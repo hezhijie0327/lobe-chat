@@ -216,6 +216,15 @@
       "desc": "Je höher der Wert, desto wahrscheinlicher ist es, dass sich das Gespräch auf neue Themen ausweitet",
       "title": "Themenfrische"
     },
+    "reasoningEffort": {
+      "desc": "Je höher der Wert, desto stärker die Schlussfolgerungsfähigkeit, aber es kann die Antwortzeit und den Tokenverbrauch erhöhen.",
+      "options": {
+        "high": "Hoch",
+        "low": "Niedrig",
+        "medium": "Mittel"
+      },
+      "title": "Schlussfolgerungsstärke"
+    },
     "temperature": {
       "desc": "Je höher der Wert, desto zufälliger die Antwort",
       "title": "Zufälligkeit",

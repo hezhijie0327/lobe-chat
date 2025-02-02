@@ -216,6 +216,15 @@
       "desc": "Più alto è il valore, più probabile è l'estensione a nuovi argomenti",
       "title": "Freschezza dell'argomento"
     },
+    "reasoningEffort": {
+      "desc": "Maggiore è il valore, maggiore è la capacità di ragionamento, ma potrebbe aumentare il tempo di risposta e il consumo di Token",
+      "options": {
+        "high": "Alto",
+        "low": "Basso",
+        "medium": "Medio"
+      },
+      "title": "Intensità di ragionamento"
+    },
     "temperature": {
       "desc": "Più alto è il valore, più casuale è la risposta",
       "title": "Casualità",

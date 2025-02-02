@@ -216,6 +216,15 @@
       "desc": "Değer ne kadar yüksekse, yeni konulara genişleme olasılığı o kadar yüksektir",
       "title": "Presence Penalty"
     },
+    "reasoningEffort": {
+      "desc": "Değer ne kadar yüksekse, akıl yürütme yeteneği o kadar güçlüdür, ancak yanıt süresi ve Token tüketimini artırabilir.",
+      "options": {
+        "high": "Yüksek",
+        "low": "Düşük",
+        "medium": "Orta"
+      },
+      "title": "Akıl Yürütme Gücü"
+    },
     "temperature": {
       "desc": "Değer ne kadar yüksekse, yanıt o kadar rastgele olur",
       "title": "Randomness",
