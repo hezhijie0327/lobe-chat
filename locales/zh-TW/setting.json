@@ -200,6 +200,9 @@
     "enableMaxTokens": {
       "title": "啟用單次回覆限制"
     },
+    "enableReasoningEffort": {
+      "title": "自訂推理強度"
+    },
     "frequencyPenalty": {
       "desc": "數值越大，越有可能降低重複字詞",
       "title": "頻率懲罰度"

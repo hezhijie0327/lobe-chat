@@ -200,6 +200,9 @@
     "enableMaxTokens": {
       "title": "単一応答制限を有効にする"
     },
+    "enableReasoningEffort": {
+      "title": "推論の強度をカスタマイズ"
+    },
     "frequencyPenalty": {
       "desc": "値が大きいほど、単語の繰り返しを減らす可能性が高くなります",
       "title": "頻度ペナルティ"
