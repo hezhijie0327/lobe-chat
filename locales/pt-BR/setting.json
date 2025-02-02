@@ -200,6 +200,9 @@
     "enableMaxTokens": {
       "title": "Ativar limite de resposta única"
     },
+    "enableReasoningEffort": {
+      "title": "Intensidade de Raciocínio Personalizada"
+    },
     "frequencyPenalty": {
       "desc": "Quanto maior o valor, maior a probabilidade de reduzir palavras repetidas",
       "title": "Penalidade de frequência"

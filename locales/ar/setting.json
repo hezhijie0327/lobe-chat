@@ -200,6 +200,9 @@
     "enableMaxTokens": {
       "title": "تمكين الحد الأقصى للردود"
     },
+    "enableReasoningEffort": {
+      "title": "تخصيص قوة الاستدلال"
+    },
     "frequencyPenalty": {
       "desc": "كلما زادت القيمة، زاد احتمال تقليل تكرار الكلمات",
       "title": "عقوبة التكرار"

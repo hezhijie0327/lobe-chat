@@ -200,6 +200,9 @@
     "enableMaxTokens": {
       "title": "Bật giới hạn phản hồi một lần"
     },
+    "enableReasoningEffort": {
+      "title": "Tùy chỉnh cường độ suy luận"
+    },
     "frequencyPenalty": {
       "desc": "Giá trị càng cao, càng có khả năng giảm sự lặp lại của từ/cụm từ",
       "title": "Hình phạt tần suất"

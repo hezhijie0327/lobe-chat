@@ -200,6 +200,9 @@
     "enableMaxTokens": {
       "title": "Max Token Sınırlamasını Etkinleştir"
     },
+    "enableReasoningEffort": {
+      "title": "Özelleştirilmiş Akıl Yürütme Gücü"
+    },
     "frequencyPenalty": {
       "desc": "Değer ne kadar yüksekse, tekrarlayan kelimeleri azaltma olasılığı o kadar yüksektir",
       "title": "Frequency Penalty"

@@ -200,6 +200,9 @@
     "enableMaxTokens": {
       "title": "فعال‌سازی محدودیت پاسخ"
     },
+    "enableReasoningEffort": {
+      "title": "تنظیم شدت استدلال سفارشی"
+    },
     "frequencyPenalty": {
       "desc": "هرچه مقدار بیشتر باشد، احتمال کاهش تکرار کلمات بیشتر است",
       "title": "مجازات تکرار"
