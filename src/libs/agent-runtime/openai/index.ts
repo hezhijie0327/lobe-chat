@@ -31,8 +31,6 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
     handlePayload: (payload) => {
       const { model } = payload;
 
-      console.log(payload)
-
       if (reasoningModels.has(model)) {
         return pruneReasoningPayload(payload) as any;
       }
