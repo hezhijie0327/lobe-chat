@@ -221,9 +221,9 @@ export default {
     reasoningEffort: {
       desc: '值越大，推理能力越强，但可能会增加响应时间和 Token 消耗',
       options: {
+        high: '高',
         low: '低',
         medium: '中',
-        high: '高'
       },
       title: '推理强度',
     },
