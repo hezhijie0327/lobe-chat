@@ -73,6 +73,11 @@ export interface LobeAgentChatConfig {
    */
   historyCount?: number;
   inputTemplate?: string;
+
+  /**
+   * 自定义推理强度
+   */
+  enableReasoningEffort?: boolean;
 }
 
 export const AgentChatConfigSchema = z.object({
