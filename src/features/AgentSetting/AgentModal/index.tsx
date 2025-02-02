@@ -1,7 +1,7 @@
 'use client';
 
 import { Form, ItemGroup, SliderWithInput } from '@lobehub/ui';
-import { Switch } from 'antd';
+import { Select, Switch } from 'antd';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -62,6 +62,21 @@ const AgentModal = memo(() => {
         label: t('settingModel.frequencyPenalty.title'),
         name: ['params', 'frequency_penalty'],
         tag: 'frequency_penalty',
+      },
+      {
+        children: (
+          <Select
+            options={[
+              { value: 'low', label: t('settingModel.reasoningEffort.options.low') },
+              { value: 'medium', label: t('settingModel.reasoningEffort.options.medium') },
+              { value: 'high', label: t('settingModel.reasoningEffort.options.high') },
+            ]}
+          />
+        ),
+        desc: t('settingModel.reasoningEffort.desc'),
+        label: t('settingModel.reasoningEffort.title'),
+        name: ['params', 'reasoning_effort'],
+        tag: 'reasoning_effort',
       },
       {
         children: <Switch />,
