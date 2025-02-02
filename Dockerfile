@@ -77,14 +77,8 @@ RUN \
         npm config set registry "https://registry.npmmirror.com/"; \
         echo 'canvas_binary_host_mirror=https://npmmirror.com/mirrors/canvas' >> .npmrc; \
     fi \
-    # Set the registry for corepack
-    && export COREPACK_NPM_REGISTRY=$(npm config get registry | sed 's/\/$//') \
-    # Update corepack to latest version
-    && npm install -g corepack@latest \
-    # Enable corepack
-    && corepack enable \
-    # Use pnpm for corepack
-    && corepack use pnpm@9 \
+    # Install pnpm
+    && npm i -g pnpm@9 \
     # Install the dependencies
     && pnpm i \
     # Add sharp dependencies
