@@ -64,23 +64,6 @@ const AgentModal = memo(() => {
         tag: 'frequency_penalty',
       },
       {
-        children: (
-          <Select
-            defaultValue='undefined'
-            options={[
-              { label: t('settingModel.reasoningEffort.options.undefined'), value: 'undefined' },
-              { label: t('settingModel.reasoningEffort.options.low'), value: 'low' },
-              { label: t('settingModel.reasoningEffort.options.medium'), value: 'medium' },
-              { label: t('settingModel.reasoningEffort.options.high'), value: 'high' },
-            ]}
-          />
-        ),
-        desc: t('settingModel.reasoningEffort.desc'),
-        label: t('settingModel.reasoningEffort.title'),
-        name: ['params', 'reasoning_effort'],
-        tag: 'reasoning_effort',
-      },
-      {
         children: <Switch />,
         label: t('settingModel.enableMaxTokens.title'),
         minWidth: undefined,
@@ -95,6 +78,30 @@ const AgentModal = memo(() => {
         label: t('settingModel.maxTokens.title'),
         name: ['params', 'max_tokens'],
         tag: 'max_tokens',
+      },
+      {
+        children: <Switch />,
+        label: t('settingModel.enableReasoningEffort.title'),
+        minWidth: undefined,
+        name: ['chatConfig', 'enableReasoningEffort'],
+        valuePropName: 'unchecked',
+      },
+      {
+        children: (
+          <Select
+            defaultValue='medium'
+            options={[
+              { label: t('settingModel.reasoningEffort.options.low'), value: 'low' },
+              { label: t('settingModel.reasoningEffort.options.medium'), value: 'medium' },
+              { label: t('settingModel.reasoningEffort.options.high'), value: 'high' },
+            ]}
+          />
+        ),
+        desc: t('settingModel.reasoningEffort.desc'),
+        hidden: !enableReasoningEffort,
+        label: t('settingModel.reasoningEffort.title'),
+        name: ['params', 'reasoning_effort'],
+        tag: 'reasoning_effort',
       },
     ],
     title: t('settingModel.title'),
