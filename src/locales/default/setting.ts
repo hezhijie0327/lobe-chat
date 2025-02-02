@@ -202,6 +202,9 @@ export default {
     enableMaxTokens: {
       title: '开启单次回复限制',
     },
+    enableReasoningEffort: {
+      title: '自定义推理强度',
+    },
     frequencyPenalty: {
       desc: '值越大，越有可能降低重复字词',
       title: '频率惩罚度',
