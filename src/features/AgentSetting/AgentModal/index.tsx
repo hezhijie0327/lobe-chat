@@ -84,7 +84,7 @@ const AgentModal = memo(() => {
         label: t('settingModel.enableReasoningEffort.title'),
         minWidth: undefined,
         name: ['chatConfig', 'enableReasoningEffort'],
-        valuePropName: 'unchecked',
+        valuePropName: 'checked',
       },
       {
         children: (
