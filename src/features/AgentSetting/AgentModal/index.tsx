@@ -22,6 +22,11 @@ const AgentModal = memo(() => {
     return [config.enableMaxTokens, s.setAgentConfig];
   });
 
+  const [enableReasoningEffort, updateConfig] = useStore((s) => {
+    const config = selectors.chatConfig(s);
+    return [config.enableReasoningEffort, s.setAgentConfig];
+  });
+
   const providerName = useProviderName(useStore((s) => s.config.provider) as string);
 
   useAgentSyncSettings(form);
