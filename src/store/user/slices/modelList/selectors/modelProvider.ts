@@ -147,8 +147,8 @@ export const modelProviderSelectors = {
   getModelCardsById,
   isModelEnabledFiles,
   isModelEnabledFunctionCall,
-  isModelEnabledUpload,
   isModelEnabledReasoning,
+  isModelEnabledUpload,
   isModelEnabledVision,
   isModelHasMaxToken,
 
