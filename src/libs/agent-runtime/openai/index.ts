@@ -2,6 +2,7 @@ import { ChatStreamPayload, ModelProvider, OpenAIChatMessage } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 export const pruneReasoningPayload = (payload: ChatStreamPayload) => {
+  // TODO: 临时写法，后续要重构成 model card 展示配置
   const disableStreamModels = new Set([
     'o1',
     'o1-2024-12-17'
