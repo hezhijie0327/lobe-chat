@@ -46,7 +46,7 @@ export interface ChatModelCard {
   /**
    *  whether model supports reasoning
    */
-  reasoning?: string;
+  reasoning?: boolean;
 
   /**
    * whether model is legacy (deprecated but not removed yet)
