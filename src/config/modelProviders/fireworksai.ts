@@ -59,7 +59,6 @@ const FireworksAI: ModelProviderCard = {
       description:
         'Meta Llama 3.1 系列是多语言大语言模型（LLM）集合，包含 8B、70B 和 405B 三种参数规模的预训练和指令微调生成模型。Llama 3.1 指令微调文本模型（8B、70B、405B）专为多语言对话应用优化，并在常见的行业基准测试中优于许多现有的开源和闭源聊天模型。',
       displayName: 'Llama 3.1 8B Instruct',
-      enabled: true,
       id: 'accounts/fireworks/models/llama-v3p1-8b-instruct',
       pricing: {
         input: 0.2,
@@ -71,7 +70,6 @@ const FireworksAI: ModelProviderCard = {
       description:
         'Meta Llama 3.1 系列是多语言大语言模型（LLM）集合，包含 8B、70B 和 405B 三种参数规模的预训练和指令微调生成模型。Llama 3.1 指令微调文本模型（8B、70B、405B）专为多语言对话应用优化，并在常见的行业基准测试中优于许多现有的开源和闭源聊天模型。',
       displayName: 'Llama 3.1 70B Instruct',
-      enabled: true,
       functionCall: true,
       id: 'accounts/fireworks/models/llama-v3p1-70b-instruct',
       pricing: {
@@ -84,7 +82,6 @@ const FireworksAI: ModelProviderCard = {
       description:
         'Meta Llama 3.1 系列是多语言大语言模型（LLM）集合，包含 8B、70B 和 405B 参数规模的预训练和指令微调生成模型。Llama 3.1 指令微调文本模型（8B、70B、405B）专为多语言对话场景优化，在常见的行业基准测试中优于许多现有的开源和闭源聊天模型。405B 是 Llama 3.1 家族中能力最强的模型。该模型采用 FP8 进行推理，与参考实现高度匹配。',
       displayName: 'Llama 3.1 405B Instruct',
-      enabled: true,
       functionCall: true,
       id: 'accounts/fireworks/models/llama-v3p1-405b-instruct',
       pricing: {
@@ -142,7 +139,6 @@ const FireworksAI: ModelProviderCard = {
       description:
         'Mixtral MoE 8x7B Instruct 是 Mixtral MoE 8x7B 的指令微调版本，已启用聊天完成功能 API。',
       displayName: 'Mixtral MoE 8x7B Instruct',
-      enabled: true,
       id: 'accounts/fireworks/models/mixtral-8x7b-instruct',
       pricing: {
         input: 0.5,
