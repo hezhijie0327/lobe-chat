@@ -61,7 +61,10 @@ export const parseModelString = (modelString: string = '', withDeploymentName = 
       for (const capability of capabilityList) {
         switch (capability) {
           case 'reasoning': {
+            /*
+            * skip warning for reasoning
             model.reasoning = true;
+            */
             break;
           }
           case 'vision': {
