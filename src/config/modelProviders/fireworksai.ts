@@ -5,20 +5,6 @@ import { ModelProviderCard } from '@/types/llm';
 const FireworksAI: ModelProviderCard = {
   chatModels: [
     {
-      contextWindowTokens: 4096,
-      description:
-        'fireworks-ai/FireLLaVA-13b 是一款视觉语言模型，可以同时接收图像和文本输入，经过高质量数据训练，适合多模态任务。',
-      displayName: 'FireLLaVA-13B',
-      enabled: true,
-      functionCall: true,
-      id: 'accounts/fireworks/models/deepseek-r1',
-      pricing: {
-        input: 20,
-        output: 50,
-      },
-      vision: true,
-    },
-    {
       contextWindowTokens: 131_072,
       description:
         'Llama 3.3 70B Instruct is the December update of Llama 3.1 70B. The model improves upon Llama 3.1 70B (released July 2024) with advances in tool calling, multilingual text support, math and coding. The model achieves industry leading results in reasoning, math and instruction following and provides similar performance as 3.1 405B but with significant speed and cost improvements.',
@@ -47,6 +33,34 @@ const FireworksAI: ModelProviderCard = {
     {
       contextWindowTokens: 131_072,
       description:
+        'Instruction-tuned image reasoning model from Meta with 11B parameters. Optimized for visual recognition, image reasoning, captioning, and answering general questions about an image. The model can understand visual data, such as charts and graphs and also bridge the gap between vision and language by generating text to describe images details',
+      displayName: 'Llama 3.2 11B Vision Instruct',
+      enabled: true,
+      functionCall: true,
+      id: 'accounts/fireworks/models/llama-v3p2-11b-vision-instruct',
+      pricing: {
+        input: 0.2,
+        output: 0.2,
+      },
+      vision: true,
+    },
+    {
+      contextWindowTokens: 131_072,
+      description:
+        'Instruction-tuned image reasoning model with 90B parameters from Meta. Optimized for visual recognition, image reasoning, captioning, and answering general questions about an image. The model can understand visual data, such as charts and graphs and also bridge the gap between vision and language by generating text to describe images details Note: This mode is served experimentally as a serverless model. If you are deploying in production, be aware that Fireworks may undeploy the model with short notice.',
+      displayName: 'Llama 3.2 90B Vision Instruct',
+      enabled: true,
+      functionCall: true,
+      id: 'accounts/fireworks/models/llama-v3p2-90b-vision-instruct',
+      pricing: {
+        input: 0.9,
+        output: 0.9,
+      },
+      vision: true,
+    },
+    {
+      contextWindowTokens: 131_072,
+      description:
         'The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes. The Llama 3.1 instruction tuned text only models (8B, 70B, 405B) are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks. 405B model is the most capable from the Llama 3.1 family. This model is served in FP8 closely matching reference implementation.',
       displayName: 'Llama 3.1 8B Instruct',
       enabled: true,
@@ -55,6 +69,19 @@ const FireworksAI: ModelProviderCard = {
       pricing: {
         input: 0.2,
         output: 0.2,
+      },
+    },
+    {
+      contextWindowTokens: 131_072,
+      description:
+        'The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes. The Llama 3.1 instruction tuned text only models (8B, 70B, 405B) are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks. 405B model is the most capable from the Llama 3.1 family. This model is served in FP8 closely matching reference implementation.',
+      displayName: 'Llama 3.1 70B Instruct',
+      enabled: true,
+      functionCall: true,
+      id: 'accounts/fireworks/models/llama-v3p1-70b-instruct',
+      pricing: {
+        input: 0.9,
+        output: 0.9,
       },
     },
     {
@@ -84,6 +111,17 @@ const FireworksAI: ModelProviderCard = {
     {
       contextWindowTokens: 8192,
       description:
+        'Meta developed and released the Meta Llama 3 family of large language models (LLMs), a collection of pretrained and instruction tuned generative text models in 8 and 70B sizes. The Llama 3 instruction tuned models are optimized for dialogue use cases and outperform many of the available open source chat models on common industry benchmarks.',
+      displayName: 'Llama 3 70B Instruct',
+      id: 'accounts/fireworks/models/llama-v3-70b-instruct',
+      pricing: {
+        input: 0.9,
+        output: 0.9,
+      },
+    },
+    {
+      contextWindowTokens: 8192,
+      description:
         'Meta Llama 3 instruction tuned models are optimized for dialogue use cases and outperform many of the available open source chat models on common industry benchmarks. Llama 3 8B Instruct (HF Version) is the original, FP16 version of Llama 3 8B Instruct whose results should be consistent with the official Hugging Face implementation.',
       displayName: 'Llama 3 8B Instruct (HF version)',
       id: 'accounts/fireworks/models/llama-v3-8b-instruct-hf',
@@ -105,6 +143,18 @@ const FireworksAI: ModelProviderCard = {
       },
     },
     {
+      contextWindowTokens: 32_768,
+      description:
+        'Mixtral MoE 8x7B Instruct is the instruction-tuned version of Mixtral MoE 8x7B and has the chat completions API enabled.',
+      displayName: 'Mixtral MoE 8x7B Instruct',
+      enabled: true,
+      id: 'accounts/fireworks/models/mixtral-8x7b-instruct',
+      pricing: {
+        input: 0.5,
+        output: 0.5,
+      },
+    },
+    {
       contextWindowTokens: 65_536,
       description:
         'Mixtral MoE 8x22B Instruct v0.1 is the instruction-tuned version of Mixtral MoE 8x22B v0.1 and has the chat completions API enabled.',
@@ -115,6 +165,31 @@ const FireworksAI: ModelProviderCard = {
         input: 1.2,
         output: 1.2,
       },
+    },
+    {
+      contextWindowTokens: 32_064,
+      description:
+        'Phi-3-Vision-128K-Instruct is a lightweight, state-of-the-art open multimodal model built upon datasets which include - synthetic data and filtered publicly available websites - with a focus on very high-quality, reasoning dense data both on text and vision. The model belongs to the Phi-3 model family, and the multimodal version comes with 128K context length (in tokens) it can support. The model underwent a rigorous enhancement process, incorporating both supervised fine-tuning and direct preference optimization to ensure precise instruction adherence and robust safety measures.',
+      displayName: 'Phi 3.5 Vision Instruct',
+      enabled: true,
+      id: 'accounts/fireworks/models/phi-3-vision-128k-instruct',
+      pricing: {
+        input: 0.2,
+        output: 0.2,
+      },
+      vision: true,
+    },
+    {
+      contextWindowTokens: 32_768,
+      description:
+        'An improved, potentially even perfected variant of MythoMix, a MythoLogic-L2 and Huginn merge using a highly experimental tensor type merge technique. Proficient at both storytelling and roleplaying due to its unique nature.',
+      displayName: 'MythoMax L2 13b',
+      id: 'accounts/fireworks/models/mythomax-l2-13b',
+      pricing: {
+        input: 0.2,
+        output: 0.2,
+      },
+      vision: true,
     },
     {
       contextWindowTokens: 131_072,
@@ -164,6 +239,19 @@ const FireworksAI: ModelProviderCard = {
         input: 0.9,
         output: 0.9,
       },
+    },
+    {
+      contextWindowTokens: 32_768,
+      description:
+        'The 72B variant of the latest iteration of Qwen-VL model from Alibaba, representing nearly a year of innovation.',
+      displayName: 'Qwen2 VL 72B Instruct',
+      enabled: true,
+      id: 'accounts/fireworks/models/qwen2-vl-72b-instruct',
+      pricing: {
+        input: 0.9,
+        output: 0.9,
+      },
+      vision: true,
     },
     {
       contextWindowTokens: 32_768,
