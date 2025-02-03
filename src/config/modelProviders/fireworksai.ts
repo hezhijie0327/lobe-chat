@@ -10,7 +10,6 @@ const FireworksAI: ModelProviderCard = {
         'Llama 3.3 70B Instruct is the December update of Llama 3.1 70B. The model improves upon Llama 3.1 70B (released July 2024) with advances in tool calling, multilingual text support, math and coding. The model achieves industry leading results in reasoning, math and instruction following and provides similar performance as 3.1 405B but with significant speed and cost improvements.',
       displayName: 'Llama 3.3 70B Instruct',
       enabled: true,
-      functionCall: true,
       id: 'accounts/fireworks/models/llama-v3p3-70b-instruct',
       pricing: {
         input: 0.9,
@@ -23,7 +22,6 @@ const FireworksAI: ModelProviderCard = {
         'Llama 3.2 3B instruct is a lightweight, multilingual model from Meta. The model is designed for efficiency and offers substantial latency and cost improvements compared to larger models. Example use cases for the model include query and prompt rewriting and writing assistance',
       displayName: 'Llama 3.2 3B Instruct',
       enabled: true,
-      functionCall: true,
       id: 'accounts/fireworks/models/llama-v3p2-3b-instruct',
       pricing: {
         input: 0.1,
@@ -36,7 +34,6 @@ const FireworksAI: ModelProviderCard = {
         'Instruction-tuned image reasoning model from Meta with 11B parameters. Optimized for visual recognition, image reasoning, captioning, and answering general questions about an image. The model can understand visual data, such as charts and graphs and also bridge the gap between vision and language by generating text to describe images details',
       displayName: 'Llama 3.2 11B Vision Instruct',
       enabled: true,
-      functionCall: true,
       id: 'accounts/fireworks/models/llama-v3p2-11b-vision-instruct',
       pricing: {
         input: 0.2,
@@ -50,7 +47,6 @@ const FireworksAI: ModelProviderCard = {
         'Instruction-tuned image reasoning model with 90B parameters from Meta. Optimized for visual recognition, image reasoning, captioning, and answering general questions about an image. The model can understand visual data, such as charts and graphs and also bridge the gap between vision and language by generating text to describe images details Note: This mode is served experimentally as a serverless model. If you are deploying in production, be aware that Fireworks may undeploy the model with short notice.',
       displayName: 'Llama 3.2 90B Vision Instruct',
       enabled: true,
-      functionCall: true,
       id: 'accounts/fireworks/models/llama-v3p2-90b-vision-instruct',
       pricing: {
         input: 0.9,
@@ -64,7 +60,6 @@ const FireworksAI: ModelProviderCard = {
         'The Meta Llama 3.1 collection of multilingual large language models (LLMs) is a collection of pretrained and instruction tuned generative models in 8B, 70B and 405B sizes. The Llama 3.1 instruction tuned text only models (8B, 70B, 405B) are optimized for multilingual dialogue use cases and outperform many of the available open source and closed chat models on common industry benchmarks. 405B model is the most capable from the Llama 3.1 family. This model is served in FP8 closely matching reference implementation.',
       displayName: 'Llama 3.1 8B Instruct',
       enabled: true,
-      functionCall: true,
       id: 'accounts/fireworks/models/llama-v3p1-8b-instruct',
       pricing: {
         input: 0.2,
@@ -160,6 +155,7 @@ const FireworksAI: ModelProviderCard = {
         'Mixtral MoE 8x22B Instruct v0.1 is the instruction-tuned version of Mixtral MoE 8x22B v0.1 and has the chat completions API enabled.',
       displayName: 'Mixtral MoE 8x22B Instruct',
       enabled: true,
+      functionCall: true,
       id: 'accounts/fireworks/models/mixtral-8x22b-instruct',
       pricing: {
         input: 1.2,
@@ -189,7 +185,6 @@ const FireworksAI: ModelProviderCard = {
         input: 0.2,
         output: 0.2,
       },
-      vision: true,
     },
     {
       contextWindowTokens: 131_072,
@@ -197,7 +192,6 @@ const FireworksAI: ModelProviderCard = {
         'A a strong Mixture-of-Experts (MoE) language model with 671B total parameters with 37B activated for each token from Deepseek.',
       displayName: 'Deepseek V3',
       enabled: true,
-      functionCall: true,
       id: 'accounts/fireworks/models/deepseek-v3',
       pricing: {
         input: 0.9,
