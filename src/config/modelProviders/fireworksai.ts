@@ -150,7 +150,6 @@ const FireworksAI: ModelProviderCard = {
       description:
         'Mixtral MoE 8x22B Instruct v0.1 是 Mixtral MoE 8x22B v0.1 的指令微调版本，已启用聊天完成功能 API。',
       displayName: 'Mixtral MoE 8x22B Instruct',
-      enabled: true,
       functionCall: true,
       id: 'accounts/fireworks/models/mixtral-8x22b-instruct',
       pricing: {
