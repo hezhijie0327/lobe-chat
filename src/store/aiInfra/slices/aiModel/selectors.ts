@@ -48,6 +48,12 @@ const isModelSupportVision = (id: string, provider: string) => (s: AIProviderSto
   return model?.abilities?.vision;
 };
 
+const isModelSupportReasoning = (id: string, provider: string) => (s: AIProviderStoreState) => {
+  const model = getEnabledModelById(id, provider)(s);
+
+  return model?.abilities?.reasoning;
+};
+
 const isModelHasContextWindowToken =
   (id: string, provider: string) => (s: AIProviderStoreState) => {
     const model = getEnabledModelById(id, provider)(s);
