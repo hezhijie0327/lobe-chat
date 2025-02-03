@@ -4,12 +4,11 @@ const internlmChatModels: AIChatModelCard[] = [
   {
     abilities: {
       functionCall: true,
-      reasoning: true,
     },
     contextWindowTokens: 32_768,
     description:
       '我们最新的模型系列，有着卓越的推理性能，领跑同量级开源模型。默认指向我们最新发布的 InternLM3 系列模型',
-    displayName: 'InternLM2.5',
+    displayName: 'InternLM3',
     enabled: true,
     id: 'internlm3-latest',
     maxOutput: 4096,
