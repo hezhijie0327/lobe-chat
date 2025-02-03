@@ -51,6 +51,18 @@ const giteeaiChatModels: AIChatModelCard[] = [
   },
   {
     abilities: {
+      reasoning: true,
+    },
+    contextWindowTokens: 32_000,
+    description:
+      'QwQ-32B-Preview 是一款独具创新的自然语言处理模型，能够高效处理复杂的对话生成与上下文理解任务。',
+    displayName: 'QwQ 32B Preview',
+    enabled: true,
+    id: 'QwQ-32B-Preview',
+    type: 'chat',
+  },
+  {
+    abilities: {
       functionCall: true,
     },
     contextWindowTokens: 16_000,
