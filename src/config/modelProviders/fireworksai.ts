@@ -184,7 +184,7 @@ const FireworksAI: ModelProviderCard = {
     {
       contextWindowTokens: 131_072,
       description:
-        'Deepseek 提供的强大 Mixture-of-Experts (MoE) 语言模型，总参数量为 671B，每个标记激活 37B 参数。,
+        'Deepseek 提供的强大 Mixture-of-Experts (MoE) 语言模型，总参数量为 671B，每个标记激活 37B 参数。',
       displayName: 'Deepseek V3',
       enabled: true,
       id: 'accounts/fireworks/models/deepseek-v3',
