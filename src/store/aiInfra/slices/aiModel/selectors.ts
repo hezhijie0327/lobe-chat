@@ -77,6 +77,7 @@ export const aiModelSelectors = {
   isModelEnabled,
   isModelHasContextWindowToken,
   isModelLoading,
+  isModelSupportReasoning,
   isModelSupportToolUse,
   isModelSupportVision,
   modelContextWindowTokens,
