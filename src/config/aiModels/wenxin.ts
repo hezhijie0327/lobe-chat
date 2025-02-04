@@ -139,7 +139,6 @@ const wenxinChatModels: AIChatModelCard[] = [
     description:
       'ERNIE Lite是百度自研的轻量级大语言模型，兼顾优异的模型效果与推理性能，适合低算力AI加速卡推理使用。',
     displayName: 'ERNIE Lite 8K',
-    enabled: true,
     id: 'ernie-lite-8k',
     pricing: {
       currency: 'CNY',
@@ -156,7 +155,6 @@ const wenxinChatModels: AIChatModelCard[] = [
     description:
       '百度自研的轻量级大语言模型，兼顾优异的模型效果与推理性能，效果比ERNIE Lite更优，适合低算力AI加速卡推理使用。',
     displayName: 'ERNIE Lite Pro 128K',
-    enabled: true,
     id: 'ernie-lite-pro-128k',
     pricing: {
       currency: 'CNY',
@@ -170,26 +168,11 @@ const wenxinChatModels: AIChatModelCard[] = [
     description:
       'ERNIE Tiny是百度自研的超高性能大语言模型，部署与精调成本在文心系列模型中最低。',
     displayName: 'ERNIE Tiny 8K',
-    enabled: true,
     id: 'ernie-tiny-8k',
     pricing: {
       currency: 'CNY',
       input: 0,
       output: 0,
-    },
-    type: 'chat',
-  },
-  {
-    contextWindowTokens: 128_000,
-    description:
-      '百度2024年最新发布的自研高性能大语言模型，通用能力优异，效果比ERNIE Speed更优，适合作为基座模型进行精调，更好地处理特定场景问题，同时具备极佳的推理性能。',
-    displayName: 'ERNIE Speed Pro 128K',
-    enabled: true,
-    id: 'ernie-speed-pro-128k',
-    pricing: {
-      currency: 'CNY',
-      input: 0.3,
-      output: 0.6,
     },
     type: 'chat',
   },
@@ -203,6 +186,19 @@ const wenxinChatModels: AIChatModelCard[] = [
       currency: 'CNY',
       input: 0,
       output: 0,
+    },
+    type: 'chat',
+  },
+  {
+    contextWindowTokens: 128_000,
+    description:
+      '百度2024年最新发布的自研高性能大语言模型，通用能力优异，效果比ERNIE Speed更优，适合作为基座模型进行精调，更好地处理特定场景问题，同时具备极佳的推理性能。',
+    displayName: 'ERNIE Speed Pro 128K',
+    id: 'ernie-speed-pro-128k',
+    pricing: {
+      currency: 'CNY',
+      input: 0.3,
+      output: 0.6,
     },
     type: 'chat',
   },
