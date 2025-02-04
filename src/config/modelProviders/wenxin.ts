@@ -164,7 +164,7 @@ const BaiduWenxin: ModelProviderCard = {
   name: 'Wenxin',
   settings: {
     disableBrowserRequest: true,
-    sdkType: 'wenxin',
+    sdkType: 'openai',
     smoothing: {
       speed: 2,
       text: true,
