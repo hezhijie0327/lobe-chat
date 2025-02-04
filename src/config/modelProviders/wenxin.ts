@@ -202,27 +202,27 @@ const BaiduWenxin: ModelProviderCard = {
       },
     },
     {
-      contextWindowTokens: 8192,
+      contextWindowTokens: 65_536,
       description:
         'DeepSeek-V3 为杭州深度求索人工智能基础技术研究有限公司自研的 MoE 模型，其多项评测成绩突出，在主流榜单中位列开源模型榜首。V3 相比 V2.5 模型生成速度实现 3 倍提升，为用户带来更加迅速流畅的使用体验。',
       displayName: 'DeepSeek V3',
       id: 'deepseek-v3',
       pricing: {
         currency: 'CNY',
-        input: 0,
-        output: 0,
+        input: 0.8,
+        output: 1.6,
       },
     },
     {
-      contextWindowTokens: 8192,
+      contextWindowTokens: 65_536,
       description:
         'DeepSeek-R1 在后训练阶段大规模使用了强化学习技术，在仅有极少标注数据的情况下，极大提升了模型推理能力。在数学、代码、自然语言推理等任务上，性能比肩 OpenAI o1 正式版。',
       displayName: 'DeepSeek R1',
       id: 'deepseek-r1',
       pricing: {
         currency: 'CNY',
-        input: 0,
-        output: 0,
+        input: 2,
+        output: 8,
       },
     },
   ],
