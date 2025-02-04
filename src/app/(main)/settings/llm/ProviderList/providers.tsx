@@ -98,7 +98,6 @@ export const useProviderList = (): ProviderItem[] => {
       BedrockProvider,
       CloudflareProvider,
       GithubProvider,
-      WenxinProviderCard,
       HuggingFaceProvider,
     ],
   );
