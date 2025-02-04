@@ -182,7 +182,7 @@ const BaiduWenxin: ModelProviderCard = {
       description:
         '百度自研的垂直场景大语言模型，适合游戏NPC、客服对话、对话角色扮演等应用场景，人设风格更为鲜明、一致，指令遵循能力更强，推理性能更优。',
       displayName: 'ERNIE Character 8K',
-      id: 'ernie-character-8k',
+      id: 'ernie-char-8k',
       pricing: {
         currency: 'CNY',
         input: 4,
@@ -192,13 +192,25 @@ const BaiduWenxin: ModelProviderCard = {
     {
       contextWindowTokens: 8192,
       description:
-        '2024年5月23日发布的版本，支持8K上下文长度，在情节演绎和规则化文本等场景下指令遵循能力更强',
+        '百度自研的垂直场景大语言模型，适合游戏NPC、客服对话、对话角色扮演等应用场景，人设风格更为鲜明、一致，指令遵循能力更强，推理性能更优。',
       displayName: 'ERNIE Character Fiction 8K',
       id: 'ernie-char-fiction-8k',
       pricing: {
         currency: 'CNY',
         input: 4,
         output: 8,
+      },
+    },
+    {
+      contextWindowTokens: 8192,
+      description:
+        '百度自研通用大语言模型，在小说续写能力上有明显优势，也可用在短剧、电影等场景。',
+      displayName: 'ERNIE Novel 8K',
+      id: 'ernie-novel-8k',
+      pricing: {
+        currency: 'CNY',
+        input: 40,
+        output: 120,
       },
     },
     {
