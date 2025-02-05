@@ -72,7 +72,7 @@ export const LobeSiliconCloudAI = LobeOpenAICompatibleFactory({
       ];
 
       const reasoningKeywords = [
-        'deepseek-ai/deepseek-rq',
+        'deepseek-ai/deepseek-r1',
         'qwen/qvq',
         'qwen/qwq',
       ];
