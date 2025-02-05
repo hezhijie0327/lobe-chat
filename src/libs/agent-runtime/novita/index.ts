@@ -29,7 +29,7 @@ export const LobeNovitaAI = LobeOpenAICompatibleFactory({
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
         functionCall: model.description.toLowerCase().includes('function calling'),
         id: model.id,
-        reasoning: model.description.toLowerCase().includes('reasoning task') || reasoningKeywords.some(keyword => model.name.toLowerCase().includes(keyword)),
+        reasoning: model.description.toLowerCase().includes('reasoning task') || reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
         vision: model.description.toLowerCase().includes('vision'),
       };
     },
