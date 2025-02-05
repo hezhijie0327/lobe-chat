@@ -20,6 +20,8 @@ import { OllamaStream, convertIterableToStream } from '../utils/streams';
 import { parseDataUri } from '../utils/uriParser';
 import { OllamaMessage } from './type';
 
+import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
+
 export class LobeOllamaAI implements LobeRuntimeAI {
   private client: Ollama;
 
