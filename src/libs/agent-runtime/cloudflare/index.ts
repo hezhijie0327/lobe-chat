@@ -21,7 +21,7 @@ export interface CloudflareModelCard {
   properties?: Record<string, string>;
   task?: {
     description?: string;
-    name?: string;
+    name: string;
   };
 }
 
@@ -136,7 +136,7 @@ export class LobeCloudflareAI implements LobeRuntimeAI {
           functionCall: model.description.toLowerCase().includes('function call') || model.properties?.["function_calling"] === "true",
           id: model.name,
           reasoning: model.name.toLowerCase().includes('deepseek-r1'),
-          vision: model.name.toLowerCase().includes('vision') || model.task.name.toLowerCase().includes('image-to-text') || model.description.toLowerCase().includes('vision'),
+          vision: model.name.toLowerCase().includes('vision') || model.task?.name.toLowerCase().includes('image-to-text') || model.description.toLowerCase().includes('vision'),
         };
       })
       .filter(Boolean) as ChatModelCard[];
