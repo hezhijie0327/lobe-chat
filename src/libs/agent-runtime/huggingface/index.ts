@@ -74,6 +74,8 @@ export const LobeHuggingFaceAI = LobeOpenAICompatibleFactory({
     return modelList
       .map((model) => {
         return {
+          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.contextWindowTokens ?? undefined,
+          displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.displayName ?? undefined,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
           functionCall: model.tags.some(tag => tag.toLowerCase().includes('function-calling')),
           id: model.id,
