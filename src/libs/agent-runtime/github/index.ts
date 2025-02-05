@@ -9,6 +9,8 @@ import {
   LobeOpenAICompatibleFactory,
 } from '../utils/openaiCompatibleFactory';
 
+import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
+
 enum Task {
   'chat-completion',
   'embeddings',
@@ -61,15 +63,30 @@ export const LobeGithubAI = LobeOpenAICompatibleFactory({
         );
       })
       .map((model) => {
-        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => m.id === model.name);
-
-        if (knownModel) return knownModel;
+        const functionCallKeywords = [
+          'function',
+          'tool',
+        ];
+  
+        const visionKeywords = [
+          'vision',
+        ];
+  
+        const reasoningKeywords = [
+          'deepseek-r1',
+          'o1',
+          'o3',
+        ];
 
         return {
-          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.contextWindowTokens ?? undefined,
+          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.contextWindowTokens ?? undefined,
           description: model.description,
           displayName: model.friendly_name,
+          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.enabled || false,
+          functionCall: functionCallKeywords.some(keyword => model.description.toLowerCase().includes(keyword)),
           id: model.name,
+          reasoning: reasoningKeywords.some(keyword => model.name.toLowerCase().includes(keyword)),
+          vision: visionKeywords.some(keyword => model.description.toLowerCase().includes(keyword)),
         };
       })
       .filter(Boolean) as ChatModelCard[];
