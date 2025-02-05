@@ -129,7 +129,9 @@ export class LobeCloudflareAI implements LobeRuntimeAI {
     return modelList
       .map((model) => {
         return {
-          contextWindowTokens: model.properties?.max_total_tokens,
+          contextWindowTokens: model.properties?.max_total_tokens
+            ? Number(model.properties.max_total_tokens)
+            : LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.contextWindowTokens ?? undefined,
           displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.displayName ?? undefined,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.enabled || false,
           functionCall: model.description.toLowerCase().includes('function call') || model.properties?.["function_calling"] === "true",
