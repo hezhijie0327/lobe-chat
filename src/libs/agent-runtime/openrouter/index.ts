@@ -18,9 +18,9 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
   models: {
     transformModel: (m) => {
       const reasoningKeywords = [
-        'deepseek-r1',
-        'o1',
-        'o3',
+        'deepseek/deepseek-r1',
+        'openai/o1',
+        'openai/o3',
       ];
 
       const model = m as unknown as OpenRouterModelCard;
