@@ -64,7 +64,7 @@ export const LobeDeepSeekAI = LobeOpenAICompatibleFactory({
       const model = m as unknown as DeepSeekModelCard;
 
       return {
-        contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.contextWindowTokens || undefined,
+        contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.contextWindowTokens ?? undefined,
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
         functionCall: !model.id.toLowerCase().includes('deepseek-reasoner'),
         id: model.id,
