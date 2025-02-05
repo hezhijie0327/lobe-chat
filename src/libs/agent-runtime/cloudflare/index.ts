@@ -1,5 +1,3 @@
-import { ChatModelCard } from '@/types/llm';
-
 import { LobeRuntimeAI } from '../BaseAI';
 import { AgentRuntimeErrorType } from '../error';
 import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from '../types';
@@ -15,6 +13,7 @@ import { StreamingResponse } from '../utils/response';
 import { createCallbacksTransformer } from '../utils/streams';
 
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
+import { ChatModelCard } from '@/types/llm';
 
 export interface CloudflareModelCard {
   description: string;
