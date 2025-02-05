@@ -54,6 +54,21 @@ export const LobeGithubAI = LobeOpenAICompatibleFactory({
     invalidAPIKey: AgentRuntimeErrorType.InvalidGithubToken,
   },
   models: async ({ client }) => {
+    const functionCallKeywords = [
+      'function',
+      'tool',
+    ];
+
+    const visionKeywords = [
+      'vision',
+    ];
+
+    const reasoningKeywords = [
+      'deepseek-r1',
+      'o1',
+      'o3',
+    ];
+
     const modelsPage = (await client.models.list()) as any;
     const modelList: Model[] = modelsPage.body;
     return modelList
@@ -63,21 +78,6 @@ export const LobeGithubAI = LobeOpenAICompatibleFactory({
         );
       })
       .map((model) => {
-        const functionCallKeywords = [
-          'function',
-          'tool',
-        ];
-  
-        const visionKeywords = [
-          'vision',
-        ];
-  
-        const reasoningKeywords = [
-          'deepseek-r1',
-          'o1',
-          'o3',
-        ];
-
         return {
           contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.contextWindowTokens ?? undefined,
           description: model.description,
