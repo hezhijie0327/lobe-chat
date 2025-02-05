@@ -38,6 +38,7 @@ export const LobeTogetherAI = LobeOpenAICompatibleFactory({
       .filter((m) => m.display_type === 'chat')
       .map((model) => {
         return {
+          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.contextWindowTokens ?? undefined,
           description: model.description,
           displayName: model.display_name,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.enabled || false,
