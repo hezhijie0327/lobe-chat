@@ -18,10 +18,10 @@ import { ChatModelCard } from '@/types/llm';
 export interface CloudflareModelCard {
   description: string;
   name: string;
-  properties: Record<string, string>;
-  task: {
-    description: string;
-    name: string;
+  properties?: Record<string, string>;
+  task?: {
+    description?: string;
+    name?: string;
   };
 }
 
