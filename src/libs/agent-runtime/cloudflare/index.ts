@@ -22,7 +22,8 @@ export interface CloudflareModelCard {
   task: {
     description: string;
     name: string;
-  }
+  };
+  properties: Record<string, string>;
 }
 
 export interface LobeCloudflareParams {
@@ -128,10 +129,10 @@ export class LobeCloudflareAI implements LobeRuntimeAI {
     return modelList
       .map((model) => {
         return {
-          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.contextWindowTokens ?? undefined,
+          contextWindowTokens: model.properties?.max_total_tokens,
           displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.displayName ?? undefined,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.enabled || false,
-          functionCall: model.description.toLowerCase().includes('function call'),
+          functionCall: model.description.toLowerCase().includes('function call') || model.properties?.["function_calling"] === "true",
           id: model.name,
           reasoning: model.name.toLowerCase().includes('deepseek-r1'),
           vision: model.name.toLowerCase().includes('vision') || model.task.name.toLowerCase().includes('Image-to-Text') || model.description.toLowerCase().includes('vision'),
