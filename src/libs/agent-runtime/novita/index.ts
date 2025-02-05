@@ -24,9 +24,9 @@ export const LobeNovitaAI = LobeOpenAICompatibleFactory({
         displayName: model.title,
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
         functionCall: model.description.toLowerCase().includes('function calling'),
+        id: model.id,
         reasoning: model.description.toLowerCase().includes('reasoning task'),
         vision: model.description.toLowerCase().includes('vision'),
-        id: model.id,
       };
     },
   },
