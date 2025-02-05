@@ -6,7 +6,6 @@ import { ChatCompetitionOptions, ChatStreamPayload, ModelProvider } from '../typ
 import {
   CloudflareStreamTransformer,
   DEFAULT_BASE_URL_PREFIX,
-  convertModelManifest,
   desensitizeCloudflareUrl,
   fillUrl,
 } from '../utils/cloudflareHelpers';
