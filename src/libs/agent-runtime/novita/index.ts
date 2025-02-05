@@ -16,6 +16,10 @@ export const LobeNovitaAI = LobeOpenAICompatibleFactory({
   },
   models: {
     transformModel: (m) => {
+      const reasoningKeywords = [
+        'deepseek-r1',
+      ];
+
       const model = m as unknown as NovitaModelCard;
 
       return {
@@ -25,7 +29,7 @@ export const LobeNovitaAI = LobeOpenAICompatibleFactory({
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.enabled || false,
         functionCall: model.description.toLowerCase().includes('function calling'),
         id: model.id,
-        reasoning: model.description.toLowerCase().includes('reasoning task'),
+        reasoning: model.description.toLowerCase().includes('reasoning task') || reasoningKeywords.some(keyword => model.name.toLowerCase().includes(keyword)),
         vision: model.description.toLowerCase().includes('vision'),
       };
     },
