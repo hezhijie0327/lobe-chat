@@ -263,9 +263,14 @@ describe('LobeGithubAI', () => {
       for (let i = 0; i < arr.length; i++) {
         const model = models[i];
         expect(model).toEqual({
+          contextWindowTokens: undefined,
           description: arr[i].description,
           displayName: arr[i].friendly_name,
+          enabled: false,
+          functionCall: false,
           id: arr[i].name,
+          reasoning: false,
+          vision: false,
         });
       }
     });
