@@ -66,6 +66,7 @@ export const LobeGithubAI = LobeOpenAICompatibleFactory({
         if (knownModel) return knownModel;
 
         return {
+          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.contextWindowTokens ?? undefined,
           description: model.description,
           displayName: model.friendly_name,
           id: model.name,
