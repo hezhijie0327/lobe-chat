@@ -45,7 +45,7 @@ export const LobeTogetherAI = LobeOpenAICompatibleFactory({
           functionCall: model.description?.toLowerCase().includes('function calling'),
           id: model.name,
           maxOutput: model.context_length,
-          reasoning: (model.description?.toLowerCase().includes('reasoning') || reasoningKeywords.some(keyword => model.name.toLowerCase().includes(keyword))) && !model.name.toLowerCase().includes('llama3'),
+          reasoning: reasoningKeywords.some(keyword => model.name.toLowerCase().includes(keyword)) || model.description?.toLowerCase().includes('reasoning') && !model.name.toLowerCase().includes('llama3'),
           tokens: model.context_length,
           vision: model.description?.toLowerCase().includes('vision') || model.name?.toLowerCase().includes('vision'),
         };
