@@ -20,8 +20,6 @@ import { OllamaStream, convertIterableToStream } from '../utils/streams';
 import { parseDataUri } from '../utils/uriParser';
 import { OllamaMessage } from './type';
 
-import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
-
 export class LobeOllamaAI implements LobeRuntimeAI {
   private client: Ollama;
 
@@ -107,13 +105,7 @@ export class LobeOllamaAI implements LobeRuntimeAI {
   async models(): Promise<ChatModelCard[]> {
     const list = await this.client.list();
     return list.models.map((model) => ({
-      contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.contextWindowTokens ?? undefined,
-      displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.displayName ?? undefined,
-      enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.enabled || false,
-      functionCall: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.functionCall || false,
       id: model.name,
-      reasoning: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.reasoning || false,
-      vision: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.vision || false,
     }));
   }
 
