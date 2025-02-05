@@ -15,7 +15,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 4096,
     "description": "MythoLogic-L2 and Huginn merge using a highly experimental tensor type merge technique. The main difference with MythoMix is that I allowed more of Huginn to intermingle with the single tensors located at the front and end of a model",
     "displayName": "MythoMax-L2 (13B)",
     "enabled": false,
@@ -51,7 +51,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 32768,
     "description": "Nous Hermes 2 Mixtral 7bx8 DPO is the new flagship Nous Research model trained over the Mixtral 7bx8 MoE LLM. The model was trained on over 1,000,000 entries of primarily GPT-4 generated data, as well as other high quality data from open datasets across the AI landscape, achieving state of the art performance on a variety of tasks.",
     "displayName": "Nous Hermes 2 - Mixtral 8x7B-DPO ",
     "enabled": false,
@@ -279,7 +279,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 16384,
     "description": "Code Llama is a family of large language models for code based on Llama 2 providing infilling capabilities, support for large input contexts, and zero-shot instruction following ability for programming tasks.",
     "displayName": "Code Llama Instruct (13B)",
     "enabled": false,
@@ -339,7 +339,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 32768,
     "description": "DBRX Instruct is a mixture-of-experts (MoE) large language model trained from scratch by Databricks. DBRX Instruct specializes in few-turn interactions.",
     "displayName": "DBRX Instruct",
     "enabled": false,
@@ -363,7 +363,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 4096,
     "description": "trained from scratch on a vast dataset of 2 trillion tokens in both English and Chinese",
     "displayName": "DeepSeek LLM Chat (67B)",
     "enabled": true,
@@ -387,7 +387,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 8192,
     "description": "Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models.",
     "displayName": "Gemma Instruct (2B)",
     "enabled": false,
@@ -399,7 +399,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 8192,
     "description": "Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models.",
     "displayName": "Gemma Instruct (7B)",
     "enabled": false,
@@ -435,7 +435,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 4096,
     "description": "Llama 2-chat leverages publicly available instruction datasets and over 1 million human annotations. Available in three sizes: 7B, 13B and 70B parameters",
     "displayName": "LLaMA-2 Chat (13B)",
     "enabled": false,
@@ -471,7 +471,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 8192,
     "description": "Llama 3 is an auto-regressive language model that uses an optimized transformer architecture. The tuned versions use supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF) to align with human preferences for helpfulness and safety.",
     "displayName": "Meta Llama 3 70B Instruct",
     "enabled": false,
@@ -483,7 +483,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 8192,
     "description": "Llama 3 is an auto-regressive language model that uses an optimized transformer architecture. The tuned versions use supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF) to align with human preferences for helpfulness and safety.",
     "displayName": "Meta Llama 3 8B Instruct",
     "enabled": false,
@@ -495,7 +495,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 65536,
     "description": "WizardLM-2 8x22B is Wizard's most advanced model, demonstrates highly competitive performance compared to those leading proprietary works and consistently outperforms all the existing state-of-the-art opensource models.",
     "displayName": "WizardLM-2 (8x22B)",
     "enabled": false,
@@ -507,7 +507,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 8192,
     "description": "instruct fine-tuned version of Mistral-7B-v0.1",
     "displayName": "Mistral (7B) Instruct",
     "enabled": false,
@@ -519,7 +519,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 32768,
     "description": "The Mistral-7B-Instruct-v0.2 Large Language Model (LLM) is an improved instruct fine-tuned version of Mistral-7B-Instruct-v0.1.",
     "displayName": "Mistral (7B) Instruct v0.2",
     "enabled": false,
@@ -531,7 +531,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 65536,
     "description": "The Mixtral-8x22B-Instruct-v0.1 Large Language Model (LLM) is an instruct fine-tuned version of the Mixtral-8x22B-v0.1.",
     "displayName": "Mixtral-8x22B Instruct v0.1",
     "enabled": true,
@@ -543,7 +543,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 32768,
     "description": "The Mixtral-8x7B Large Language Model (LLM) is a pretrained generative Sparse Mixture of Experts.",
     "displayName": "Mixtral-8x7B Instruct v0.1",
     "enabled": true,
@@ -639,7 +639,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 32768,
     "description": "A hybrid architecture composed of multi-head, grouped-query attention and gated convolutions arranged in Hyena blocks, different from traditional decoder-only Transformers",
     "displayName": "StripedHyena Nous (7B)",
     "enabled": false,
@@ -663,7 +663,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 4096,
     "description": "Built on the Llama2 architecture, SOLAR-10.7B incorporates the innovative Upstage Depth Up-Scaling",
     "displayName": "Upstage SOLAR Instruct v1 (11B)",
     "enabled": false,
@@ -675,7 +675,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 4000,
     "description": "The Yi series models are large language models trained from scratch by developers at 01.AI",
     "displayName": "01-ai Yi Chat (34B)",
     "enabled": true,
