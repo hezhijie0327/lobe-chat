@@ -21,8 +21,8 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
         'deepseek/deepseek-r1',
         'openai/o1',
         'openai/o3',
-        'qvq',
-        'qwq',
+        'qwen/qvq',
+        'qwen/qwq',
         'thinking'
       ];
 
