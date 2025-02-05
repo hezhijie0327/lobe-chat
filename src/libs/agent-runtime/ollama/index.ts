@@ -105,7 +105,13 @@ export class LobeOllamaAI implements LobeRuntimeAI {
   async models(): Promise<ChatModelCard[]> {
     const list = await this.client.list();
     return list.models.map((model) => ({
+      contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.contextWindowTokens ?? undefined,
+      displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.displayName ?? undefined,
+      enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.enabled || false,
+      functionCall: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.functionCall || false,
       id: model.name,
+      reasoning: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.reasoning || false,
+      vision: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.vision || false,
     }));
   }
 
