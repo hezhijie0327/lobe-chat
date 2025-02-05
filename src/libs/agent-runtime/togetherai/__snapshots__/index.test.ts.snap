@@ -279,7 +279,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": 16384,
+    "contextWindowTokens": undefined,
     "description": "Code Llama is a family of large language models for code based on Llama 2 providing infilling capabilities, support for large input contexts, and zero-shot instruction following ability for programming tasks.",
     "displayName": "Code Llama Instruct (13B)",
     "enabled": false,
@@ -291,7 +291,7 @@ exports[`LobeTogetherAI > models > should get models 1`] = `
     "vision": false,
   },
   {
-    "contextWindowTokens": undefined,
+    "contextWindowTokens": 16384,
     "description": "Code Llama is a family of large language models for code based on Llama 2 providing infilling capabilities, support for large input contexts, and zero-shot instruction following ability for programming tasks.",
     "displayName": "Code Llama Instruct (34B)",
     "enabled": false,
