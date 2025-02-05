@@ -21,6 +21,7 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
         'deepseek/deepseek-r1',
         'openai/o1',
         'openai/o3',
+        'thinking'
       ];
 
       const model = m as unknown as OpenRouterModelCard;
