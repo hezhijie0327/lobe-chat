@@ -133,10 +133,10 @@ export class LobeCloudflareAI implements LobeRuntimeAI {
             : LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.contextWindowTokens ?? undefined,
           displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.displayName ?? undefined,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name.endsWith(m.id))?.enabled || false,
-          functionCall: model.description.toLowerCase().includes('function call') || model.properties?.["function_calling"] === "true",
+          functionCall: model.description.includes('function call') || model.properties?.["function_calling"] === "true",
           id: model.name,
-          reasoning: model.name.toLowerCase().includes('deepseek-r1'),
-          vision: model.name.toLowerCase().includes('vision') || model.task.name.toLowerCase().includes('Image-to-Text') || model.description.toLowerCase().includes('vision'),
+          reasoning: model.name.includes('deepseek-r1'),
+          vision: model.name.includes('vision') || model.task.name.includes('Image-to-Text') || model.description.includes('vision'),
         };
       })
       .filter(Boolean) as ChatModelCard[];
