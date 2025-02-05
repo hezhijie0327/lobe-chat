@@ -53,7 +53,7 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
     return modelList
       .map((model) => {
         return {
-          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id.endsWith(m.id))?.contextWindowTokens ?? undefined,
+          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode.endsWith(m.id))?.contextWindowTokens ?? undefined,
           description: model.description,
           displayName: model.modelName,
           enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode.endsWith(m.id))?.enabled || false,
