@@ -85,7 +85,7 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
         id: model.id,
         reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
         releasedAt: toReleasedAt(model.created)
-          || LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.releasedAt 
+          || LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.releasedAt
           || undefined,
         vision: visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('audio'),
       };
