@@ -95,8 +95,8 @@ interface OpenAICompatibleFactoryOptions<T extends Record<string, any> = any> {
   provider: string;
 }
 
-export const toReleasedAt = (timestamp: any) => {
-  if (!timestamp) return;
+export const toReleasedAt = (timestamp: any): string | undefined => {
+  if (!timestamp) return undefined;
   dayjs.extend(utc);
 
   // guarantee item.created in Date String format
