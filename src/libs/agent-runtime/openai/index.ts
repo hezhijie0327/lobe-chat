@@ -65,6 +65,7 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
 
       const visionKeywords = [
         'gpt-4o',
+        'vision',
       ];
 
       const reasoningKeywords = [
@@ -82,7 +83,7 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
         functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('audio'),
         id: model.id,
         reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
-        vision: visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && model.id.toLowerCase().includes('vision') && !model.id.toLowerCase().includes('audio'),
+        vision: visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('audio'),
       };
     },
   },
