@@ -77,7 +77,6 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
 
       return {
         contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.contextWindowTokens ?? undefined,
-        description: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.description ?? undefined,
         displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.displayName ?? undefined,
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
         functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('audio'),
