@@ -10,7 +10,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo",
     "reasoning": false,
-    "releasedAt": "2023-02-28",
     "vision": false,
   },
   {
@@ -21,7 +20,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo-16k",
     "reasoning": false,
-    "releasedAt": "2023-05-10",
     "vision": false,
   },
   {
@@ -32,7 +30,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo-16k-0613",
     "reasoning": false,
-    "releasedAt": "2023-05-30",
     "vision": false,
   },
   {
@@ -43,7 +40,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-4-1106-vision-preview",
     "reasoning": false,
-    "releasedAt": "2024-03-26",
     "vision": true,
   },
   {
@@ -54,7 +50,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo-instruct-0914",
     "reasoning": false,
-    "releasedAt": "2023-09-07",
     "vision": false,
   },
   {
@@ -65,7 +60,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-4-0125-preview",
     "reasoning": false,
-    "releasedAt": "2024-01-23",
     "vision": false,
   },
   {
@@ -76,7 +70,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-4-turbo-preview",
     "reasoning": false,
-    "releasedAt": "2024-01-23",
     "vision": false,
   },
   {
@@ -87,7 +80,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo-instruct",
     "reasoning": false,
-    "releasedAt": "2023-08-24",
     "vision": false,
   },
   {
@@ -98,7 +90,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo-0301",
     "reasoning": false,
-    "releasedAt": "2023-03-01",
     "vision": false,
   },
   {
@@ -109,7 +100,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo-0613",
     "reasoning": false,
-    "releasedAt": "2023-06-12",
     "vision": false,
   },
   {
@@ -120,7 +110,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo-1106",
     "reasoning": false,
-    "releasedAt": "2023-11-02",
     "vision": false,
   },
   {
@@ -131,7 +120,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-4-1106-preview",
     "reasoning": false,
-    "releasedAt": "2023-11-02",
     "vision": false,
   },
   {
@@ -142,7 +130,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-4-vision-preview",
     "reasoning": false,
-    "releasedAt": "2023-11-02",
     "vision": true,
   },
   {
@@ -153,7 +140,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-4",
     "reasoning": false,
-    "releasedAt": "2023-06-27",
     "vision": false,
   },
   {
@@ -164,7 +150,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-3.5-turbo-0125",
     "reasoning": false,
-    "releasedAt": "2024-01-23",
     "vision": false,
   },
   {
@@ -175,7 +160,6 @@ exports[`LobeOpenAI > models > should get models 1`] = `
     "functionCall": true,
     "id": "gpt-4-0613",
     "reasoning": false,
-    "releasedAt": "2023-06-12",
     "vision": false,
   },
 ]
