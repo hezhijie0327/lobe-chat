@@ -58,13 +58,13 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
   models: {
     transformModel: (m) => {
       const functionCallKeywords = [
-        'qwen/qvq',
-        'vision',
+        'gpt-4',
+        'gpt-3.5',
+        'o3-mini',
       ];
 
       const visionKeywords = [
-        'qwen/qvq',
-        'vision',
+        'gpt-4o',
       ];
 
       const reasoningKeywords = [
@@ -79,10 +79,10 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
         description: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.description ?? undefined,
         displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.displayName ?? undefined,
         enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
-        functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
+        functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('audio'),
         id: model.id,
         reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
-        vision: visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
+        vision: visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && model.id.toLowerCase().includes('vision') && !model.id.toLowerCase().includes('audio'),
       };
     },
   },
