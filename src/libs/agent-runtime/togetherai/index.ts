@@ -30,7 +30,7 @@ export const LobeTogetherAI = LobeOpenAICompatibleFactory({
     client.baseURL = 'https://api.together.xyz/api';
 
     const modelsPage = await client.models.list() as any;
-    const modelList: TogetherAIModel[] = modelsPage.data;
+    const modelList: TogetherAIModel[] = modelsPage.body;
 
     return modelList
       .map((model) => {
