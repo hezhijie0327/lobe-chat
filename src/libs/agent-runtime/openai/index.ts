@@ -1,9 +1,10 @@
 import { ChatStreamPayload, ModelProvider, OpenAIChatMessage } from '../types';
-import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
+import { LobeOpenAICompatibleFactory, toReleasedAt } from '../utils/openaiCompatibleFactory';
 
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
 
 export interface OpenAIModelCard {
+  created: string;
   id: string;
 }
 
@@ -83,7 +84,9 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
         functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('audio'),
         id: model.id,
         reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
-        releasedAt: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.releasedAt ?? undefined,
+        releasedAt: toReleasedAt(model.created)
+          || LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.releasedAt 
+          || undefined,
         vision: visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('audio'),
       };
     },
