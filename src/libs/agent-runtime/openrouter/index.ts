@@ -33,11 +33,14 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
 
       const model = m as unknown as OpenRouterModelCard;
 
+      const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+
+      if (knownModel) return knownModel;
+
       return {
         contextWindowTokens: model.context_length,
         description: model.description,
         displayName: model.name,
-        enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
         functionCall:
           model.description.includes('function calling') || model.description.includes('tools'),
         id: model.id,
