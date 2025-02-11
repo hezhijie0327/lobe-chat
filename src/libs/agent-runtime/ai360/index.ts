@@ -31,7 +31,7 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
 
       const model = m as unknown as Ai360ModelCard;
 
-      const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id) as unknown as any;
+      const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
 
       return {
         contextWindowTokens: model.total_tokens,
