@@ -125,13 +125,15 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
     const json = await response.json();
   
     const modelList: AnthropicModelCard[] = json['data'];
-  
+
     return modelList
       .map((model) => {
+        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+
+        if (knownModel) return knownModel;
+
         return {
-          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.contextWindowTokens ?? undefined,
           displayName: model.display_name,
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
           functionCall: model.id.toLowerCase().includes('claude-3'),
           id: model.id,
           vision: model.id.toLowerCase().includes('claude-3') && !model.id.toLowerCase().includes('claude-3-5-haiku'),
