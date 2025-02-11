@@ -24,10 +24,12 @@ export const LobeFireworksAI = LobeOpenAICompatibleFactory({
 
       const model = m as unknown as FireworksAIModelCard;
 
+      const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+
+      if (knownModel) return knownModel;
+
       return {
         contextWindowTokens: model.context_length,
-        displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.displayName ?? undefined,
-        enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
         functionCall: model.supports_tools || model.id.toLowerCase().includes('function'),
         id: model.id,
         reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
