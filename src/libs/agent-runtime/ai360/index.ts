@@ -31,19 +31,19 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
 
       const model = m as unknown as Ai360ModelCard;
 
-      const knownModels = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+      const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id) as unknown as any;
 
       return {
         contextWindowTokens: model.total_tokens,
         displayName: knownModels?.displayName ?? undefined,
         enabled: knownModels?.enabled || false,
-        functionCall: model.id === '360gpt-pro' || knownModels?.functionCall,
+        functionCall: model.id === '360gpt-pro' || knownModels?.abilities?.functionCall || false,
         id: model.id,
         maxTokens:
           typeof model.max_tokens === 'number'
             ? model.max_tokens
             : undefined,
-        reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) || knownModels?.reasoning,
+        reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) || knownModels?.abilities?.reasoning || false,
       };
     },
   },
