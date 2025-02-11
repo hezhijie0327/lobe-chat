@@ -57,11 +57,13 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
 
     return modelList
       .map((model) => {
+        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode === m.id);
+
+        if (knownModel) return knownModel;
+
         return {
-          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode === m.id)?.contextWindowTokens ?? undefined,
           description: model.description,
           displayName: model.modelName,
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.modelCode === m.id)?.enabled || false,
           functionCall: model.modelCode.toLowerCase().includes('glm-4') && !model.modelCode.toLowerCase().includes('glm-4v'),
           id: model.modelCode,
           reasoning: model.modelCode.toLowerCase().includes('glm-zero-preview'),
