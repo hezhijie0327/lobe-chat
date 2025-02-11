@@ -35,12 +35,15 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
     const modelsPage = await client.models.list() as any;
     const modelList: BaichuanModelCard[] = modelsPage.data;
 
+    const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.model === m.id);
+
+    if (knownModel) return knownModel;
+
     return modelList
       .map((model) => {
         return {
           contextWindowTokens: model.max_input_length,
           displayName: model.model_show_name,
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.model === m.id)?.enabled || false,
           functionCall: model.function_call,
           id: model.model,
           maxTokens: model.max_tokens,
