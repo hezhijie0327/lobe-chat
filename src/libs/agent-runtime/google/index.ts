@@ -149,10 +149,13 @@ export class LobeGoogleAI implements LobeRuntimeAI {
       .map((model) => {
         const modelName = model.name.replace(/^models\//, '');
 
+        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => modelName === m.id);
+
+        if (knownModel) return knownModel;
+
         return {
           contextWindowTokens: model.inputTokenLimit + model.outputTokenLimit,
           displayName: model.displayName,
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => modelName === m.id)?.enabled || false,
           functionCall: modelName.toLowerCase().includes('gemini'),
           id: modelName,
           reasoning: modelName.toLowerCase().includes('thinking'),
