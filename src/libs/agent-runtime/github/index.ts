@@ -58,11 +58,13 @@ export const LobeGithubAI = LobeOpenAICompatibleFactory({
 
     return modelList
       .map((model) => {
+        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id);
+
+        if (knownModel) return knownModel;
+
         return {
-          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.contextWindowTokens ?? undefined,
           description: model.description,
           displayName: model.friendly_name,
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.enabled || false,
           functionCall: functionCallKeywords.some(keyword => model.description.toLowerCase().includes(keyword)),
           id: model.name,
           reasoning: reasoningKeywords.some(keyword => model.name.toLowerCase().includes(keyword)),
