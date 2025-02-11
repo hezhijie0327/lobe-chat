@@ -79,10 +79,11 @@ export const LobeHuggingFaceAI = LobeOpenAICompatibleFactory({
 
     return modelList
       .map((model) => {
+        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+
+        if (knownModel) return knownModel;
+
         return {
-          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.contextWindowTokens ?? undefined,
-          displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.displayName ?? undefined,
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
           functionCall: model.tags.some(tag => tag.toLowerCase().includes('function-calling')),
           id: model.id,
           reasoning: model.tags.some(tag => tag.toLowerCase().includes('reasoning')) || reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
