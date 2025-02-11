@@ -125,14 +125,19 @@ export class LobeCloudflareAI implements LobeRuntimeAI {
 
     const modelList: CloudflareModelCard[] = json.result;
 
+    const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id);
+
+    if (knownModel) return knownModel;
+
     return modelList
       .map((model) => {
         return {
           contextWindowTokens: model.properties?.max_total_tokens
             ? Number(model.properties.max_total_tokens)
-            : LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.contextWindowTokens ?? undefined,
-          displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.displayName ?? (model.properties?.["beta"] === "true" ? `${model.name} (Beta)` : undefined),
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id)?.enabled || false,
+            : undefined,
+          displayName: model.properties?.["beta"] === "true"
+            ? `${model.name} (Beta)`
+            : undefined,
           functionCall: model.description.toLowerCase().includes('function call') || model.properties?.["function_calling"] === "true",
           id: model.name,
           reasoning: model.name.toLowerCase().includes('deepseek-r1'),
