@@ -44,10 +44,11 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
 
     return modelList
       .map((model) => {
+        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+
+        if (knownModel) return knownModel;
+
         return {
-          contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.contextWindowTokens ?? undefined,
-          displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.displayName ?? undefined,
-          enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
           functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
           id: model.id,
           vision: model.id.toLowerCase().includes('vision'),
