@@ -2,7 +2,6 @@ import { Ollama, Tool } from 'ollama/browser';
 import { ClientOptions } from 'openai';
 
 import { OpenAIChatMessage } from '@/libs/agent-runtime';
-import { ChatModelCard } from '@/types/llm';
 
 import { LobeRuntimeAI } from '../BaseAI';
 import { AgentRuntimeErrorType } from '../error';
@@ -21,6 +20,7 @@ import { parseDataUri } from '../utils/uriParser';
 import { OllamaMessage } from './type';
 
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
+import { ChatModelCard } from '@/types/llm';
 
 export interface OllamaModelCard {
   id: string;
