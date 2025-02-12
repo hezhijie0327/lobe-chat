@@ -37,10 +37,19 @@ export const LobeGiteeAI = LobeOpenAICompatibleFactory({
         contextWindowTokens: knownModel?.contextWindowTokens ?? undefined,
         displayName: knownModel?.displayName ?? undefined,
         enabled: knownModel?.enabled || false,
-        functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('qwen2.5-coder') || knownModel?.abilities?.functionCall || false,
+        functionCall:
+          functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) && !model.id.toLowerCase().includes('qwen2.5-coder')
+          || knownModel?.abilities?.functionCall
+          || false,
         id: model.id,
-        reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) || knownModel?.abilities?.reasoning || false,
-        vision: visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) || knownModel?.abilities?.vision || false,
+        reasoning:
+          reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+          || knownModel?.abilities?.reasoning
+          || false,
+        vision:
+          visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+          || knownModel?.abilities?.vision
+          || false,
       };
     },
   },
