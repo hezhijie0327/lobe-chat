@@ -135,10 +135,22 @@ export class LobeCloudflareAI implements LobeRuntimeAI {
             : knownModel?.contextWindowTokens ?? undefined,
           displayName: knownModel?.displayName ?? (model.properties?.["beta"] === "true" ? `${model.name} (Beta)` : undefined),
           enabled: knownModel?.enabled || false,
-          functionCall: model.description.toLowerCase().includes('function call') || model.properties?.["function_calling"] === "true" || knownModel?.abilities?.functionCall || false,
+          functionCall:
+            model.description.toLowerCase().includes('function call')
+            || model.properties?.["function_calling"] === "true"
+            || knownModel?.abilities?.functionCall
+            || false,
           id: model.name,
-          reasoning: model.name.toLowerCase().includes('deepseek-r1') || knownModel?.abilities?.reasoning || false,
-          vision: model.name.toLowerCase().includes('vision') || model.task?.name.toLowerCase().includes('image-to-text') || model.description.toLowerCase().includes('vision') || knownModel?.abilities?.vision || false,
+          reasoning:
+            model.name.toLowerCase().includes('deepseek-r1')
+            || knownModel?.abilities?.reasoning
+            || false,
+          vision:
+            model.name.toLowerCase().includes('vision')
+            || model.task?.name.toLowerCase().includes('image-to-text')
+            || model.description.toLowerCase().includes('vision')
+            || knownModel?.abilities?.vision
+            || false,
         };
       })
       .filter(Boolean) as ChatModelCard[];
