@@ -134,9 +134,15 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
           contextWindowTokens: knownModel?.contextWindowTokens ?? undefined,
           displayName: model.display_name,
           enabled: knownModel?.enabled || false,
-          functionCall: model.id.toLowerCase().includes('claude-3') || knownModel?.abilities?.functionCall || false,
+          functionCall:
+            model.id.toLowerCase().includes('claude-3')
+            || knownModel?.abilities?.functionCall
+            || false,
           id: model.id,
-          vision: model.id.toLowerCase().includes('claude-3') && !model.id.toLowerCase().includes('claude-3-5-haiku') || knownModel?.abilities?.vision || false,
+          vision:
+            model.id.toLowerCase().includes('claude-3') && !model.id.toLowerCase().includes('claude-3-5-haiku')
+            || knownModel?.abilities?.vision
+            || false,
         };
       })
       .filter(Boolean) as ChatModelCard[];
