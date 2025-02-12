@@ -34,7 +34,7 @@ export const LobeTogetherAI = LobeOpenAICompatibleFactory({
 
     return modelList
       .map((model) => {
-        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+        const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.name === m.id);
 
         return {
           contextWindowTokens: knownModel?.contextWindowTokens ?? undefined,
