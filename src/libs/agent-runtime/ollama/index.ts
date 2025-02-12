@@ -23,7 +23,7 @@ import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
 import { ChatModelCard } from '@/types/llm';
 
 export interface OllamaModelCard {
-  id: string;
+  name: string;
 }
 
 export class LobeOllamaAI implements LobeRuntimeAI {
@@ -109,7 +109,9 @@ export class LobeOllamaAI implements LobeRuntimeAI {
   }
 
   async models() {
-    const modelList: OllamaModelCard[] = await this.client.list();
+    const json = await this.client.list();
+
+    const modelList: OllamaModelCard[] = json.data;
 
     return modelList
       .map((model) => {
