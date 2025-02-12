@@ -37,13 +37,19 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
         contextWindowTokens: model.total_tokens,
         displayName: knownModel?.displayName ?? undefined,
         enabled: knownModel?.enabled || false,
-        functionCall: model.id === '360gpt-pro' || knownModel?.abilities?.functionCall || false,
+        functionCall:
+          model.id === '360gpt-pro'
+          || knownModel?.abilities?.functionCall
+          || false,
         id: model.id,
         maxTokens:
           typeof model.max_tokens === 'number'
             ? model.max_tokens
             : undefined,
-        reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) || knownModel?.abilities?.reasoning || false,
+        reasoning:
+          reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+          || knownModel?.abilities?.reasoning
+          || false,
       };
     },
   },
