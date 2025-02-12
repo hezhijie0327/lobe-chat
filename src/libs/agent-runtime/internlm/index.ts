@@ -30,7 +30,9 @@ export const LobeInternLMAI = LobeOpenAICompatibleFactory({
         contextWindowTokens: knownModel?.contextWindowTokens ?? undefined,
         displayName: knownModel?.displayName ?? undefined,
         enabled: knownModel?.enabled || false,
-        functionCall: true,
+        functionCall:
+          || knownModel?.abilities?.functionCall
+          || false,
         id: model.id,
       };
     },
