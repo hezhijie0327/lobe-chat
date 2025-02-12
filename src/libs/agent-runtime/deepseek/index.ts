@@ -69,9 +69,15 @@ export const LobeDeepSeekAI = LobeOpenAICompatibleFactory({
         contextWindowTokens: knownModel?.contextWindowTokens ?? undefined,
         displayName: knownModel?.displayName ?? undefined,
         enabled: knownModel?.enabled || false,
-        functionCall: !model.id.toLowerCase().includes('reasoner') || knownModel?.abilities?.functionCall || false,
+        functionCall:
+          !model.id.toLowerCase().includes('reasoner')
+          || knownModel?.abilities?.functionCall
+          || false,
         id: model.id,
-        reasoning: model.id.toLowerCase().includes('reasoner') || knownModel?.abilities?.reasoning || false,
+        reasoning:
+          model.id.toLowerCase().includes('reasoner')
+          || knownModel?.abilities?.reasoning
+          || false,
       };
     },
   },
