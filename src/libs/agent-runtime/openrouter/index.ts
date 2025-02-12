@@ -6,6 +6,15 @@ import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
 
 export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://openrouter.ai/api/v1',
+  chatCompletion: {
+    handlePayload: (payload) => {
+      return {
+        ...payload,
+        include_reasoning: true,
+        stream: payload.stream ?? true,
+      } as any;
+    },
+  },
   constructorOptions: {
     defaultHeaders: {
       'HTTP-Referer': 'https://chat-preview.lobehub.com',
@@ -17,10 +26,7 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
   },
   models: {
     transformModel: (m) => {
-      const visionKeywords = [
-        'qwen/qvq',
-        'vision',
-      ];
+      const visionKeywords = ['qwen/qvq', 'vision'];
 
       const reasoningKeywords = [
         'deepseek/deepseek-r1',
@@ -28,7 +34,7 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
         'openai/o3',
         'qwen/qvq',
         'qwen/qwq',
-        'thinking'
+        'thinking',
       ];
 
       const model = m as unknown as OpenRouterModelCard;
