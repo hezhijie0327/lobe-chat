@@ -30,9 +30,14 @@ export const LobeFireworksAI = LobeOpenAICompatibleFactory({
         contextWindowTokens: model.context_length,
         displayName: knownModel?.displayName ?? undefined,
         enabled: knownModel?.enabled || false,
-        functionCall: model.supports_tools || model.id.toLowerCase().includes('function'),
+        functionCall:
+          model.supports_tools
+          || model.id.toLowerCase().includes('function'),
         id: model.id,
-        reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) || knownModel?.abilities?.reasoning || false,
+        reasoning:
+          reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+          || knownModel?.abilities?.reasoning
+          || false,
         vision: model.supports_image_input,
       };
     },
