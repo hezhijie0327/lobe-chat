@@ -1,9 +1,9 @@
 import { uniqueId } from 'lodash-es';
 
-import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiProviders';
-
 import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
+
+import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
 
 export const LobeHigressAI = LobeOpenAICompatibleFactory({
   constructorOptions: {
