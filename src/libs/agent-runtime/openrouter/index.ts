@@ -1,8 +1,8 @@
-import { LOBE_DEFAULT_MODEL_LIST } from '@/config/modelProviders';
-
 import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 import { OpenRouterModelCard } from './type';
+
+import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
 
 export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://openrouter.ai/api/v1',
