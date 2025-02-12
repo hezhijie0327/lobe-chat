@@ -148,6 +148,7 @@ describe('LobeOllamaAI', () => {
       expect(models).toEqual([
         {
           contextWindowTokens: undefined,
+          displayName: undefined,
           enabled: false,
           functionCall: false,
           id: 'model-1',
@@ -156,6 +157,7 @@ describe('LobeOllamaAI', () => {
         },
         {
           contextWindowTokens: undefined,
+          displayName: undefined,
           enabled: false,
           functionCall: false,
           id: 'model-2',
