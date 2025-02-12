@@ -54,10 +54,19 @@ export const LobeGroq = LobeOpenAICompatibleFactory({
         contextWindowTokens: model.context_window,
         displayName: knownModel?.displayName ?? undefined,
         enabled: knownModel?.enabled || false,
-        functionCall: functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) || knownModel?.abilities?.functionCall || false,
+        functionCall:
+          functionCallKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+          || knownModel?.abilities?.functionCall
+          || false,
         id: model.id,
-        reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)) || knownModel?.abilities?.reasoning || false,
-        vision: model.id.toLowerCase().includes('vision') || knownModel?.abilities?.vision || false,
+        reasoning:
+          reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+          || knownModel?.abilities?.reasoning
+          || false,
+        vision:
+          model.id.toLowerCase().includes('vision')
+          || knownModel?.abilities?.vision
+          || false,
       };
     },
   },
