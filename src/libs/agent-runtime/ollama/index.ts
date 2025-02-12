@@ -109,9 +109,7 @@ export class LobeOllamaAI implements LobeRuntimeAI {
   }
 
   async models() {
-    const json = await this.client.list();
-
-    const modelList: OllamaModelCard[] = (json as any).data;
+    const modelList: OllamaModelCard[] = await this.client.list() as any;
 
     return modelList
       .map((model) => {
