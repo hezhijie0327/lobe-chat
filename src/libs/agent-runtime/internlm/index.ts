@@ -24,10 +24,12 @@ export const LobeInternLMAI = LobeOpenAICompatibleFactory({
     transformModel: (m) => {
       const model = m as unknown as InternLMModelCard;
 
+      const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+
       return {
-        contextWindowTokens: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.contextWindowTokens ?? undefined,
-        displayName: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.displayName ?? undefined,
-        enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
+        contextWindowTokens: knownModel?.contextWindowTokens ?? undefined,
+        displayName: knownModel?.displayName ?? undefined,
+        enabled: knownModel?.enabled || false,
         functionCall: true,
         id: model.id,
       };
