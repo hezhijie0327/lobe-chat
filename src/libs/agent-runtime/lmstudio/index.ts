@@ -2,7 +2,6 @@ import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 import { LOBE_DEFAULT_MODEL_LIST } from '@/config/aiModels';
-import { ChatModelCard } from '@/types/llm';
 
 export interface LMStudioModelCard {
   id: string;
