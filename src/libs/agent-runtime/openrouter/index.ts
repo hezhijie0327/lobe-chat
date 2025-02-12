@@ -33,23 +33,33 @@ export const LobeOpenRouterAI = LobeOpenAICompatibleFactory({
 
       const model = m as unknown as OpenRouterModelCard;
 
+      const knownModel = LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id);
+
       return {
         contextWindowTokens: model.context_length,
         description: model.description,
         displayName: model.name,
-        enabled: LOBE_DEFAULT_MODEL_LIST.find((m) => model.id === m.id)?.enabled || false,
+        enabled: knownModel?.enabled || false,
         functionCall:
-          model.description.includes('function calling') || model.description.includes('tools'),
+          model.description.includes('function calling')
+          || model.description.includes('tools')
+          || knownModel?.abilities?.functionCall
+          || false,
         id: model.id,
         maxTokens:
           typeof model.top_provider.max_completion_tokens === 'number'
             ? model.top_provider.max_completion_tokens
             : undefined,
-        reasoning: reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
+        reasoning:
+          reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+          || knownModel?.abilities?.reasoning
+          || false,
         vision:
-          model.description.includes('vision') ||
-          model.description.includes('multimodal') ||
-          visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword)),
+          model.description.includes('vision')
+          || model.description.includes('multimodal')
+          || visionKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+          || knownModel?.abilities?.vision
+          || false,
       };
     },
   },
