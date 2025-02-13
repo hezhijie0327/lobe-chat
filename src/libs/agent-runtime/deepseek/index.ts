@@ -63,7 +63,7 @@ export const LobeDeepSeekAI = LobeOpenAICompatibleFactory({
     const { LOBE_DEFAULT_MODEL_LIST } = await import('@/config/aiModels');
 
     const modelsPage = await client.models.list() as any;
-    const modelList: Ai360ModelCard[] = modelsPage.data;
+    const modelList: DeepSeekModelCard[] = modelsPage.data;
 
     return modelList
       .map((model) => {
