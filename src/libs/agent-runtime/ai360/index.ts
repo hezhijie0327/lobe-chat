@@ -55,7 +55,7 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
             || knownModel?.abilities?.reasoning
             || false,
           vision:
-            knownModel?.abilities?.reasoning
+            knownModel?.abilities?.vision
             || false,
         };
       })
