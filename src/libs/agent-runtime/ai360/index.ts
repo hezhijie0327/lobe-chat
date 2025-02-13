@@ -22,7 +22,7 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
   debug: {
     chatCompletion: () => process.env.DEBUG_AI360_CHAT_COMPLETION === '1',
   },
-  models: async () => {
+  models: async ({ client }) => {
     const { LOBE_DEFAULT_MODEL_LIST } = await import('@/config/aiModels');
 
     const reasoningKeywords = [
