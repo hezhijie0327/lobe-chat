@@ -29,11 +29,6 @@ export const LobeHigressAI = LobeOpenAICompatibleFactory({
   models: async ({ client }) => {
     const { LOBE_DEFAULT_MODEL_LIST } = await import('@/config/aiModels');
 
-    const reasoningKeywords = [
-      '360gpt2-o1',
-      '360zhinao2-o1',
-    ];
-
     const modelsPage = await client.models.list() as any;
     const modelList: HigressModelCard[] = modelsPage.data;
 
