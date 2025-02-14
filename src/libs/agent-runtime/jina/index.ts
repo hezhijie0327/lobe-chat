@@ -35,7 +35,8 @@ export const LobeJinaAI = LobeOpenAICompatibleFactory({
             || false,
           id: model.id,
           reasoning:
-            knownModel?.abilities?.reasoning
+            reasoningKeywords.some(keyword => model.id.toLowerCase().includes(keyword))
+            || knownModel?.abilities?.reasoning
             || false,
           vision:
             knownModel?.abilities?.vision
