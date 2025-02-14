@@ -227,7 +227,7 @@ class AgentRuntime {
         break;
       }
 
-      case ModelProvider.vLLM: {
+      case ModelProvider.VLLM: {
         runtimeModel = new LobeVLLMAI(params.vllm);
         break;
       }
