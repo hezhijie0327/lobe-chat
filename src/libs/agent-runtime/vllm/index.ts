@@ -3,7 +3,7 @@ import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
 import type { ChatModelCard } from '@/types/llm';
 
-export interface vLLMModelCard {
+export interface VLLMModelCard {
   id: string;
 }
 
@@ -16,7 +16,7 @@ export const LobeVLLMAI = LobeOpenAICompatibleFactory({
     const { LOBE_DEFAULT_MODEL_LIST } = await import('@/config/aiModels');
 
     const modelsPage = await client.models.list() as any;
-    const modelList: vLLMModelCard[] = modelsPage.data;
+    const modelList: VLLMModelCard[] = modelsPage.data;
 
     return modelList
       .map((model) => {
@@ -40,5 +40,5 @@ export const LobeVLLMAI = LobeOpenAICompatibleFactory({
       })
       .filter(Boolean) as ChatModelCard[];
   },
-  provider: ModelProvider.vLLM,
+  provider: ModelProvider.VLLM,
 });
