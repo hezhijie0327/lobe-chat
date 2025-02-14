@@ -5,7 +5,10 @@ const Jina: ModelProviderCard = {
   id: 'jina',
   modelList: { showModelFetcher: true },
   name: 'Jina',
-  settings: {},
+  settings: {
+    sdkType: 'openai',
+    showModelFetcher: true,
+  },
   url: 'https://jina.ai/deepsearch',
 };
 
