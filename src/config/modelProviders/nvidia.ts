@@ -9,6 +9,9 @@ const Nvidia: ModelProviderCard = {
   modelsUrl: 'https://build.nvidia.com/models',
   name: 'Nvidia',
   settings: {
+    proxyUrl: {
+      placeholder: 'https://integrate.api.nvidia.com/v1',
+    },
     sdkType: 'openai',
     showModelFetcher: true,
   },
