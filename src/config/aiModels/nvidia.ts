@@ -5,15 +5,11 @@ const nvidiaChatModels: AIChatModelCard[] = [
     abilities: {
       reasoning: true,
     },
-    "contextWindowTokens": 64_000,
-    "description": "深度搜索结合了网络搜索、阅读和推理，可进行全面调查。您可以将其视为一个代理，接受您的研究任务 - 它会进行广泛搜索并经过多次迭代，然后才能给出答案。这个过程涉及持续的研究、推理和从各个角度解决问题。这与直接从预训练数据生成答案的标准大模型以及依赖一次性表面搜索的传统 RAG 系统有着根本的不同。",
-    "displayName": "Jina DeepSearch v1",
+    "contextWindowTokens": 128_000,
+    "description": "DeepSeek 推出的推理模型。在输出最终回答之前，模型会先输出一段思维链内容，以提升最终答案的准确性。",
+    "displayName": "DeepSeek R1",
     "enabled": true,
-    "id": "jina-deepsearch-v1",
-    "pricing": {
-      "input": 0.02,
-      "output": 0.02
-    },
+    "id": "deepseek-ai/deepseek-r1",
     "type": "chat"
   }
 ]
