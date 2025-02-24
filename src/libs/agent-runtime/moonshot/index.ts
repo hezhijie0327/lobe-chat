@@ -21,8 +21,8 @@ export const LobeMoonshotAI = LobeOpenAICompatibleFactory({
             ...(tools ? tools : []),
             {
               function: {
-          			name: "$web_search",
-          		},
+                name: "$web_search",
+              },
               type: "builtin_function",
             }
           ]
