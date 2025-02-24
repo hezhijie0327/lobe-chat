@@ -17,6 +17,7 @@ export const LobeStepfunAI = LobeOpenAICompatibleFactory({
         ...rest,
         stream: !payload.tools,
         ...(enabledSearch && {
+          stream: false,
           tools: [
             ...(tools ? tools : []),
             {
