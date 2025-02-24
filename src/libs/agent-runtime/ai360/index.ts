@@ -17,8 +17,9 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
 
       return {
         ...rest,
-        stream: !tools,
+        stream: !payload.tools,
         ...(enabledSearch && {
+          stream: false,
           tools: [
             ...(tools ? tools : []),
             {
