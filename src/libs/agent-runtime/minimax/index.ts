@@ -21,7 +21,7 @@ export const LobeMinimaxAI = LobeOpenAICompatibleFactory({
           parameters: JSON.stringify(tool.function.parameters),
         },
         type: 'function',
-      })),
+      }));
 
       return {
         ...params,
