@@ -1,5 +1,3 @@
-import OpenAI from 'openai';
-
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
@@ -36,7 +34,18 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
               temperature: temperature !== undefined ? temperature / 2 : undefined,
               top_p,
             }),
-      }) as OpenAI.ChatCompletionCreateParamsStreaming,
+        ...(enabledSearch && {
+          tools: [
+            ...(tools ? tools : []),
+            {
+              type: "web_search",
+              web_search: {
+                enable: true,
+              },
+            }
+          ]
+        }),
+      }) as any,
   },
   constructorOptions: {
     defaultHeaders: {
