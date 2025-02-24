@@ -28,7 +28,7 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
                 search_mode: "auto",
               },
             }
-          ],
+          ]
         }),
       } as any;
     },
