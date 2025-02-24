@@ -13,21 +13,20 @@ export const LobeStepfunAI = LobeOpenAICompatibleFactory({
     handlePayload: (payload) => {
       const { enabledSearch, tools, ...rest } = payload;
 
+      const stepfunTools = enabledSearch ? [
+        ...(tools || []),
+        {
+          function: {
+            description: "use web_search to search information on the internet",
+          },
+          type: "web_search",
+        }
+      ] : tools;
+
       return {
         ...rest,
-        stream: !payload.tools,
-        ...(enabledSearch && {
-          stream: false,
-          tools: [
-            ...(tools ? tools : []),
-            {
-              function: {
-                description: "use web_search to search information on the internet",
-              },
-              type: "web_search",
-            }
-          ]
-        }),
+        stream: !stepfunTools,
+        tools: stepfunTools,
       } as any;
     },
   },
