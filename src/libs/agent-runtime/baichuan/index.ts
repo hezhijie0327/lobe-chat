@@ -24,7 +24,7 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
         temperature: temperature !== undefined ? temperature / 2 : undefined,
         ...(enabledSearch && {
           tools: [
-            ...tools,
+            ...(tools ? tools : []),
             {
               type: "web_search",
               web_search: {
