@@ -17,10 +17,10 @@ export const LobeAi360AI = LobeOpenAICompatibleFactory({
 
       return {
         ...rest,
-        stream: !payload.tools,
+        stream: !tools,
         ...(enabledSearch && {
           tools: [
-            ...(tools || []),
+            ...(tools ? tools : []),
             {
               type: "web_search",
               web_search: {
