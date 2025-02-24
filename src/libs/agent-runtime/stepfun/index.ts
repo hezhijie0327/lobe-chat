@@ -21,7 +21,7 @@ export const LobeStepfunAI = LobeOpenAICompatibleFactory({
             ...(tools ? tools : []),
             {
               function: {
-                description: "这个web_search用来搜索互联网的信息",
+                description: "use web_search to search information on the internet",
               },
               type: "web_search",
             }
