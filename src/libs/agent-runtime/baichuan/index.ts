@@ -1,5 +1,3 @@
-import OpenAI from 'openai';
-
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
@@ -36,7 +34,7 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
             }
           ]
         }),
-      } as OpenAI.ChatCompletionCreateParamsStreaming;
+      } as any;
     },
   },
   debug: {
