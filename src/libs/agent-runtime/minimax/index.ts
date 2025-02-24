@@ -12,7 +12,7 @@ export const LobeMinimaxAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.minimax.chat/v1',
   chatCompletion: {
     handlePayload: (payload) => {
-      const { temperature, top_p, ...params } = payload;
+      const { enabledSearch, temperature, tools, top_p, ...params } = payload;
 
       return {
         ...params,
@@ -21,15 +21,15 @@ export const LobeMinimaxAI = LobeOpenAICompatibleFactory({
         presence_penalty: undefined,
         stream: true,
         temperature: temperature === undefined || temperature <= 0 ? undefined : temperature / 2,
-        tools: params.tools?.map((tool) => ({
-          function: {
-            description: tool.function.description,
-            name: tool.function.name,
-            parameters: JSON.stringify(tool.function.parameters),
-          },
-          type: 'function',
-        })),
         top_p: top_p !== undefined && top_p > 0 && top_p <= 1 ? top_p : undefined,
+        ...(enabledSearch && {
+          tools: [
+            ...(tools ? tools : []),
+            {
+              type: "web_search",
+            }
+          ]
+        }),
       } as any;
     },
   },
