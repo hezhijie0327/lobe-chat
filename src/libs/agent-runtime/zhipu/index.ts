@@ -12,7 +12,7 @@ export interface ZhipuModelCard {
 export const LobeZhipuAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://open.bigmodel.cn/api/paas/v4',
   chatCompletion: {
-    handlePayload: ({ max_tokens, model, temperature, top_p, ...payload }: ChatStreamPayload) =>
+    handlePayload: ({ enabledSearch, max_tokens, model, temperature, tools, top_p, ...payload }: ChatStreamPayload) =>
       ({
         ...payload,
         max_tokens: 
