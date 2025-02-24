@@ -13,20 +13,20 @@ export const LobeMoonshotAI = LobeOpenAICompatibleFactory({
     handlePayload: (payload: ChatStreamPayload) => {
       const { enabledSearch, temperature, tools, ...rest } = payload;
 
+      const moonshotTools = enabledSearch ? [
+        ...(tools || []),
+        {
+          function: {
+            name: "$web_search",
+          },
+          type: "builtin_function",
+        }
+      ] : tools;
+
       return {
         ...rest,
         temperature: temperature !== undefined ? temperature / 2 : undefined,
-        ...(enabledSearch && {
-          tools: [
-            ...(tools ? tools : []),
-            {
-              function: {
-                name: "$web_search",
-              },
-              type: "builtin_function",
-            }
-          ]
-        }),
+        tools: moonshotTools,
       } as any;
     },
   },
