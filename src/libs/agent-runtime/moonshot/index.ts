@@ -13,11 +13,22 @@ export const LobeMoonshotAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.moonshot.cn/v1',
   chatCompletion: {
     handlePayload: (payload: ChatStreamPayload) => {
-      const { temperature, ...rest } = payload;
+      const { enabledSearch, temperature, tools, ...rest } = payload;
 
       return {
         ...rest,
         temperature: temperature !== undefined ? temperature / 2 : undefined,
+        ...(enabledSearch && {
+          tools: [
+            ...(tools ? tools : []),
+            {
+              function: {
+          			name: "$web_search",
+          		},
+              type: "builtin_function",
+            }
+          ]
+        }),
       } as OpenAI.ChatCompletionCreateParamsStreaming;
     },
   },
