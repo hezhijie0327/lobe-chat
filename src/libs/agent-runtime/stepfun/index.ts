@@ -11,9 +11,22 @@ export const LobeStepfunAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.stepfun.com/v1',
   chatCompletion: {
     handlePayload: (payload) => {
+      const { enabledSearch, tools, ...rest } = payload;
+
       return {
-        ...payload,
+        ...rest,
         stream: !payload.tools,
+        ...(enabledSearch && {
+          tools: [
+            ...(tools ? tools : []),
+            {
+              function: {
+                description: "这个web_search用来搜索互联网的信息",
+              },
+              type: "web_search",
+            }
+          ]
+        }),
       } as any;
     },
   },

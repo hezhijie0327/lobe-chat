@@ -1,5 +1,3 @@
-import OpenAI from 'openai';
-
 import { ChatStreamPayload, ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
@@ -14,7 +12,7 @@ export interface ZhipuModelCard {
 export const LobeZhipuAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://open.bigmodel.cn/api/paas/v4',
   chatCompletion: {
-    handlePayload: ({ max_tokens, model, temperature, top_p, ...payload }: ChatStreamPayload) =>
+    handlePayload: ({ enabledSearch, max_tokens, model, temperature, tools, top_p, ...payload }: ChatStreamPayload) =>
       ({
         ...payload,
         max_tokens: 
@@ -36,7 +34,18 @@ export const LobeZhipuAI = LobeOpenAICompatibleFactory({
               temperature: temperature !== undefined ? temperature / 2 : undefined,
               top_p,
             }),
-      }) as OpenAI.ChatCompletionCreateParamsStreaming,
+        ...(enabledSearch && {
+          tools: [
+            ...(tools ? tools : []),
+            {
+              type: "web_search",
+              web_search: {
+                enable: true,
+              },
+            }
+          ]
+        }),
+      }) as any,
   },
   constructorOptions: {
     defaultHeaders: {
