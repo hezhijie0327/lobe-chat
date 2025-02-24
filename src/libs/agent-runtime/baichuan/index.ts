@@ -17,7 +17,7 @@ export const LobeBaichuanAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.baichuan-ai.com/v1',
   chatCompletion: {
     handlePayload: (payload: ChatStreamPayload) => {
-      const { temperature, enabledSearch, tools, ...rest } = payload;
+      const { enabledSearch, temperature, tools, ...rest } = payload;
 
       return {
         ...rest,
