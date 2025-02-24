@@ -14,6 +14,15 @@ export const LobeMinimaxAI = LobeOpenAICompatibleFactory({
     handlePayload: (payload) => {
       const { enabledSearch, temperature, tools, top_p, ...params } = payload;
 
+      const minimaxTools = tools?.map((tool) => ({
+        function: {
+          description: tool.function.description,
+          name: tool.function.name,
+          parameters: JSON.stringify(tool.function.parameters),
+        },
+        type: 'function',
+      })),
+
       return {
         ...params,
         frequency_penalty: undefined,
@@ -24,7 +33,7 @@ export const LobeMinimaxAI = LobeOpenAICompatibleFactory({
         top_p: top_p !== undefined && top_p > 0 && top_p <= 1 ? top_p : undefined,
         ...(enabledSearch && {
           tools: [
-            ...(tools ? tools : []),
+            ...(minimaxTools ? minimaxTools : []),
             {
               type: "web_search",
             }
