@@ -140,20 +140,12 @@ export const transformOpenAIStream = (
             { data: content, id: chunk.id, type: 'text' },
           ];
         }
-/*
-        // Hunyuan
-        if ('search_info' in chunk && !!chunk.search_info?.search_results) {
-          const search_info = (chunk.search_info?.search_results as any[]).map((item) => ({ title: item.title, url: item.url }));
 
-          return [
-            { data: { search_info }, id: chunk.id, type: 'grounding' },
-            { data: content, id: chunk.id, type: 'text' },
-          ];
-        }
-*/
-        // Wenxin
-        if ('search_results' in chunk && !!chunk.search_results) {
-          const search_results = (chunk.search_results as any[]).map((item) => {
+        // in Wenxin api, the citation is in the first and last chunk
+        if ('search_results' in chunk && !!chunk.search_results && !streamContext?.returnedWenxinCitation) {
+          streamContext.returnedWenxinCitation = true;
+
+          const citations = (chunk.search_results as any[]).map((item) => {
             return {
               title: item.title,
               url: item.url
@@ -161,7 +153,7 @@ export const transformOpenAIStream = (
           });
 
           return [
-            { data: { search_results }, id: chunk.id, type: 'grounding' },
+            { data: { citations }, id: chunk.id, type: 'grounding' },
             { data: content, id: chunk.id, type: 'text' },
           ];
         }
