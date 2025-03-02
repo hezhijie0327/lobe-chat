@@ -142,10 +142,10 @@ export const transformOpenAIStream = (
         }
 
         // in Hunyuan api, the citation is in every chunk
-        if ('search_info' in chunk && !!chunk.search_info.search_results && !streamContext?.returnedHunyuanCitation) {
+        if ('search_info' in chunk && !!(chunk as any).search_info.search_results && !streamContext?.returnedHunyuanCitation) {
           streamContext.returnedHunyuanCitation = true;
 
-          const citations = (chunk.search_info.search_results as any[]).map((item) => {
+          const citations = ((chunk as any).search_info.search_results as any[]).map((item) => {
             return {
               title: item.title,
               url: item.url
