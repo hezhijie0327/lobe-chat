@@ -142,32 +142,26 @@ export const transformOpenAIStream = (
         }
 
         // in Hunyuan api, the citation is in every chunk
-        if ('search_info' in chunk && !!(chunk as any).search_info.search_results && !streamContext?.returnedHunyuanCitation) {
-          streamContext.returnedHunyuanCitation = true;
+        if ('search_info' in chunk && !!chunk.search_results) {
+          const search_info = chunk.search_info as { search_results?: any[] };
 
-          const citations = ((chunk as any).search_info.search_results as any[]).map((item) => {
-            return {
-              title: item.title,
-              url: item.url
-            } as CitationItem;
-          });
+          if (!!search_info.search_results && !streamContext?.returnedHunyuanCitation) {
+            streamContext.returnedHunyuanCitation = true;
 
-          return [
-            { data: { citations }, id: chunk.id, type: 'grounding' },
-            { data: content, id: chunk.id, type: 'text' },
-          ];
+            const citations = search_info.search_results.map((item) => ({ title: item.title, url: item.url }) as CitationItem);
+
+            return [
+              { data: { citations }, id: chunk.id, type: 'grounding' },
+              { data: content, id: chunk.id, type: 'text' },
+            ];
+          }
         }
 
         // in Wenxin api, the citation is in the first and last chunk
         if ('search_results' in chunk && !!chunk.search_results && !streamContext?.returnedWenxinCitation) {
           streamContext.returnedWenxinCitation = true;
 
-          const citations = (chunk.search_results as any[]).map((item) => {
-            return {
-              title: item.title,
-              url: item.url
-            } as CitationItem;
-          });
+          const citations = (chunk.search_results as any[]).map((item) => ({ title: item.title, url: item.url }) as CitationItem);
 
           return [
             { data: { citations }, id: chunk.id, type: 'grounding' },
