@@ -7,13 +7,12 @@ import { AgentRuntimeErrorType } from '../../error';
  */
 export interface StreamContext {
   id: string;
-  returnedHunyuanCitation?: boolean;
   /**
    * As pplx citations is in every chunk, but we only need to return it once
-   * this flag is used to check if the pplx citation is returned,and then not return it again
+   * this flag is used to check if the pplx citation is returned,and then not return it again.
+   * Same as Hunyuan and Wenxin
    */
-  returnedPplxCitation?: boolean;
-  returnedWenxinCitation?: boolean;
+  returnedCitation?: boolean;
   thinking?: {
     id: string;
     name: string;
