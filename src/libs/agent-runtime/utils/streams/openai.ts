@@ -128,8 +128,8 @@ export const transformOpenAIStream = (
 
       if (typeof content === 'string') {
         // in Perplexity api, the citation is in every chunk, but we only need to return it once
-        if ('citations' in chunk && !!chunk.citations && !streamContext?.returnedPplxCitation) {
-          streamContext.returnedPplxCitation = true;
+        if ('citations' in chunk && !!chunk.citations && !streamContext?.returnedCitation) {
+          streamContext.returnedCitation = true;
 
           const citations = (chunk.citations as any[]).map((item) =>
             typeof item === 'string' ? ({ title: item, url: item } as CitationItem) : item,
@@ -145,8 +145,8 @@ export const transformOpenAIStream = (
         if ('search_info' in chunk && !!chunk.search_info) {
           const search_info = chunk.search_info as { search_results: any[] };
 
-          if (!!search_info.search_results && !streamContext?.returnedHunyuanCitation) {
-            streamContext.returnedHunyuanCitation = true;
+          if (!!search_info.search_results && !streamContext?.returnedCitation) {
+            streamContext.returnedCitation = true;
 
             const citations = search_info.search_results.map((item) => ({ title: item.title, url: item.url }) as CitationItem);
 
@@ -158,8 +158,8 @@ export const transformOpenAIStream = (
         }
 
         // in Wenxin api, the citation is in the first and last chunk
-        if ('search_results' in chunk && !!chunk.search_results && !streamContext?.returnedWenxinCitation) {
-          streamContext.returnedWenxinCitation = true;
+        if ('search_results' in chunk && !!chunk.search_results && !streamContext?.returnedCitation) {
+          streamContext.returnedCitation = true;
 
           const citations = (chunk.search_results as any[]).map((item) => ({ title: item.title, url: item.url }) as CitationItem);
 
