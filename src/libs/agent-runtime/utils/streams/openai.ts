@@ -132,7 +132,7 @@ export const transformOpenAIStream = (
             // in Perplexity api, the citation is in every chunk, but we only need to return it once
             ('citations' in chunk && chunk.citations) ||
             // in Hunyuan api, the citation is in every chunk
-            ('search_info' in chunk && chunk.search_info?.search_results) ||
+            ('search_info' in chunk && (chunk.search_info as any)?.search_results) ||
             // in Wenxin api, the citation is in the first and last chunk
             ('search_results' in chunk && chunk.search_results);
 
@@ -140,10 +140,19 @@ export const transformOpenAIStream = (
             streamContext.returnedCitation = true;
 
             return [
-              { data: { citations: citations.map((item: any) => ({
-                  title: item.title ?? item,
-                  url: item.url ?? item,
-              })) }, id: chunk.id, type: 'grounding' },
+              {
+                data: {
+                  citations: (citations as any[]).map(
+                    (item) =>
+                      ({
+                        title: typeof item === 'string' ? item : item.title,
+                        url: typeof item === 'string' ? item : item.url,
+                      }) as CitationItem
+                  ),
+                },
+                id: chunk.id,
+                type: 'grounding',
+              },
               { data: content, id: chunk.id, type: 'text' },
             ];
           }
