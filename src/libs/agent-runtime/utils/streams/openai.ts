@@ -141,12 +141,19 @@ export const transformOpenAIStream = (
           ];
         }
 
-        /*
-          Wenxin Stream:
-          {"id":"as-kqd1t7j73a","object":"chat.completion.chunk","created":1740848970,"model":"ernie-4.0-8k-latest","choices":[{"index":0,"delta":{"content":"今天是**","role":"assistant"},"flag":0}],"search_results":[{"index":1,"url":"https://news.cctv.cn/news/china/index.shtml","title":"中国新闻_央视网(cctv.com)"},{"index":2,"url":"http://chinahoy.com.cn/","title":"今日中国"},{"index":3,"url":"https://www.chinanews.com.cn/china/?q=nnurm","title":"中国新闻网_时政"}]}
-        */
+        // Hunyuan
+        if ('search_info' in chunk && !!chunk.search_info) {
+          const search_info = (chunk.search_info.search_results as any[]).map((item) => ({ title: item.title, url: item.url }));
+
+          return [
+            { data: { search_info }, id: chunk.id, type: 'grounding' },
+            { data: content, id: chunk.id, type: 'text' },
+          ];
+        }
+
+        // Wenxin
         if ('search_results' in chunk && !!chunk.search_results) {
-          const search_results = (chunk.search_results as any[]).map((item) => ({ title: item.title, url: item.url, }));
+          const search_results = (chunk.search_results as any[]).map((item) => ({ title: item.title, url: item.url }));
 
           return [
             { data: { search_results }, id: chunk.id, type: 'grounding' },
