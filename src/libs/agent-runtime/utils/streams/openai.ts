@@ -153,7 +153,12 @@ export const transformOpenAIStream = (
 */
         // Wenxin
         if ('search_results' in chunk && !!chunk.search_results) {
-          const search_results = (chunk.search_results as any[]).map((item) => ({ title: item.title, url: item.url }));
+          const search_results = (chunk.search_results as any[]).map((item) => {
+            return {
+              title: item.title,
+              url: item.url
+            } as CitationItem;
+          });
 
           return [
             { data: { search_results }, id: chunk.id, type: 'grounding' },
