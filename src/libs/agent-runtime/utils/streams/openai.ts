@@ -143,7 +143,7 @@ export const transformOpenAIStream = (
 
         // Hunyuan
         if ('search_info' in chunk && !!chunk.search_info?.search_results) {
-          const search_info = (chunk.search_info.search_results as any[]).map((item) => ({ title: item.title, url: item.url }));
+          const search_info = (chunk.search_info?.search_results as any[]).map((item) => ({ title: item.title, url: item.url }));
 
           return [
             { data: { search_info }, id: chunk.id, type: 'grounding' },
