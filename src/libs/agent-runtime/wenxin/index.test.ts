@@ -67,132 +67,36 @@ describe('LobeWenxinAI', () => {
     it('should with search citations', async () => {
       const data = [
         {
-          id: '506d64fb-e7f2-4d94-b80f-158369e9446d',
-          model: 'sonar-pro',
-          created: 1739896615,
-          object: 'chat.completion.chunk',
+          id: "as-bhrxwy5fq1",
+          object: "chat.completion.chunk",
+          created: 1741000028,
+          model: "ernie-4.0-8k-latest",
           choices: [
             {
-              finish_reason: null,
               index: 0,
-              delta: {
-                refusal: null,
-                content: '<think>',
-                role: 'assistant',
-                function_call: null,
-                tool_calls: null,
-                audio: null,
-              },
-              logprobs: null,
-            },
+              delta: { content: "今天是**", role: "assistant" },
+              flag: 0
+            }
           ],
-          stream_options: null,
-          citations: null,
+          search_results: [
+            { index: 1, url: "http://www.mnw.cn/news/shehui/", title: "社会新闻" },
+            { index: 2, url: "https://www.chinanews.com.cn/sh/2025/03-01/10376297.shtml", title: "中越边民共庆“春龙节”" },
+            { index: 3, url: "https://www.chinanews.com/china/index.shtml", title: "中国新闻网_时政" }
+          ]
         },
         {
-          id: '506d64fb-e7f2-4d94-b80f-158369e9446d',
-          model: 'sonar-pro',
-          created: 1739896615,
-          usage: {
-            prompt_tokens: 4,
-            completion_tokens: 3,
-            total_tokens: 7,
-            citation_tokens: 2217,
-            num_search_queries: 1,
-          },
-          citations: [
-            'https://www.weather.com.cn/weather/101210101.shtml',
-            'https://tianqi.moji.com/weather/china/zhejiang/hangzhou',
-            'https://weather.cma.cn/web/weather/58457.html',
-            'https://tianqi.so.com/weather/101210101',
-            'https://www.accuweather.com/zh/cn/hangzhou/106832/weather-forecast/106832',
-            'https://www.hzqx.com',
-            'https://www.hzqx.com/pc/hztq/',
-          ],
-          object: 'chat.completion',
+          id: "as-bhrxwy5fq1",
+          object: "chat.completion.chunk",
+          created: 1741000028,
+          model: "ernie-4.0-8k-latest",
           choices: [
             {
               index: 0,
-              finish_reason: null,
-              message: {
-                role: 'assistant',
-                content: '杭州今',
-              },
-              delta: {
-                role: 'assist',
-                content: '杭州今',
-              },
-            },
-          ],
-        },
-        {
-          id: '506d64fb-e7f2-4d94-b80f-158369e9446d',
-          model: 'sonar-pro',
-          created: 1739896615,
-          usage: {
-            prompt_tokens: 4,
-            completion_tokens: 9,
-            total_tokens: 13,
-            citation_tokens: 2217,
-            num_search_queries: 1,
-          },
-          citations: [
-            'https://www.weather.com.cn/weather/101210101.shtml',
-            'https://tianqi.moji.com/weather/china/zhejiang/hangzhou',
-            'https://weather.cma.cn/web/weather/58457.html',
-            'https://tianqi.so.com/weather/101210101',
-            'https://www.accuweather.com/zh/cn/hangzhou/106832/weather-forecast/106832',
-            'https://www.hzqx.com',
-            'https://www.hzqx.com/pc/hztq/',
-          ],
-          object: 'chat.completion',
-          choices: [
-            {
-              index: 0,
-              finish_reason: null,
-              message: {
-                role: 'assistant',
-                content: '杭州今天和未来几天的',
-              },
-              delta: {
-                role: 'assistant',
-                content: '天和未来几天的',
-              },
-            },
-          ],
-        },
-        {
-          id: '506d64fb-e7f2-4d94-b80f-158369e9446d',
-          model: 'sonar-pro',
-          created: 1739896615,
-          usage: {
-            prompt_tokens: 4,
-            completion_tokens: 14,
-            total_tokens: 18,
-            citation_tokens: 2217,
-            num_search_queries: 1,
-          },
-          citations: [
-            'https://www.weather.com.cn/weather/101210101.shtml',
-            'https://tianqi.moji.com/weather/china/zhejiang/hangzhou',
-            'https://weather.cma.cn/web/weather/58457.html',
-            'https://tianqi.so.com/weather/101210101',
-            'https://www.accuweather.com/zh/cn/hangzhou/106832/weather-forecast/106832',
-            'https://www.hzqx.com',
-            'https://www.hzqx.com/pc/hztq/',
-          ],
-          object: 'chat.completion',
-          choices: [
-            {
-              index: 0,
-              finish_reason: null,
-              message: {
-                role: 'assistant',
-                content: '杭州今天和未来几天的天气预报如',
-              },
-            },
-          ],
-        },
+              delta: { content: "20" },
+              flag: 0
+            }
+          ]
+        }
       ];
 
       const mockStream = new ReadableStream({
@@ -225,21 +129,15 @@ describe('LobeWenxinAI', () => {
 
       expect(stream).toEqual(
         [
-          'id: 506d64fb-e7f2-4d94-b80f-158369e9446d',
+          'id: as-bhrxwy5fq1',
           'event: text',
-          'data: "<think>"\n',
-          'id: 506d64fb-e7f2-4d94-b80f-158369e9446d',
+          'data: "今天是**"\n',
+          'id: as-bhrxwy5fq1',
           'event: grounding',
-          'data: {"citations":[{"title":"https://www.weather.com.cn/weather/101210101.shtml","url":"https://www.weather.com.cn/weather/101210101.shtml"},{"title":"https://tianqi.moji.com/weather/china/zhejiang/hangzhou","url":"https://tianqi.moji.com/weather/china/zhejiang/hangzhou"},{"title":"https://weather.cma.cn/web/weather/58457.html","url":"https://weather.cma.cn/web/weather/58457.html"},{"title":"https://tianqi.so.com/weather/101210101","url":"https://tianqi.so.com/weather/101210101"},{"title":"https://www.accuweather.com/zh/cn/hangzhou/106832/weather-forecast/106832","url":"https://www.accuweather.com/zh/cn/hangzhou/106832/weather-forecast/106832"},{"title":"https://www.hzqx.com","url":"https://www.hzqx.com"},{"title":"https://www.hzqx.com/pc/hztq/","url":"https://www.hzqx.com/pc/hztq/"}]}\n',
-          'id: 506d64fb-e7f2-4d94-b80f-158369e9446d',
+          'data: {"citations":[{"title":"社会新闻","url":"http://www.mnw.cn/news/shehui/"},{"title":"中越边民共庆“春龙节”","url":"https://www.chinanews.com.cn/sh/2025/03-01/10376297.shtml"},{"title":"中国新闻网_时政","url":"https://www.chinanews.com/china/index.shtml"}]}\n',
+          'id: as-bhrxwy5fq1',
           'event: text',
-          'data: "杭州今"\n',
-          'id: 506d64fb-e7f2-4d94-b80f-158369e9446d',
-          'event: text',
-          'data: "天和未来几天的"\n',
-          'id: 506d64fb-e7f2-4d94-b80f-158369e9446d',
-          'event: data',
-          'data: {"id":"506d64fb-e7f2-4d94-b80f-158369e9446d","index":0}\n',
+          'data: "20"\n',
         ].map((line) => `${line}\n`),
       );
 
