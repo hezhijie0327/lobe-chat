@@ -24,6 +24,7 @@ export interface SearchResult {
   engine: string;
   engines: string[];
   iframe_src?: string;
+  img_src?: string;
   parsed_url: string[];
   positions: number[];
   publishedDate?: string | null;
@@ -36,6 +37,7 @@ export interface SearchResult {
 
 export interface SearchContent {
   content?: string;
+  img_src?: string;
   title: string;
   url: string;
 }
