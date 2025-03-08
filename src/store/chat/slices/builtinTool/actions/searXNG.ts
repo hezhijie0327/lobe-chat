@@ -141,12 +141,12 @@ export const searchSlice: StateCreator<
     get().toggleSearchLoading(id, true);
     let data: SearchResponse | undefined;
     try {
-      data = await searchService.search(params.query, params.searchEngines);
+      data = await searchService.search(params.query, params.searchEngines, params.searchTimeRange);
 
       // 如果没有搜索到结果，那么尝试使用默认的搜索引擎再搜一次
-      if (data?.results.length === 0 && params.searchEngines && params.searchEngines?.length > 0) {
+      if (data?.results.length === 0 && (params.searchEngines && params.searchEngines?.length > 0 || params.searchTimeRange)) {
         data = await searchService.search(params.query);
-        get().updatePluginArguments(id, { ...params, searchEngines: undefined });
+        get().updatePluginArguments(id, { ...params, searchEngines: undefined, searchTimeRange: undefined });
       }
 
       await get().updatePluginState(id, data);
@@ -175,6 +175,7 @@ export const searchSlice: StateCreator<
     // add 15 search results to message content
     const searchContent: SearchContent[] = data.results.slice(0, 15).map((item) => ({
       content: item.content,
+      img_src: item.img_src,
       title: item.title,
       url: item.url,
     }));
