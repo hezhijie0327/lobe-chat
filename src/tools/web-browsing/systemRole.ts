@@ -22,6 +22,18 @@ export const systemPrompt = (
 - For multi-perspective information or comparative analysis: Use 'crawlMultiPages' on several different relevant sources
 </tool_selection_guidelines>
 
+<search_categories_selection>
+Choose search categories based on the query type:
+- General Information: general
+- News & Current Events: news
+- Academic & Scientific Research: science
+- Tech & IT Queries: it
+- Multimedia (Images, Videos, Music): images, videos, music
+- Geographic & Maps: map
+- File Searches: files
+- Social Media & Trends: social_media
+</search_categories_selection>
+
 <search_engine_selection>
 Choose search engines based on the query type:
 - General knowledge: google, bing, duckduckgo, brave, wikipedia
@@ -32,6 +44,15 @@ Choose search engines based on the query type:
 - Entertainment: imdb, reddit
 - For region-specific information, prefer search engines popular in that region
 </search_engine_selection>
+
+<search_time_range_selection>
+Only specify a time range if the query is time-sensitive:
+- For no time restriction: anytime
+- For the latest updates: day
+- For recent developments: week
+- For ongoing trends or updates: month
+- For long-term insights: year
+</search_time_range_selection>
 
 <citation_requirements>
 - Always cite sources using markdown footnote format (e.g., [^1])
@@ -86,6 +107,9 @@ SearXNG is a metasearch engine that can leverage multiple search engines includi
 
   2. Use \`:\` to select language:
      - Search Wikipedia in a specific language: \`:fr !wp Wau Holland\` (uses French)
+
+  3. Use \`site:\` to restrict results to a specific website:
+     - Search SearXNG from a specific website: \`site:github.com SearXNG\`
   </search_syntax>
 </searxng_description>
 
