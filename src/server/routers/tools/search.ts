@@ -37,7 +37,9 @@ export const searchRouter = router({
     .input(
       z.object({
         query: z.string(),
+        searchCategories: z.array(z.string()).optional(),
         searchEngine: z.array(z.string()).optional(),
+        searchTimeRange: z.string(),
       }),
     )
     .query(async ({ input }) => {
