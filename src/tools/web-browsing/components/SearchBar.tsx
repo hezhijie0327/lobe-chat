@@ -131,7 +131,7 @@ const SearchBar = memo<SearchBarProps>(
           </Flexbox>
         )}
 
-        <Flexbox align={'center'} gap={16} horizontal wrap>
+        <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
           <Typography.Text type={'secondary'}>
             {t('search.timeRange.label')}
           </Typography.Text>
