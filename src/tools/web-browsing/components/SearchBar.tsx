@@ -16,6 +16,7 @@ import { EngineAvatar } from './EngineAvatar';
 interface SearchBarProps {
   aiSummary?: boolean;
   defaultEngines?: string[];
+  defaultTimeRange?: string;
   defaultQuery: string;
   messageId: string;
   onSearch?: (searchQuery: SearchQuery) => void;
@@ -26,6 +27,7 @@ interface SearchBarProps {
 const SearchBar = memo<SearchBarProps>(
   ({
     defaultEngines = [],
+    defaultTimeRange = undefined,
     aiSummary = true,
     defaultQuery,
     tooltip = true,
@@ -37,11 +39,12 @@ const SearchBar = memo<SearchBarProps>(
     const loading = useChatStore(chatToolSelectors.isSearXNGSearching(messageId));
     const [query, setQuery] = useState(defaultQuery);
     const [engines, setEngines] = useState(defaultEngines);
+    const [time_range, setTimeRange] = useState(defaultTimeRange);
     const isMobile = useIsMobile();
     const [reSearchWithSearXNG] = useChatStore((s) => [s.reSearchWithSearXNG]);
 
     const updateAndSearch = async () => {
-      const data: SearchQuery = { query, searchEngines: engines };
+      const data: SearchQuery = { query, searchEngines: engines, searchTimeRange: time_range };
       onSearch?.(data);
       await reSearchWithSearXNG(messageId, data, { aiSummary });
     };
@@ -127,6 +130,23 @@ const SearchBar = memo<SearchBarProps>(
             />
           </Flexbox>
         )}
+
+        <Flexbox align={'center'} gap={16} horizontal wrap>
+          <Typography.Text type={'secondary'}>
+            {t('search.timeRange.label')}
+          </Typography.Text>
+          <Radio.Group
+            value={time_range}
+            onChange={(e) => setTimeRange(e.target.value)}
+            optionType="button"
+            options={[
+              { label: t('search.timeRange.anytime'), value: undefined },
+              { label: t('search.timeRange.day'), value: 'day' },
+              { label: t('search.timeRange.week'), value: 'week' },
+              { label: t('search.timeRange.year'), value: 'year' },
+            ]}
+          />
+        </Flexbox>
       </Flexbox>
     );
   },
