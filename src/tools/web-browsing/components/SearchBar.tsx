@@ -27,7 +27,7 @@ interface SearchBarProps {
 const SearchBar = memo<SearchBarProps>(
   ({
     defaultEngines = [],
-    defaultTimeRange = 'anytime',
+    defaultTimeRange,
     aiSummary = true,
     defaultQuery,
     tooltip = true,
