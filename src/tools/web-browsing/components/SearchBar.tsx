@@ -47,7 +47,7 @@ const SearchBar = memo<SearchBarProps>(
       const data: SearchQuery = {
         query,
         searchEngines: engines,
-        ...(defaultTimeRange !== 'anytime' && { searchTimeRange: time_range }),
+        ...(defaultTimeRange !== undefined && { searchTimeRange: time_range }),
       };
       onSearch?.(data);
       await reSearchWithSearXNG(messageId, data, { aiSummary });
@@ -143,7 +143,7 @@ const SearchBar = memo<SearchBarProps>(
             onChange={(e) => setTimeRange(e.target.value)}
             optionType="button"
             options={[
-              { label: t('search.timeRange.anytime'), value: 'anytime' },
+              { label: t('search.timeRange.anytime'), value: undefined },
               { label: t('search.timeRange.day'), value: 'day' },
               { label: t('search.timeRange.week'), value: 'week' },
               { label: t('search.timeRange.month'), value: 'month' },
