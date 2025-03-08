@@ -10,7 +10,7 @@ export class SearXNGClient {
     this.baseUrl = baseUrl;
   }
 
-  async search(query: string, engines?: string[]): Promise<SearchResponse> {
+  async search(query: string, categories?: string[], engines?: string[], time_range?: string): Promise<SearchResponse> {
     try {
       const searchParams = qs.stringify({
         categories: categories?.join(','),
