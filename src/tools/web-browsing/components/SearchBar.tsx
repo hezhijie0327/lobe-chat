@@ -133,7 +133,7 @@ const SearchBar = memo<SearchBarProps>(
 
         <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
           <Typography.Text type={'secondary'}>
-            {t('search.timeRange.label')}
+            {t('search.searchTimeRange')}
           </Typography.Text>
           <Radio.Group
             value={time_range}
