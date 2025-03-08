@@ -16,8 +16,8 @@ import { EngineAvatar } from './EngineAvatar';
 interface SearchBarProps {
   aiSummary?: boolean;
   defaultEngines?: string[];
-  defaultTimeRange?: string;
   defaultQuery: string;
+  defaultTimeRange?: string;
   messageId: string;
   onSearch?: (searchQuery: SearchQuery) => void;
   searchAddon?: ReactNode;
