@@ -37,8 +37,6 @@ export interface SearchResult {
 
 export interface SearchContent {
   content?: string;
-  img_src?: string;
-  thumbnail?: string;
   title: string;
   url: string;
 }
