@@ -30,12 +30,15 @@ export interface SearchResult {
   score: number;
   template: string;
   thumbnail?: string | null;
+  thumbnail_src?: string;
   title: string;
   url: string;
 }
 
 export interface SearchContent {
   content?: string;
+  img_src?: string;
+  thumbnail?: string;
   title: string;
   url: string;
 }
