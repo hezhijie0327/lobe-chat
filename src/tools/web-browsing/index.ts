@@ -42,7 +42,7 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
             type: 'array'
           },
           searchEngines: {
-            description: '(optional) [array] Specifies the active search engines. Please do not use searchCategories and searchEngines at together.',
+            description: '(optional) [array] Specifies the active search engines.',
             items: {
               enum: [
                 'google',
@@ -69,14 +69,14 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
             type: 'array',
           },
           searchTimeRange: {
-            description: "(optional) [string] Time range of search for engines which support it. See if an engine supports time range search in the preferences page of an instance.",
+            description: "(optional) [string] Specifies time range of search results.",
             enum: [
               'day',
               'month',
               'year',
             ],
             type: 'string'
-          }
+          },
         },
         required: ['query'],
         type: 'object',
