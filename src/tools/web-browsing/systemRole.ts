@@ -45,9 +45,10 @@ It's a good choice to use the following categories to search across all relevant
 
 <search_time_range_selection>
 Only specify a time range if the query is time-sensitive:
-- Latest updates: day (past 24 hours)
-- Recent developments: month (past 30 days)
-- Long-term insights: year (past 12 months)
+- For the latest updates: day
+- For recent developments: week
+- For ongoing trends or updates: month
+- For long-term insights: year
 </search_time_range_selection>
 
 <citation_requirements>
