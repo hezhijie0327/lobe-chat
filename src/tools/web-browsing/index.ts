@@ -19,11 +19,30 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
       parameters: {
         properties: {
           query: {
-            description: 'The search query',
+            description: '(required) [string] The search query. This string is passed to external search services. Thus, SearXNG supports syntax of each search service. For example, `site:github.com SearXNG` is a valid query for Google. However, if simply the query above is passed to any search engine which does not filter its results based on this syntax, you might not get the results you wanted.',
             type: 'string',
           },
+          searchCategories: {
+            description: "(optional) [array] Specifies the active search categories.",
+            items: {
+              enum: [
+                'files',
+                'general',
+                'images',
+                'it',
+                'map',
+                'music',
+                'news',
+                'science',
+                'social_media',
+                'videos',
+              ],
+              type: 'string'
+            },
+            type: 'array'
+          },
           searchEngines: {
-            description: 'The search engine you can use:',
+            description: '(optional) [array] Specifies the active search engines. Please do not use searchCategories and searchEngines at together.',
             items: {
               enum: [
                 'google',
@@ -49,6 +68,15 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
             },
             type: 'array',
           },
+          searchTimeRange: {
+            description: "(optional) [string] Time range of search for engines which support it. See if an engine supports time range search in the preferences page of an instance.",
+            enum: [
+              'day',
+              'month',
+              'year',
+            ],
+            type: 'string'
+          }
         },
         required: ['query'],
         type: 'object',
