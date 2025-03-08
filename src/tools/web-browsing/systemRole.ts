@@ -22,6 +22,17 @@ export const systemPrompt = (
 - For multi-perspective information or comparative analysis: Use 'crawlMultiPages' on several different relevant sources
 </tool_selection_guidelines>
 
+<search_category_selection>
+Choose search categories based on the query type:  
+- General information: general, news
+- Academic/scientific research: science
+- Technical/IT-related queries: it
+- Multimedia content: images, videos, music
+- Geographic/map-related searches: map
+- File searches: files
+- Social trends and discussions: social_media 
+</search_category_selection>
+
 <search_engine_selection>
 Choose search engines based on the query type:
 - General knowledge: google, bing, duckduckgo, brave, wikipedia
@@ -32,6 +43,13 @@ Choose search engines based on the query type:
 - Entertainment: imdb, reddit
 - For region-specific information, prefer search engines popular in that region
 </search_engine_selection>
+
+<search_time_range_selection>
+Specify the time range based on the query need:
+- Latest updates: day (past 24 hours)
+- Recent developments: month (past 30 days)
+- Long-term insights: year (past 12 months)
+</search_time_range_selection>
 
 <citation_requirements>
 - Always cite sources using markdown footnote format (e.g., [^1])
