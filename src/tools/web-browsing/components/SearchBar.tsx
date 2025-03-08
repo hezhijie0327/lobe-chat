@@ -143,6 +143,7 @@ const SearchBar = memo<SearchBarProps>(
               { label: t('search.timeRange.anytime'), value: undefined },
               { label: t('search.timeRange.day'), value: 'day' },
               { label: t('search.timeRange.week'), value: 'week' },
+              { label: t('search.timeRange.month'), value: 'month' },
               { label: t('search.timeRange.year'), value: 'year' },
             ]}
           />
