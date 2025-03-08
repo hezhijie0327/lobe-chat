@@ -27,7 +27,7 @@ interface SearchBarProps {
 const SearchBar = memo<SearchBarProps>(
   ({
     defaultEngines = [],
-    defaultTimeRange = undefined,
+    defaultTimeRange = 'anytime',
     aiSummary = true,
     defaultQuery,
     tooltip = true,
@@ -44,7 +44,11 @@ const SearchBar = memo<SearchBarProps>(
     const [reSearchWithSearXNG] = useChatStore((s) => [s.reSearchWithSearXNG]);
 
     const updateAndSearch = async () => {
-      const data: SearchQuery = { query, searchEngines: engines, searchTimeRange: time_range };
+      const data: SearchQuery = {
+        query,
+        searchEngines: engines,
+        searchTimeRange: time_range === 'anytime' ? undefined : time_range,
+      };
       onSearch?.(data);
       await reSearchWithSearXNG(messageId, data, { aiSummary });
     };
@@ -139,7 +143,7 @@ const SearchBar = memo<SearchBarProps>(
             onChange={(e) => setTimeRange(e.target.value)}
             optionType="button"
             options={[
-              { label: t('search.timeRange.anytime'), value: undefined },
+              { label: t('search.timeRange.anytime'), value: 'anytime' },
               { label: t('search.timeRange.day'), value: 'day' },
               { label: t('search.timeRange.week'), value: 'week' },
               { label: t('search.timeRange.month'), value: 'month' },
