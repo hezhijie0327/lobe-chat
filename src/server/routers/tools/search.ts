@@ -50,7 +50,7 @@ export const searchRouter = router({
       const client = new SearXNGClient(toolsEnv.SEARXNG_URL);
 
       try {
-        return await client.search(input.query, input.searchEngine);
+        return await client.search(input.query, input.searchCategories, input.searchEngine, input.searchTimeRange);
       } catch (e) {
         console.error(e);
 
