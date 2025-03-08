@@ -45,7 +45,7 @@ Choose search engines based on the query type:
 </search_engine_selection>
 
 <search_time_range_selection>
-Specify the time range for search results:
+Specify the time range based on the query if needed:
 - Latest updates: day (past 24 hours)
 - Recent developments: month (past 30 days)
 - Long-term insights: year (past 12 months)
