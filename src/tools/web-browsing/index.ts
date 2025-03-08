@@ -19,11 +19,11 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
       parameters: {
         properties: {
           query: {
-            description: '(required) [string] The search query. This string is passed to external search services. Thus, SearXNG supports syntax of each search service. For example, `site:github.com SearXNG` is a valid query for Google. However, if simply the query above is passed to any search engine which does not filter its results based on this syntax, you might not get the results you wanted.',
+            description: '(required) [string] The search query.',
             type: 'string',
           },
           searchCategories: {
-            description: "(optional) [array] Specifies the active search categories.",
+            description: '(optional) [array] Specifies the active search categories.',
             items: {
               enum: [
                 'files',
