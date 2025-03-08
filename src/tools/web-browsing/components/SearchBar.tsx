@@ -136,7 +136,6 @@ const SearchBar = memo<SearchBarProps>(
             {t('search.searchTimeRange')}
           </Typography.Text>
           <Radio.Group
-            value={time_range}
             onChange={(e) => setTimeRange(e.target.value)}
             optionType="button"
             options={[
@@ -146,6 +145,7 @@ const SearchBar = memo<SearchBarProps>(
               { label: t('search.timeRange.month'), value: 'month' },
               { label: t('search.timeRange.year'), value: 'year' },
             ]}
+            value={time_range}
           />
         </Flexbox>
       </Flexbox>
