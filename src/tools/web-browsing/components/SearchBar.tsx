@@ -47,7 +47,7 @@ const SearchBar = memo<SearchBarProps>(
       const data: SearchQuery = {
         query,
         searchEngines: engines,
-        ...(defaultTimeRange !== 'anytime' && { searchTimeRange: defaultTimeRange }),
+        ...(defaultTimeRange !== 'anytime' && { searchTimeRange: time_range }),
       };
       onSearch?.(data);
       await reSearchWithSearXNG(messageId, data, { aiSummary });
