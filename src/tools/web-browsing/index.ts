@@ -62,7 +62,7 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
             type: 'array',
           },
           searchTimeRange: {
-            description: "(required) [string] Specifies time range of search results.",
+            description: "(optional) [string] Specifies time range of search results.",
             enum: [
               'anytime',
               'day',
@@ -73,7 +73,7 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
             type: 'string'
           },
         },
-        required: ['query', 'searchTimeRange'],
+        required: ['query'],
         type: 'object',
       },
     },
