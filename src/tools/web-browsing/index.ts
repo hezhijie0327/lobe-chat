@@ -23,10 +23,9 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
             type: 'string',
           },
           searchEngines: {
-            description: '(optional) [array] Specifies the active search engines or categories.',
+            description: '(optional) [array] Specifies the active search engines.',
             items: {
               enum: [
-                // Engines
                 'google',
                 'bilibili',
                 'bing',
@@ -45,17 +44,6 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
                 'unsplash',
                 'vimeo',
                 'youtube',
-                // Categories
-                'files',
-                'general',
-                'images',
-                'it',
-                'map',
-                'music',
-                'news',
-                'science',
-                'social_media',
-                'videos',
               ],
               type: 'string',
             },
