@@ -94,7 +94,6 @@ SearXNG is a metasearch engine that can leverage multiple search engines includi
      - Chain multiple modifiers: \`!map !ddg !wp paris\` (searches for "paris" in the map category, DuckDuckGo, and Wikipedia)
 
      <search_categories_prefix>
-     Should explicitly specify the search category using the \`!\` prefix:
        - General Information: \`!general query\`
        - News & Current Events: \`!news query\`
        - Academic & Scientific Research: \`!science query\`
