@@ -49,6 +49,7 @@ Only specify a time range if the query is time-sensitive:
 - For recent developments: week
 - For ongoing trends or updates: month
 - For long-term insights: year
+- For no time restriction: anytime
 </search_time_range_selection>
 
 <citation_requirements>
