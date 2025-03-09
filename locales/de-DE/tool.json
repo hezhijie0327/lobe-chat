@@ -1,35 +1,35 @@
 {
   "dalle": {
     "autoGenerate": "Automatisch generieren",
-    "downloading": "Die von DallE3 generierten Bildlinks sind nur 1 Stunde lang gültig. Das Bild wird lokal zwischengespeichert...",
+    "downloading": "Der Link zu den von DallE3 generierten Bildern ist nur 1 Stunde gültig. Bilder werden lokal zwischengespeichert...",
     "generate": "Generieren",
-    "generating": "Generiert",
+    "generating": "Wird generiert...",
     "images": "Bilder:",
-    "prompt": "Hinweiswort"
+    "prompt": "Eingabeaufforderung"
   },
   "search": {
     "createNewSearch": "Neue Suchanfrage erstellen",
-    "emptyResult": "Keine Ergebnisse gefunden, bitte ändern Sie die Schlüsselwörter und versuchen Sie es erneut",
-    "genAiMessage": "Assistentnachricht erstellen",
-    "includedTooltip": "Die aktuellen Suchergebnisse werden in den Kontext der Sitzung aufgenommen",
+    "emptyResult": "Keine Ergebnisse gefunden. Bitte ändern Sie die Schlüsselwörter und versuchen Sie es erneut.",
+    "genAiMessage": "Assistenten-Nachricht erstellen",
+    "includedTooltip": "Die aktuellen Suchergebnisse werden in den Kontext der Sitzung aufgenommen.",
     "keywords": "Schlüsselwörter:",
-    "scoreTooltip": "Relevanzpunktzahl, je höher die Punktzahl, desto relevanter ist sie für die Suchanfrage",
+    "scoreTooltip": "Relevanzpunktzahl. Je höher die Punktzahl, desto relevanter ist sie für die Suchanfrage.",
     "searchBar": {
       "button": "Suchen",
       "placeholder": "Schlüsselwörter",
-      "tooltip": "Die Suchergebnisse werden erneut abgerufen und eine neue Zusammenfassungsnachricht wird erstellt"
+      "tooltip": "Die Suchergebnisse werden erneut abgerufen und eine neue Zusammenfassungsnachricht wird erstellt."
     },
     "searchEngine": "Suchmaschine:",
     "searchResult": "Anzahl der Suchergebnisse:",
-    "searchTimeRange": "Zeitspanne:",
+    "searchTimeRange": "Zeitraum:",
     "summary": "Zusammenfassung",
     "summaryTooltip": "Aktuellen Inhalt zusammenfassen",
     "timeRange": {
-      "anytime": "Keine Zeitbeschränkung",
-      "day": "Letzte 24 Stunden",
-      "month": "Letzter Monat",
-      "week": "Letzte Woche",
-      "year": "Letztes Jahr"
+      "anytime": "Zeit unbegrenzt",
+      "day": "Innerhalb eines Tages",
+      "month": "Innerhalb eines Monats",
+      "week": "Innerhalb einer Woche",
+      "year": "Innerhalb eines Jahres"
     },
     "viewMoreResults": "Weitere {{results}} Ergebnisse anzeigen"
   }

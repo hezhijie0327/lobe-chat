@@ -1,11 +1,11 @@
 {
   "dalle": {
-    "autoGenerate": "Génération automatique",
-    "downloading": "Le lien de l'image générée par DallE3 est valide pendant 1 heure, en cours de mise en cache de l'image localement...",
+    "autoGenerate": "Auto-générer",
+    "downloading": "Les liens d'image générés par DallE3 ne sont valides que pendant 1 heure. Le téléchargement de l'image est en cours...",
     "generate": "Générer",
-    "generating": "Génération en cours...",
+    "generating": "En cours de génération...",
     "images": "Images :",
-    "prompt": "Mots-clés"
+    "prompt": "Mot de rappel"
   },
   "search": {
     "createNewSearch": "Créer un nouvel enregistrement de recherche",
@@ -20,17 +20,9 @@
       "tooltip": "Cela va récupérer à nouveau les résultats de recherche et créer un nouveau message de résumé"
     },
     "searchEngine": "Moteur de recherche :",
-    "searchResult": "Nombre de résultats :",
-    "searchTimeRange": "Plage de temps :",
+    "searchResult": "Nombre de recherches :",
     "summary": "Résumé",
     "summaryTooltip": "Résumer le contenu actuel",
-    "timeRange": {
-      "anytime": "Temps illimité",
-      "day": "Dans la journée",
-      "month": "Dans le mois",
-      "week": "Dans la semaine",
-      "year": "Dans l'année"
-    },
     "viewMoreResults": "Voir {{results}} résultats supplémentaires"
   }
 }

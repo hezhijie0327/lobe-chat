@@ -1,19 +1,19 @@
 {
   "dalle": {
-    "autoGenerate": "Auto-generato",
-    "downloading": "Il link dell'immagine generata da DALL·E3 è valido solo per 1 ora, sta scaricando l'immagine in locale...",
+    "autoGenerate": "Generazione automatica",
+    "downloading": "Il link dell'immagine generata da DallE3 è valido solo per 1 ora, sto memorizzando l'immagine localmente...",
     "generate": "Genera",
     "generating": "Generazione in corso...",
     "images": "Immagini:",
-    "prompt": "parola chiave"
+    "prompt": "Parola chiave"
   },
   "search": {
     "createNewSearch": "Crea una nuova registrazione di ricerca",
     "emptyResult": "Nessun risultato trovato, per favore modifica le parole chiave e riprova",
-    "genAiMessage": "Crea messaggio assistente",
-    "includedTooltip": "I risultati della ricerca attuale entreranno nel contesto della conversazione",
+    "genAiMessage": "Crea un messaggio dell'assistente",
+    "includedTooltip": "I risultati di ricerca attuali entreranno nel contesto della conversazione",
     "keywords": "Parole chiave:",
-    "scoreTooltip": "Punteggio di rilevanza, un punteggio più alto indica una maggiore pertinenza rispetto alle parole chiave di ricerca",
+    "scoreTooltip": "Punteggio di rilevanza, più alto è il punteggio, più è correlato alla parola chiave di ricerca",
     "searchBar": {
       "button": "Cerca",
       "placeholder": "Parole chiave",
@@ -22,14 +22,14 @@
     "searchEngine": "Motore di ricerca:",
     "searchResult": "Numero di ricerche:",
     "searchTimeRange": "Intervallo di tempo:",
-    "summary": "Riepilogo",
-    "summaryTooltip": "Riepiloga il contenuto attuale",
+    "summary": "Sintesi",
+    "summaryTooltip": "Sintetizza il contenuto attuale",
     "timeRange": {
-      "anytime": "Nessun limite di tempo",
-      "day": "Ultime 24 ore",
-      "month": "Ultimo mese",
-      "week": "Ultima settimana",
-      "year": "Ultimo anno"
+      "anytime": "Tempo illimitato",
+      "day": "Entro un giorno",
+      "month": "Entro un mese",
+      "week": "Entro una settimana",
+      "year": "Entro un anno"
     },
     "viewMoreResults": "Visualizza altri {{results}} risultati"
   }

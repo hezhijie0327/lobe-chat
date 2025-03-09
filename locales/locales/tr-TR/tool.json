@@ -1,11 +1,11 @@
 {
   "dalle": {
     "autoGenerate": "Otomatik Oluştur",
-    "downloading": "DallE3 tarafından oluşturulan resim bağlantısı yalnızca 1 saat geçerlidir, resmi yerel olarak önbelleğe alınıyor...",
+    "downloading": "DallE3 tarafından oluşturulan resim bağlantıları sadece 1 saat geçerlidir, resim yerel olarak önbelleğe alınıyor...",
     "generate": "Oluştur",
     "generating": "Oluşturuluyor...",
-    "images": "Resimler:",
-    "prompt": "Açıklama"
+    "images": "Görseller:",
+    "prompt": "İpucu"
   },
   "search": {
     "createNewSearch": "Yeni bir arama kaydı oluştur",
@@ -16,21 +16,13 @@
     "scoreTooltip": "İlgililik puanı, bu puan ne kadar yüksekse, sorgu anahtar kelimesiyle o kadar ilgili demektir",
     "searchBar": {
       "button": "Ara",
-      "placeholder": "Anahtar kelimeler",
+      "placeholder": "Anahtar kelime",
       "tooltip": "Arama sonuçları yeniden alınacak ve yeni bir özet mesajı oluşturulacaktır"
     },
-    "searchEngine": "Arama Motoru:",
-    "searchResult": "Arama Sayısı:",
-    "searchTimeRange": "Zaman Aralığı:",
+    "searchEngine": "Arama motoru:",
+    "searchResult": "Arama sayısı:",
     "summary": "Özet",
     "summaryTooltip": "Mevcut içeriği özetle",
-    "timeRange": {
-      "anytime": "Zaman sınırlı değil",
-      "day": "Bir gün içinde",
-      "month": "Bir ay içinde",
-      "week": "Bir hafta içinde",
-      "year": "Bir yıl içinde"
-    },
     "viewMoreResults": "Daha fazla {{results}} sonuç görüntüle"
   }
 }

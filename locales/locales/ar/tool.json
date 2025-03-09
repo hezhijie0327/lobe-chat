@@ -21,16 +21,8 @@
     },
     "searchEngine": "محرك البحث:",
     "searchResult": "عدد النتائج:",
-    "searchTimeRange": "時間範圍：",
     "summary": "ملخص",
     "summaryTooltip": "تلخيص المحتوى الحالي",
-    "timeRange": {
-      "anytime": "時間不限",
-      "day": "一天內",
-      "month": "一個月內",
-      "week": "一周內",
-      "year": "一年內"
-    },
     "viewMoreResults": "عرض المزيد من {{results}} نتيجة"
   }
 }
