@@ -83,12 +83,71 @@ describe('searXNG actions', () => {
       const expectedContent: SearchContent[] = [
         {
           content: 'Test Content',
+          img_src: undefined,
           title: 'Test Result',
           url: 'https://test.com',
         },
       ];
 
       expect(searchService.search).toHaveBeenCalledWith('test query', ['google'], undefined);
+      expect(result.current.searchLoading[messageId]).toBe(false);
+      expect(result.current.internal_updateMessageContent).toHaveBeenCalledWith(
+        messageId,
+        JSON.stringify(expectedContent),
+      );
+    });
+
+    it('should handle successful search with image', async () => {
+      const mockResponse: SearchResponse = {
+        results: [
+          {
+            title: 'Test Result with image',
+            content: 'Test Content',
+            url: 'https://test.com',
+            img_src: 'https://test.com/test.jpg',
+            category: 'images',
+            engine: 'duckduckgo images',
+            engines: ['duckduckgo images'],
+            parsed_url: ['test.com'],
+            positions: [1],
+            score: 1,
+            template: 'images.html',
+          },
+        ],
+        answers: [],
+        corrections: [],
+        infoboxes: [],
+        number_of_results: 1,
+        query: 'test',
+        suggestions: [],
+        unresponsive_engines: [],
+      };
+
+      (searchService.search as Mock).mockResolvedValue(mockResponse);
+
+      const { result } = renderHook(() => useChatStore());
+      const { searchWithSearXNG } = result.current;
+
+      const messageId = 'test-message-id';
+      const query: SearchQuery = {
+        query: 'test query',
+        searchEngines: ['duckduckgo images'],
+      };
+
+      await act(async () => {
+        await searchWithSearXNG(messageId, query);
+      });
+
+      const expectedContent: SearchContent[] = [
+        {
+          content: 'Test Content',
+          img_src: 'https://test.com/test.jpg',
+          title: 'Test Result with image',
+          url: 'https://test.com',
+        },
+      ];
+
+      expect(searchService.search).toHaveBeenCalledWith('test query', ['duckduckgo images'], undefined);
       expect(result.current.searchLoading[messageId]).toBe(false);
       expect(result.current.internal_updateMessageContent).toHaveBeenCalledWith(
         messageId,
