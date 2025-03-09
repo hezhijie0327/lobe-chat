@@ -93,6 +93,19 @@ SearXNG is a metasearch engine that can leverage multiple search engines includi
      - Search for images: \`!images Wau Holland\`
      - Chain multiple modifiers: \`!map !ddg !wp paris\` (searches for "paris" in the map category, DuckDuckGo, and Wikipedia)
 
+     <search_categories_prefix>
+     Should explicitly specify the search category using the \`!\` prefix:
+       - General Information: \`!general query\`
+       - News & Current Events: \`!news query\`
+       - Academic & Scientific Research: \`!science query\`
+       - Tech & IT Queries: \`!it query\`
+       - Images: \`!images query\`
+       - Videos: \`!videos query\`
+       - Geographic & Maps: \`!map query\`
+       - File Searches: \`!files query\`
+       - Social Media & Trends: \`!social_media query\`
+     </search_categories_prefix>
+
   2. Use \`:\` to select language:
      - Search Wikipedia in a specific language: \`:fr !wp Wau Holland\` (uses French)
 
