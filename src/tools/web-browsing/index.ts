@@ -19,11 +19,11 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
       parameters: {
         properties: {
           query: {
-            description: '(required) [string] The search query.',
+            description: 'The search query',
             type: 'string',
           },
           searchEngines: {
-            description: '(optional) [array] Specifies the active search engines.',
+            description: 'The search engine you can use:',
             items: {
               enum: [
                 'google',
@@ -50,7 +50,7 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
             type: 'array',
           },
           searchTimeRange: {
-            description: "(optional) [string] Specifies time range of search results.",
+            description: "The time range you can choice:",
             enum: [
               'anytime',
               'day',
