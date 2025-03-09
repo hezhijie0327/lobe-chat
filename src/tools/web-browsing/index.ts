@@ -64,6 +64,7 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
           searchTimeRange: {
             description: "(optional) [string] Specifies time range of search results.",
             enum: [
+              'anytime',
               'day',
               'week',
               'month',
