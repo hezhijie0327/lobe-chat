@@ -16,7 +16,7 @@ export class SearXNGClient {
         engines: engines?.join(','),
         format: 'json',
         q: query,
-        ...( time_range !== 'anytime' ? { time_range: time_range } : {} )
+        ...( time_range !== 'anytime' ? { time_range: time_range } : {} ),
       });
 
       const response = await fetch(urlJoin(this.baseUrl, `/search?${searchParams}`));
