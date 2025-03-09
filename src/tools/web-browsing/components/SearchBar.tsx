@@ -17,7 +17,7 @@ interface SearchBarProps {
   aiSummary?: boolean;
   defaultEngines?: string[];
   defaultQuery: string;
-  defaultTimeRange?: string;
+  defaultTimeRange?: string | null;
   messageId: string;
   onSearch?: (searchQuery: SearchQuery) => void;
   searchAddon?: ReactNode;
