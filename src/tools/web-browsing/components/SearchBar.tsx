@@ -144,7 +144,13 @@ const SearchBar = memo<SearchBarProps>(
             {t('search.searchTimeRange')}
           </Typography.Text>
           <Radio.Group
-            onChange={(e) => setTimeRange(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value === undefined) {
+                setTimeRange(null);
+              } else {
+                setTimeRange(e.target.value);
+              }
+            }}
             optionType="button"
             options={[
               { label: t('search.timeRange.anytime'), value: undefined },
