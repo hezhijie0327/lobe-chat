@@ -27,7 +27,7 @@ interface SearchBarProps {
 const SearchBar = memo<SearchBarProps>(
   ({
     defaultEngines = [],
-    defaultTimeRange = undefined,
+    defaultTimeRange = '',
     aiSummary = true,
     defaultQuery,
     tooltip = true,
@@ -47,12 +47,8 @@ const SearchBar = memo<SearchBarProps>(
       const data: SearchQuery = {
         query,
         searchEngines: engines,
+        ...(time_range !== '' && { searchTimeRange: time_range }),
       };
-
-      if (time_range) {
-        data.searchTimeRange = time_range;
-      }
-
       onSearch?.(data);
       await reSearchWithSearXNG(messageId, data, { aiSummary });
     };
@@ -144,16 +140,10 @@ const SearchBar = memo<SearchBarProps>(
             {t('search.searchTimeRange')}
           </Typography.Text>
           <Radio.Group
-            onChange={(e) => {
-              if (e.target.value === undefined) {
-                setTimeRange(null);
-              } else {
-                setTimeRange(e.target.value);
-              }
-            }}
+            onChange={(e) => setTimeRange(e.target.value)}
             optionType="button"
             options={[
-              { label: t('search.timeRange.anytime'), value: undefined },
+              { label: t('search.timeRange.anytime'), value: '' },
               { label: t('search.timeRange.day'), value: 'day' },
               { label: t('search.timeRange.week'), value: 'week' },
               { label: t('search.timeRange.month'), value: 'month' },
