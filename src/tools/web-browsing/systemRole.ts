@@ -31,16 +31,6 @@ Choose search engines based on the query type:
 - Images: unsplash, pinterest
 - Entertainment: imdb, reddit
 - For region-specific information, prefer search engines popular in that region
-
-It's a good choice to use the following categories to search across all relevant engines if you need to broaden the range of search or are unsure about which specific engine to use:  
-- General information: general
-- News: news
-- Academic/scientific research: science
-- Technical/IT-related queries: it
-- Multimedia content: images, videos, music
-- Geographic/map-related searches: map
-- File searches: files
-- Social trends and discussions: social_media
 </search_engine_selection>
 
 <search_time_range_selection>
@@ -97,6 +87,16 @@ SearXNG is a metasearch engine that can leverage multiple search engines includi
 
   <search_syntax>
   SearXNG has special search syntax to modify the categories, engines, and language of searches:
+
+  0. Available categories:
+     - General Information: general
+     - News & Current Events: news
+     - Academic & Scientific Research: science
+     - Tech & IT Queries: it
+     - Multimedia (Images, Videos, Music): images, videos, music
+     - Geographic & Maps: map
+     - File Searches: files
+     - Social Media & Trends: social_media
 
   1. Use \`!\` to select engines and categories:
      - Search for "paris" in the "map" category: \`!map paris\`
