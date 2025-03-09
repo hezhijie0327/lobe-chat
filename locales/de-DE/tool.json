@@ -1,31 +1,31 @@
 {
   "dalle": {
     "autoGenerate": "Automatisch generieren",
-    "downloading": "Der Link zu den von DallE3 generierten Bildern ist nur 1 Stunde gültig. Bilder werden lokal zwischengespeichert...",
+    "downloading": "Die von DallE3 generierten Bildlinks sind nur 1 Stunde lang gültig. Das Bild wird lokal zwischengespeichert...",
     "generate": "Generieren",
-    "generating": "Wird generiert...",
+    "generating": "Generiert",
     "images": "Bilder:",
-    "prompt": "Eingabeaufforderung"
+    "prompt": "Hinweiswort"
   },
   "search": {
     "createNewSearch": "Neue Suchanfrage erstellen",
-    "emptyResult": "Keine Ergebnisse gefunden. Bitte ändern Sie die Schlüsselwörter und versuchen Sie es erneut.",
-    "genAiMessage": "Assistenten-Nachricht erstellen",
-    "includedTooltip": "Die aktuellen Suchergebnisse werden in den Kontext der Sitzung aufgenommen.",
+    "emptyResult": "Keine Ergebnisse gefunden, bitte ändern Sie die Schlüsselwörter und versuchen Sie es erneut",
+    "genAiMessage": "Assistentnachricht erstellen",
+    "includedTooltip": "Die aktuellen Suchergebnisse werden in den Kontext der Sitzung aufgenommen",
     "keywords": "Schlüsselwörter:",
-    "scoreTooltip": "Relevanzpunktzahl. Je höher die Punktzahl, desto relevanter ist sie für die Suchanfrage.",
+    "scoreTooltip": "Relevanzpunktzahl, je höher die Punktzahl, desto relevanter ist sie für die Suchanfrage",
     "searchBar": {
       "button": "Suchen",
       "placeholder": "Schlüsselwörter",
-      "tooltip": "Die Suchergebnisse werden erneut abgerufen und eine neue Zusammenfassungsnachricht wird erstellt."
+      "tooltip": "Die Suchergebnisse werden erneut abgerufen und eine neue Zusammenfassungsnachricht wird erstellt"
     },
     "searchEngine": "Suchmaschine:",
     "searchResult": "Anzahl der Suchergebnisse:",
-    "searchTimeRange": "Zeitraum:",
+    "searchTimeRange": "Zeitspanne:",
     "summary": "Zusammenfassung",
     "summaryTooltip": "Aktuellen Inhalt zusammenfassen",
     "timeRange": {
-      "anytime": "Zeit unbegrenzt",
+      "anytime": "Keine Zeitbeschränkung",
       "day": "Innerhalb eines Tages",
       "month": "Innerhalb eines Monats",
       "week": "Innerhalb einer Woche",

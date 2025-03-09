@@ -1,11 +1,11 @@
 {
   "dalle": {
-    "autoGenerate": "Generación automática",
-    "downloading": "El enlace de la imagen generada por DallE3 es válido solo por 1 hora, guardando la imagen localmente...",
+    "autoGenerate": "Auto-generar",
+    "downloading": "El enlace de la imagen generada por DALL·E 3 solo es válido durante 1 hora, descargando la imagen al dispositivo local...",
     "generate": "Generar",
     "generating": "Generando...",
     "images": "Imágenes:",
-    "prompt": "Palabra clave"
+    "prompt": "Palabra de aviso"
   },
   "search": {
     "createNewSearch": "Crear un nuevo registro de búsqueda",
@@ -26,10 +26,10 @@
     "summaryTooltip": "Resumir el contenido actual",
     "timeRange": {
       "anytime": "Sin límite de tiempo",
-      "day": "Dentro de un día",
-      "month": "Dentro de un mes",
-      "week": "Dentro de una semana",
-      "year": "Dentro de un año"
+      "day": "En un día",
+      "month": "En un mes",
+      "week": "En una semana",
+      "year": "En un año"
     },
     "viewMoreResults": "Ver más {{results}} resultados"
   }

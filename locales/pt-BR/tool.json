@@ -1,11 +1,11 @@
 {
   "dalle": {
-    "autoGenerate": "Geração automática",
-    "downloading": "O link da imagem gerada pelo DallE3 é válido por apenas 1 hora, salvando a imagem localmente...",
+    "autoGenerate": "Auto gerar",
+    "downloading": "O link da imagem gerada pelo DALL·E3 é válido apenas por 1 hora, está baixando a imagem para o armazenamento local...",
     "generate": "Gerar",
     "generating": "Gerando...",
     "images": "Imagens:",
-    "prompt": "Palavras-chave"
+    "prompt": "Palavra-chave"
   },
   "search": {
     "createNewSearch": "Criar nova pesquisa",
@@ -17,7 +17,7 @@
     "searchBar": {
       "button": "Pesquisar",
       "placeholder": "Palavras-chave",
-      "tooltip": "Os resultados da pesquisa serão atualizados e uma nova mensagem de resumo será criada"
+      "tooltip": "Isso irá recuperar os resultados da pesquisa novamente e criar uma nova mensagem de resumo"
     },
     "searchEngine": "Motor de busca:",
     "searchResult": "Número de pesquisas:",
