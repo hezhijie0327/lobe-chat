@@ -23,21 +23,18 @@ export interface SearchResult {
   engine: string;
   engines: string[];
   iframe_src?: string;
-  img_src?: string;
   parsed_url: string[];
   positions: number[];
   publishedDate?: string | null;
   score: number;
   template: string;
   thumbnail?: string | null;
-  thumbnail_src?: string;
   title: string;
   url: string;
 }
 
 export interface SearchContent {
   content?: string;
-  img_src?: string;
   title: string;
   url: string;
 }
