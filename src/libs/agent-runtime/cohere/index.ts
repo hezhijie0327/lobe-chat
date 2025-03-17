@@ -5,7 +5,7 @@ import type { ChatModelCard } from '@/types/llm';
 
 export interface CohereModelCard {
   context_length: number;
-  features: string[];
+  features: string[] | null;
   name: string;
   supports_vision: boolean;
 }
