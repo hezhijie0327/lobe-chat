@@ -19,7 +19,6 @@ export const LobeCohereAI = LobeOpenAICompatibleFactory({
       return {
         ...rest,
         // https://docs.cohere.com/v2/docs/compatibility-api#unsupported-parameters
-        // {"model":"command","stream":true,"frequency_penalty":0,"presence_penalty":0,"temperature":1,"top_p":1,"messages":[{"content":"Hi","role":"user"}],"user":"DEFAULT_LOBE_CHAT_USER","stream_options":{"include_usage":true}}
         frequency_penalty: frequency_penalty !== undefined ? Math.max(0, Math.min(1, frequency_penalty / 2)) : undefined,
         presence_penalty: presence_penalty !== undefined ? Math.max(0, Math.min(1, presence_penalty / 2)) : undefined,
         stream_options: undefined,
