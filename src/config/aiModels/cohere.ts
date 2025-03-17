@@ -111,9 +111,6 @@ const cohereChatModels: AIChatModelCard[] = [
     type: 'chat'
   },
   {
-    abilities: {
-      functionCall: true,
-    },
     contextWindowTokens: 4000,
     description: 'An instruction-following conversational model that performs language tasks with high quality, more reliably and with a longer context than our base generative models.',
     displayName: 'Command',
@@ -142,9 +139,6 @@ const cohereChatModels: AIChatModelCard[] = [
     type: 'chat'
   },
   {
-    abilities: {
-      functionCall: true,
-    },
     contextWindowTokens: 4000,
     description: 'A smaller, faster version of command. Almost as capable, but a lot faster.',
     displayName: 'Command Light',
@@ -158,9 +152,6 @@ const cohereChatModels: AIChatModelCard[] = [
     type: 'chat'
   },
   {
-    abilities: {
-      functionCall: true,
-    },
     contextWindowTokens: 4000,
     description: 'To reduce the time between major releases, we put out nightly versions of command models. For command-light, that is command-light-nightly. Be advised that command-light-nightly is the latest, most experimental, and (possibly) unstable version of its default counterpart. Nightly releases are updated regularly, without warning, and are not recommended for production use.',
     displayName: 'Command Light Nightly',
