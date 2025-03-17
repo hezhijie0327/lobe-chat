@@ -37,7 +37,7 @@ export const LobeCohereAI = LobeOpenAICompatibleFactory({
             || false,
           id: model.name,
           vision:
-            model.supports_vision,
+            model.supports_vision
             || knownModel?.abilities?.vision
             || false,
         };
