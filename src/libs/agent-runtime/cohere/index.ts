@@ -12,6 +12,19 @@ export interface CohereModelCard {
 
 export const LobeCohereAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.cohere.ai/compatibility/v1',
+  chatCompletion: {
+    handlePayload: (payload: ChatStreamPayload) => {
+      const { stream_options, user, ...rest } = payload;
+
+      return {
+        ...rest,
+        // https://docs.cohere.com/v2/docs/compatibility-api#unsupported-parameters
+        // {"model":"command","stream":true,"frequency_penalty":0,"presence_penalty":0,"temperature":1,"top_p":1,"messages":[{"content":"Hi","role":"user"}],"user":"DEFAULT_LOBE_CHAT_USER","stream_options":{"include_usage":true}}
+        stream_options: undefined,
+        user: undefined,
+      } as any;
+    },
+  },
   debug: {
     chatCompletion: () => process.env.DEBUG_COHERE_CHAT_COMPLETION === '1',
   },
@@ -21,7 +34,7 @@ export const LobeCohereAI = LobeOpenAICompatibleFactory({
     client.baseURL = 'https://api.cohere.com/v1';
 
     const modelsPage = await client.models.list() as any;
-    const modelList: CohereModelCard[] = modelsPage.models;
+    const modelList: CohereModelCard[] = modelsPage.body.models;
 
     return modelList
       .map((model) => {
