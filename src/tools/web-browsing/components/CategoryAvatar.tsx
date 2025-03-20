@@ -31,7 +31,6 @@ export const CategoryAvatar = memo<CategoryAvatarProps>(
       >
         <Icon 
           size={size} 
-          style={{ fontWeight: 'bold' }}
         />
       </Avatar>
     );
@@ -60,7 +59,6 @@ export const CategoryAvatarGroup = memo<CategoryAvatarGroupProps>(
             <CategoryAvatar 
               category={category} 
               size={18}
-              style={{ fontWeight: 'bold' }}
             />
           </Avatar>
         ))}
