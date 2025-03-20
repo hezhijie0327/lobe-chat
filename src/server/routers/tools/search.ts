@@ -56,12 +56,10 @@ export const searchRouter = router({
       const client = new SearXNGClient(toolsEnv.SEARXNG_URL);
 
       try {
-        const params = {
+        return await client.search(input.query, {
           engines: input.searchEngine,
           time_range: input.searchTimeRange,
-        };
-
-        return await client.search(input.query, params);
+        });
       } catch (e) {
         console.error(e);
 
