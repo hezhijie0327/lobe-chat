@@ -146,7 +146,7 @@ export const searchSlice: StateCreator<
       // 如果没有搜索到结果，那么尝试使用默认的搜索引擎再搜一次
       if (data?.results.length === 0 && (params.optionalParams?.searchEngines && params.optionalParams?.searchEngines?.length > 0 || params.optionalParams?.searchTimeRange)) {
         data = await searchService.search({ query: params.query });
-        get().updatePluginArguments(id, { ...params, optionalParams: { searchEngines: undefined, searchTimeRange: undefined } });
+        get().updatePluginArguments(id, { ...params, optionalParams: undefined });
       }
 
       await get().updatePluginState(id, data);
