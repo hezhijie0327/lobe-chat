@@ -1,8 +1,9 @@
 import { toolsClient } from '@/libs/trpc/client';
+import { SearchQuery } from '@/types/tool/search';
 
 class SearchService {
-  search(query: string, optionalParams: any) {
-    return toolsClient.search.query.query({ query, optionalParams });
+  search(parmas: SearchQuery) {
+    return toolsClient.search.query.query(parmas);
   }
 
   crawlPage(url: string) {
