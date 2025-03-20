@@ -46,8 +46,10 @@ const SearchBar = memo<SearchBarProps>(
     const updateAndSearch = async () => {
       const data: SearchQuery = {
         query,
-        searchEngines: engines,
-        searchTimeRange: time_range,
+        params: {
+          searchEngines: engines,
+          searchTimeRange: time_range,
+        }
       };
       onSearch?.(data);
       await reSearchWithSearXNG(messageId, data, { aiSummary });
