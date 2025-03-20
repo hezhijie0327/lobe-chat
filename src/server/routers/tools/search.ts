@@ -59,8 +59,8 @@ export const searchRouter = router({
 
       try {
         return await client.search(input.query, {
-          engines: input.optionalParams.searchEngines,
-          time_range: input.optionalParams.searchTimeRange,
+          engines: input.optionalParams?.searchEngines,
+          time_range: input.optionalParams?.searchTimeRange,
         });
       } catch (e) {
         console.error(e);
