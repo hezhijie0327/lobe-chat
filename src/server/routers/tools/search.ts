@@ -44,8 +44,10 @@ export const searchRouter = router({
     .input(
       z.object({
         query: z.string(),
-        searchEngine: z.array(z.string()).optional(),
-        searchTimeRange: z.string().optional(),
+        params: z.object({
+          searchEngine: z.array(z.string()).optional(),
+          searchTimeRange: z.string().optional(),
+        }),
       }),
     )
     .query(async ({ input }) => {
@@ -57,8 +59,8 @@ export const searchRouter = router({
 
       try {
         return await client.search(input.query, {
-          engines: input.searchEngine,
-          time_range: input.searchTimeRange,
+          engines: input.params?.searchEngine,
+          time_range: input.params?.searchTimeRange,
         });
       } catch (e) {
         console.error(e);
