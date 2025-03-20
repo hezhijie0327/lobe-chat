@@ -14,7 +14,7 @@ interface CategoryAvatarGroupProps {
 }
 
 export const CategoryAvatar = memo<CategoryAvatarProps>(
-  ({ category, size = 16 }) => {
+  ({ category, size = 20 }) => {
     const Icon = CATEGORY_ICON_MAP[category];
     const theme = useTheme();
 
@@ -29,7 +29,10 @@ export const CategoryAvatar = memo<CategoryAvatarProps>(
           width: size,
         }}
       >
-        <Icon size={size - 4} />
+        <Icon 
+          size={size} 
+          style={{ fontWeight: 'bold' }}
+        />
       </Avatar>
     );
   },
@@ -46,12 +49,19 @@ export const CategoryAvatarGroup = memo<CategoryAvatarGroupProps>(
             key={category}
             style={{
               background: theme.colorBgLayout,
-              height: 20,
-              padding: 3,
-              width: 20,
+              height: 24,
+              width: 24,
+              padding: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <CategoryAvatar category={category} size={16} />
+            <CategoryAvatar 
+              category={category} 
+              size={18}
+              style={{ fontWeight: 'bold' }}
+            />
           </Avatar>
         ))}
       </Avatar.Group>
