@@ -1,8 +1,8 @@
 import { toolsClient } from '@/libs/trpc/client';
 
 class SearchService {
-  search(query: string, searchEngine?: string[], searchTimeRange?: string) {
-    return toolsClient.search.query.query({ query, searchEngine, searchTimeRange });
+  search(query: string, params: any) {
+    return toolsClient.search.query.query({ query, params });
   }
 
   crawlPage(url: string) {
