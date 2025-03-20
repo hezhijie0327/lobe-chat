@@ -10,7 +10,7 @@ import { useChatStore } from '@/store/chat';
 import { chatToolSelectors } from '@/store/chat/selectors';
 import { SearchQuery } from '@/types/tool/search';
 
-import { ENGINE_ICON_MAP } from '../const';
+import { CATEGORY_ICON_MAP, ENGINE_ICON_MAP } from '../const';
 import { EngineAvatar } from './EngineAvatar';
 
 interface SearchBarProps {
