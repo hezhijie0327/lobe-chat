@@ -72,10 +72,10 @@ describe('searXNG actions', () => {
 
       const messageId = 'test-message-id';
       const query: SearchQuery = {
-        query: 'test query',
         optionalParams: {
           searchEngines: ['google'],
         },
+        query: 'test query',
       };
 
       await act(async () => {
