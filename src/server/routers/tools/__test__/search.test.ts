@@ -98,10 +98,10 @@ describe('searchRouter', () => {
       const caller = searchRouter.createCaller(mockContext as any);
 
       const result = await caller.query({
-        query: 'test query',
         optionalParams: {
           searchEngines: ['google'],
         },
+        query: 'test query',
       });
 
       expect(result).toEqual(mockSearchResult);
