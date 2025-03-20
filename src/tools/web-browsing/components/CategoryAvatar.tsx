@@ -14,7 +14,7 @@ interface CategoryAvatarGroupProps {
 }
 
 export const CategoryAvatar = memo<CategoryAvatarProps>(
-  ({ category, size = 28 }) => {
+  ({ category, size = 26 }) => {
     const Icon = CATEGORY_ICON_MAP[category];
     const theme = useTheme();
 
