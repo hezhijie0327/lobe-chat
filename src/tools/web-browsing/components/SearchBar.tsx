@@ -11,6 +11,7 @@ import { chatToolSelectors } from '@/store/chat/selectors';
 import { SearchQuery } from '@/types/tool/search';
 
 import { CATEGORY_ICON_MAP, ENGINE_ICON_MAP } from '../const';
+import { CategoryAvatar } from './CategoryAvatar';
 import { EngineAvatar } from './EngineAvatar';
 
 interface SearchBarProps {
@@ -93,6 +94,7 @@ const SearchBar = memo<SearchBarProps>(
           {searchAddon}
         </Flexbox>
 
+        // Engines
         {isMobile ? (
           <Select
             mode={'multiple'}
@@ -140,6 +142,48 @@ const SearchBar = memo<SearchBarProps>(
           </Flexbox>
         )}
 
+        // Categories
+        {isMobile ? (
+          <Select
+            mode="multiple"
+            onChange={(checkedValue) => setCategories(checkedValue)}
+            optionRender={(item) => (
+              <Flexbox align={'center'} gap={8} horizontal>
+                <CategoryAvatar category={item.value} />
+                {t(`search.categories.${item.value}`)}
+              </Flexbox>
+            )}
+            options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
+              label: t(`search.categories.${item}`),
+              value: item,
+            }))}
+            placeholder={t('search.categoriesPlaceholder')}
+            size="small"
+            value={categories}
+            variant="filled"
+          />
+        ) : (
+          <Flexbox align="flex-start" gap={8} horizontal>
+            <Typography.Text type="secondary">
+              {t('search.categories')}
+            </Typography.Text>
+            <Checkbox.Group
+              onChange={(checkedValue) => setCategories(checkedValue)}
+              options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
+                label: (
+                  <Flexbox align={'center'} gap={8} horizontal>
+                    <CategoryAvatar category={item} />
+                    {t(`search.categories.${item}`)}
+                  </Flexbox>
+                ),
+                value: item,
+              }))}
+              value={categories}
+            />
+          </Flexbox>
+        )}
+
+        // Time Range
         <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
           <Typography.Text type={'secondary'}>
             {t('search.searchTimeRange')}
