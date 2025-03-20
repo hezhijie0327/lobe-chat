@@ -152,7 +152,7 @@ const SearchBar = memo<SearchBarProps>(
                 onChange={(checkedValue) => setCategories(checkedValue)}
                 optionRender={(item) => (
                   <Flexbox align={'center'} gap={8} horizontal>
-                    <CategoryAvatar category={item.value} />
+                    <CategoryAvatar category={item.value as string} />
                     {t(`search.categoryType.${item.value}` as const)}
                   </Flexbox>
                 )}
