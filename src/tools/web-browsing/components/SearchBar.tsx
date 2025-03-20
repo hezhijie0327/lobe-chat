@@ -154,12 +154,12 @@ const SearchBar = memo<SearchBarProps>(
                 }}
                 optionRender={(item) => (
                   <Flexbox align={'center'} gap={8} horizontal>
-                    <CategoryAvatar category={item} />
-                    {t(`search.categoryType.${item}` as const)}
+                    <CategoryAvatar category={item.value as string} />
+                    {t(`search.categoryType.${item.value}` as any)}
                   </Flexbox>
                 )}
                 options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
-                  label: t(`search.categoryType.${item}` as const),
+                  label: t(`search.categoryType.${item}`),
                   value: item,
                 }))}
                 size="small"
@@ -178,7 +178,7 @@ const SearchBar = memo<SearchBarProps>(
                 label: (
                   <Flexbox align={'center'} gap={8} horizontal>
                     <CategoryAvatar category={item} />
-                    {t(`search.categoryType.${item}` as const)}
+                    {t(`search.categoryType.${item}`)}
                   </Flexbox>
                 ),
                 value: item,
