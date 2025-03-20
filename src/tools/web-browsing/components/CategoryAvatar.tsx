@@ -48,9 +48,9 @@ export const CategoryAvatarGroup = memo<CategoryAvatarGroupProps>(
             key={category}
             style={{
               background: theme.colorBgLayout,
-              height: 24,
-              width: 24,
-              padding: 2,
+              height: 20,
+              width: 20,
+              padding: 3,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -58,7 +58,7 @@ export const CategoryAvatarGroup = memo<CategoryAvatarGroupProps>(
           >
             <CategoryAvatar 
               category={category} 
-              size={18}
+              size={16}
             />
           </Avatar>
         ))}
