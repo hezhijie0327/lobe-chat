@@ -90,11 +90,8 @@ describe('searXNG actions', () => {
         },
       ];
 
-      expect( searchService.search ).toHaveBeenCalledWith({
-        "optionalParams": {
-          "searchEngines": [ 'google' ]
-        },
-        "query": "test query",
+      expect( searchService.search ).toHaveBeenCalledWith('test query', {
+        searchEngines: [ 'google' ]
       });
       expect(result.current.searchLoading[messageId]).toBe(false);
       expect(result.current.internal_updateMessageContent).toHaveBeenCalledWith(
@@ -160,16 +157,11 @@ describe('searXNG actions', () => {
       });
 
       expect(searchService.search).toHaveBeenCalledTimes(2);
-      expect(searchService.search).toHaveBeenNthCalledWith(1, {
-        "optionalParams": {
-          "searchEngines": [ 'custom-engine' ],
+      expect(searchService.search).toHaveBeenNthCalledWith(1, "test query", {
+          "searchEngines": [ "custom-engine" ],
           "searchTimeRange": "year",
-        },
-        "query": "test query",
       });
-      expect(searchService.search).toHaveBeenNthCalledWith(2, {
-        "query": "test query",
-      });
+      expect(searchService.search).toHaveBeenNthCalledWith(2, "test query");
       expect(result.current.updatePluginArguments).toHaveBeenCalledWith(messageId, {
         optionalParams: undefined,
         query: 'test query',
