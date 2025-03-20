@@ -31,7 +31,10 @@ export default {
       placeholder: '关键词',
       tooltip: '将会重新获取搜索结果，并创建一条新的总结消息',
     },
-    searchCategory: '搜索类别：',
+    searchCategory: {
+      placeholder: '类别',
+      title: '搜索类别：',
+    },
     searchEngine: '搜索引擎：',
     searchResult: '搜索数量：',
     searchTimeRange: '时间范围：',
