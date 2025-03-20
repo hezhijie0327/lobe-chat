@@ -2,7 +2,7 @@ import { toolsClient } from '@/libs/trpc/client';
 
 class SearchService {
   search(query: string, optionalParams?: object) {
-    return toolsClient.search.query.query(query, optionalParams);
+    return toolsClient.search.query.query({ query, optionalParams });
   }
 
   crawlPage(url: string) {
