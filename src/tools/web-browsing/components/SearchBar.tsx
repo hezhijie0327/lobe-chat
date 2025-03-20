@@ -150,14 +150,14 @@ const SearchBar = memo<SearchBarProps>(
             optionRender={(item) => (
               <Flexbox align={'center'} gap={8} horizontal>
                 <CategoryAvatar category={item.value} />
-                {t(`search.categories.${item.value}`)}
+                {t(`search.categoryType.${item.value}`)}
               </Flexbox>
             )}
             options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
-              label: t(`search.categories.${item}`),
+              label: t(`search.categoryType.${item}`),
               value: item,
             }))}
-            placeholder={t('search.categoriesPlaceholder')}
+            placeholder={t('search.searchCategory')}
             size="small"
             value={categories}
             variant="filled"
@@ -165,7 +165,7 @@ const SearchBar = memo<SearchBarProps>(
         ) : (
           <Flexbox align="flex-start" gap={8} horizontal>
             <Typography.Text type="secondary">
-              {t('search.categories')}
+              {t('search.searchCategory')}
             </Typography.Text>
             <Checkbox.Group
               onChange={(checkedValue) => setCategories(checkedValue)}
@@ -173,7 +173,7 @@ const SearchBar = memo<SearchBarProps>(
                 label: (
                   <Flexbox align={'center'} gap={8} horizontal>
                     <CategoryAvatar category={item} />
-                    {t(`search.categories.${item}`)}
+                    {t(`search.categoryType.${item}`)}
                   </Flexbox>
                 ),
                 value: item,
