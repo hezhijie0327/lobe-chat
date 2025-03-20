@@ -46,7 +46,7 @@ const SearchBar = memo<SearchBarProps>(
     const updateAndSearch = async () => {
       const data: SearchQuery = {
         query,
-        params: {
+        optionalParams: {
           searchEngines: engines,
           searchTimeRange: time_range,
         }
