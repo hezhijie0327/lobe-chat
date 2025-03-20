@@ -138,6 +138,7 @@ describe('searXNG actions', () => {
 
       (searchService.search as Mock)
         .mockResolvedValueOnce(emptyResponse)
+        .mockResolvedValueOnce(emptyResponse)
         .mockResolvedValueOnce(retryResponse);
 
       const { result } = renderHook(() => useChatStore());
