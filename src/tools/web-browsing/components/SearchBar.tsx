@@ -155,7 +155,11 @@ const SearchBar = memo<SearchBarProps>(
               </Flexbox>
             )}
             options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
-              label: t(`search.categoryType.${item}`),
+              label: (
+                <Flexbox align={'center'} gap={8} horizontal>
+                  <CategoryAvatar engine={item} />
+                </Flexbox>
+              ),
               value: item,
             }))}
             size="small"
@@ -165,7 +169,7 @@ const SearchBar = memo<SearchBarProps>(
         ) : (
           <Flexbox align="flex-start" gap={8} horizontal>
             <Typography.Text style={{ marginTop: 2, wordBreak: 'keep-all' }} type={'secondary'}>
-              {t('search.searchCategory.title')}
+              {t('search.searchCategory')}
             </Typography.Text>
             <Checkbox.Group
               onChange={(checkedValue) => setCategories(checkedValue)}
