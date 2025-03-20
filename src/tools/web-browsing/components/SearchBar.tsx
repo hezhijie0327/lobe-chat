@@ -26,6 +26,7 @@ interface SearchBarProps {
 
 const SearchBar = memo<SearchBarProps>(
   ({
+    defaultCategories = [],
     defaultEngines = [],
     defaultTimeRange,
     aiSummary = true,
@@ -38,6 +39,7 @@ const SearchBar = memo<SearchBarProps>(
     const { t } = useTranslation('tool');
     const loading = useChatStore(chatToolSelectors.isSearXNGSearching(messageId));
     const [query, setQuery] = useState(defaultQuery);
+    const [categories, setCategories] = useState(defaultCategories);
     const [engines, setEngines] = useState(defaultEngines);
     const [time_range, setTimeRange] = useState(defaultTimeRange);
     const isMobile = useIsMobile();
@@ -46,6 +48,7 @@ const SearchBar = memo<SearchBarProps>(
     const updateAndSearch = async () => {
       const data: SearchQuery = {
         optionalParams: {
+          searchCategories: categories,
           searchEngines: engines,
           searchTimeRange: time_range,
         },
