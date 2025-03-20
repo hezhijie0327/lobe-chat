@@ -145,7 +145,7 @@ const SearchBar = memo<SearchBarProps>(
         {isMobile ? (
           <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
             <Typography.Text type="secondary">
-              {t('search.searchCategory')}
+              {t('search.searchCategory.title')}
             </Typography.Text>
               <Select
                 mode="multiple"
@@ -163,15 +163,16 @@ const SearchBar = memo<SearchBarProps>(
                   value: item,
                 }))}
                 size="small"
-                style={{ minWidth: 350 }}
+                style={{ minWidth: isMobile ? undefined : 400 }}
                 value={categories}
                 variant="filled"
+                placeholder={t('search.searchCategory.placeholder')}
               />
           </Flexbox>
         ) : (
           <Flexbox align="flex-start" gap={8} horizontal>
             <Typography.Text style={{ marginTop: 2, wordBreak: 'keep-all' }} type={'secondary'}>
-              {t('search.searchCategory')}
+              {t('search.searchCategory.title')}
             </Typography.Text>
             <Checkbox.Group
               onChange={(checkedValue) => setCategories(checkedValue)}
