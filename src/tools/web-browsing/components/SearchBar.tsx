@@ -163,6 +163,7 @@ const SearchBar = memo<SearchBarProps>(
               size="small"
               value={categories}
               variant="filled"
+              style={{ color: theme.colorText }}
             />
         </Flexbox>
         ) : (
