@@ -1,5 +1,4 @@
 import { 
-  CircleIcon,
   CodeIcon,
   FileIcon,
   FlaskConicalIcon,
@@ -7,12 +6,13 @@ import {
   MapIcon,
   MusicIcon,
   NewspaperIcon,
+  SearchIcon,
   Share2Icon,
   VideoIcon,
 } from 'lucide-react';
 
 export const CATEGORY_ICON_MAP: Record<string, any> = {
-   'general': CircleIcon,
+   'general': SearchIcon,
    'images': ImageIcon,
    'videos': VideoIcon,
    'news': NewspaperIcon,
