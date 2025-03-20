@@ -12,7 +12,7 @@ export class SearXNGClient {
 
   async search(query: string, params: Record<string, any> = {}): Promise<SearchResponse> {
     try {
-      const formatParams = Object.entries(params).reduce((acc, [key, value]) => {
+      const formatParams = Object.entries(params).reduce<Record<string, any>>((acc, [key, value]) => {
         acc[key] = Array.isArray(value) ? value.join(',') : value;
         return acc;
       }, {});
