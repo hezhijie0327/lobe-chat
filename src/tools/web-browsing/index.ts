@@ -53,8 +53,8 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
                 enum: ['anytime', 'day', 'week', 'month', 'year'],
                 type: 'string',
               },
-              type: 'object',
             },
+            type: 'object',
           },
           query: {
             description: 'The search query',
