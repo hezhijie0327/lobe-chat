@@ -18,10 +18,6 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
       name: WebBrowsingApiName.searchWithSearXNG,
       parameters: {
         properties: {
-          query: {
-            description: 'The search query',
-            type: 'string',
-          },
           optionalParams: {
             description: "The optional params you can set:",
             type: 'object',
@@ -59,6 +55,10 @@ export const WebBrowsingManifest: BuiltinToolManifest = {
                 type: 'string',
               },
             },
+          },
+          query: {
+            description: 'The search query',
+            type: 'string',
           },
         },
         required: ['query'],
