@@ -73,7 +73,9 @@ describe('searXNG actions', () => {
       const messageId = 'test-message-id';
       const query: SearchQuery = {
         query: 'test query',
-        searchEngines: ['google'],
+        optionalParams: {
+          searchEngines: ['google'],
+        },
       };
 
       await act(async () => {
@@ -142,8 +144,10 @@ describe('searXNG actions', () => {
       const messageId = 'test-message-id';
       const query: SearchQuery = {
         query: 'test query',
-        searchEngines: ['custom-engine'],
-        searchTimeRange: 'year',
+        optionalParams: {
+          searchEngines: ['custom-engine'],
+          searchTimeRange: 'year',
+        },
       };
 
       await act(async () => {
