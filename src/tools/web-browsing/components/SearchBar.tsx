@@ -143,32 +143,25 @@ const SearchBar = memo<SearchBarProps>(
         )}
 
         {isMobile ? (
-          <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
-            <Typography.Text type="secondary">
-              {t('search.searchCategory.title')}
-            </Typography.Text>
-              <Select
-                mode="multiple"
-                onChange={(checkedValue) => {
-                  setCategories(checkedValue);
-                }}
-                optionRender={(item) => (
-                  <Flexbox align={'center'} gap={8} horizontal>
-                    <CategoryAvatar category={item.value as string} />
-                    {t(`search.categoryType.${item.value}` as any)}
-                  </Flexbox>
-                )}
-                options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
-                  label: t(`search.categoryType.${item}`),
-                  value: item,
-                }))}
-                size="small"
-                style={{ minWidth: isMobile ? undefined : 400 }}
-                value={categories}
-                variant="filled"
-                placeholder={t('search.searchCategory.placeholder')}
-              />
-          </Flexbox>
+          <Select
+            mode="multiple"
+            onChange={(checkedValue) => {
+              setCategories(checkedValue);
+            }}
+            optionRender={(item) => (
+              <Flexbox align={'center'} gap={8} horizontal>
+                <CategoryAvatar category={item.value as string} />
+                {t(`search.categoryType.${item.value}` as any)}
+              </Flexbox>
+            )}
+            options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
+              label: t(`search.categoryType.${item}`),
+              value: item,
+            }))}
+            size="small"
+            value={categories}
+            variant="filled"
+          />
         ) : (
           <Flexbox align="flex-start" gap={8} horizontal>
             <Typography.Text style={{ marginTop: 2, wordBreak: 'keep-all' }} type={'secondary'}>
