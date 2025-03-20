@@ -11,7 +11,7 @@ import {
   VideoIcon,
 } from 'lucide-react';
 
-export const CATEGORY_ICON_MAP: Record<string, React.FC> = {
+export const CATEGORY_ICON_MAP: Record<string, any> = {
   'general': CircleIcon,
   'images': ImageIcon,
   'videos': VideoIcon,
