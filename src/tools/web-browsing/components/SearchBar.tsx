@@ -142,24 +142,53 @@ const SearchBar = memo<SearchBarProps>(
           </Flexbox>
         )}
 
-      <Flexbox align="flex-start" gap={8} horizontal>
-          <Typography.Text style={{ marginTop: 2, wordBreak: 'keep-all' }} type={'secondary'}>
-            {t('search.searchCategory')}
-          </Typography.Text>
-          <Checkbox.Group
-            onChange={(checkedValue) => setCategories(checkedValue)}
-            options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
-              label: (
-                <Flexbox align={'center'} gap={8} horizontal>
-                  <CategoryAvatar category={item} />
-                  {t(`search.categoryType.${item}`)}
-                </Flexbox>
-              ),
-              value: item,
-            }))}
-            value={categories}
-          />
-        </Flexbox>
+        {isMobile ? (
+          <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
+            <Typography.Text type="secondary">
+              {t('search.searchCategory')}
+            </Typography.Text>
+              <Select
+                mode="multiple"
+                onChange={(checkedValue) => {
+                  setCategories(checkedValue);
+                }}
+                optionRender={(item) => (
+                  <Flexbox align={'center'} gap={8} horizontal>
+                    <CategoryAvatar category={item.value as string} />
+                    {t(`search.categoryType.${item.value}` as any)}
+                  </Flexbox>
+                )}
+                options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
+                  label: t(`search.categoryType.${item}`),
+                  value: item,
+                }))}
+                size="small"
+                style={{ minWidth: isMobile ? 200 : 400 }}
+                value={categories}
+                variant="filled"
+                placeholder={t('search.searchCategory')}
+              />
+          </Flexbox>
+        ) : (
+          <Flexbox align="flex-start" gap={8} horizontal>
+            <Typography.Text style={{ marginTop: 2, wordBreak: 'keep-all' }} type={'secondary'}>
+              {t('search.searchCategory')}
+            </Typography.Text>
+            <Checkbox.Group
+              onChange={(checkedValue) => setCategories(checkedValue)}
+              options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
+                label: (
+                  <Flexbox align={'center'} gap={8} horizontal>
+                    <CategoryAvatar category={item} />
+                    {t(`search.categoryType.${item}`)}
+                  </Flexbox>
+                ),
+                value: item,
+              }))}
+              value={categories}
+            />
+          </Flexbox>
+        )}
 
         <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
           <Typography.Text type={'secondary'}>
