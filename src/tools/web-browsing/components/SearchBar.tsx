@@ -158,7 +158,7 @@ const SearchBar = memo<SearchBarProps>(
               label: (
                 <Flexbox align={'center'} gap={8} horizontal>
                   <CategoryAvatar category={item as any} size={22} />
-                  {t(`search.categoryType.${item}` as any)}
+                  {t(`search.searchCategory.value.${item}` as any)}
                 </Flexbox>
               ),
               value: item,
@@ -166,11 +166,12 @@ const SearchBar = memo<SearchBarProps>(
             size="small"
             value={categories}
             variant="filled"
+            placeholder={t('search.searchCategory.placeholder')}
           />
         ) : (
           <Flexbox align="flex-start" gap={8} horizontal>
             <Typography.Text style={{ marginTop: 2, wordBreak: 'keep-all' }} type={'secondary'}>
-              {t('search.searchCategory')}
+              {t('search.searchCategory.title')}
             </Typography.Text>
             <Checkbox.Group
               onChange={(checkedValue) => setCategories(checkedValue)}
@@ -178,7 +179,7 @@ const SearchBar = memo<SearchBarProps>(
                 label: (
                   <Flexbox align={'center'} gap={8} horizontal>
                     <CategoryAvatar category={item as any} />
-                    {t(`search.categoryType.${item}` as any)}
+                    {t(`search.searchCategory.value.${item}` as any)}
                   </Flexbox>
                 ),
                 value: item,
@@ -190,17 +191,17 @@ const SearchBar = memo<SearchBarProps>(
 
         <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
           <Typography.Text type={'secondary'}>
-            {t('search.searchTimeRange')}
+            {t('search.searchTimeRange.title')}
           </Typography.Text>
           <Radio.Group
             onChange={(e) => setTimeRange(e.target.value)}
             optionType="button"
             options={[
-              { label: t('search.timeRange.anytime'), value: 'anytime' },
-              { label: t('search.timeRange.day'), value: 'day' },
-              { label: t('search.timeRange.week'), value: 'week' },
-              { label: t('search.timeRange.month'), value: 'month' },
-              { label: t('search.timeRange.year'), value: 'year' },
+              { label: t('search.searchTimeRange.value.anytime'), value: 'anytime' },
+              { label: t('search.searchTimeRange.value.day'), value: 'day' },
+              { label: t('search.searchTimeRange.value.week'), value: 'week' },
+              { label: t('search.searchTimeRange.value.month'), value: 'month' },
+              { label: t('search.searchTimeRange.value.year'), value: 'year' },
             ]}
             value={time_range}
           />
