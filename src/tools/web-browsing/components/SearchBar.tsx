@@ -163,7 +163,7 @@ const SearchBar = memo<SearchBarProps>(
                   value: item,
                 }))}
                 size="small"
-                style={{ minWidth: 300 }}
+                style={{ minWidth: 400 }}
                 value={categories}
                 variant="filled"
                 //placeholder={t('search.searchCategory')}
