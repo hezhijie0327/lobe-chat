@@ -22,7 +22,8 @@ export const CategoryAvatar = memo<CategoryAvatarProps>(
       <Avatar
         alt={category}
         style={{
-          background: theme.colorBgLayout,
+          backgroundColor: 'transparent',
+          color: theme.colorTextSecondary,
           display: 'flex',
           height: size,
           width: size,
