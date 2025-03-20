@@ -157,7 +157,7 @@ const SearchBar = memo<SearchBarProps>(
                   </Flexbox>
                 )}
                 options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
-                  label: {t(`search.categoryType.${item.value}` as const)},
+                  label: t(`search.categoryType.${item.value}` as const),
                   value: item,
                 }))}
                 size="small"
