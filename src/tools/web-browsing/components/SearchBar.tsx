@@ -149,15 +149,17 @@ const SearchBar = memo<SearchBarProps>(
             </Typography.Text>
               <Select
                 mode="multiple"
-                onChange={(checkedValue) => setCategories(checkedValue)}
+                onChange={(checkedValue) => {
+                  setCategories(checkedValue);
+                }}
                 optionRender={(item) => (
                   <Flexbox align={'center'} gap={8} horizontal>
-                    <CategoryAvatar category={item.value as string} />
-                    {t(`search.categoryType.${item.value}` as const)}
+                    <CategoryAvatar category={item} />
+                    {t(`search.categoryType.${item}` as const)}
                   </Flexbox>
                 )}
                 options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
-                  label: t(`search.categoryType.${item.value}` as const),
+                  label: t(`search.categoryType.${item}` as const),
                   value: item,
                 }))}
                 size="small"
