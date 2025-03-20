@@ -38,7 +38,7 @@ export const CategoryAvatar = memo<CategoryAvatarProps>(
 );
 
 export const CategoryAvatarGroup = memo<CategoryAvatarGroupProps>(
-  ({ categories }) => {
+  ({ categories, size = 16}) => {
     const theme = useTheme();
     
     return (
@@ -47,18 +47,16 @@ export const CategoryAvatarGroup = memo<CategoryAvatarGroupProps>(
           <Avatar
             key={category}
             style={{
-              background: theme.colorBgLayout,
-              height: 16,
-              width: 16,
-              padding: 2,
+              background: 'transparent',
+              color: theme.colorTextSecondary,
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              height: size,
+              width: size,
             }}
           >
             <CategoryAvatar 
               category={category} 
-              size={16}
+              size={size}
             />
           </Avatar>
         ))}
