@@ -141,12 +141,12 @@ export const searchSlice: StateCreator<
     get().toggleSearchLoading(id, true);
     let data: SearchResponse | undefined;
     try {
-      data = await searchService.search(params.query, params.params);
+      data = await searchService.search(params.query, params.optionalParams);
 
       // 如果没有搜索到结果，那么尝试使用默认的搜索引擎再搜一次
-      if (data?.results.length === 0 && (params.params?.searchEngines && params.params?.searchEngines?.length > 0 || params.params?.searchTimeRange)) {
-        data = await searchService.search(params.query);
-        get().updatePluginArguments(id, { ...params, searchEngines: undefined, searchTimeRange: undefined });
+      if (data?.results.length === 0 && (params.optionalParams?.searchEngines && params.optionalParams?.searchEngines?.length > 0 || params.optionalParams?.searchTimeRange)) {
+        data = await searchService.search(params.query, params.optionalParams);
+        get().updatePluginArguments(id, { ...params, optionalParams: { searchEngines: undefined, searchTimeRange: undefined } });
       }
 
       await get().updatePluginState(id, data);
