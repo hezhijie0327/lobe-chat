@@ -171,10 +171,7 @@ describe('searXNG actions', () => {
         "query": "test query",
       });
       expect(result.current.updatePluginArguments).toHaveBeenCalledWith(messageId, {
-        optionalParams: {
-          searchEngines: undefined,
-          searchTimeRange: undefined,
-        },
+        optionalParams: undefined,
         query: 'test query',
       });
     });
