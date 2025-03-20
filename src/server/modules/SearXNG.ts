@@ -10,13 +10,17 @@ export class SearXNGClient {
     this.baseUrl = baseUrl;
   }
 
-  async search(query: string, engines?: string[], time_range?: string): Promise<SearchResponse> {
+  async search(query: string, params: Record<string, any> = {}): Promise<SearchResponse> {
     try {
+      const formatParams = Object.entries(params).reduce((acc, [key, value]) => {
+        acc[key] = Array.isArray(value) ? value.join(',') : value;
+        return acc;
+      }, {});
+
       const searchParams = qs.stringify({
-        engines: engines?.join(','),
+        ...formatParams,
         format: 'json',
         q: query,
-        ...( time_range !== 'anytime' ? { time_range: time_range } : {} ),
       });
 
       const response = await fetch(urlJoin(this.baseUrl, `/search?${searchParams}`));
