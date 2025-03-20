@@ -16,6 +16,7 @@ import { EngineAvatar } from './EngineAvatar';
 
 interface SearchBarProps {
   aiSummary?: boolean;
+  defaultCategories?: string[];
   defaultEngines?: string[];
   defaultQuery: string;
   defaultTimeRange?: string;
@@ -148,7 +149,7 @@ const SearchBar = memo<SearchBarProps>(
             optionRender={(item) => (
               <Flexbox align={'center'} gap={8} horizontal>
                 <CategoryAvatar category={item.value} />
-                {t(`search.categoryType.${item.value}`)}
+                {t(`search.categoryType.${item.value}` as const)}
               </Flexbox>
             )}
             options={Object.keys(CATEGORY_ICON_MAP).map((item) => ({
@@ -171,7 +172,7 @@ const SearchBar = memo<SearchBarProps>(
                 label: (
                   <Flexbox align={'center'} gap={8} horizontal>
                     <CategoryAvatar category={item} />
-                    {t(`search.categoryType.${item}`)}
+                    {t(`search.categoryType.${item}` as const)}
                   </Flexbox>
                 ),
                 value: item,
