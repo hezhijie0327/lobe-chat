@@ -94,7 +94,6 @@ const SearchBar = memo<SearchBarProps>(
           {searchAddon}
         </Flexbox>
 
-        // Engines
         {isMobile ? (
           <Select
             mode={'multiple'}
@@ -142,7 +141,6 @@ const SearchBar = memo<SearchBarProps>(
           </Flexbox>
         )}
 
-        // Categories
         {isMobile ? (
           <Select
             mode="multiple"
@@ -183,7 +181,6 @@ const SearchBar = memo<SearchBarProps>(
           </Flexbox>
         )}
 
-        // Time Range
         <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'}>
           <Typography.Text type={'secondary'}>
             {t('search.searchTimeRange')}
