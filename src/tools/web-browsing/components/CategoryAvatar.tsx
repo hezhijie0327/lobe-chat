@@ -11,6 +11,7 @@ interface CategoryAvatarProps {
 
 interface CategoryAvatarGroupProps {
   categories: string[];
+  size?: number;
 }
 
 export const CategoryAvatar = memo<CategoryAvatarProps>(
