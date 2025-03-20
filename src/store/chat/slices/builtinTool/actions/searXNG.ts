@@ -145,7 +145,7 @@ export const searchSlice: StateCreator<
       data = await searchService.search(params.query, params.optionalParams);
 
       // 如果没有搜索到结果，则执行第一次重试（移除搜索引擎限制）
-      if (data?.results.length === 0 && params.optionalParams?.searchEngines?.length > 0) {
+      if (data?.results.length === 0 && params.optionalParams?.searchEngines && params.optionalParams?.searchEngines?.length > 0) {
         const newParams = {
           ...params,
           optionalParams: {
@@ -157,7 +157,7 @@ export const searchSlice: StateCreator<
         get().updatePluginArguments(id, newParams);
       }
 
-      // 如果仍然没有搜索到结果，则执行第二次重试（去除所有限制）
+      // 如果仍然没有搜索到结果，则执行第二次重试（移除所有限制）
       if (data?.results.length === 0) {
         data = await searchService.search(params.query);
         get().updatePluginArguments(id, { ...params, optionalParams: undefined });
