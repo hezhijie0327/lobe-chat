@@ -1,6 +1,6 @@
 export interface SearchQuery {
   query: string;
-  params: {
+  params?: {
     searchEngines?: string[];
     searchTimeRange?: string;
   }
