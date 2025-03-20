@@ -167,7 +167,7 @@ const SearchBar = memo<SearchBarProps>(
           </Flexbox>
         ) : (
           <Flexbox align="flex-start" gap={8} horizontal>
-            <Typography.Text type="secondary">
+            <Typography.Text style={{ marginTop: 2, wordBreak: 'keep-all' }} type={'secondary'}>
               {t('search.searchCategory')}
             </Typography.Text>
             <Checkbox.Group
