@@ -41,6 +41,7 @@ export interface SearchResult {
 export interface SearchContent {
   content?: string;
   img_src?: string;
+  publishedDate?: string | null;
   thumbnail?: string | null;
   title: string;
   url: string;
