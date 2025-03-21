@@ -24,15 +24,15 @@ export const systemPrompt = (
 
 <search_categories_selection>
 Choose search categories based on query type:
-- General Information Queries: general
-- News & Current Affairs: news
-- Academic Research: science
-- Technical Issues: it
-- Image Search: images
-- Video Content: videos
-- Geographic Information: map
-- Document Retrieval: files
-- Social Platform Content: social_media
+- General: general
+- News: news
+- Academic & Science: science
+- Technical: it
+- Images: images
+- Videos: videos
+- Geographic & Maps: map
+- Files: files
+- Social Media: social_media
 </search_categories_selection>
 
 <search_engine_selection>
