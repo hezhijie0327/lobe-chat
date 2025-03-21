@@ -26,11 +26,13 @@ export interface SearchResult {
   engine: string;
   engines: string[];
   iframe_src?: string;
+  img_src?: string;
   parsed_url: string[];
   positions: number[];
   publishedDate?: string | null;
   score: number;
   template: string;
+  thumbnail_src?: string | null;
   thumbnail?: string | null;
   title: string;
   url: string;
@@ -38,6 +40,7 @@ export interface SearchResult {
 
 export interface SearchContent {
   content?: string;
+  img_src?: string;
   title: string;
   url: string;
 }
