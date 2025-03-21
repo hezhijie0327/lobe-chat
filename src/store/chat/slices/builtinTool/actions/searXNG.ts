@@ -189,9 +189,9 @@ export const searchSlice: StateCreator<
     // add 15 search results to message content
     const searchContent: SearchContent[] = data.results.slice(0, 15).map((item) => ({
       content: item.content,
-      img_src: item.img_src,
       title: item.title,
       url: item.url,
+      ...(item.img_src && { img_src: item.img_src }),
     }));
 
     await get().internal_updateMessageContent(id, JSON.stringify(searchContent));
