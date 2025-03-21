@@ -188,7 +188,6 @@ export const searchSlice: StateCreator<
 
     // add 15 search results to message content
     const searchContent: SearchContent[] = data.results.slice(0, 15).map((item) => ({
-      content: item.content,
       title: item.title,
       url: item.url,
       ...(item.content && { content: item.content }),
