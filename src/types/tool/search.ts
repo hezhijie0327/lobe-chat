@@ -32,8 +32,8 @@ export interface SearchResult {
   publishedDate?: string | null;
   score: number;
   template: string;
-  thumbnail_src?: string | null;
   thumbnail?: string | null;
+  thumbnail_src?: string | null;
   title: string;
   url: string;
 }
