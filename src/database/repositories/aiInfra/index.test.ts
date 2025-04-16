@@ -309,8 +309,8 @@ describe('AiInfraRepos', () => {
       expect(result).toHaveLength(2);
       expect(result).toEqual(
         expect.arrayContaining([
-          expect.objectContaining({ id: 'jamba-large' }),
           expect.objectContaining({ id: 'jamba-mini' }),
+          expect.objectContaining({ id: 'jamba-large' }),
         ]),
       );
     });
