@@ -35,7 +35,6 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
     const { LOBE_DEFAULT_MODEL_LIST } = await import('@/config/aiModels');
 
     const functionCallKeywords = [
-      'deepseek-v3',
       'sensechat-5',
     ];
 
