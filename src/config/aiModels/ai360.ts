@@ -9,6 +9,7 @@ const ai360ChatModels: AIChatModelCard[] = [
     description:
       '360zhinao2-o1 使用树搜索构建思维链，并引入了反思机制，使用强化学习训练，模型具备自我反思与纠错的能力。',
     displayName: '360Zhinao2 o1',
+    enabled: true,
     id: '360zhinao2-o1',
     pricing: {
       currency: 'CNY',
@@ -25,7 +26,6 @@ const ai360ChatModels: AIChatModelCard[] = [
     description:
       '360gpt2-o1 使用树搜索构建思维链，并引入了反思机制，使用强化学习训练，模型具备自我反思与纠错的能力。',
     displayName: '360GPT2 o1',
-    enabled: true,
     id: '360gpt2-o1',
     pricing: {
       currency: 'CNY',
@@ -93,6 +93,7 @@ const ai360ChatModels: AIChatModelCard[] = [
     description:
       '兼顾性能和效果的百亿级大模型，适合对性能/成本要求较高 的场景。',
     displayName: '360GPT Turbo',
+    enabled: true,
     id: '360gpt-turbo',
     pricing: {
       currency: 'CNY',
