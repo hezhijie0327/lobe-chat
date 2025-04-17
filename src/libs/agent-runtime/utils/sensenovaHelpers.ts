@@ -1,8 +1,8 @@
-export const convertSenseNovaMessage = (content: any, isLegacy: boolean) => {
+export const convertSenseNovaMessage = (content: any, convertImageOnly: boolean) => {
 
   // 如果为单条 string 类 content，则格式转换为 text 类
   if (typeof content === 'string') {
-    return isLegacy ? content : [{ type: 'text', text: content }];    
+    return convertImageOnly ? [{ type: 'text', text: content }] : content;
   }
 
   // 如果内容包含图片内容，则需要对 array 类 content，进行格式转换
