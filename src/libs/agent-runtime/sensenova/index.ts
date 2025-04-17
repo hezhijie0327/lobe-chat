@@ -1,7 +1,7 @@
 import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
-import { processSenseNovaV6Content } from '../utils/sensenovaHelpers';
+import { convertSenseNovaMessage } from '../utils/sensenovaHelpers';
 
 import type { ChatModelCard } from '@/types/llm';
 
@@ -27,7 +27,7 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
 
           return {
             ...message,
-            content: processSenseNovaV6Content(message.content),
+            content: convertSenseNovaMessage(message.content),
           } as any;
         }),
         model,
