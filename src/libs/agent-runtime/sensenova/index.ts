@@ -25,7 +25,7 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
           const isV6Model = model.startsWith('SenseNova-V6') && message.role === 'user';
           const isVisionModel = model.startsWith('SenseChat-Vision');
 
-          if (!isVisionModel && !isV6UserMessage) return message;
+          if (!isVisionModel && !isV6Model) return message;
 
           return {
             ...message,
