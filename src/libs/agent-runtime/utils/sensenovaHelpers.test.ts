@@ -98,7 +98,7 @@ describe('convertSenseNovaMessage', () => {
     const result = convertSenseNovaMessage([
       { type: 'text', text: "Hi" },
       { type: 'image_url', image_url: { url: "data:image/jpeg;base64,ABCDEF123456" } }
-    ]);
+    ], false);
 
     expect(result).toEqual([
       { type: 'text', text: "Hi" },
