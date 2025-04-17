@@ -22,10 +22,7 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
             ? frequency_penalty
             : undefined,
         messages: messages.map((message) => {
-          const isV6Model = model.startsWith('SenseNova-V6') && message.role === 'user';
-          const isVisionModel = model.startsWith('SenseChat-Vision');
-
-          if (!isV6Model && !isVisionModel) return message;
+          if ((!model.startsWith('SenseNova-V6') || !model.startsWith('SenseChat-Vision')) && message.role !== 'user') return message;
 
           return {
             ...message,
