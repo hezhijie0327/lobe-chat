@@ -4,7 +4,7 @@ import { convertSenseNovaMessage } from './sensenovaHelpers';
 describe('convertSenseNovaMessage', () => {
   it('should convert string content to text type array', () => {
     const content = 'Hello world';
-    const result = convertSenseNovaMessage(content);
+    const result = convertSenseNovaMessage(content, false);
 
     expect(result).toEqual([{ type: 'text', text: 'Hello world' }]);
   });
@@ -13,7 +13,7 @@ describe('convertSenseNovaMessage', () => {
     const content = [
       { type: 'text', text: 'Hello world' }
     ];
-    const result = convertSenseNovaMessage(content);
+    const result = convertSenseNovaMessage(content, false);
 
     expect(result).toEqual([{ type: 'text', text: 'Hello world' }]);
   });
@@ -22,7 +22,7 @@ describe('convertSenseNovaMessage', () => {
     const content = [
       { type: 'image_url', image_url: { url: 'data:image/jpeg;base64,ABCDEF123456' } }
     ];
-    const result = convertSenseNovaMessage(content);
+    const result = convertSenseNovaMessage(content, false);
 
     expect(result).toEqual([
       { type: 'image_base64', image_base64: 'ABCDEF123456' }
@@ -33,7 +33,7 @@ describe('convertSenseNovaMessage', () => {
     const content = [
       { type: 'image_url', image_url: { url: 'https://example.com/image.jpg' } }
     ];
-    const result = convertSenseNovaMessage(content);
+    const result = convertSenseNovaMessage(content, false);
 
     expect(result).toEqual([
       { type: 'image_url', image_url: 'https://example.com/image.jpg' }
@@ -46,7 +46,7 @@ describe('convertSenseNovaMessage', () => {
       { type: 'image_url', image_url: { url: 'data:image/jpeg;base64,ABCDEF123456' } },
       { type: 'image_url', image_url: { url: 'https://example.com/image.jpg' } }
     ];
-    const result = convertSenseNovaMessage(content);
+    const result = convertSenseNovaMessage(content, false);
 
     expect(result).toEqual([
       { type: 'text', text: 'Hello world' },
@@ -61,7 +61,7 @@ describe('convertSenseNovaMessage', () => {
       { type: 'unknown', value: 'should be filtered' },
       { type: 'image_url', image_url: { notUrl: 'missing url field' } }
     ];
-    const result = convertSenseNovaMessage(content);
+    const result = convertSenseNovaMessage(content, false);
 
     expect(result).toEqual([
       { type: 'text', text: 'Hello world' }
