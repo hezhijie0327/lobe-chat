@@ -1,7 +1,7 @@
 import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
-import { convertSenseNovaV6Message, convertSenseChatVisionMessage } from '../utils/sensenovaHelpers';
+import { convertSenseNovaMessage } from '../utils/sensenovaHelpers';
 
 import type { ChatModelCard } from '@/types/llm';
 
@@ -22,11 +22,10 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
             ? frequency_penalty
             : undefined,
         messages: messages.map((message) => {
-          // 如果是非 V6 模型，则直接返回标准 message
           if (model.startsWith('SenseChat-Vision')) {
             return {
               ...message,
-              content: convertSenseChatVisionMessage(message.content),
+              content: convertSenseNovaMessage(message.content, true),
             } as any;
           }
 
@@ -34,7 +33,7 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
 
           return {
             ...message,
-            content: convertSenseNovaV6Message(message.content),
+            content: convertSenseNovaMessage(message.content, false),
           } as any;
         }),
         model,
