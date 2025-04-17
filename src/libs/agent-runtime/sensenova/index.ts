@@ -1,7 +1,7 @@
 import { ModelProvider } from '../types';
 import { LobeOpenAICompatibleFactory } from '../utils/openaiCompatibleFactory';
 
-import { convertSenseNovaMessage } from '../utils/sensenovaHelpers';
+import { convertSenseNovaMessage, convertSenseChatVisionMessage } from '../utils/sensenovaHelpers';
 
 import type { ChatModelCard } from '@/types/llm';
 
@@ -23,6 +23,13 @@ export const LobeSenseNovaAI = LobeOpenAICompatibleFactory({
             : undefined,
         messages: messages.map((message) => {
           // 如果是非 V6 模型，则直接返回标准 message
+          if (model.startsWith('SenseChat-Vision')) {
+            return {
+              ...message,
+              content: convertSenseChatVisionMessage(message.content),
+            } as any;
+          }
+
           if (!model.startsWith('SenseNova-V6') || message.role !== 'user') return message;
 
           return {
