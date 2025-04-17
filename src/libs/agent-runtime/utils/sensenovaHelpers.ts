@@ -1,4 +1,4 @@
-const processSenseNovaV6Content = (content: any) => {
+export const processSenseNovaV6Content = (content: any) => {
   if (typeof content === 'string') {
     return [{ type: 'text', text: content }];
   }
