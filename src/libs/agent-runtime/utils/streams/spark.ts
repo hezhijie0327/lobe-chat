@@ -123,12 +123,19 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
   }
 
   if (typeof item.delta?.content === 'string') {
+    /*
     if (chunk.usage) {
       const usage = chunk.usage;
       return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
     }
+    */
+    const results = [{ data: item.delta.content, id: chunk.id, type: 'text' }];
 
-    return { data: item.delta.content, id: chunk.id, type: 'text' };
+    if (chunk.usage) {
+      results.push({ data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' });
+    }
+
+    return results;
   }
 
   if (item.delta?.content === null) {
