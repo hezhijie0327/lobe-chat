@@ -97,10 +97,12 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
     }
   }
 
+  /*
   if (chunk.usage) {
     const usage = chunk.usage;
     return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
   }
+  */
 
   if (item.finish_reason) {
     // one-api 的流式接口，会出现既有 finish_reason ，也有 content 的情况
@@ -129,8 +131,13 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
       return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
     }
     */
+    const results = [{ data: item.delta.content, id: chunk.id, type: 'text' }];
 
-    return [{ data: item.delta.content, id: chunk.id, type: 'text' }, { data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' }];
+    if (chunk.usage) {
+      results.push({ data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' });
+    }
+
+    return results;
   }
 
   if (item.delta?.content === null) {
