@@ -11,6 +11,8 @@ import {
   generateToolCallId,
 } from './protocol';
 
+import { convertUsage } from '../usageConverter';
+
 export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
   return new ReadableStream({
     start(controller) {
