@@ -129,13 +129,8 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
       return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
     }
     */
-    const results = [{ data: item.delta.content, id: chunk.id, type: 'text' }];
 
-    if (chunk.usage) {
-      results.push({ data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' });
-    }
-
-    return results;
+    return [{ data: item.delta.content, id: chunk.id, type: 'text' }, { data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' }];
   }
 
   if (item.delta?.content === null) {
