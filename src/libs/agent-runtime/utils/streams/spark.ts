@@ -97,17 +97,17 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
     }
   }
 
+  if (chunk.usage) {
+    const usage = chunk.usage;
+    return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
+  }
+
   if (item.finish_reason) {
     // one-api 的流式接口，会出现既有 finish_reason ，也有 content 的情况
     //  {"id":"demo","model":"deepl-en","choices":[{"index":0,"delta":{"role":"assistant","content":"Introduce yourself."},"finish_reason":"stop"}]}
 
     if (typeof item.delta?.content === 'string' && !!item.delta.content) {
       return { data: item.delta.content, id: chunk.id, type: 'text' };
-    }
-
-    if (chunk.usage) {
-      const usage = chunk.usage;
-      return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
     }
 
     return { data: item.finish_reason, id: chunk.id, type: 'stop' };
@@ -123,6 +123,11 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
   }
 
   if (typeof item.delta?.content === 'string') {
+    if (chunk.usage) {
+      const usage = chunk.usage;
+      return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
+    }
+
     return { data: item.delta.content, id: chunk.id, type: 'text' };
   }
 
