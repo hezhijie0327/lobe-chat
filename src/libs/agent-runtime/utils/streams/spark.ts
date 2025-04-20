@@ -103,7 +103,21 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
       return { data: item.delta.content, id: chunk.id, type: 'text' };
     }
 
+    if (chunk.usage) {
+      const usage = chunk.usage;
+      return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
+    }
+
     return { data: item.finish_reason, id: chunk.id, type: 'stop' };
+  }
+
+  if (
+    item.delta &&
+    'reasoning_content' in item.delta &&
+    typeof item.delta.reasoning_content === 'string' &&
+    item.delta.reasoning_content !== ''
+  ) {
+    return { data: item.delta.reasoning_content, id: chunk.id, type: 'reasoning' };
   }
 
   if (typeof item.delta?.content === 'string') {
