@@ -43,11 +43,7 @@ describe('SparkAIStream', () => {
       },
     });
 
-    const onReasoningMock = vi.fn();
-
-    const protocolStream = SparkAIStream(mockStream, {
-      onReasoning: onReasoningMock,
-    });
+    const protocolStream = SparkAIStream(mockStream);
 
     const decoder = new TextDecoder();
     const chunks = [];
