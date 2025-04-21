@@ -118,26 +118,19 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
   }
 
   if (typeof item.delta?.content === 'string') {
+    /*
+    处理 v1 endpoint usage，混合在最后一个 content 内容中
+    {"code":0,"message":"Success","sid":"cha000d05ef@dx196553ae415b80a432","id":"cha000d05ef@dx196553ae415b80a432","created":1745186655,"choices":[{"delta":{"role":"assistant","content":"😊"},"index":0}],"usage":{"prompt_tokens":1,"completion_tokens":418,"total_tokens":419}}
+    */
+    if (chunk.usage) {
+      return [
+        { data: item.delta.content, id: chunk.id, type: 'text' },
+        { data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' },
+      ] as any;
+    }
+
     return { data: item.delta.content, id: chunk.id, type: 'text' };
   }
-
-/*
-// 功能正常，CI 过不去，待修复
-  if (typeof item.delta?.content === 'string') {
-    if (chunk.usage) {
-      const usage = chunk.usage;
-      return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
-    }
-    const results = [{ data: item.delta.content, id: chunk.id, type: 'text' }];
-
-    // 处理 v1 endpoint usage
-    if (chunk.usage) {
-      results.push({ data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' });
-    }
-
-    return results;
-  }
-*/
 
   if (item.delta?.content === null) {
     return { data: item.delta, id: chunk.id, type: 'data' };
