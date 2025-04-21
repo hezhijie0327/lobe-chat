@@ -117,9 +117,11 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
     return { data: item.delta.reasoning_content, id: chunk.id, type: 'reasoning' };
   }
 
-  // 功能正常，CI 过不去，待修复
   if (typeof item.delta?.content === 'string') {
-    // 处理 v1 endpoint usage
+    /*
+    处理 v1 endpoint usage，混合在最后一个 content 内容中
+    {"code":0,"message":"Success","sid":"cha000d05ef@dx196553ae415b80a432","id":"cha000d05ef@dx196553ae415b80a432","created":1745186655,"choices":[{"delta":{"role":"assistant","content":"😊"},"index":0}],"usage":{"prompt_tokens":1,"completion_tokens":418,"total_tokens":419}}
+    */
     if (chunk.usage) {
       return [
         { data: item.delta.content, id: chunk.id, type: 'text' },
