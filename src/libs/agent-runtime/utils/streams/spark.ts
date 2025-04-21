@@ -16,7 +16,7 @@ import { convertUsage } from '../usageConverter';
 export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
   return new ReadableStream({
     start(controller) {
-      const choices = data?.choices;
+      const choices = data?.choices || [];
 
       const chunk: OpenAI.ChatCompletionChunk = {
         choices: choices.map((choice: OpenAI.ChatCompletion.Choice) => {
