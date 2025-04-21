@@ -16,8 +16,10 @@ import { convertUsage } from '../usageConverter';
 export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
   return new ReadableStream({
     start(controller) {
+      const choices = data?.choices || [];
+
       const chunk: OpenAI.ChatCompletionChunk = {
-        choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => {
+        choices: choices.map((choice: OpenAI.ChatCompletion.Choice) => {
           const toolCallsArray = choice.message.tool_calls
             ? Array.isArray(choice.message.tool_calls)
               ? choice.message.tool_calls
@@ -51,7 +53,7 @@ export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
       controller.enqueue(chunk);
 
       controller.enqueue({
-        choices: data.choices.map((choice: OpenAI.ChatCompletion.Choice) => ({
+        choices: choices.map((choice: OpenAI.ChatCompletion.Choice) => ({
           delta: {
             content: null,
             role: choice.message.role,
