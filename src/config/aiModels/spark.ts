@@ -13,7 +13,7 @@ const sparkChatModels: AIChatModelCard[] = [
     id: 'x1',
     maxOutput: 32_768,
     settings: {
-      searchImpl: 'internal',
+      searchImpl: 'params',
     },
     type: 'chat',
   },
@@ -39,7 +39,7 @@ const sparkChatModels: AIChatModelCard[] = [
     id: 'generalv3',
     maxOutput: 8192,
     settings: {
-      searchImpl: 'internal',
+      searchImpl: 'params',
     },
     type: 'chat',
   },
