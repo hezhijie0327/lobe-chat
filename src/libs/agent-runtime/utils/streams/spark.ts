@@ -99,17 +99,6 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
     }
   }
 
-  if (item.finish_reason) {
-    // one-api 的流式接口，会出现既有 finish_reason ，也有 content 的情况
-    //  {"id":"demo","model":"deepl-en","choices":[{"index":0,"delta":{"role":"assistant","content":"Introduce yourself."},"finish_reason":"stop"}]}
-
-    if (typeof item.delta?.content === 'string' && !!item.delta.content) {
-      return { data: item.delta.content, id: chunk.id, type: 'text' };
-    }
-
-    return { data: item.finish_reason, id: chunk.id, type: 'stop' };
-  }
-
   if (
     item.delta &&
     'reasoning_content' in item.delta &&
