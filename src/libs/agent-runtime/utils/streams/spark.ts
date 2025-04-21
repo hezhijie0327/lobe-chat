@@ -122,6 +122,7 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
   }
 
 /*
+// 功能正常，CI 过不去，待修复
   if (typeof item.delta?.content === 'string') {
     if (chunk.usage) {
       const usage = chunk.usage;
