@@ -7,45 +7,52 @@ describe('SparkAIStream', () => {
   beforeAll(() => {});
 
   it('should handle reasoning content in stream', async () => {
-    const mockStream = new ReadableStream({
+    const data = [
+      {
+        id: 'test-id',
+        object: 'chat.completion.chunk',
+        created: 1734395014,
+        model: 'x1',
+        choices: [
+          {
+            delta: {
+              reasoning_content: 'Hello',
+              role: 'assistant',
+            },
+            index: 0,
+            finish_reason: null,
+          },
+        ],
+      },
+      {
+        id: 'test-id',
+        object: 'chat.completion.chunk',
+        created: 1734395014,
+        model: 'x1',
+        choices: [
+          {
+            delta: {
+              reasoning_content: ' World',
+              role: 'assistant',
+            },
+            index: 0,
+            finish_reason: null,
+          },
+        ],
+      },
+    ]
+
+    const mockSparkStream = new ReadableStream({
       start(controller) {
-        controller.enqueue({
-          id: 'test-id',
-          object: 'chat.completion.chunk',
-          created: 1734395014,
-          model: 'x1',
-          choices: [
-            {
-              delta: {
-                reasoning_content: 'Hello',
-                role: 'assistant',
-              },
-              index: 0,
-              finish_reason: null,
-            },
-          ],
-        } as OpenAI.ChatCompletionChunk);
-        controller.enqueue({
-          id: 'test-id',
-          object: 'chat.completion.chunk',
-          created: 1734395014,
-          model: 'x1',
-          choices: [
-            {
-              delta: {
-                reasoning_content: ' World',
-                role: 'assistant',
-              },
-              index: 0,
-              finish_reason: null,
-            },
-          ],
-        } as OpenAI.ChatCompletionChunk);
+        data.forEach((chunk) => {
+          controller.enqueue(chunk);
+        });
+
         controller.close();
       },
     });
 
-    const protocolStream = SparkAIStream(mockStream);
+    const protocolStream = SparkAIStream(mockSparkStream);
 
     const decoder = new TextDecoder();
     const chunks = [];
