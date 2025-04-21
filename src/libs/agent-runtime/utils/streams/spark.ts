@@ -125,12 +125,15 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
   }
 
   if (typeof item.delta?.content === 'string') {
-    /*
+    return { data: item.delta.content, id: chunk.id, type: 'text' };
+  }
+
+/*
+  if (typeof item.delta?.content === 'string') {
     if (chunk.usage) {
       const usage = chunk.usage;
       return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
     }
-    */
     const results = [{ data: item.delta.content, id: chunk.id, type: 'text' }];
 
     // 处理 v1 endpoint usage
@@ -140,6 +143,7 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
 
     return results;
   }
+*/
 
   if (item.delta?.content === null) {
     return { data: item.delta, id: chunk.id, type: 'data' };
