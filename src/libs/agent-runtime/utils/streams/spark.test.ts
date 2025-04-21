@@ -17,6 +17,7 @@ describe('SparkAIStream', () => {
           choices: [
             {
               delta: {
+                content: '',
                 reasoning_content: 'Hello',
                 role: 'assistant',
               },
@@ -32,6 +33,7 @@ describe('SparkAIStream', () => {
           choices: [
             {
               delta: {
+                content: '',
                 reasoning_content: ' World',
                 role: 'assistant',
               },
