@@ -119,14 +119,15 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
 
   // 功能正常，CI 过不去，待修复
   if (typeof item.delta?.content === 'string') {
-    const results = [{ data: item.delta.content, id: chunk.id, type: 'text' }];
-
     // 处理 v1 endpoint usage
     if (chunk.usage) {
-      results.push({ data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' });
+      return [
+        { data: item.delta.content, id: chunk.id, type: 'text' },
+        { data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' },
+      ];
     }
 
-    return results;
+    return { data: item.delta.content, id: chunk.id, type: 'text' };
   }
 
   if (item.delta?.content === null) {
