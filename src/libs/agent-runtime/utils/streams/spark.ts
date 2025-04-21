@@ -124,7 +124,7 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
       return [
         { data: item.delta.content, id: chunk.id, type: 'text' },
         { data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' },
-      ];
+      ] as any;
     }
 
     return { data: item.delta.content, id: chunk.id, type: 'text' };
