@@ -6,6 +6,67 @@ import { SparkAIStream, transformSparkResponseToStream } from './spark';
 describe('SparkAIStream', () => {
   beforeAll(() => {});
 
+  it('should handle reasoning content in stream', async () => {
+    const mockStream = new ReadableStream({
+      start(controller) {
+        controller.enqueue({
+          id: 'test-id',
+          object: 'chat.completion.chunk',
+          created: 1734395014,
+          model: 'x1',
+          choices: [
+            {
+              delta: {
+                reasoning_content: 'Hello',
+                role: 'assistant',
+              },
+              index: 0,
+            },
+          ],
+        } as OpenAI.ChatCompletionChunk);
+        controller.enqueue({
+          id: 'test-id',
+          object: 'chat.completion.chunk',
+          created: 1734395014,
+          model: 'x1',
+          choices: [
+            {
+              delta: {
+                reasoning_content: ' World',
+                role: 'assistant',
+              },
+              index: 0,
+            },
+          ],
+        } as OpenAI.ChatCompletionChunk);
+        controller.close();
+      },
+    });
+
+    const onReasoningMock = vi.fn();
+
+    const protocolStream = SparkAIStream(mockStream, {
+      onReasoning: onReasoningMock,
+    });
+
+    const decoder = new TextDecoder();
+    const chunks = [];
+
+    // @ts-ignore
+    for await (const chunk of protocolStream) {
+      chunks.push(decoder.decode(chunk, { stream: true }));
+    }
+
+    expect(chunks).toEqual([
+      'id: test-id\n',
+      'event: reasoning\n',
+      'data: "Hello"\n\n',
+      'id: test-id\n',
+      'event: reasoning\n',
+      'data: " World"\n\n',
+    ]);
+  });
+
   it('should transform non-streaming response to stream', async () => {
     const mockResponse = {
       id: 'cha000ceba6@dx193d200b580b8f3532',
