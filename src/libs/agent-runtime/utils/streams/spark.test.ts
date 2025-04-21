@@ -17,11 +17,11 @@ describe('SparkAIStream', () => {
           choices: [
             {
               delta: {
-                content: '',
                 reasoning_content: 'Hello',
                 role: 'assistant',
               },
               index: 0,
+              finish_reason: null,
             },
           ],
         } as OpenAI.ChatCompletionChunk);
@@ -33,11 +33,11 @@ describe('SparkAIStream', () => {
           choices: [
             {
               delta: {
-                content: '',
                 reasoning_content: ' World',
                 role: 'assistant',
               },
               index: 0,
+              finish_reason: null,
             },
           ],
         } as OpenAI.ChatCompletionChunk);
