@@ -11,6 +11,8 @@ import {
   generateToolCallId,
 } from './protocol';
 
+import { convertUsage } from '../usageConverter';
+
 export function transformSparkResponseToStream(data: OpenAI.ChatCompletion) {
   return new ReadableStream({
     start(controller) {
@@ -106,12 +108,44 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
     return { data: item.finish_reason, id: chunk.id, type: 'stop' };
   }
 
+  if (
+    item.delta &&
+    'reasoning_content' in item.delta &&
+    typeof item.delta.reasoning_content === 'string' &&
+    item.delta.reasoning_content !== ''
+  ) {
+    return { data: item.delta.reasoning_content, id: chunk.id, type: 'reasoning' };
+  }
+
   if (typeof item.delta?.content === 'string') {
     return { data: item.delta.content, id: chunk.id, type: 'text' };
   }
 
+/*
+// 功能正常，CI 过不去，待修复
+  if (typeof item.delta?.content === 'string') {
+    if (chunk.usage) {
+      const usage = chunk.usage;
+      return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
+    }
+    const results = [{ data: item.delta.content, id: chunk.id, type: 'text' }];
+
+    // 处理 v1 endpoint usage
+    if (chunk.usage) {
+      results.push({ data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' });
+    }
+
+    return results;
+  }
+*/
+
   if (item.delta?.content === null) {
     return { data: item.delta, id: chunk.id, type: 'data' };
+  }
+
+  // 处理 v2 endpoint usage
+  if (chunk.usage) {
+    return { data: convertUsage(chunk.usage), id: chunk.id, type: 'usage' };
   }
 
   return {
