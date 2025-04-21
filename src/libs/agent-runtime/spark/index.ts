@@ -16,7 +16,9 @@ export const LobeSparkAI = LobeOpenAICompatibleFactory({
           web_search: {
             enable: true,
             search_mode: process.env.SPARK_SEARCH_MODE || "normal", // normal or deep
+            /*
             show_ref_label: true,
+            */
           },
         }
       ] : tools;
