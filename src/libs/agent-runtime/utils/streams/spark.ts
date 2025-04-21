@@ -117,12 +117,7 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
     return { data: item.delta.reasoning_content, id: chunk.id, type: 'reasoning' };
   }
 
-  if (typeof item.delta?.content === 'string') {
-    return { data: item.delta.content, id: chunk.id, type: 'text' };
-  }
-
-/*
-// 功能正常，CI 过不去，待修复
+  // 功能正常，CI 过不去，待修复
   if (typeof item.delta?.content === 'string') {
     if (chunk.usage) {
       const usage = chunk.usage;
@@ -137,7 +132,6 @@ export const transformSparkStream = (chunk: OpenAI.ChatCompletionChunk): StreamP
 
     return results;
   }
-*/
 
   if (item.delta?.content === null) {
     return { data: item.delta, id: chunk.id, type: 'data' };
