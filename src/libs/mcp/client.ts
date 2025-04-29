@@ -3,6 +3,7 @@ import {
   StdioClientTransport,
   getDefaultEnvironment,
 } from '@modelcontextprotocol/sdk/client/stdio.js';
+import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js'
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.d.ts';
 import type { Progress } from '@modelcontextprotocol/sdk/types.js';
@@ -22,8 +23,13 @@ export class MCPClient {
 
     switch (params.type) {
       case 'http': {
-        log('Using HTTP transport with url: %s', params.url);
-        this.transport = new StreamableHTTPClientTransport(new URL(params.url));
+        if (params.url.includes('sse')) {
+          log('Using SSE transport with url: %s', params.url);
+          this.transport = new SSEClientTransport(new URL(params.url));
+        } else {
+          log('Using HTTP transport with url: %s', params.url);
+          this.transport = new StreamableHTTPClientTransport(new URL(params.url));
+        }
         break;
       }
       case 'stdio': {
