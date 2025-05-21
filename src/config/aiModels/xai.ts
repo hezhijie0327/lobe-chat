@@ -47,6 +47,7 @@ const xaiChatModels: AIChatModelCard[] = [
     abilities: {
       functionCall: true,
       reasoning: true,
+      search: true,
     },
     contextWindowTokens: 131_072,
     description:
@@ -59,12 +60,16 @@ const xaiChatModels: AIChatModelCard[] = [
       output: 0.5,
     },
     releasedAt: '2025-04-03',
+    settings: {
+      searchImpl: 'params',
+    },
     type: 'chat',
   },
   {
     abilities: {
       functionCall: true,
       reasoning: true,
+      search: true,
     },
     contextWindowTokens: 131_072,
     description:
@@ -76,6 +81,9 @@ const xaiChatModels: AIChatModelCard[] = [
       output: 4,
     },
     releasedAt: '2025-04-03',
+    settings: {
+      searchImpl: 'params',
+    },
     type: 'chat',
   },
   {
