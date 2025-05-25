@@ -99,6 +99,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
       tools,
       thinking,
       enabledContextCaching = true,
+      enabledSearch,
     } = payload;
     const system_message = messages.find((m) => m.role === 'system');
     const user_messages = messages.filter((m) => m.role !== 'system');
@@ -116,6 +117,21 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
     const postMessages = await buildAnthropicMessages(user_messages, { enabledContextCaching });
 
     const postTools = buildAnthropicTools(tools, { enabledContextCaching });
+
+    if (enabledSearch) {
+      const webSearchTool: Anthropic.Tool = {
+        type: "web_search_20250305",
+        name: "web_search",
+        max_uses: 5
+      };
+
+      // 如果已有工具，则添加到现有工具列表中；否则创建新的工具列表
+      if (postTools && postTools.length > 0) {
+        postTools = [...postTools, webSearchTool];
+      } else {
+        postTools = [webSearchTool];
+      }
+    }
 
     if (!!thinking && thinking.type === 'enabled') {
       // claude 3.7 thinking has max output of 64000 tokens
