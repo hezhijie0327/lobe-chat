@@ -5,6 +5,7 @@ const anthropicChatModels: AIChatModelCard[] = [
     abilities: {
       functionCall: true,
       reasoning: true,
+      search: true,
       vision: true,
     },
     contextWindowTokens: 200_000,
@@ -23,12 +24,14 @@ const anthropicChatModels: AIChatModelCard[] = [
     releasedAt: '2025-05-23',
     settings: {
       extendParams: ['disableContextCaching', 'enableReasoning', 'reasoningBudgetToken'],
+      searchImpl: 'params',
     },
     type: 'chat',
   },
   {
     abilities: {
       functionCall: true,
+      search: true,
       vision: true,
     },
     contextWindowTokens: 200_000,
@@ -47,6 +50,7 @@ const anthropicChatModels: AIChatModelCard[] = [
     releasedAt: '2025-05-23',
     settings: {
       extendParams: ['disableContextCaching', 'enableReasoning', 'reasoningBudgetToken'],
+      searchImpl: 'params',
     },
     type: 'chat',
   },
@@ -54,6 +58,7 @@ const anthropicChatModels: AIChatModelCard[] = [
     abilities: {
       functionCall: true,
       reasoning: true,
+      search: true,
       vision: true,
     },
     contextWindowTokens: 200_000,
@@ -72,12 +77,14 @@ const anthropicChatModels: AIChatModelCard[] = [
     releasedAt: '2025-02-24',
     settings: {
       extendParams: ['disableContextCaching', 'enableReasoning', 'reasoningBudgetToken'],
+      searchImpl: 'params',
     },
     type: 'chat',
   },
   {
     abilities: {
       functionCall: true,
+      search: true,
       vision: true,
     },
     contextWindowTokens: 200_000,
@@ -96,6 +103,7 @@ const anthropicChatModels: AIChatModelCard[] = [
     releasedAt: '2024-11-05',
     settings: {
       extendParams: ['disableContextCaching'],
+      searchImpl: 'params',
     },
     type: 'chat',
   },
@@ -120,6 +128,7 @@ const anthropicChatModels: AIChatModelCard[] = [
     releasedAt: '2024-10-22',
     settings: {
       extendParams: ['disableContextCaching'],
+      searchImpl: 'params',
     },
     type: 'chat',
   },
