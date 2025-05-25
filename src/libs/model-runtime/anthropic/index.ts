@@ -119,7 +119,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
     const postTools = buildAnthropicTools(tools, { enabledContextCaching });
 
     if (enabledSearch) {
-      const webSearchTool: Anthropic.Tool = {
+      const webSearchTool: Anthropic.WebSearchTool20250305 = {
         type: "web_search_20250305",
         name: "web_search",
         max_uses: 5
