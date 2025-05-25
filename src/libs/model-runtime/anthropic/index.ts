@@ -103,6 +103,18 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
       enabledContextCaching = true,
       enabledSearch,
     } = payload;
+
+    const { default: anthropicModels } = await import('@/config/aiModels/anthropic');
+    const modelConfig = anthropicModels.find(m => m.id === model);
+    const defaultMaxOutput = modelConfig?.maxOutput;
+
+    // 配置优先级：用户设置 > 模型配置 > 硬编码默认值
+    const getMaxTokens = () => {
+      if (max_tokens) return max_tokens;
+      if (defaultMaxOutput) return defaultMaxOutput;
+      return undefined;
+    };
+
     const system_message = messages.find((m) => m.role === 'system');
     const user_messages = messages.filter((m) => m.role !== 'system');
 
@@ -136,12 +148,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
     }
 
     if (!!thinking && thinking.type === 'enabled') {
-      // claude 3.7 thinking has max output of 64000 tokens
-      const maxTokens = !!max_tokens
-        ? thinking?.budget_tokens && thinking?.budget_tokens > max_tokens
-          ? Math.min(thinking?.budget_tokens + max_tokens, 64_000)
-          : max_tokens
-        : 64_000;
+      const maxTokens = getMaxTokens() || 32_000; // Claude Opus 4 has minimum maxOutput
 
       // `temperature` may only be set to 1 when thinking is enabled.
       // `top_p` must be unset when thinking is enabled.
@@ -150,7 +157,12 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
         messages: postMessages,
         model,
         system: systemPrompts,
-        thinking,
+        thinking: {
+          ...thinking,
+          budget_tokens: thinking?.budget_tokens 
+            ? Math.min(thinking.budget_tokens, maxTokens - 1)  // `max_tokens` must be greater than `thinking.budget_tokens`.
+            : 1024,
+        },
         tools: postTools,
       } satisfies Anthropic.MessageCreateParams;
     }
@@ -158,7 +170,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
     return {
       // claude 3 series model hax max output token of 4096, 3.x series has 8192
       // https://docs.anthropic.com/en/docs/about-claude/models/all-models#:~:text=200K-,Max%20output,-Normal%3A
-      max_tokens: max_tokens ?? (modelsWithSmallContextWindow.has(model) ? 4096 : 8192),
+      max_tokens: getMaxTokens() || (modelsWithSmallContextWindow.has(model) ? 4096 : 8192),
       messages: postMessages,
       model,
       system: systemPrompts,
