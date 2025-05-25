@@ -116,7 +116,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
 
     const postMessages = await buildAnthropicMessages(user_messages, { enabledContextCaching });
 
-    const postTools = buildAnthropicTools(tools, { enabledContextCaching });
+    let postTools = buildAnthropicTools(tools, { enabledContextCaching });
 
     if (enabledSearch) {
       const webSearchTool: Anthropic.WebSearchTool20250305 = {
