@@ -29,6 +29,8 @@ const modelsWithSmallContextWindow = new Set(['claude-3-opus-20240229', 'claude-
 
 const DEFAULT_BASE_URL = 'https://api.anthropic.com';
 
+const DEFAULT_ANTHROPIC_BETA = 'max-tokens-3-5-sonnet-2024-07-15';
+
 interface AnthropicAIParams extends ClientOptions {
   id?: string;
 }
@@ -47,7 +49,14 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
   constructor({ apiKey, baseURL = DEFAULT_BASE_URL, id, ...res }: AnthropicAIParams = {}) {
     if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidProviderAPIKey);
 
-    this.client = new Anthropic({ apiKey, baseURL, ...res });
+    const anthropicBeta = process.env.ANTHROPIC_BETA || DEFAULT_ANTHROPIC_BETA;
+
+    this.client = new Anthropic({
+      apiKey,
+      baseURL,
+      defaultHeaders: { "anthropic-beta": anthropicBeta },
+      ...res
+    });
     this.baseURL = this.client.baseURL;
     this.apiKey = apiKey;
     this.id = id || ModelProvider.Anthropic;
