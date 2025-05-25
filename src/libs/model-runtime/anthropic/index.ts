@@ -44,21 +44,15 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
     return process.env.DEBUG_ANTHROPIC_CHAT_COMPLETION === '1';
   }
 
-  private getBetaHeaders() {
-    return process.env.ANTHROPIC_BETA_HEADERS;
-  }
-
-  private getMaxUses() {
-    return parseInt(process.env.ANTHROPIC_MAX_USES ?? '5', 10);
-  }
-
   constructor({ apiKey, baseURL = DEFAULT_BASE_URL, id, ...res }: AnthropicAIParams = {}) {
     if (!apiKey) throw AgentRuntimeError.createError(AgentRuntimeErrorType.InvalidProviderAPIKey);
+
+    const betaHeaders = process.env.ANTHROPIC_BETA_HEADERS;
 
     this.client = new Anthropic({
       apiKey,
       baseURL,
-      defaultHeaders: { "anthropic-beta": getBetaHeaders() },
+      ...(betaHeaders ? { defaultHeaders: { "anthropic-beta": betaHeaders } } : {}),
       ...res
     });
     this.baseURL = this.client.baseURL;
@@ -148,7 +142,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
     if (enabledSearch) {
       const webSearchTool: Anthropic.WebSearchTool20250305 = {
         // Limit the number of searches per request
-        max_uses: getMaxUses(),
+        max_uses: parseInt(process.env.ANTHROPIC_MAX_USES ?? '5', 10),
         name: 'web_search',
         type: 'web_search_20250305',
       };
