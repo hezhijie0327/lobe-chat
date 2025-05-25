@@ -23,6 +23,8 @@ export interface AnthropicModelCard {
   id: string;
 }
 
+type ExtendedTool = Anthropic.Tool | Anthropic.WebSearchTool20250305;
+
 const modelsWithSmallContextWindow = new Set(['claude-3-opus-20240229', 'claude-3-haiku-20240307']);
 
 const DEFAULT_BASE_URL = 'https://api.anthropic.com';
@@ -116,7 +118,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
 
     const postMessages = await buildAnthropicMessages(user_messages, { enabledContextCaching });
 
-    let postTools = buildAnthropicTools(tools, { enabledContextCaching });
+    let postTools: ExtendedTool[] | undefined = buildAnthropicTools(tools, { enabledContextCaching });
 
     if (enabledSearch) {
       const webSearchTool: Anthropic.WebSearchTool20250305 = {
