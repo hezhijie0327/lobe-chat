@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { Stream } from '@anthropic-ai/sdk/streaming';
 
-import { ModelTokensUsage } from '@/types/message';
+import { ModelTokensUsage, CitationItem } from '@/types/message';
 
 import { ChatStreamCallbacks } from '../../types';
 import {
