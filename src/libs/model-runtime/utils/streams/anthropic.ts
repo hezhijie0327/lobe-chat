@@ -154,8 +154,10 @@ export const transformAnthropicStream = (
           return [
             {
               data: {
-                title: citations.title,
-                url: citations.url,
+                citations: [{
+                  title: citations.title,
+                  url: citations.url,
+                }],
               } as CitationItem,
               id: context.id,
               type: 'grounding',
