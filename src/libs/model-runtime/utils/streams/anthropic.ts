@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { Stream } from '@anthropic-ai/sdk/streaming';
 
-import { ModelTokensUsage } from '@/types/message';
+import { ModelTokensUsage, CitationItem } from '@/types/message';
 
 import { ChatStreamCallbacks } from '../../types';
 import {
@@ -150,7 +150,17 @@ export const transformAnthropicStream = (
         }
 
         case 'citations_delta': {
-          return { data: chunk.delta.citation, id: context.id, type: 'grounding' };
+          const citations = chunk.delta.citation;
+          return [
+            {
+              data: {
+                title: citations.title,
+                url: citations.url,
+              } as CitationItem,
+              id: context.id,
+              type: 'grounding',
+            },
+          ];
         }
 
         default: {
