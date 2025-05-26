@@ -125,6 +125,26 @@ export const transformOpenAIStream = (
         return { data: item.delta.content, id: chunk.id, type: 'text' };
       }
 
+      if (chunk.citations) {
+        const citations = chunk.citations;
+
+        return [
+          {
+            data: {
+              citations: (citations as any[]).map(
+                (item) =>
+                  ({
+                    title: item,
+                    url: item,
+                  }) as CitationItem,
+              ),
+            },
+            id: chunk.id,
+            type: 'grounding',
+          },
+        ];
+      }
+
       if (chunk.usage) {
         const usage = chunk.usage;
         return { data: convertUsage(usage), id: chunk.id, type: 'usage' };
