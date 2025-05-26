@@ -127,8 +127,8 @@ export const transformOpenAIStream = (
 
       // xAI Live Search 功能返回引用源
       // {"id":"8721eebb-6465-4c47-ba2e-8e2ec0f97055","object":"chat.completion.chunk","created":1747809109,"model":"grok-3","choices":[{"index":0,"delta":{"role":"assistant"},"finish_reason":"stop"}],"system_fingerprint":"fp_1affcf9872","citations":["https://world.huanqiu.com/"]}
-      if (chunk.citations) {
-        const citations = chunk.citations;
+      if (chunk.citations as any) {
+        const citations = chunk.citations as any;
 
         return [
           {
