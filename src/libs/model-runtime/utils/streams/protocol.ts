@@ -17,8 +17,11 @@ export interface StreamContext {
    */
   returnedCitation?: boolean;
   /**
-   * As Claude citations is between in text output
-  **/
+   * Claude's citations are inline and interleaved with text output.
+   * Each text segment may carry references to sources (e.g., web search results) 
+   * relevant to that specific portion of the generated content.
+   * This array accumulates all citation items received during the streaming response.
+   */
   returnedCitationArray?: CitationItem[];
   thinking?: {
     id: string;
