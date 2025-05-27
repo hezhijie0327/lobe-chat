@@ -9,10 +9,6 @@ import { ChatStreamCallbacks } from '../../types';
  * context in the stream to save temporarily data
  */
 export interface StreamContext {
-  /**
-   * Calude citations
-  **/
-  citationsArray?: array;
   id: string;
   /**
    * As pplx citations is in every chunk, but we only need to return it once
@@ -20,6 +16,10 @@ export interface StreamContext {
    * Same as Hunyuan and Wenxin
    */
   returnedCitation?: boolean;
+  /**
+   * As Claude citations is between in text output
+  **/
+  returnedCitationArray?: string[];
   thinking?: {
     id: string;
     name: string;
