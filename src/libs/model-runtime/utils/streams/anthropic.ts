@@ -176,14 +176,12 @@ export const transformAnthropicStream = (
         case 'citations_delta': {
           const citations = chunk.delta.citation;
 
-          if (!context.returnedCitationArray) {
-            context.returnedCitationArray = [];
+          if (context.returnedCitationArray) {
+            context.returnedCitationArray.push({
+              title: citations.title,
+              url: citations.url,
+            } as CitationItem)
           }
-
-          context.returnedCitationArray.push({
-            title: citations.title,
-            url: citations.url,
-          } as any)
 
           return { data: null, id: context.id, type: 'text' };
         }
@@ -221,7 +219,7 @@ export const transformAnthropicStream = (
 
     case 'message_stop': {
       return [
-        { data: { citations: context.returnedCitationArray as CitationItem }, id: context.id, type: 'grounding' },
+        { data: { citations: context.returnedCitationArray }, id: context.id, type: 'grounding' },
         { data: 'message_stop', id: context.id, type: 'stop' }
       ];
     }
