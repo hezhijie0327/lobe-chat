@@ -9,6 +9,10 @@ import { ChatStreamCallbacks } from '../../types';
  * context in the stream to save temporarily data
  */
 export interface StreamContext {
+  /**
+   * Calude citations
+  **/
+  citation?: array;
   id: string;
   /**
    * As pplx citations is in every chunk, but we only need to return it once
