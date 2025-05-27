@@ -233,6 +233,9 @@ export const openaiChatModels: AIChatModelCard[] = [
       output: 0.6,
     },
     releasedAt: '2025-03-11',
+    settings: {
+      searchImpl: 'internal',
+    },
     type: 'chat',
   },
   {
@@ -268,6 +271,9 @@ export const openaiChatModels: AIChatModelCard[] = [
       output: 10,
     },
     releasedAt: '2025-03-11',
+    settings: {
+      searchImpl: 'internal',
+    },
     type: 'chat',
   },
   {
