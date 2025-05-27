@@ -180,6 +180,8 @@ export const transformAnthropicStream = (
             title: citations.title,
             url: citations.url,
           })
+
+          return { data: null, id: context.id, type: 'text' };
         }
 
         default: {
