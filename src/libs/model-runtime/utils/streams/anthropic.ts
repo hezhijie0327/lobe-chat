@@ -225,10 +225,10 @@ export const transformAnthropicStream = (
               id: context.id, 
               type: 'grounding' 
             }] 
-          : undefined
+          : []
         ),
         { data: 'message_stop', id: context.id, type: 'stop' }
-      ];
+      ] as any;
     }
 
     default: {
