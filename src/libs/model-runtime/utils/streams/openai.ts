@@ -133,7 +133,7 @@ export const transformOpenAIStream = (
 
       // OpenAI Search Preview 模型返回引用源
       // {"id":"chatcmpl-18037d13-243c-4941-8b05-9530b352cf17","object":"chat.completion.chunk","created":1748351805,"model":"gpt-4o-mini-search-preview-2025-03-11","choices":[{"index":0,"delta":{"annotations":[{"type":"url_citation","url_citation":{"url":"https://zh.wikipedia.org/wiki/%E4%B8%8A%E6%B5%B7%E4%B9%90%E9%AB%98%E4%B9%90%E5%9B%AD?utm_source=openai","title":"上海乐高乐园","start_index":75,"end_index":199}}]},"finish_reason":"stop"}],"service_tier":"default"}
-      if (（item as any).delta.annotations && (item as any).delta.annotations.length > 0) {
+      if ((item as any).delta.annotations && (item as any).delta.annotations.length > 0) {
         const citations = (item as any).delta.annotations;
 
         return [
