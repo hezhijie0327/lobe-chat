@@ -14,13 +14,15 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
   baseURL: 'https://api.openai.com/v1',
   chatCompletion: {
     handlePayload: (payload) => {
-      const { enabledSearch, model } = payload;
+      const { model } = payload;
 
       if (prunePrefixes.some(prefix => model.startsWith(prefix))) {
         return pruneReasoningPayload(payload) as any;
       }
 
       if (model.includes('-search-')) {
+        const oaiSearchContextSize = process.env.OPENAI_SEARCH_CONTEXT_SIZE; // low, medium, high
+
         return {
           ...payload,
           frequency_penalty: undefined,
@@ -28,9 +30,11 @@ export const LobeOpenAI = LobeOpenAICompatibleFactory({
           stream: payload.stream ?? true,
           temperature: undefined,
           top_p: undefined,
-          web_search_options: {
-            search_context_size: process.env.OPENAI_SEARCH_CONTEXT_SIZE || 'medium', // low, medium, high
-          },
+          ...(oaiSearchContextSize && {
+            web_search_options: {
+              search_context_size: oaiSearchContextSize,
+            },
+          }),
         } as any;
       }
 
