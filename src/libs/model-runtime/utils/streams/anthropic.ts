@@ -221,15 +221,7 @@ export const transformAnthropicStream = (
 
     case 'message_stop': {
       return [
-        ...(context.returnedCitationArray?.length > 0
-        ? [
-            {
-              data: { citations: context.returnedCitationArray },
-              id: context.id,
-              type: 'grounding',
-            },
-          ]
-        : []),
+        { data: { citations: context.returnedCitationArray }, id: context.id, type: 'grounding' },
         { data: 'message_stop', id: context.id, type: 'stop' }
       ];
     }
