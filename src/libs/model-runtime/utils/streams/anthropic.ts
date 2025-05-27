@@ -23,6 +23,7 @@ export const transformAnthropicStream = (
   switch (chunk.type) {
     case 'message_start': {
       context.id = chunk.message.id;
+      context.returnedCitationArray = [];
       let totalInputTokens = chunk.message.usage?.input_tokens;
 
       if (
@@ -87,6 +88,7 @@ export const transformAnthropicStream = (
           return { data: [toolCall], id: context.id, type: 'tool_calls' };
         }
 
+        /*
         case 'web_search_tool_result': {
           const citations = chunk.content_block.content;
 
@@ -106,6 +108,7 @@ export const transformAnthropicStream = (
             },
           ];
         }
+        */
 
         case 'thinking': {
           const thinkingChunk = chunk.content_block;
@@ -170,6 +173,15 @@ export const transformAnthropicStream = (
           };
         }
 
+        case 'citations_delta': {
+          const citations = chunk.delta.citation
+
+          context.returnedCitationArray.push({
+            title: citations.title,
+            url: citations.url,
+          })
+        }
+
         default: {
           break;
         }
@@ -202,7 +214,10 @@ export const transformAnthropicStream = (
     }
 
     case 'message_stop': {
-      return { data: 'message_stop', id: context.id, type: 'stop' };
+      return [
+        { data: { citations: context.returnedCitationArray }, id: context.id, type: 'grounding' },
+        { data: 'message_stop', id: context.id, type: 'stop' }
+      ];
     }
 
     default: {
