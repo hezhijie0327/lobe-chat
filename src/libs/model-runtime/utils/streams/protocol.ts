@@ -12,7 +12,7 @@ export interface StreamContext {
   /**
    * Calude citations
   **/
-  citation?: array;
+  citationsArray?: array;
   id: string;
   /**
    * As pplx citations is in every chunk, but we only need to return it once
