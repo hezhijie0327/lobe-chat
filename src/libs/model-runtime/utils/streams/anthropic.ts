@@ -174,7 +174,7 @@ export const transformAnthropicStream = (
         }
 
         case 'citations_delta': {
-          const citations = chunk.delta.citation;
+          const citations = (chunk as any).delta.citation;
 
           if (context.returnedCitationArray) {
             context.returnedCitationArray.push({
