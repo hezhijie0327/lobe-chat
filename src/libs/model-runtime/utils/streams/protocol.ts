@@ -1,4 +1,4 @@
-import { ModelSpeed, ModelTokensUsage } from '@/types/message';
+import { CitationItem, ModelSpeed, ModelTokensUsage } from '@/types/message';
 import { safeParseJSON } from '@/utils/safeParseJSON';
 
 import { AgentRuntimeErrorType } from '../../error';
@@ -19,7 +19,7 @@ export interface StreamContext {
   /**
    * As Claude citations is between in text output
   **/
-  returnedCitationArray?: string[];
+  returnedCitationArray?: CitationItem[];
   thinking?: {
     id: string;
     name: string;
