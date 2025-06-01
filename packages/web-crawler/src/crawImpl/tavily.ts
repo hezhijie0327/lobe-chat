@@ -81,7 +81,6 @@ export const tavily: CrawlImpl = async (url) => {
     return {
       content: firstResult.raw_content,
       contentType: 'text',
-      description: new URL(url).hostname,
       length: firstResult.raw_content.length,
       siteName: new URL(url).hostname,
       title: new URL(url).hostname,
