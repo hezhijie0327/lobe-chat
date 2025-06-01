@@ -5,11 +5,7 @@ import urlJoin from 'url-join';
 import { SearchParams, UniformSearchResponse, UniformSearchResult } from '@/types/tool/search';
 
 import { SearchServiceImpl } from '../type';
-import { JinaResponse } from './type';
-
-interface JinaQueryParams {
-  q: string;
-}
+import { JinaSearchParameters, JinaResponse } from './type';
 
 const log = debug('lobe-search:Jina');
 
