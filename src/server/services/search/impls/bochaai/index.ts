@@ -43,12 +43,12 @@ export class BoChaAIImpl implements SearchServiceImpl {
     log('Starting BoChaAI query with query: "%s", params: %o', query, params);
     const endpoint = urlJoin(this.baseUrl, '/web-search');
 
-    const defaultQueryParams: FirecrawlQueryParams = {
+    const defaultQueryParams: BoChaAIQueryParams = {
       count: 15,
       query,
     };
 
-    let body: FirecrawlQueryParams = {
+    let body: BoChaAIQueryParams = {
       ...defaultQueryParams,
       freshness:
         params?.searchTimeRange && params.searchTimeRange !== 'anytime'
