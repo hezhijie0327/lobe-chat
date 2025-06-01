@@ -5,7 +5,6 @@ import { JinaImpl } from './jina';
 import { Search1APIImpl } from './search1api';
 import { SearXNGImpl } from './searxng';
 import { TavilyImpl } from './tavily';
-import { ZhipuImpl } from './zhipu';
 
 import { SearchServiceImpl } from './type';
 
@@ -20,7 +19,6 @@ export enum SearchImplType {
   SearXNG = 'searxng',
   Search1API = 'search1api',
   Tavily = 'tavily',
-  Zhipu = 'zhipu',
 }
 
 /**
