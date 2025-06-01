@@ -41,7 +41,7 @@ export class ZhipuImpl implements SearchServiceImpl {
       search_query: query,
     };
 
-    let body: ZhipuQueryParams = {
+    let body: ZhipuSearchParameters = {
       ...defaultQueryParams,
       search_recency_filter:
         params?.searchTimeRange && params.searchTimeRange !== 'anytime'
