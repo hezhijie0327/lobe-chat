@@ -9,11 +9,9 @@ import { ExaSearchParameters, ExaResponse } from './type';
 
 const log = debug('lobe-search:Exa');
 
-type TimeRange = 'day' | 'week' | 'month' | 'year';
-
-const getTimeRange = (time_range: TimeRange): { endPublishedDate: string; startPublishedDate: string } => {
+const getTimeRange = (time_range: any): { endPublishedDate: string; startPublishedDate: string } => {
   const now = Date.now();
-  const map: Record<TimeRange, number> = { day: 1, week: 7, month: 30, year: 365 };
+  const map: Record<any, number> = { day: 1, week: 7, month: 30, year: 365 };
 
   const days = map[time_range];
   return {
