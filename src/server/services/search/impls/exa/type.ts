@@ -34,6 +34,6 @@ export interface ExaResponse {
   costDollars?: ExaCostDollars;
   requestId?: string;
   resolvedSearchType?: string;
-  results: ExaResults;
+  results: ExaResults[];
   searchType?: string;
 }
