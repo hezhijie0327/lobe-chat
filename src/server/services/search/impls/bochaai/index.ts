@@ -107,7 +107,7 @@ export class BoChaAIImpl implements SearchServiceImpl {
           engines: ['bochaai'], // Use 'bochaai' as the engine name
           parsedUrl: result.url ? new URL(result.url).hostname : '', // Basic URL parsing
           score: 1, // Default score to 1
-          title: result.title || '',
+          title: result.name || '',
           url: result.url,
         }),
       );
