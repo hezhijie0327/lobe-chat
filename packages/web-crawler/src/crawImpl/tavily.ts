@@ -3,12 +3,19 @@ import { NetworkConnectionError, PageNotFoundError, TimeoutError } from '../util
 import { DEFAULT_TIMEOUT, withTimeout } from '../utils/withTimeout';
 
 interface TavilyResults {
+  images?: string[];
   raw_content: string;
+  url: string;
+}
+
+interface TavilyFailedResults {
+  error?: string;
   url: string;
 }
 
 interface TavilyResponse {
   base_url: string;
+  failed_results?: TavilyFailedResults[];
   response_time: number;
   results: TavilyResults[];
 }
@@ -21,13 +28,11 @@ export const tavily: CrawlImpl = async (url) => {
 
   try {
     res = await withTimeout(
-      fetch('https://api.tavily.com/crawl', {
+      fetch('https://api.tavily.com/extract', {
         body: JSON.stringify({
           extract_depth: process.env.TAVILY_EXTRACT_DEPTH || 'basic', // basic or advanced
-          limit: 1,
-          max_breadth: 1,
-          max_depth: 1,
-          url,
+          include_images: false,
+          urls: url,
         }),
         headers: {
           'Authorization': !apiKey ? '' : `Bearer ${apiKey}`,
@@ -61,18 +66,26 @@ export const tavily: CrawlImpl = async (url) => {
   try {
     const data = (await res.json()) as TavilyResponse;
 
+    if (!data.results || data.results.length === 0) {
+      console.warn( 'Tavily API returned no results for URL:', url )
+      return
+    }
+
+    const firstResult = data.results[0];
+
     // Check if content is empty or too short
-    if (!data.results[0].content || data.results[0].content.length < 100) {
+    if (!firstResult.raw_content || firstResult.raw_content.length < 100) {
       return;
     }
 
     return {
-      content: data.results[0].raw_content,
+      content: firstResult.raw_content,
       contentType: 'text',
-      length: data.results[0].raw_content.length,
+      description: new URL(url).hostname,
+      length: firstResult.raw_content.length,
       siteName: new URL(url).hostname,
       title: new URL(url).hostname,
-      url: data.results[0].url || url,
+      url: firstResult.url || url,
     } satisfies CrawlSuccessResult;
   } catch (error) {
     console.error(error);
