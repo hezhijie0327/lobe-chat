@@ -103,7 +103,7 @@ export class BoChaAIImpl implements SearchServiceImpl {
       const mappedResults = (bochaaiResponse.data.webPages.value || []).map(
         (result): UniformSearchResult => ({
           category: 'general', // Default category
-          content: result.text || '', // Prioritize content, fallback to snippet
+          content: result.snippet || '', // Prioritize content, fallback to snippet
           engines: ['bochaai'], // Use 'bochaai' as the engine name
           parsedUrl: result.url ? new URL(result.url).hostname : '', // Basic URL parsing
           score: 1, // Default score to 1
