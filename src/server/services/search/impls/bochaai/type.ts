@@ -32,7 +32,10 @@ interface BoChaAIWebPages {
 }
 
 interface BoChaAIData {
+  images?: any;
   queryContext?: BoChaAIQueryContext;
+  videos?: any;
+  webPages: BoChaAIWebPages;
 }
 
 export interface BoChaAIResponse {
