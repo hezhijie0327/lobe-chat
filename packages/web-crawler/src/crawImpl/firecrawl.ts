@@ -32,7 +32,7 @@ interface FirecrawlResponse {
 export const firecrawl: CrawlImpl = async (url) => {
   // Get API key from environment variable
   const apiKey = process.env.FIRECRAWL_API_KEY;
-  const baseUrl = process.env.FIRECRAWL_BASE_URL || 'https://api.firecrawl.dev/v1';
+  const baseUrl = process.env.FIRECRAWL_URL || 'https://api.firecrawl.dev/v1';
 
   let res: Response;
 
