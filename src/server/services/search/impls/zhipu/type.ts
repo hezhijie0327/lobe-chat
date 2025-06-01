@@ -29,5 +29,5 @@ export interface ZhipuResponse {
   created?: number;
   id?: string;
   search_intent?: ZhipuSearchIntent;
-  search_result: ZhipuSearchResult;
+  search_result: ZhipuSearchResult[];
 }
