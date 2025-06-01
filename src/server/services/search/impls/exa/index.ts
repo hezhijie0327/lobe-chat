@@ -9,6 +9,17 @@ import { ExaSearchParameters, ExaResponse } from './type';
 
 const log = debug('lobe-search:Exa');
 
+const getTimeRange = (time_range) => {
+  const now = Date.now();
+  const map = { day: 1, week: 7, month: 30, year: 365 };
+
+  const days = map[time_range];
+  return {
+    endPublishedDate: new Date(now).toISOString(),
+    startPublishedDate: new Date(now - days * 86400000).toISOString(),
+  };
+};
+
 /**
  * Exa implementation of the search service
  * Primarily used for web crawling
@@ -27,10 +38,17 @@ export class ExaImpl implements SearchServiceImpl {
     log('Starting Exa query with query: "%s", params: %o', query, params);
     const endpoint = urlJoin(this.baseUrl, '/search');
 
-    let body: ExaSearchParameters = {
+    const defaultQueryParams: ExaSearchParameters = {
       numResults: 15,
       query,
       type: 'auto',
+    };
+
+    let body: ExaSearchParameters = {
+      ...defaultQueryParams,
+      ...(params?.searchTimeRange && params.searchTimeRange !== 'anytime')
+        ? getTimeRange(params.searchTimeRange)
+        : undefined,
     };
 
     log('Constructed request body: %o', body);
