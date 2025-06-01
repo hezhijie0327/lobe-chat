@@ -35,7 +35,6 @@ export class ZhipuImpl implements SearchServiceImpl {
     const endpoint = urlJoin(this.baseUrl, '/web_search');
 
     const defaultQueryParams: ZhipuSearchParameters = {
-      //content_size: process.env.ZHIPU_CONTENT_SIZE || 'medium', // low, medium, high
       count: 15,
       search_engine: process.env.ZHIPU_SEARCH_ENGINE || 'search_std', // search_std or search_pro
       search_query: query,
