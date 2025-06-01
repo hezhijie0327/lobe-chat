@@ -22,6 +22,7 @@ interface BochaValue {
   name: string;
   siteName?: string;
   snippet?: string;
+  summary?: string;
   url: string;
 }
 
