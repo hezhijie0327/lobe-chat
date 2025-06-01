@@ -16,7 +16,7 @@ interface ExaResults {
 
 interface ExaResponse {
   requestId?: string;
-  results: ExaResults;
+  results: ExaResults[];
 }
 
 export const exa: CrawlImpl = async (url) => {
