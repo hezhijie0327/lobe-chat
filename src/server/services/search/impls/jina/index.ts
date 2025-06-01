@@ -32,7 +32,7 @@ export class JinaImpl implements SearchServiceImpl {
     const endpoint = urlJoin(this.baseUrl, '/');
 
     let body: JinaQueryParams = {
-      q,
+      q: query,
     };
 
     log('Constructed request body: %o', body);
