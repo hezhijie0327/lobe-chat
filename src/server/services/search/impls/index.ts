@@ -52,10 +52,6 @@ export const createSearchServiceImpl = (
       return new TavilyImpl();
     }
 
-    case SearchImplType.Zhipu: {
-      return new ZhipuImpl();
-    }
-
     default: {
       return new Search1APIImpl();
     }
