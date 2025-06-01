@@ -48,7 +48,7 @@ export class JinaImpl implements SearchServiceImpl {
           'Authorization': this.apiKey ? `Bearer ${this.apiKey}` : '',
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'X-Return-Format': 'markdown',
+          'X-Respond-With': 'no-content',
         },
         method: 'POST',
       });
@@ -84,8 +84,7 @@ export class JinaImpl implements SearchServiceImpl {
       const mappedResults = (jinaResponse.data || []).map(
         (result): UniformSearchResult => ({
           category: 'general', // Default category
-          content: result.content || '', // Prioritize content, fallback to snippet
-          description: result.description || '',
+          content: result.description || '', // Prioritize content, fallback to snippet
           engines: ['jina'], // Use 'jina' as the engine name
           parsedUrl: result.url ? new URL(result.url).hostname : '', // Basic URL parsing
           score: 1, // Default score to 1
