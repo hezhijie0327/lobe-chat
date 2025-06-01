@@ -63,7 +63,7 @@ export const exa: CrawlImpl = async (url) => {
   }
 
   try {
-    const data = (await res.json()) as TavilyResponse;
+    const data = (await res.json()) as ExaResponse;
 
     if (!data.results || data.results.length === 0) {
       console.warn( 'Exa API returned no results for URL:', url )
