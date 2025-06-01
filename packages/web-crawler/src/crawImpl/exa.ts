@@ -29,6 +29,7 @@ export const exa: CrawlImpl = async (url) => {
     res = await withTimeout(
       fetch('https://api.exa.ai/contents', {
         body: JSON.stringify({
+          livecrawl: 'fallback', // always, fallback
           text: true,
           urls: [url],
         }),
