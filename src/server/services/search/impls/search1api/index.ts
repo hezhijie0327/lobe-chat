@@ -5,7 +5,19 @@ import urlJoin from 'url-join';
 import { SearchParams, UniformSearchResponse, UniformSearchResult } from '@/types/tool/search';
 
 import { SearchServiceImpl } from '../type';
-import { Search1ApiSearchParameters, Search1ApiResponse } from './type';
+import { Search1ApiResponse } from './type';
+
+interface Search1APIQueryParams {
+  crawl_results?: 0 | 1;
+  exclude_sites?: string[];
+  image?: boolean;
+  include_sites?: string[];
+  language?: string;
+  max_results: number;
+  query: string;
+  search_service?: string;
+  time_range?: string;
+}
 
 const log = debug('lobe-search:search1api');
 
@@ -29,14 +41,14 @@ export class Search1APIImpl implements SearchServiceImpl {
 
     const { searchEngines } = params;
 
-    const defaultQueryParams: Search1ApiSearchParameters = {
+    const defaultQueryParams: Search1APIQueryParams = {
       crawl_results: 0, // 默认不做抓取
       image: false,
       max_results: 15, // Default max results
       query,
     };
 
-    let body: Search1ApiSearchParameters[] = [
+    let body: Search1APIQueryParams[] = [
       {
         ...defaultQueryParams,
         time_range:
