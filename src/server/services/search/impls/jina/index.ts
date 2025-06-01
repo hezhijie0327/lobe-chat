@@ -27,7 +27,7 @@ export class JinaImpl implements SearchServiceImpl {
     log('Starting Jina query with query: "%s", params: %o', query, params);
     const endpoint = urlJoin(this.baseUrl, '/');
 
-    let body: JinaQueryParams = {
+    let body: JinaSearchParameters = {
       q: query,
     };
 
