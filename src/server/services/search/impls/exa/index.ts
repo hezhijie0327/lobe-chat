@@ -48,6 +48,9 @@ export class ExaImpl implements SearchServiceImpl {
             };
           })()
         : {}),
+      category:
+        // Exa 只支持 news 类型
+        params?.searchCategories?.filter(cat => ['news'].includes(cat))?.[0],
     };
 
     log('Constructed request body: %o', body);
