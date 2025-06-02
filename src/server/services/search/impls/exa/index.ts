@@ -39,6 +39,9 @@ export class ExaImpl implements SearchServiceImpl {
         ? (() => {
             const now = Date.now();
             const days = { day: 1, week: 7, month: 30, year: 365 }[params.searchTimeRange!];
+
+            if (days === undefined) return {};
+
             return {
               endPublishedDate: new Date(now).toISOString(),
               startPublishedDate: new Date(now - days * 86_400 * 1_000).toISOString(),
