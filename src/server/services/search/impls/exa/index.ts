@@ -99,7 +99,7 @@ export class ExaImpl implements SearchServiceImpl {
 
       const mappedResults = (exaResponse.results || []).map(
         (result): UniformSearchResult => ({
-          category: 'general', // Default category
+          category: body.category || 'general', // Default category
           content: result.text || '', // Prioritize content, fallback to snippet
           engines: ['exa'], // Use 'exa' as the engine name
           parsedUrl: result.url ? new URL(result.url).hostname : '', // Basic URL parsing
