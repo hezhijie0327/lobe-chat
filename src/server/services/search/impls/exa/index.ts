@@ -9,17 +9,6 @@ import { ExaSearchParameters, ExaResponse } from './type';
 
 const log = debug('lobe-search:Exa');
 
-const getTimeRange = (time_range: any): { endPublishedDate: string; startPublishedDate: string } => {
-  const now = Date.now();
-  const map: Record<any, number> = { day: 1, week: 7, month: 30, year: 365 };
-
-  const days = map[time_range];
-  return {
-    endPublishedDate: new Date(now).toISOString(),
-    startPublishedDate: new Date(now - days * 86400000).toISOString(),
-  };
-};
-
 /**
  * Exa implementation of the search service
  * Primarily used for web crawling
@@ -46,9 +35,16 @@ export class ExaImpl implements SearchServiceImpl {
 
     let body: ExaSearchParameters = {
       ...defaultQueryParams,
-      ...(params?.searchTimeRange && params.searchTimeRange !== 'anytime')
-        ? getTimeRange(params.searchTimeRange)
-        : undefined,
+      ...(params?.searchTimeRange && params.searchTimeRange !== 'anytime'
+        ? (() => {
+            const now = Date.now();
+            const days = { day: 1, week: 7, month: 30, year: 365 }[params.searchTimeRange!];
+            return {
+              endPublishedDate: new Date(now).toISOString(),
+              startPublishedDate: new Date(now - days * 86_400 * 1_000).toISOString(),
+            };
+          })()
+        : {}),
     };
 
     log('Constructed request body: %o', body);
