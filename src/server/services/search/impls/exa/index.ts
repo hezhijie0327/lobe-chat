@@ -27,10 +27,27 @@ export class ExaImpl implements SearchServiceImpl {
     log('Starting Exa query with query: "%s", params: %o', query, params);
     const endpoint = urlJoin(this.baseUrl, '/search');
 
-    let body: ExaSearchParameters = {
+    const defaultQueryParams: ExaSearchParameters = {
       numResults: 15,
       query,
       type: 'auto',
+    };
+
+    let body: ExaSearchParameters = {
+      ...defaultQueryParams,
+      ...(params?.searchTimeRange && params.searchTimeRange !== 'anytime'
+        ? (() => {
+            const now = Date.now();
+            const days = { day: 1, week: 7, month: 30, year: 365 }[params.searchTimeRange!];
+
+            if (days === undefined) return {};
+
+            return {
+              endPublishedDate: new Date(now).toISOString(),
+              startPublishedDate: new Date(now - days * 86_400 * 1_000).toISOString(),
+            };
+          })()
+        : {}),
     };
 
     log('Constructed request body: %o', body);
