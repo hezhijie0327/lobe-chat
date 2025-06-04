@@ -56,3 +56,15 @@ export const parsePlaceholderVariables = (text: string): string => {
     return variables[key] || match;
   });
 };
+
+/**
+ * 解析消息内容，替换占位符变量
+ * @param messages 原始消息数组
+ * @returns 处理后的消息数组
+ */
+export const parsePayloadMessages = (messages: any[]): any[] => {
+  return messages.map((message) => ({
+    ...message,
+    content: parsePlaceholderVariables(message.content)
+  }));
+};
