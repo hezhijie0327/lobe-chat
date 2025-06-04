@@ -124,9 +124,9 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
       return undefined;
     };
 
-    const payload_message = parsePlaceholderVariablesMessages(messages);
-    const system_message = payload_message.find((m) => m.role === 'system');
-    const user_messages = payload_message.filter((m) => m.role !== 'system');
+    const payload_messages = parsePlaceholderVariablesMessages(messages);
+    const system_message = payload_messages.find((m) => m.role === 'system');
+    const user_messages = payload_messages.filter((m) => m.role !== 'system');
 
     const systemPrompts = !!system_message?.content
       ? ([
