@@ -18,7 +18,7 @@ import { StreamingResponse } from '../utils/response';
 import { AnthropicStream } from '../utils/streams';
 import { handleAnthropicError } from './handleAnthropicError';
 
-import { parsePlaceholderVariables } from '../utils/placeholderParser';
+import { parsePayloadMessages } from '../utils/placeholderParser';
 
 export interface AnthropicModelCard {
   display_name: string;
@@ -124,10 +124,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
       return undefined;
     };
 
-    const payload_message = messages.map((message) => ({
-      ...message,
-      content: parsePlaceholderVariables(message.content)
-    })) as any[];
+    const payload_message = parsePayloadMessages(messages);
     const system_message = payload_message.find((m) => m.role === 'system');
     const user_messages = payload_message.filter((m) => m.role !== 'system');
 
