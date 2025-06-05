@@ -135,8 +135,9 @@ export const parsePlaceholderVariables = (text: string): string => {
       interpolate: placeholderVariablesRegex,
     });
 
-    return compiled(variables);
+    return compiled(getTemplateVariables());
   } catch {
+    // 如果模板编译失败，返回原文本
     return text;
   }
 };
