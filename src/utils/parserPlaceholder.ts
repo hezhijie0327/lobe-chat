@@ -7,6 +7,7 @@ import { userProfileSelectors } from '@/store/user/selectors';
 
 const placeholderVariablesRegex = /{{(.*?)}}/g;
 
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 export const VARIABLE_GENERATORS = {
   /**
   * 时间类模板变量
@@ -135,7 +136,7 @@ export const parsePlaceholderVariables = (text: string): string => {
       interpolate: placeholderVariablesRegex,
     });
 
-    return compiled(getTemplateVariables());
+    return compiled(variables);
   } catch {
     // 如果模板编译失败，返回原文本
     return text;
