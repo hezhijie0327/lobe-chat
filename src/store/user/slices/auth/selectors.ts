@@ -30,7 +30,7 @@ const username = (s: UserStore) => {
     return DEFAULT_USERNAME;
   }
 
-  if (s.isSignedIn) return s.user?.username;
+  if (s.isSignedIn) return s.user?.username || s.user?.fullname;
 
   return 'anonymous';
 };
