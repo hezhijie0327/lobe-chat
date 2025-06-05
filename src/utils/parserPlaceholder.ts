@@ -117,7 +117,6 @@ const getUUIDVariables = () => {
  * | `{{language}}` | zh-CN |
  * | `{{platform}}` | MacIntel |
  * | `{{user_agent}}` | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0 |
- * | `{{vendor}}` | Google Inc. |
  *
  */
 const getPlatformVariables = () => {
@@ -125,7 +124,6 @@ const getPlatformVariables = () => {
     language: typeof navigator !== 'undefined' ? navigator.language : '',
     platform: typeof navigator !== 'undefined' ? navigator.platform : '',
     user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
-    vendor: typeof navigator !== 'undefined' ? navigator.vendor : '',
   };
 };
 
