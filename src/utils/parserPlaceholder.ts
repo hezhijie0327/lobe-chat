@@ -125,39 +125,26 @@ export const parsePlaceholderVariables = (text: string): string => {
  */
 export const parsePlaceholderVariablesMessages = (messages: any[]): any[] =>
   messages.map(message => {
-    // 检查 message 是否具有 content 属性
-    if (!Object.prototype.hasOwnProperty.call(message, 'content')) {
-      return message;
-    }
-    
-    const content = message.content;
-    
-    // 处理字符串类型的 content
+    if (!message?.content) return message;
+
+    const { content } = message;
+
+    // 字符串类型直接处理
     if (typeof content === 'string') {
-      return {
-        ...message,
-        content: parsePlaceholderVariables(content)
-      };
+      return { ...message, content: parsePlaceholderVariables(content) };
     }
-    
-    // 处理数组类型的 content（如混合 text 和 image_url）
+
+    // 数组类型处理其中的 text 元素
     if (Array.isArray(content)) {
       return {
         ...message,
-        content: content.map(item => {
-          // 仅对 type 为 text 的元素进行处理
-          if (item && typeof item === 'object' && item.type === 'text') {
-            return {
-              ...item,
-              text: parsePlaceholderVariables(item.text)
-            };
-          }
-          // 非 text 类型保持原样返回
-          return item;
-        })
+        content: content.map(item => 
+          item?.type === 'text' 
+            ? { ...item, text: parsePlaceholderVariables(item.text) }
+            : item
+        )
       };
     }
-    
-    // 非字符串、非数组的 content 原样返回
+
     return message;
   });
