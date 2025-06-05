@@ -115,7 +115,7 @@ export const VARIABLE_GENERATORS = {
   * | `{{input_template}}` | Some contents |
   *
   */
-  input_template: () => agentChatConfigSelectors.currentChatConfig(getAgentStoreState()).inputTemplate || '',
+  input_template: () => parsePlaceholderVariables(agentChatConfigSelectors.currentChatConfig(getAgentStoreState()).inputTemplate || ''),
 } as Record<string, () => string>;
 
 /**
