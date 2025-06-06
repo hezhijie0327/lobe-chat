@@ -1,6 +1,6 @@
 import { template } from 'lodash-es';
 
-import { v4 as uuidv4 } from 'uuid';
+import { uuid } from '@/utils/uuid';
 
 import { useUserStore } from '@/store/user';
 import { userProfileSelectors } from '@/store/user/selectors';
@@ -90,8 +90,8 @@ export const VARIABLE_GENERATORS = {
   * | `{{uuid_short}}` | dd90b35 |
   *
   */
-  uuid: () => uuidv4(),
-  uuid_short: () => uuidv4().split('-')[0],
+  uuid: () => uuid(),
+  uuid_short: () => uuid().split('-')[0],
 
   /**
   * 平台类模板变量
