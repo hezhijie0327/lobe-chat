@@ -36,9 +36,7 @@ const username = (s: UserStore) => {
 };
 
 export const userProfileSelectors = {
-  firstName: (s: UserStore): string => s.user?.firstName || '',
   fullName: (s: UserStore): string => s.user?.fullName || '',
-  latestName: (s: UserStore): string => s.user?.latestName || '',
   nickName,
   userAvatar: (s: UserStore): string => s.user?.avatar || '',
   userId: (s: UserStore) => s.user?.id,
