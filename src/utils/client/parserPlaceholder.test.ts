@@ -36,8 +36,8 @@ describe('parsePlaceholderVariablesMessages', () => {
   beforeEach(() => {
     // Mock Date for consistent testing
     vi.useFakeTimers();
-    vi.setSystemTime(new Date('2024-01-15T10:30:45.123Z'));
-    
+    vi.setSystemTime(new Date('2025-06-06T06:06:06.666Z'));
+
     // Mock Math.random for consistent random values
     vi.spyOn(Math, 'random').mockReturnValue(0.5);
   });
@@ -81,7 +81,6 @@ describe('parsePlaceholderVariablesMessages', () => {
         {
           id: '1',
           role: 'user',
-          timestamp: 12345,
           content: 'Hello {{username}}'
         }
       ];
@@ -91,7 +90,6 @@ describe('parsePlaceholderVariablesMessages', () => {
       expect(result[0]).toEqual({
         id: '1',
         role: 'user',
-        timestamp: 12345,
         content: 'Hello testuser'
       });
     });
@@ -108,8 +106,8 @@ describe('parsePlaceholderVariablesMessages', () => {
               text: 'Hello {{username}}'
             },
             {
-              type: 'image',
-              url: 'image.jpg'
+              type: 'image_url',
+              image_url: 'image.jpg'
             }
           ]
         }
@@ -119,8 +117,8 @@ describe('parsePlaceholderVariablesMessages', () => {
 
       expect(result[0].content[0].text).toBe('Hello testuser');
       expect(result[0].content[1]).toEqual({
-        type: 'image',
-        url: 'image.jpg'
+        type: 'image_url',
+        image_url: 'image.jpg'
       });
     });
 
@@ -138,8 +136,8 @@ describe('parsePlaceholderVariablesMessages', () => {
               text: 'Time: {{time}}'
             },
             {
-              type: 'image',
-              url: 'test.jpg'
+              type: 'image_url',
+              image_url: 'test.jpg'
             }
           ]
         }
@@ -150,8 +148,8 @@ describe('parsePlaceholderVariablesMessages', () => {
       expect(result[0].content[0].text).toContain(new Date().toLocaleDateString());
       expect(result[0].content[1].text).toContain(new Date().toLocaleTimeString());
       expect(result[0].content[2]).toEqual({
-        type: 'image',
-        url: 'test.jpg'
+        type: 'image_url',
+        image_url: 'test.jpg'
       });
     });
 
@@ -161,13 +159,12 @@ describe('parsePlaceholderVariablesMessages', () => {
           id: '1',
           content: [
             {
-              type: 'image',
-              url: 'image.jpg',
-              alt: 'Test image'
+              type: 'image_url',
+              image_url: 'image.jpg',
             },
             {
-              type: 'file',
-              name: 'document.pdf'
+              type: 'image_url',
+              name: 'image2.jpg'
             }
           ]
         }
@@ -177,13 +174,12 @@ describe('parsePlaceholderVariablesMessages', () => {
 
       expect(result[0].content).toEqual([
         {
-          type: 'image',
-          url: 'image.jpg',
-          alt: 'Test image'
+          type: 'image_url',
+          image_url: 'image.jpg'
         },
         {
-          type: 'file',
-          name: 'document.pdf'
+          type: 'image_url',
+          name: 'image2.jpg'
         }
       ]);
     });
@@ -228,7 +224,7 @@ describe('parsePlaceholderVariablesMessages', () => {
           id: '2', 
           content: [
             { type: 'text', text: 'No variables here' },
-            { type: 'image', url: 'test.jpg' }
+            { type: 'image_url', image_url: 'test.jpg' }
           ]
         }
       ];
@@ -273,9 +269,9 @@ describe('parsePlaceholderVariablesMessages', () => {
 
       const result = parsePlaceholderVariablesMessages(messages);
 
-      expect(result[0].content).toContain('Year: 2024');
-      expect(result[0].content).toContain('Month: 01');
-      expect(result[0].content).toContain('Day: 15');
+      expect(result[0].content).toContain('Year: 2025');
+      expect(result[0].content).toContain('Month: 06');
+      expect(result[0].content).toContain('Day: 06');
     });
 
     it('should handle random variables', () => {
