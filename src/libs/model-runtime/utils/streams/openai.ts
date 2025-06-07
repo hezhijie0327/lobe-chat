@@ -242,22 +242,27 @@ export const transformOpenAIStream = (
           }
         }
 
-        if (content.includes('<think>')) {
-          streamContext?.thinkingInContent = true;
+        // 处理 <think> & </think> 思考链
+        if (!streamContext?.thinkingInContent) {
+          // 如果 content 包含 <think> 则进入 reasoning 模式
+          if (content.includes('<think>')) {
+            streamContext.thinkingInContent = true;
 
-          return { data: content.replace(/<\/?think>/g, ''), id: chunk.id, type: 'reasoning' };
-        }
-      
-        if (content.includes('</think>')) {
-          streamContext?.thinkingInContent = false;
+            // 清理 <think> 标签
+            return { data: content.replace(/<\/?think>/g, '').trim(), id: chunk.id, type: 'reasoning' };
+          }
 
-          return { data: content.replace(/<\/?think>/g, ''), id: chunk.id, type: 'text' };
-        }
-
-        if (streamContext?.thinkingInContent) {
-          return { data: content, id: chunk.id, type: 'reasoning' };
-        } else {
           return { data: content, id: chunk.id, type: 'text' };
+        } else {
+          // 如果 content 包含 </think> 则退出 reasoning 模式
+          if (content.includes('</think>')) {
+            streamContext.thinkingInContent = false;
+
+            // 清理 <think> 标签
+            return { data: content.replace(/<\/?think>/g, '').trim(), id: chunk.id, type: 'text' };
+          }
+
+          return { data: content, id: chunk.id, type: 'reasoning' };
         }
       }
     }
