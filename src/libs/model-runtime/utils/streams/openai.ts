@@ -210,7 +210,7 @@ export const transformOpenAIStream = (
       }
 
       if (typeof content === 'string') {
-        // 处理 <think> & </think> 思考链，清除 <think> 标签
+        // 清除 <think> 及 </think> 标签
         const thinkingContent = content.replace(/<\/?think>/g, '');
 
         // 判断是否有 <think> 或 </think> 标签，更新 thinkingInContent 状态
