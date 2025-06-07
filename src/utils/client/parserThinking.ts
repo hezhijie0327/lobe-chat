@@ -1,6 +1,4 @@
-import { template } from 'lodash-es';
-
-const thinkingTagRegex = /<think>(.*?)<\/think>/g;
+const thinkingTagRegex = /<think>[\S\s]*?<\/think>/g;
 
 /**
  * 移除文本中的 <think></think> 标签及其内容
@@ -8,9 +6,7 @@ const thinkingTagRegex = /<think>(.*?)<\/think>/g;
  * @returns 移除标签后的文本
  */
 const removeThinkingTags = (text: string): string => {
-  // 使用 template 替换 thinking 标签为空字符串
-  const templateFn = template(text, { interpolate: thinkingTagRegex });
-  return templateFn({}).trim();
+  return text.replace(thinkingTagRegex, '').trim();
 };
 
 /**
