@@ -243,7 +243,7 @@ export const transformOpenAIStream = (
         }
 
         // 处理 <think> & </think> 思考链，清除 <think> 标签和周围空白
-        const thinkingContent = content.replace(/\s*<\/?think>\s*/g, '');
+        const thinkingContent = content.replace(/<\/?think>/g, '');
         // 判断是否有 <think> 或 </think> 标签，更新状态
         if (content.includes('<think>')) {
           streamContext.thinkingInContent = true;
