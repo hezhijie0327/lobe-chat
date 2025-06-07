@@ -259,8 +259,6 @@ export const transformOpenAIStream = (
         } else {
           return { data: content, id: chunk.id, type: 'text' };
         }
-
-        return { data: content, id: chunk.id, type: 'text' };
       }
     }
 
