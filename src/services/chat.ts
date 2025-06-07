@@ -42,7 +42,6 @@ import { FetchSSEOptions, fetchSSE, getMessageError } from '@/utils/fetch';
 import { genToolCallingName } from '@/utils/toolCall';
 import { createTraceHeader, getTraceId } from '@/utils/trace';
 import { parsePlaceholderVariablesMessages } from '@/utils/client/parserPlaceholder';
-import { removeThinkingTagsMessages } from '@/utils/client/cleanupThinking';
 
 import { createHeaderWithAuth, createPayloadWithKeyVaults } from './_auth';
 import { API_ENDPOINTS } from './_url';
@@ -195,13 +194,10 @@ class ChatService {
       pluginIds.push(WebBrowsingManifest.identifier);
     }
 
-    // ============  1. preprocess thinking tag   ============ //
-    const noThinkingMessages = removeThinkingTagsMessages(messages);
+    // ============  1. preprocess placeholder variables   ============ //
+    const parsedMessages = parsePlaceholderVariablesMessages(messages);
 
-    // ============  2. preprocess placeholder variables   ============ //
-    const parsedMessages = parsePlaceholderVariablesMessages(noThinkingMessages);
-
-    // ============  3. preprocess messages   ============ //
+    // ============  2. preprocess messages   ============ //
 
     const oaiMessages = this.processMessages(
       {
@@ -213,14 +209,14 @@ class ChatService {
       options,
     );
 
-    // ============  4. preprocess tools   ============ //
+    // ============  3. preprocess tools   ============ //
 
     const tools = this.prepareTools(pluginIds, {
       model: payload.model,
       provider: payload.provider!,
     });
 
-    // ============  5. process extend params   ============ //
+    // ============  4. process extend params   ============ //
 
     let extendParams: Record<string, any> = {};
 
