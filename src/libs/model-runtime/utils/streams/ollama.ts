@@ -40,7 +40,7 @@ const transformOllamaStream = (chunk: ChatResponse, stack: StreamContext): Strea
     stack.thinkingInContent = false;
   }
 
-  // 清除 <think> 及 </think>标签，并根据当前思考模式确定返回类型
+  // 清除 <think> 及 </think> 标签，并根据当前思考模式确定返回类型
   return {
     data: chunk.message.content.replace(/<\/?think>/g, ''),
     id: stack.id,
