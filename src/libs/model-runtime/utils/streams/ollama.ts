@@ -37,16 +37,16 @@ const transformOllamaStream = (chunk: ChatResponse, stack: StreamContext): Strea
   const thinkingContent = chunk.message.content.replace(/\s*<\/?think>\s*/g, '');
   // 判断是否有 <think> 或 </think> 标签，更新状态
   if (chunk.message.content.includes('<think>')) {
-    streamContext.thinkingInContent = true;
-  } else if (content.includes('</think>')) {
-    streamContext.thinkingInContent = false;
+    stack.thinkingInContent = true;
+  } else if (chunk.message.content.includes('</think>')) {
+    stack.thinkingInContent = false;
   }
 
   // 返回类型根据当前思考模式确定
   return {
     data: thinkingContent,
     id: stack.id,
-    type: streamContext?.thinkingInContent ? 'reasoning' : 'text',
+    type: stack?.thinkingInContent ? 'reasoning' : 'text',
   };
 };
 
