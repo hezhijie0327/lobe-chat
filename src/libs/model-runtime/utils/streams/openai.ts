@@ -242,6 +242,24 @@ export const transformOpenAIStream = (
           }
         }
 
+        if (content.includes('<think>')) {
+          streamContext?.thinkingInContent = true;
+
+          return { data: content.replace(/<\/?think>/g, ''), id: chunk.id, type: 'reasoning' };
+        }
+      
+        if (content.includes('</think>')) {
+          streamContext?.thinkingInContent = false;
+
+          return { data: content.replace(/<\/?think>/g, ''), id: chunk.id, type: 'text' };
+        }
+
+        if (streamContext?.thinkingInContent) {
+          return { data: content, id: chunk.id, type: 'reasoning' };
+        } else {
+          return { data: content, id: chunk.id, type: 'text' };
+        }
+
         return { data: content, id: chunk.id, type: 'text' };
       }
     }
