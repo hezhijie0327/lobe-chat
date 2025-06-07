@@ -33,18 +33,16 @@ const transformOllamaStream = (chunk: ChatResponse, stack: StreamContext): Strea
     };
   }
 
-  // 处理 <think> & </think> 思考链，清除 <think> 标签和周围空白
-  const thinkingContent = chunk.message.content.replace(/<\/?think>/g, '');
-  // 判断是否有 <think> 或 </think> 标签，更新状态
+  // 判断是否有 <think> 或 </think> 标签，更新 thinkingInContent 状态
   if (chunk.message.content.includes('<think>')) {
     stack.thinkingInContent = true;
   } else if (chunk.message.content.includes('</think>')) {
     stack.thinkingInContent = false;
   }
 
-  // 返回类型根据当前思考模式确定
+  // 清除 <think> 及 </think>标签，并根据当前思考模式确定返回类型
   return {
-    data: thinkingContent,
+    data: chunk.message.content.replace(/<\/?think>/g, ''),
     id: stack.id,
     type: stack?.thinkingInContent ? 'reasoning' : 'text',
   };
