@@ -210,6 +210,14 @@ export const transformOpenAIStream = (
       }
 
       if (typeof content === 'string') {
+        // 判断是否有 <think> 或 </think> 标签，更新 thinkingInContent 状态
+        if (content.includes('<think>')) {
+          streamContext.thinkingInContent = true;
+        } else if (content.includes('</think>')) {
+          streamContext.thinkingInContent = false;
+        }
+
+        // 判断是否有 citations 内容，更新 returnedCitation 状态
         if (!streamContext?.returnedCitation) {
           const citations =
             // in Perplexity api, the citation is in every chunk, but we only need to return it once
@@ -242,18 +250,9 @@ export const transformOpenAIStream = (
           }
         }
 
-        // 处理 <think> & </think> 思考链，清除 <think> 标签和周围空白
-        const thinkingContent = content.replace(/<\/?think>/g, '');
-        // 判断是否有 <think> 或 </think> 标签，更新状态
-        if (content.includes('<think>')) {
-          streamContext.thinkingInContent = true;
-        } else if (content.includes('</think>')) {
-          streamContext.thinkingInContent = false;
-        }
-
-        // 返回类型根据当前思考模式确定
+        // 清除 <think> 及 </think>标签，并根据当前思考模式确定返回类型
         return {
-          data: thinkingContent,
+          data: content.replace(/<\/?think>/g, ''),
           id: chunk.id,
           type: streamContext?.thinkingInContent ? 'reasoning' : 'text',
         };
