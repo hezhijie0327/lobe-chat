@@ -14,7 +14,7 @@ const removeThinkingTags = (text: string): string => {
  * @param messages 原始消息数组
  * @returns 处理后的消息数组
  */
-export const parseThinkingMessages = (messages: any[]): any[] =>
+export const removeThinkingTagsMessages = (messages: any[]): any[] =>
   messages.map(message => {
     // 只处理 assistant 角色的消息
     if (message?.role !== 'assistant' || !message?.content) return message;
