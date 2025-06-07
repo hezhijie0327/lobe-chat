@@ -32,11 +32,7 @@ describe('parseThinkingMessages', () => {
     const messages = [
       {
         role: 'assistant',
-        content: `<think>
-This is a multiline
-thinking process
-with newlines
-</think>Final answer here.`
+        content: '<think>\nThis is a multiline\nthinking process\nwith newlines\n</think>Final answer here.'
       }
     ];
 
