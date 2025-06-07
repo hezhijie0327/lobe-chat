@@ -36,7 +36,7 @@ const transformOllamaStream = (chunk: ChatResponse, stack: StreamContext): Strea
   // 处理 <think> & </think> 思考链，清除 <think> 标签和周围空白
   const thinkingContent = chunk.message.content.replace(/\s*<\/?think>\s*/g, '');
   // 判断是否有 <think> 或 </think> 标签，更新状态
-  if (content.includes('<think>')) {
+  if (chunk.message.content.includes('<think>')) {
     streamContext.thinkingInContent = true;
   } else if (content.includes('</think>')) {
     streamContext.thinkingInContent = false;
