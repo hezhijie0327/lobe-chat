@@ -210,6 +210,9 @@ export const transformOpenAIStream = (
       }
 
       if (typeof content === 'string') {
+        // 处理 <think> & </think> 思考链，清除 <think> 标签
+        const thinkingContent = content.replace(/<\/?think>/g, '');
+
         // 判断是否有 <think> 或 </think> 标签，更新 thinkingInContent 状态
         if (content.includes('<think>')) {
           streamContext.thinkingInContent = true;
@@ -245,14 +248,14 @@ export const transformOpenAIStream = (
                 id: chunk.id,
                 type: 'grounding',
               },
-              { data: content, id: chunk.id, type: 'text' },
+              { data: thinkingContent, id: chunk.id, type: streamContext?.thinkingInContent ? 'reasoning' : 'text' },
             ];
           }
         }
 
-        // 清除 <think> 及 </think>标签，并根据当前思考模式确定返回类型
+        // 根据当前思考模式确定返回类型
         return {
-          data: content.replace(/<\/?think>/g, ''),
+          data: thinkingContent,
           id: chunk.id,
           type: streamContext?.thinkingInContent ? 'reasoning' : 'text',
         };
