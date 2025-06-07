@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { parseThinkingMessages } from './parserThinking';
+import { removeThinkingTagsMessages } from './cleanupThinking';
 
-describe('parseThinkingMessages', () => {
+describe('removeThinkingTagsMessages', () => {
   it('should remove thinking tags from assistant string content', () => {
     const messages = [
       {
@@ -10,7 +10,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content).toBe('Here is my response.');
   });
@@ -23,7 +23,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content).toBe('Response part 1Response part 2');
   });
@@ -36,7 +36,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content).toBe('Final answer here.');
   });
@@ -58,7 +58,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content[0].text).toBe('Here is the text response.');
     expect(result[0].content[1]).toEqual({
@@ -75,7 +75,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content).toBe('<think>This should not be removed</think>User message content.');
   });
@@ -88,7 +88,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content).toBe('<think>System thinking</think>System prompt here.');
   });
@@ -108,7 +108,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result).toHaveLength(3);
     expect(result[0]).toEqual({ role: 'assistant' });
@@ -124,7 +124,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content).toBe('Response without thinking content.');
   });
@@ -137,7 +137,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content).toBe('');
   });
@@ -150,7 +150,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content).toBe('<div>Keep this</div><span>And this</span>');
   });
@@ -163,7 +163,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     // 由于使用非贪婪匹配，每个 think 标签会被单独移除
     expect(result[0].content).toBe('Final response.');
@@ -191,7 +191,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0].content[0].text).toBe('First text');
     expect(result[0].content[1]).toEqual({
@@ -213,7 +213,7 @@ describe('parseThinkingMessages', () => {
       }
     ];
 
-    const result = parseThinkingMessages(messages);
+    const result = removeThinkingTagsMessages(messages);
 
     expect(result[0]).toEqual({
       id: 'msg-123',
