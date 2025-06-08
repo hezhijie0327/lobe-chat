@@ -13,7 +13,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
   baseURL: 'https://api.openai.com/v1',
   chatCompletion: {
     handlePayload: (payload) => {
-      const { model } = payload;
+      const { enabledSearch, model } = payload;
 
       const oaiSearchContextSize = process.env.OPENAI_SEARCH_CONTEXT_SIZE; // low, medium, high
 
