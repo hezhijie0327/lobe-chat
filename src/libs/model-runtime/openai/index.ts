@@ -9,13 +9,13 @@ export interface OpenAIModelCard {
 
 const prunePrefixes = ['o1', 'o3', 'o4'];
 
+const oaiSearchContextSize = process.env.OPENAI_SEARCH_CONTEXT_SIZE; // low, medium, high
+
 export const LobeOpenAI = createOpenAICompatibleRuntime({
   baseURL: 'https://api.openai.com/v1',
   chatCompletion: {
     handlePayload: (payload) => {
       const { enabledSearch, model } = payload;
-
-      const oaiSearchContextSize = process.env.OPENAI_SEARCH_CONTEXT_SIZE; // low, medium, high
 
       if (model === 'o1-pro' || enabledSearch) {
         return { ...payload, apiMode: 'responses' } as ChatStreamPayload;
@@ -57,10 +57,8 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
   },
   provider: ModelProvider.OpenAI,
   responses: {
-    handlePayload: (payload: ChatStreamPayload) => {
+    handlePayload: (payload) => {
       const { enabledSearch, model, tools } = payload;
-
-      const oaiSearchContextSize = process.env.OPENAI_SEARCH_CONTEXT_SIZE; // low, medium, high
 
       const openaiTools = enabledSearch
         ? [
@@ -82,7 +80,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
         }
       }
 
-      return { ...payload, stream: payload.stream ?? true, tools: openaiTools };
+      return { ...payload, stream: payload.stream ?? true, tools: openaiTools } as any;
     },
   },
 });
