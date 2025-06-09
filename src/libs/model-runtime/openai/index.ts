@@ -15,10 +15,10 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
   baseURL: 'https://api.openai.com/v1',
   chatCompletion: {
     handlePayload: (payload) => {
-      const { enabledSearch, model } = payload;
+      const { enabledSearch, model, ...rest } = payload;
 
       if (model === 'o1-pro' || enabledSearch) {
-        return { ...payload, apiMode: 'responses' } as ChatStreamPayload;
+        return { ...rest, apiMode: 'responses', model } as ChatStreamPayload;
       }
 
       if (prunePrefixes.some((prefix) => model.startsWith(prefix))) {
@@ -27,8 +27,9 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
 
       if (model.includes('-search-')) {
         return {
-          ...payload,
+          ...rest,
           frequency_penalty: undefined,
+          model,
           presence_penalty: undefined,
           stream: payload.stream ?? true,
           temperature: undefined,
@@ -41,7 +42,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
         } as any;
       }
 
-      return { ...payload, stream: payload.stream ?? true };
+      return { ...rest, model, stream: payload.stream ?? true };
     },
   },
   debug: {
@@ -58,7 +59,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
   provider: ModelProvider.OpenAI,
   responses: {
     handlePayload: (payload) => {
-      const { enabledSearch, model, tools } = payload;
+      const { enabledSearch, model, tools, ...rest } = payload;
 
       const openaiTools = enabledSearch
         ? [
@@ -80,7 +81,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
         }
       }
 
-      return { ...payload, stream: payload.stream ?? true, tools: openaiTools } as any;
+      return { ...rest, model, stream: payload.stream ?? true, tools: openaiTools } as any;
     },
   },
 });
