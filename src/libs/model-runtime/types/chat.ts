@@ -107,7 +107,6 @@ export interface ChatStreamPayload {
     effort?: string;
     summary?: string;
   };
-  reasoning_effort?: string;
   responseMode?: 'stream' | 'json';
   /**
    * @title 是否开启流式请求
