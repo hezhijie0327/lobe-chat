@@ -478,7 +478,7 @@ export const createOpenAICompatibleRuntime = <T extends Record<string, any> = an
     ): Promise<Response> {
       const inputStartAt = Date.now();
 
-      const { messages, reasoningEffort, tools, ...res } = responses?.handlePayload
+      const { messages, reasoning_effort, tools, ...res } = responses?.handlePayload
         ? (responses?.handlePayload(payload, this._options) as ChatStreamPayload)
         : payload;
 
@@ -491,7 +491,7 @@ export const createOpenAICompatibleRuntime = <T extends Record<string, any> = an
 
       const postPayload = {
         ...res,
-        ...(reasoningEffort ? { reasoning: { effort: reasoningEffort } } : {}),
+        ...(reasoning_effort ? { reasoning: { effort: reasoning_effort } } : {}),
         input,
         store: false,
         tools: tools?.map((tool) => this.convertChatCompletionToolToResponseTool(tool)),
