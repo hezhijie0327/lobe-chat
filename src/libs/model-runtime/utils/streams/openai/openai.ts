@@ -15,6 +15,7 @@ import {
   convertIterableToStream,
   createCallbacksTransformer,
   createFirstErrorHandleTransformer,
+  createReasoningTransform,
   createSSEProtocolTransformer,
   createTokenSpeedCalculator,
   generateToolCallId,
@@ -331,6 +332,7 @@ export const OpenAIStream = (
       // so in the first Transformer, we need to handle the error
       .pipeThrough(createFirstErrorHandleTransformer(bizErrorTypeTransformer, provider))
       .pipeThrough(createTokenSpeedCalculator(transformOpenAIStream, { inputStartAt, streamStack }))
+      .pipeThrough(createReasoningTransform())
       .pipeThrough(createSSEProtocolTransformer((c) => c, streamStack))
       .pipeThrough(createCallbacksTransformer(callbacks))
   );
