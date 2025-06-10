@@ -448,6 +448,7 @@ export const createReasoningTransform = <T extends { type: string; textDelta?: s
         }
       }
 
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         const nextTag = isReasoning ? closingTag : openingTag
         const startIndex = getPotentialStartIndex(buffer, nextTag)
@@ -459,7 +460,8 @@ export const createReasoningTransform = <T extends { type: string; textDelta?: s
         }
 
         // 发布标签前的内容
-        publish(buffer.slice(0, startIndex))
+        const beforeTag = buffer.slice(0, startIndex)
+        publish(beforeTag)
 
         const foundFullMatch = startIndex + nextTag.length <= buffer.length
         if (foundFullMatch) {
