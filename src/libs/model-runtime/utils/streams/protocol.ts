@@ -5,6 +5,8 @@ import { AgentRuntimeErrorType } from '../../error';
 import { parseToolCalls } from '../../helpers';
 import { ChatStreamCallbacks } from '../../types';
 
+import { getTextContent, getPotentialStartIndex } from '../extractReasoning'
+
 /**
  * context in the stream to save temporarily data
  */
@@ -374,3 +376,76 @@ export const createTokenSpeedCalculator = (
     },
   });
 };
+
+export const createReasoningTransform = <T extends { type: string; textDelta?: string }>() => {
+  const openingTag = '<think>'
+  const closingTag = '</think>'
+
+  let isReasoning = false
+  let buffer = ''
+
+  return new TransformStream<T, T>({
+    transform: (chunk, controller) => {
+      // 直接过滤掉 stop 类型的 chunk
+      if (chunk.type === 'stop') {
+        return
+      }
+
+      const textContent = getTextContent(chunk)
+      if (!textContent) {
+        controller.enqueue(chunk)
+        return
+      }
+
+      buffer += textContent
+
+      function publish(text: string) {
+        if (text.length > 0) {
+          const newChunk = {
+            ...chunk,
+            type: isReasoning ? 'reasoning' : 'text',
+            textDelta: text
+          } as T
+          controller.enqueue(newChunk)
+        }
+      }
+
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        const nextTag = isReasoning ? closingTag : openingTag
+        const startIndex = getPotentialStartIndex(buffer, nextTag)
+
+        if (startIndex === null) {
+          publish(buffer)
+          buffer = ''
+          break
+        }
+
+        // 发布标签前的内容
+        const beforeTag = buffer.slice(0, startIndex)
+        publish(beforeTag)
+
+        const foundFullMatch = startIndex + nextTag.length <= buffer.length
+        if (foundFullMatch) {
+          // 找到完整标签，切换状态
+          buffer = buffer.slice(startIndex + nextTag.length)
+          isReasoning = !isReasoning
+        } else {
+          // 标签不完整，保留在 buffer 中等待更多数据
+          buffer = buffer.slice(startIndex)
+          break
+        }
+      }
+    },
+
+    flush: (controller) => {
+      if (buffer.length > 0) {
+        const finalChunk = {
+          type: isReasoning ? 'reasoning' : 'text',
+          textDelta: buffer
+        } as T
+        controller.enqueue(finalChunk)
+      }
+    }
+  })
+}
