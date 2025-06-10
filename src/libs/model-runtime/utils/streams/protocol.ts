@@ -374,3 +374,116 @@ export const createTokenSpeedCalculator = (
     },
   });
 };
+
+export const createReasoningTransform = <T extends { type: string; textDelta?: string }>() => {
+  const openingTag = '<think>'
+  const closingTag = '</think>'
+  const separator = '\n'
+
+  let isReasoning = false
+  let buffer = ''
+
+  return new TransformStream<T, T>({
+    transform: (chunk, controller) => {
+      // 直接过滤掉 stop 类型的 chunk
+      if (chunk.type === 'stop') {
+        return
+      }
+
+      const textContent = getTextContent(chunk)
+      if (!textContent) {
+        controller.enqueue(chunk)
+        return
+      }
+
+      buffer += textContent
+
+      function publish(text: string) {
+        if (text.length > 0) {
+          const newChunk = {
+            ...chunk,
+            type: isReasoning ? 'reasoning' : 'text',
+            textDelta: text
+          } as T
+          controller.enqueue(newChunk)
+        }
+      }
+
+      while (true) {
+        const nextTag = isReasoning ? closingTag : openingTag
+        const startIndex = getPotentialStartIndex(buffer, nextTag)
+
+        if (startIndex === null) {
+          publish(buffer)
+          buffer = ''
+          break
+        }
+
+        // 发布标签前的内容
+        const beforeTag = buffer.slice(0, startIndex)
+        publish(beforeTag)
+
+        const foundFullMatch = startIndex + nextTag.length <= buffer.length
+        if (foundFullMatch) {
+          // 找到完整标签，切换状态
+          buffer = buffer.slice(startIndex + nextTag.length)
+          isReasoning = !isReasoning
+        } else {
+          // 标签不完整，保留在 buffer 中等待更多数据
+          buffer = buffer.slice(startIndex)
+          break
+        }
+      }
+    },
+
+    flush: (controller) => {
+      if (buffer.length > 0) {
+        const finalChunk = {
+          type: isReasoning ? 'reasoning' : 'text',
+          textDelta: buffer
+        } as T
+        controller.enqueue(finalChunk)
+      }
+    }
+  })
+}
+
+const getTextContent = (chunk: any): string | null => {
+  if (chunk.textDelta && typeof chunk.textDelta === 'string') {
+    return chunk.textDelta
+  }
+
+  if (chunk.content && typeof chunk.content === 'string') {
+    return chunk.content
+  }
+
+  if (chunk.data && typeof chunk.data === 'string') {
+    return chunk.data
+  }
+
+  if (chunk.type === 'text' && typeof chunk.data === 'string') {
+    return chunk.data
+  }
+
+  return null
+}
+
+const getPotentialStartIndex = (text: string, searchedText: string): number | null => {
+  if (searchedText.length === 0) {
+    return null
+  }
+
+  const directIndex = text.indexOf(searchedText)
+  if (directIndex !== -1) {
+    return directIndex
+  }
+
+  for (let i = text.length - 1; i >= 0; i--) {
+    const suffix = text.substring(i)
+    if (searchedText.startsWith(suffix)) {
+      return i
+    }
+  }
+
+  return null
+}
