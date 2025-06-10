@@ -16,6 +16,17 @@ export const disableStreamModels = new Set([
 ]);
 
 /**
+ * models use Responses API only
+ */
+export const responsesAPIModels = new Set([
+  'o1-pro',
+  'o1-pro-2025-03-19',
+  'codex-mini-latest',
+  'computer-use-preview',
+  'computer-use-preview-2025-03-11',
+]);
+
+/**
  * models support context caching
  */
 export const contextCachingModels = new Set([
