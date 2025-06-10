@@ -2,6 +2,7 @@ import { ChatStreamPayload, ModelProvider } from '../types';
 import { processMultiProviderModelList } from '../utils/modelParse';
 import { createOpenAICompatibleRuntime } from '../utils/openaiCompatibleFactory';
 import { pruneReasoningPayload } from '../utils/openaiHelpers';
+import { responsesAPIModels } from '@/const/models';
 
 export interface OpenAIModelCard {
   id: string;
@@ -17,7 +18,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
     handlePayload: (payload) => {
       const { enabledSearch, model, ...rest } = payload;
 
-      if (model === 'o1-pro' || model === 'codex-mini-latest' || model === 'computer-use-preview' || enabledSearch) {
+      if (responsesAPIModels.has(model) || enabledSearch) {
         return { ...rest, apiMode: 'responses', enabledSearch, model } as ChatStreamPayload;
       }
 
