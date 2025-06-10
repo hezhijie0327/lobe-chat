@@ -459,8 +459,7 @@ export const createReasoningTransform = <T extends { type: string; textDelta?: s
         }
 
         // 发布标签前的内容
-        const beforeTag = buffer.slice(0, startIndex)
-        publish(beforeTag)
+        publish(buffer.slice(0, startIndex))
 
         const foundFullMatch = startIndex + nextTag.length <= buffer.length
         if (foundFullMatch) {
