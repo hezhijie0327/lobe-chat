@@ -242,17 +242,16 @@ const transformOpenAIStream = (
               {
                 data: content,
                 id: chunk.id,
-                type: chunk.type,
+                type: (chunk as any).type,
               },
             ];
           }
         }
 
-        // 根据当前思考模式确定返回类型
         return {
           data: content,
           id: chunk.id,
-          type: chunk.type,
+          type: (chunk as any).type,
         };
       }
     }
