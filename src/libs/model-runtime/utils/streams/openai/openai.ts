@@ -211,16 +211,6 @@ const transformOpenAIStream = (
       }
 
       if (typeof content === 'string') {
-        // 清除 <think> 及 </think> 标签
-        const thinkingContent = content.replaceAll(/<\/?think>/g, '');
-
-        // 判断是否有 <think> 或 </think> 标签，更新 thinkingInContent 状态
-        if (content.includes('<think>')) {
-          streamContext.thinkingInContent = true;
-        } else if (content.includes('</think>')) {
-          streamContext.thinkingInContent = false;
-        }
-
         // 判断是否有 citations 内容，更新 returnedCitation 状态
         if (!streamContext?.returnedCitation) {
           const citations =
@@ -250,9 +240,9 @@ const transformOpenAIStream = (
                 type: 'grounding',
               },
               {
-                data: thinkingContent,
+                data: content,
                 id: chunk.id,
-                type: streamContext?.thinkingInContent ? 'reasoning' : 'text',
+                type: chunk.type,
               },
             ];
           }
@@ -260,9 +250,9 @@ const transformOpenAIStream = (
 
         // 根据当前思考模式确定返回类型
         return {
-          data: thinkingContent,
+          data: content,
           id: chunk.id,
-          type: streamContext?.thinkingInContent ? 'reasoning' : 'text',
+          type: chunk.type,
         };
       }
     }
