@@ -7,7 +7,7 @@ export interface OpenAIModelCard {
   id: string;
 }
 
-const prunePrefixes = ['o1', 'o3', 'o4'];
+const prunePrefixes = ['o1', 'o3', 'o4', 'codex', 'computer-use'];
 
 const oaiSearchContextSize = process.env.OPENAI_SEARCH_CONTEXT_SIZE; // low, medium, high
 
@@ -17,7 +17,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
     handlePayload: (payload) => {
       const { enabledSearch, model, ...rest } = payload;
 
-      if (model === 'o1-pro' || enabledSearch) {
+      if (model === 'o1-pro' || model === 'codex-mini-latest' || model === 'computer-use-preview' || enabledSearch) {
         return { ...rest, apiMode: 'responses', enabledSearch, model } as ChatStreamPayload;
       }
 
