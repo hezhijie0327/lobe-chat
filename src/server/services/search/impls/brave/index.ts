@@ -100,7 +100,7 @@ export class BraveImpl implements SearchServiceImpl {
       const mappedResults = (braveResponse.web.results || []).map(
         (result): UniformSearchResult => ({
           category: 'general', // Default category
-          content: result.description | '', // Prioritize content
+          content: result.description || '', // Prioritize content
           engines: ['brave'], // Use 'brave' as the engine name
           parsedUrl: result.url ? new URL(result.url).hostname : '', // Basic URL parsing
           score: 1, // Default score to 1
