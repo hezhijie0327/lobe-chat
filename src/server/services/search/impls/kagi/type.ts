@@ -10,13 +10,12 @@ interface KagiThumbnail {
 }
 
 interface KagiData {
-  list?: string[];
   published?: number;
   snippet?: string;
   t: number;
   thumbnail?: KagiThumbnail;
-  title?: string;
-  url?: string;
+  title: string;
+  url: string;
 }
 
 export interface KagiResponse {
