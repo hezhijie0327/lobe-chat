@@ -33,7 +33,7 @@ export class GoogleImpl implements SearchServiceImpl {
     const defaultQueryParams: GoogleSearchParameters = {
       cx: process.env.GOOGLE_PSE_ENGINE_ID || '',
       key: process.env.GOOGLE_PSE_API_KEY || '',
-      num: 15,
+      num: 10,
       q: query,
     };
 
