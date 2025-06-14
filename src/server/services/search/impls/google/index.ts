@@ -21,6 +21,14 @@ const timeRangeMapping = {
  * Primarily used for web crawling
  */
 export class GoogleImpl implements SearchServiceImpl {
+  private get apiKey(): string | undefined {Add commentMore actions
+    return process.env.GOOGLE_PSE_API_KEY;
+  }
+
+  private get engineId(): string | undefined {
+    return process.env.GOOGLE_PSE_ENGINE_ID;
+  }
+
   private get baseUrl(): string {
     // Assuming the base URL is consistent with the crawl endpoint
     return 'https://www.googleapis.com';
@@ -31,8 +39,8 @@ export class GoogleImpl implements SearchServiceImpl {
     const endpoint = urlJoin(this.baseUrl, '/customsearch/v1');
 
     const defaultQueryParams: GoogleSearchParameters = {
-      cx: process.env.GOOGLE_PSE_ENGINE_ID || '',
-      key: process.env.GOOGLE_PSE_API_KEY || '',
+      cx: this.engineId || '',
+      key: this.apiKey || '',
       num: 10,
       q: query,
     };
