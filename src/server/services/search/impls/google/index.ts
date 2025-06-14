@@ -21,7 +21,7 @@ const timeRangeMapping = {
  * Primarily used for web crawling
  */
 export class GoogleImpl implements SearchServiceImpl {
-  private get apiKey(): string | undefined {Add commentMore actions
+  private get apiKey(): string | undefined {
     return process.env.GOOGLE_PSE_API_KEY;
   }
 
