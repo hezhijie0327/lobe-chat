@@ -22,7 +22,7 @@ export interface GoogleSearchParameters {
   orTerms?: string;
   q: string;
   rights?: string;
-  safe:? string;
+  safe?: string;
   searchType?: string;
   siteSearch?: string;
   siteSearchFilter?: string;
