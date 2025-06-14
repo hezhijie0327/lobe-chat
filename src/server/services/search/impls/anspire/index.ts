@@ -30,7 +30,7 @@ export class AnspireImpl implements SearchServiceImpl {
     const defaultQueryParams: AnspireSearchParameters = {
       mode: 0,
       query,
-      top_k: 15,
+      top_k: 20,
     };
 
     let body: AnspireSearchParameters = {
@@ -52,18 +52,24 @@ export class AnspireImpl implements SearchServiceImpl {
 
     log('Constructed request body: %o', body);
 
+    const searchParams = new URLSearchParams();
+    for (const [key, value] of Object.entries(body)) {
+      searchParams.append(key, String(value));
+    }
+
     let response: Response;
     const startAt = Date.now();
     let costTime = 0;
     try {
       log('Sending request to endpoint: %s', endpoint);
-      response = await fetch(endpoint, {
-        body: JSON.stringify(body),
+      response = await fetch(`${endpoint}?${searchParams.toString()}`, {
         headers: {
-          'Authorization': this.apiKey ? `Bearer {this.apiKey}` : '',
+          'Accept': '*/*',
+          'Authorization': this.apiKey ? `Bearer ${this.apiKey}` : '',
+          'Connection': 'keep-alive ',
           'Content-Type': 'application/json',
         },
-        method: 'POST',
+        method: 'GET',
       });
       log('Received response with status: %d', response.status);
       costTime = Date.now() - startAt;
