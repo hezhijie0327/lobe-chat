@@ -4,8 +4,8 @@ const minimaxChatModels: AIChatModelCard[] = [
   {
     abilities: {
       functionCall: true,
-      search: true,
       reasoning: true,
+      search: true,
     },
     contextWindowTokens: 1_000_192,
     description:
