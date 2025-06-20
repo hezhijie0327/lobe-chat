@@ -6,5 +6,5 @@ export const LobeVercelAI = createOpenAICompatibleRuntime({
   debug: {
     chatCompletion: () => process.env.DEBUG_VERCEL_CHAT_COMPLETION === '1',
   },
-  provider: ModelProvider.VercelAI,
+  provider: ModelProvider.Vercel,
 });
