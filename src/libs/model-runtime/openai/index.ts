@@ -83,7 +83,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
             { ...payload.reasoning, summary: 'auto' } : 
             { summary: 'auto' },
           stream: payload.stream ?? true,
-          tools: openaiTools,
+          tools: openaiTools as any,
           // computer-use series must set truncation as auto
           ...(model.startsWith('computer-use') && { truncation: 'auto' }),
         }) as any;
