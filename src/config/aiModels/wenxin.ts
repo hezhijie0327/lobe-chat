@@ -567,7 +567,7 @@ const wenxinChatModels: AIChatModelCard[] = [
 const wenxinImageModels: AIImageModelCard[] = [
   {
     description:
-      '',
+      '百度自研的iRAG（image based RAG），检索增强的文生图技术，将百度搜索的亿级图片资源跟强大的基础模型能力相结合，就可以生成各种超真实的图片，整体效果远远超过文生图原生系统，去掉了AI味儿，而且成本很低。iRAG具备无幻觉、超真实、立等可取等特点。',
     displayName: 'ERINE iRAG',
     enabled: true,
     id: 'irag-1.0',
@@ -585,7 +585,7 @@ const wenxinImageModels: AIImageModelCard[] = [
   },
   {
     description:
-      '',
+      '业内知名的跨模态大模型，由Stability AI研发并开源，有着业内领先的图像生成能力。',
     displayName: 'Stable-Diffusion-XL',
     enabled: true,
     id: 'stable-diffusion-xl-base-1.0',
@@ -603,7 +603,7 @@ const wenxinImageModels: AIImageModelCard[] = [
   },
   {
     description:
-      '',
+      '具有120亿参数的修正流变换器，能够根据文本描述生成图像。',
     displayName: 'FLUX.1-schnell',
     enabled: true,
     id: 'flux.1-schnell',
