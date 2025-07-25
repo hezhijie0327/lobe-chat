@@ -166,7 +166,6 @@ const xaiImageModels: AIImageModelCard[] = [
     enabled: true,
     id: 'grok-2-image-1212',
     parameters: {
-      imageUrls: { default: [] },
       prompt: {
         default: '',
       },
