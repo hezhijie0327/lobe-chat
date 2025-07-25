@@ -1,4 +1,4 @@
-import { AIChatModelCard } from '@/types/aiModel';
+import { AIChatModelCard, AIImageModelCard } from '@/types/aiModel';
 
 const wenxinChatModels: AIChatModelCard[] = [
   {
@@ -561,6 +561,63 @@ const wenxinChatModels: AIChatModelCard[] = [
       output: 8,
     },
     type: 'chat',
+  },
+];
+
+const wenxinImageModels: AIImageModelCard[] = [
+  {
+    description:
+      '',
+    displayName: 'ERINE iRAG',
+    enabled: true,
+    id: 'irag-1.0',
+    parameters: {
+      prompt: {
+        default: '',
+      },
+      size: {
+        default: '1024x1024',
+        enum: ['768x768', '1024x1024', '1536x1536', '2048x2048', '1024x768', '2048x1536', '768x1024', '1536x2048', '1024x576', '2048x1152', '576x1024', '1152x2048'],
+      },
+    },
+    releasedAt: '2025-03-04',
+    type: 'image',
+  },
+  {
+    description:
+      '',
+    displayName: 'Stable-Diffusion-XL',
+    enabled: true,
+    id: '--',
+    parameters: {
+      prompt: {
+        default: '',
+      },
+      size: {
+        default: '1024x1024',
+        enum: ['768x768', '1024x1024', '1536x1536', '2048x2048', '1024x768', '2048x1536', '768x1024', '1536x2048', '1024x576', '2048x1152', '576x1024', '1152x2048'],
+      },
+    },
+    releasedAt: '2025-03-04',
+    type: 'image',
+  },
+  {
+    description:
+      '',
+    displayName: 'FLUX.1-schnell',
+    enabled: true,
+    id: 'flux.1-schnell',
+    parameters: {
+      prompt: {
+        default: '',
+      },
+      size: {
+        default: '1024x1024',
+        enum: ['768x768', '1024x1024', '1536x1536', '2048x2048', '1024x768', '2048x1536', '768x1024', '1536x2048', '1024x576', '2048x1152', '576x1024', '1152x2048'],
+      },
+    },
+    releasedAt: '2025-03-04',
+    type: 'image',
   },
 ];
 
