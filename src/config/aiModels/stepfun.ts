@@ -287,10 +287,12 @@ const stepfunImageModels: AIImageModelCard[] = [
       prompt: {
         default: '',
       },
+      seed: { default: null },
       size: {
         default: '1024x1024',
         enum: ['256x256', '512x512', '768x768', '1024x1024', '1280x800', '800x1280'],
       },
+      steps: { default: 50, max: 100, min: 1 },
     },
     releasedAt: '2024-08-07',
     type: 'image',
@@ -305,10 +307,12 @@ const stepfunImageModels: AIImageModelCard[] = [
       prompt: {
         default: '',
       },
+      seed: { default: null },
       size: {
         default: '1024x1024',
         enum: ['256x256', '512x512', '768x768', '1024x1024', '1280x800', '800x1280'],
       },
+      steps: { default: 50, max: 100, min: 1 },
     },
     releasedAt: '2025-07-15',
     type: 'image',
