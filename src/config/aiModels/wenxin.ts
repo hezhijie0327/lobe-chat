@@ -588,7 +588,7 @@ const wenxinImageModels: AIImageModelCard[] = [
       '',
     displayName: 'Stable-Diffusion-XL',
     enabled: true,
-    id: '--',
+    id: 'stable-diffusion-xl-base-1.0',
     parameters: {
       prompt: {
         default: '',
