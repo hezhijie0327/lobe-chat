@@ -292,7 +292,7 @@ const stepfunImageModels: AIImageModelCard[] = [
         enum: ['256x256', '512x512', '768x768', '1024x1024', '1280x800', '800x1280'],
       },
     },
-    releasedAt: '2025-03-04',
+    releasedAt: '2024-08-07',
     type: 'image',
   },
   {
@@ -310,7 +310,7 @@ const stepfunImageModels: AIImageModelCard[] = [
         enum: ['256x256', '512x512', '768x768', '1024x1024', '1280x800', '800x1280'],
       },
     },
-    releasedAt: '2025-03-04',
+    releasedAt: '2025-07-15',
     type: 'image',
   },
 ];
