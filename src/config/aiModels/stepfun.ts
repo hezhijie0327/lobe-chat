@@ -284,6 +284,7 @@ const stepfunImageModels: AIImageModelCard[] = [
     enabled: true,
     id: 'step-2x-large',
     parameters: {
+      imageUrls: { default: [] },
       prompt: {
         default: '',
       },
@@ -302,6 +303,7 @@ const stepfunImageModels: AIImageModelCard[] = [
     enabled: true,
     id: 'step-1x-medium',
     parameters: {
+      imageUrls: { default: [] },
       prompt: {
         default: '',
       },
