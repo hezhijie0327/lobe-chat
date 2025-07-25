@@ -19,12 +19,14 @@ interface QwenImageTaskResponse {
 }
 
 const QwenText2ImageModels = [
-  'wanx',
+  'wanx2.1-t2i',
+  'wanx2.0-t2i',
+  'wanx-v1',
   'flux',
   'stable-diffusion'
 ];
 
-const getModelType(model: string): string {
+const getModelType = (model: string): string => {
   // 可以添加其他模型类型的判断
   // if (QwenImage2ImageModels.some(prefix => model.startsWith(prefix))) {
   //   return 'image2image';
