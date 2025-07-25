@@ -580,25 +580,7 @@ const wenxinImageModels: AIImageModelCard[] = [
         enum: ['768x768', '1024x1024', '1536x1536', '2048x2048', '1024x768', '2048x1536', '768x1024', '1536x2048', '1024x576', '2048x1152', '576x1024', '1152x2048'],
       },
     },
-    releasedAt: '2025-03-04',
-    type: 'image',
-  },
-  {
-    description:
-      '业内知名的跨模态大模型，由Stability AI研发并开源，有着业内领先的图像生成能力。',
-    displayName: 'Stable-Diffusion-XL',
-    enabled: true,
-    id: 'stable-diffusion-xl-base-1.0',
-    parameters: {
-      prompt: {
-        default: '',
-      },
-      size: {
-        default: '1024x1024',
-        enum: ['768x768', '1024x1024', '1536x1536', '2048x2048', '1024x768', '2048x1536', '768x1024', '1536x2048', '1024x576', '2048x1152', '576x1024', '1152x2048'],
-      },
-    },
-    releasedAt: '2025-03-04',
+    releasedAt: '2025-02-05',
     type: 'image',
   },
   {
@@ -616,7 +598,25 @@ const wenxinImageModels: AIImageModelCard[] = [
         enum: ['768x768', '1024x1024', '1536x1536', '2048x2048', '1024x768', '2048x1536', '768x1024', '1536x2048', '1024x576', '2048x1152', '576x1024', '1152x2048'],
       },
     },
-    releasedAt: '2025-03-04',
+    releasedAt: '2025-03-27',
+    type: 'image',
+  },
+  {
+    description:
+      '业内知名的跨模态大模型，由Stability AI研发并开源，有着业内领先的图像生成能力。',
+    displayName: 'Stable-Diffusion-XL',
+    enabled: true,
+    id: 'stable-diffusion-xl-base-1.0',
+    parameters: {
+      prompt: {
+        default: '',
+      },
+      size: {
+        default: '1024x1024',
+        enum: ['768x768', '1024x1024', '1536x1536', '2048x2048', '1024x768', '2048x1536', '768x1024', '1536x2048', '1024x576', '2048x1152', '576x1024', '1152x2048'],
+      },
+    },
+    releasedAt: '2023-10-25',
     type: 'image',
   },
 ];
