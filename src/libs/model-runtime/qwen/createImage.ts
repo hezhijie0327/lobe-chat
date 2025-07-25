@@ -21,7 +21,7 @@ interface QwenImageTaskResponse {
 const TEXT2IMAGE_PREFIXES = [
   'wanx',
   'flux',
-  'stable-diffusion',
+  'stable-diffusion'
 ];
 
 const getModelType(model: string): string {
@@ -33,7 +33,7 @@ const getModelType(model: string): string {
   if (TEXT2IMAGE_PREFIXES.some(prefix => model.startsWith(prefix))) {
     return 'text2image';
   }
-  
+
   throw new Error(`Unsupported model: ${model}`);
 }
 
