@@ -841,6 +841,7 @@ const siliconcloudImageModels: AIImageModelCard[] = [
       prompt: {
         default: '',
       },
+      seed: { default: null },
       size: {
         default: '1024x1024',
         enum: ['1024x1024', '960x1280', '768x1024', '720x1440', '720x1280'],
