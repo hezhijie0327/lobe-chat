@@ -621,6 +621,6 @@ const wenxinImageModels: AIImageModelCard[] = [
   },
 ];
 
-export const allModels = [...wenxinChatModels];
+export const allModels = [...wenxinChatModels, ...wenxinImageModels];
 
 export default allModels;
