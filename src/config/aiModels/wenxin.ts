@@ -598,7 +598,7 @@ const wenxinImageModels: AIImageModelCard[] = [
         default: '1024x1024',
         enum: ['768x768', '1024x1024', '1536x1536', '2048x2048', '1024x768', '2048x1536', '768x1024', '1536x2048', '1024x576', '2048x1152', '576x1024', '1152x2048'],
       },
-      steps: { default: null, max: 50, min: 1 },
+      steps: { default: 25, max: 50, min: 1 },
     },
     releasedAt: '2025-03-27',
     type: 'image',
