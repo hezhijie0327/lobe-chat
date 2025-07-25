@@ -1020,6 +1020,7 @@ const qwenImageModels: AIImageModelCard[] = [
       seed: { default: null },
       width: { default: 1024, max: 1440, min: 512, step: 1 },
     },
+    releasedAt: '2024-05-22',
     type: 'image',
   },
   {
@@ -1039,6 +1040,7 @@ const qwenImageModels: AIImageModelCard[] = [
       },
       steps: { default: 4, max: 12, min: 1 },
     },
+    releasedAt: '2024-08-07',
     type: 'image',
   },
   {
@@ -1058,6 +1060,7 @@ const qwenImageModels: AIImageModelCard[] = [
       },
       steps: { default: 50, max: 50, min: 1 },
     },
+    releasedAt: '2024-08-07',
     type: 'image',
   },
   {
@@ -1077,6 +1080,7 @@ const qwenImageModels: AIImageModelCard[] = [
       },
       steps: { default: 30, max: 30, min: 1 },
     },
+    releasedAt: '2024-08-22',
     type: 'image',
   },
   {
@@ -1093,6 +1097,7 @@ const qwenImageModels: AIImageModelCard[] = [
       steps: { default: 40, max: 500, min: 1 },
       width: { default: 1024, max: 1024, min: 512, step: 128 },
     },
+    releasedAt: '2024-10-25',
     type: 'image',
   },
   {
@@ -1109,6 +1114,7 @@ const qwenImageModels: AIImageModelCard[] = [
       steps: { default: 40, max: 500, min: 1 },
       width: { default: 1024, max: 1024, min: 512, step: 128 },
     },
+    releasedAt: '2024-10-25',
     type: 'image',
   },
   {
@@ -1124,6 +1130,7 @@ const qwenImageModels: AIImageModelCard[] = [
       steps: { default: 50, max: 500, min: 1 },
       width: { default: 1024, max: 1024, min: 512, step: 128 },
     },
+    releasedAt: '2024-04-09',
     type: 'image',
   },
   {
@@ -1139,6 +1146,7 @@ const qwenImageModels: AIImageModelCard[] = [
       steps: { default: 50, max: 500, min: 1 },
       width: { default: 512, max: 1024, min: 512, step: 128 },
     },
+    releasedAt: '2024-04-09',
     type: 'image',
   },
 ];
