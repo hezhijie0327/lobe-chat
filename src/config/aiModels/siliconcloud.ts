@@ -846,7 +846,7 @@ const siliconcloudImageModels: AIImageModelCard[] = [
         enum: ['1024x1024', '960x1280', '768x1024', '720x1440', '720x1280'],
       },
     },
-    releasedAt: '2025-03-04',
+    releasedAt: '2024-07-06',
     type: 'image',
   },
 ];
