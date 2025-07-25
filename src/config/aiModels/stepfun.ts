@@ -297,24 +297,6 @@ const stepfunImageModels: AIImageModelCard[] = [
   },
   {
     description:
-      '该模型专注于图像编辑任务，能够根据用户提供的图片和文本描述，对图片进行修改和增强。支持多种输入格式，包括文本描述和示例图像。模型能够理解用户的意图，并生成符合要求的图像编辑结果。',
-    displayName: 'Step 1X Edit',
-    enabled: true,
-    id: 'step-1x-edit',
-    parameters: {
-      prompt: {
-        default: '',
-      },
-      size: {
-        default: '1024x1024',
-        enum: ['256x256', '512x512', '768x768', '1024x1024', '1280x800', '800x1280'],
-      },
-    },
-    releasedAt: '2025-03-04',
-    type: 'image',
-  },
-  {
-    description:
       '该模型拥有强大的图像生成能力，支持文本描述作为输入方式。具备原生的中文支持，能够更好的理解和处理中文文本描述，并且能够更准确地捕捉文本描述中的语义信息，并将其转化为图像特征，从而实现更精准的图像生成。模型能够根据输入生成高分辨率、高质量的图像，并具备一定的风格迁移能力。',
     displayName: 'Step 1X Medium',
     enabled: true,
