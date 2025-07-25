@@ -1023,6 +1023,63 @@ const qwenImageModels: AIImageModelCard[] = [
     type: 'image',
   },
   {
+    description: 'FLUX.1 [schnell] 作为目前开源最先进的少步模型，不仅超越了同类竞争者，甚至还优于诸如Midjourney v6.0和DALL·E 3 (HD)等强大的非精馏模型。该模型经过专门微调，以保留预训练阶段的全部输出多样性，相较于当前市场上的最先进模型，FLUX.1 [schnell] 显著提升了在视觉质量、指令遵从、尺寸/比例变化、字体处理及输出多样性等方面的可能，为用户带来更为丰富多样的创意图像生成体验。',
+    displayName: 'FLUX.1 [schnell]',
+    enabled: true,
+    id: 'flux-schnell',
+    organization: 'Qwen',
+    parameters: {
+      prompt: {
+        default: '',
+      },
+      seed: { default: null },
+      size: {
+        default: '1024x1024',
+        enum: ['512x1024', '768x512', '768x1024', '1024x576', '576x1024', '1024x1024'],
+      },
+      steps: { default: 4, max: 12, min: 1 },
+    },
+    type: 'image',
+  },
+  {
+    description: 'FLUX.1 [dev] 是一款面向非商业应用的开源权重、精炼模型。FLUX.1 [dev] 在保持了与FLUX专业版相近的图像质量和指令遵循能力的同时，具备更高的运行效率。相较于同尺寸的标准模型，它在资源利用上更为高效。',
+    displayName: 'FLUX.1 [dev]',
+    enabled: true,
+    id: 'flux-dev',
+    organization: 'Qwen',
+    parameters: {
+      prompt: {
+        default: '',
+      },
+      seed: { default: null },
+      size: {
+        default: '1024x1024',
+        enum: ['512x1024', '768x512', '768x1024', '1024x576', '576x1024', '1024x1024'],
+      },
+      steps: { default: 50, max: 50, min: 1 },
+    },
+    type: 'image',
+  },
+  {
+    description: 'FLUX.1-merged模型结合了"DEV"在开发阶段探索的深度特性和"Schnell"所代表的高速执行优势。通过这一举措，FLUX.1-merged不仅提升了模型的性能界限，还拓宽了其应用范围。',
+    displayName: 'FLUX.1-merged',
+    enabled: true,
+    id: 'flux-merged',
+    organization: 'Qwen',
+    parameters: {
+      prompt: {
+        default: '',
+      },
+      seed: { default: null },
+      size: {
+        default: '1024x1024',
+        enum: ['512x1024', '768x512', '768x1024', '1024x576', '576x1024', '1024x1024'],
+      },
+      steps: { default: 30, max: 30, min: 1 },
+    },
+    type: 'image',
+  },
+  {
     description: 'stable-diffusion-3.5-large是一个具有8亿参数的多模态扩散变压器（MMDiT）文本到图像生成模型，具备卓越的图像质量和提示词匹配度，支持生成100万像素的高分辨率图像，且能够在普通消费级硬件上高效运行。',
     displayName: 'StableDiffusion 3.5 Large',
     enabled: true,
