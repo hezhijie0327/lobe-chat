@@ -958,8 +958,25 @@ const qwenChatModels: AIChatModelCard[] = [
 
 const qwenImageModels: AIImageModelCard[] = [
   {
-    description: '阿里云通义旗下的文生图模型',
-    displayName: 'Wanxiang T2I Turbo',
+    description: '全面升级版本。生成图像细节更丰富，速度稍慢。对应通义万相官网2.1专业模型。',
+    displayName: 'Wanxiang2.1 T2I Plus',
+    enabled: true,
+    id: 'wanx2.1-t2i-plus',
+    organization: 'Qwen',
+    parameters: {
+      height: { default: 1024, max: 1440, min: 512, step: 1 },
+      prompt: {
+        default: '',
+      },
+      seed: { default: null },
+      width: { default: 1024, max: 1440, min: 512, step: 1 },
+    },
+    releasedAt: '2025-01-08',
+    type: 'image',
+  },
+  {
+    description: '全面升级版本。生成速度快、效果全面、综合性价比高。对应通义万相官网2.1极速模型。',
+    displayName: 'Wanxiang2.1 T2I Turbo',
     enabled: true,
     id: 'wanx2.1-t2i-turbo',
     organization: 'Qwen',
@@ -972,6 +989,99 @@ const qwenImageModels: AIImageModelCard[] = [
       width: { default: 1024, max: 1440, min: 512, step: 1 },
     },
     releasedAt: '2025-01-08',
+    type: 'image',
+  },
+  {
+    description: '擅长质感人像，速度中等、成本较低。对应通义万相官网2.0极速模型。',
+    displayName: 'Wanxiang2.0 T2I Turbo',
+    id: 'wanx2.0-t2i-turbo',
+    organization: 'Qwen',
+    parameters: {
+      height: { default: 1024, max: 1440, min: 512, step: 1 },
+      prompt: {
+        default: '',
+      },
+      seed: { default: null },
+      width: { default: 1024, max: 1440, min: 512, step: 1 },
+    },
+    releasedAt: '2025-01-17',
+    type: 'image',
+  },
+  {
+    description: '基础文生图模型。对应通义万相官网1.0通用模型。',
+    displayName: 'Wanxiang v1',
+    id: 'wanx-v1',
+    organization: 'Qwen',
+    parameters: {
+      height: { default: 1024, max: 1440, min: 512, step: 1 },
+      prompt: {
+        default: '',
+      },
+      seed: { default: null },
+      width: { default: 1024, max: 1440, min: 512, step: 1 },
+    },
+    type: 'image',
+  },
+  {
+    description: 'stable-diffusion-3.5-large是一个具有8亿参数的多模态扩散变压器（MMDiT）文本到图像生成模型，具备卓越的图像质量和提示词匹配度，支持生成100万像素的高分辨率图像，且能够在普通消费级硬件上高效运行。',
+    displayName: 'StableDiffusion 3.5 Large',
+    enabled: true,
+    id: 'stable-diffusion-3.5-large',
+    organization: 'Qwen',
+    parameters: {
+      height: { default: 1024, max: 1024, min: 512, step: 128 },
+      prompt: {
+        default: '',
+      },
+      steps: { default: 40, max: 500, min: 1 },
+      width: { default: 1024, max: 1024, min: 512, step: 128 },
+    },
+    type: 'image',
+  },
+  {
+    description: 'stable-diffusion-3.5-large-turbo是在stable-diffusion-3.5-large的基础上采用对抗性扩散蒸馏（ADD）技术的模型，具备更快的速度。',
+    displayName: 'StableDiffusion 3.5 Large Turbo',
+    enabled: true,
+    id: 'stable-diffusion-3.5-large-turbo',
+    organization: 'Qwen',
+    parameters: {
+      height: { default: 1024, max: 1024, min: 512, step: 128 },
+      prompt: {
+        default: '',
+      },
+      steps: { default: 40, max: 500, min: 1 },
+      width: { default: 1024, max: 1024, min: 512, step: 128 },
+    },
+    type: 'image',
+  },
+  {
+    description: 'stable-diffusion-xl相比于v1.5做了重大的改进，并且与当前开源的文生图SOTA模型midjourney效果相当。具体改进之处包括： 更大的unet backbone，是之前的3倍； 增加了refinement模块用于改善生成图片的质量；更高效的训练技巧等。',
+    displayName: 'StableDiffusion xl',
+    id: 'stable-diffusion-xl',
+    organization: 'Qwen',
+    parameters: {
+      height: { default: 1024, max: 1024, min: 512, step: 128 },
+      prompt: {
+        default: '',
+      },
+      steps: { default: 50, max: 500, min: 1 },
+      width: { default: 1024, max: 1024, min: 512, step: 128 },
+    },
+    type: 'image',
+  },
+  {
+    description: 'stable-diffusion-v1.5是以stable-diffusion-v1.2 检查点的权重进行初始化，并在 "laion-aesthetics v2 5+" 上以 512x512 的分辨率进行了595k步的微调，减少了10%的文本条件化，以提高无分类器的引导采样。',
+    displayName: 'StableDiffusion v1.5',
+    id: 'stable-diffusion-v1.5',
+    organization: 'Qwen',
+    parameters: {
+      height: { default: 512, max: 1024, min: 512, step: 128 },
+      prompt: {
+        default: '',
+      },
+      steps: { default: 50, max: 500, min: 1 },
+      width: { default: 512, max: 1024, min: 512, step: 128 },
+    },
     type: 'image',
   },
 ];
