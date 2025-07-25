@@ -18,7 +18,7 @@ interface QwenImageTaskResponse {
   request_id: string;
 }
 
-const TEXT2IMAGE_PREFIXES = [
+const QwenText2ImageModels = [
   'wanx',
   'flux',
   'stable-diffusion'
@@ -26,11 +26,11 @@ const TEXT2IMAGE_PREFIXES = [
 
 const getModelType(model: string): string {
   // 可以添加其他模型类型的判断
-  // if (IMAGE2IMAGE_PREFIXES.some(prefix => model.startsWith(prefix))) {
+  // if (QwenImage2ImageModels.some(prefix => model.startsWith(prefix))) {
   //   return 'image2image';
   // }
 
-  if (TEXT2IMAGE_PREFIXES.some(prefix => model.startsWith(prefix))) {
+  if (QwenText2ImageModels.some(prefix => model.startsWith(prefix))) {
     return 'text2image';
   }
 
