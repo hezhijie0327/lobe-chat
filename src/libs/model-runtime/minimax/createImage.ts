@@ -7,29 +7,18 @@ import { CreateImageOptions } from '../utils/openaiCompatibleFactory';
 const log = createDebug('lobe-image:minimax');
 
 interface MiniMaxImageResponse {
-  id: string;
-  data: {
-    image_urls: string[];
-  };
-  metadata: {
-    failed_count: string;
-    success_count: string;
-  };
   base_resp: {
     status_code: number;
     status_msg: string;
   };
-}
-
-interface MiniMaxSubjectReference {
-  type: 'human_face' | 'human_body' | 'object';
-  image_url: string;
-  weight?: number; // 权重，范围[0.1, 1.0]
-}
-
-interface MiniMaxStyle {
-  style_id: string; // 画风ID
-  weight?: number; // 权重，范围[0.1, 1.0]
+  data: {
+    image_urls: string[];
+  };
+  id: string;
+  metadata: {
+    failed_count: string;
+    success_count: string;
+  };
 }
 
 /**
@@ -41,7 +30,7 @@ function convertImageParams(params: CreateImagePayload['params']) {
   // Prepare the base parameters
   const miniMaxParams: any = {
     prompt: params.prompt,
-    response_format: 'url',
+    response_format: 'base64',
     n: Math.min(Math.max(n, 1), 9), // MiniMax supports 1-9 images
     prompt_optimizer: true, // Enable prompt optimization by default
   };
@@ -207,91 +196,4 @@ export async function createMiniMaxImage(
       provider,
     });
   }
-}
-
-/**
- * Supported MiniMax image generation models and their capabilities
- */
-export const MINIMAX_IMAGE_MODELS = {
-  'image-01': {
-    name: 'MiniMax Image-01',
-    supportsDimensions: true,
-    supportsSubjectReference: true,
-    supportsStyle: false,
-    maxImages: 9,
-    supportedAspectRatios: ['1:1', '16:9', '4:3', '3:2', '2:3', '3:4', '9:16', '21:9'],
-    dimensionRange: { min: 512, max: 2048, step: 8 },
-    maxPixels: 2000000, // 2M pixels recommended limit
-  },
-  'image-01-live': {
-    name: 'MiniMax Image-01-Live',
-    supportsDimensions: false,
-    supportsSubjectReference: false,
-    supportsStyle: true,
-    maxImages: 9,
-    supportedAspectRatios: ['1:1', '16:9', '4:3', '3:2', '2:3', '3:4', '9:16', '21:9'],
-  },
-} as const;
-
-/**
- * Validate if the model is supported by MiniMax
- */
-export function isMiniMaxImageModel(model: string): boolean {
-  return model in MINIMAX_IMAGE_MODELS;
-}
-
-/**
- * Get model configuration for MiniMax image model
- */
-export function getMiniMaxImageModelConfig(model: string) {
-  return MINIMAX_IMAGE_MODELS[model as keyof typeof MINIMAX_IMAGE_MODELS];
-}
-
-/**
- * Validate image generation parameters for MiniMax
- */
-export function validateMiniMaxImageParams(model: string, params: CreateImagePayload['params']): {
-  isValid: boolean;
-  errors: string[];
-} {
-  const errors: string[] = [];
-  const config = getMiniMaxImageModelConfig(model);
-  
-  if (!config) {
-    errors.push(`Unsupported model: ${model}`);
-    return { isValid: false, errors };
-  }
-
-  // Validate prompt length
-  if (!params.prompt || params.prompt.length > 1500) {
-    errors.push('Prompt is required and must be <= 1500 characters');
-  }
-
-  // Validate n parameter
-  if (params.n && (params.n < 1 || params.n > config.maxImages)) {
-    errors.push(`Number of images must be between 1 and ${config.maxImages}`);
-  }
-
-  // Validate dimensions for image-01 model
-  if (config.supportsDimensions && params.width && params.height) {
-    const { min, max, step } = config.dimensionRange;
-    
-    if (params.width < min || params.width > max) {
-      errors.push(`Width must be between ${min} and ${max} pixels`);
-    }
-    if (params.height < min || params.height > max) {
-      errors.push(`Height must be between ${min} and ${max} pixels`);
-    }
-    if (params.width % step !== 0 || params.height % step !== 0) {
-      errors.push(`Width and height must be multiples of ${step}`);
-    }
-    if (params.width * params.height > config.maxPixels) {
-      errors.push(`Total resolution exceeds ${config.maxPixels} pixels limit`);
-    }
-  }
-
-  return {
-    isValid: errors.length === 0,
-    errors,
-  };
 }
