@@ -25,13 +25,13 @@ interface MiniMaxImageResponse {
  * Convert standard image parameters to MiniMax format
  */
 function convertImageParams(params: CreateImagePayload['params']) {
-  const { width, height, n = 1, seed } = params;
+  const { width, height, seed } = params;
   
   // Prepare the base parameters
   const miniMaxParams: any = {
     prompt: params.prompt,
     // response_format: 'url',
-    n: Math.min(Math.max(n, 1), 9), // MiniMax supports 1-9 images
+    n: 1, // MiniMax supports 1-9 images
     prompt_optimizer: true, // Enable prompt optimization by default
   };
 
@@ -177,7 +177,7 @@ export async function createMiniMaxImage(
     log('Error in createMiniMaxImage: %O', error);
 
     // Handle specific error types
-    let errorType: 'InvalidPayload' | 'ProviderBizError' | 'NoOpenAIAPIKey' = 'ProviderBizError';
+    let errorType: 'ProviderBizError' | 'NoOpenAIAPIKey' = 'ProviderBizError';
     
     if (error instanceof Error) {
       const errorMessage = error.message.toLowerCase();
@@ -186,7 +186,7 @@ export async function createMiniMaxImage(
         errorType = 'NoOpenAIAPIKey';
       } else if (errorMessage.includes('400') || errorMessage.includes('invalid') ||
                 errorMessage.includes('parameter')) {
-        errorType = 'InvalidPayload';
+        errorType = 'ProviderBizError';
       }
     }
 
