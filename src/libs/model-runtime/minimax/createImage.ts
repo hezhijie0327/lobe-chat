@@ -161,17 +161,7 @@ export async function createMiniMaxImage(
 
     log('Image generated successfully: %s', imageUrl);
 
-    return { 
-      imageUrl,
-      // Include additional metadata if available
-      metadata: {
-        id: data.id,
-        successCount,
-        failedCount,
-        totalImages: data.data.image_urls.length,
-        allImageUrls: data.data.image_urls, // Include all generated images
-      },
-    };
+    return {  imageUrl };
 
   } catch (error) {
     log('Error in createMiniMaxImage: %O', error);
