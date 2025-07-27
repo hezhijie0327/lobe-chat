@@ -30,7 +30,7 @@ function convertImageParams(params: CreateImagePayload['params']) {
   // Prepare the base parameters
   const miniMaxParams: any = {
     prompt: params.prompt,
-    response_format: 'base64',
+    // response_format: 'url',
     n: Math.min(Math.max(n, 1), 9), // MiniMax supports 1-9 images
     prompt_optimizer: true, // Enable prompt optimization by default
   };
