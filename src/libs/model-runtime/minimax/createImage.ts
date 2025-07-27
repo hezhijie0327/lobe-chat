@@ -176,23 +176,9 @@ export async function createMiniMaxImage(
   } catch (error) {
     log('Error in createMiniMaxImage: %O', error);
 
-    // Handle specific error types
-    let errorType: 'ProviderBizError' | 'NoOpenAIAPIKey' = 'ProviderBizError';
-    
-    if (error instanceof Error) {
-      const errorMessage = error.message.toLowerCase();
-      if (errorMessage.includes('401') || errorMessage.includes('unauthorized') || 
-          errorMessage.includes('invalid api key')) {
-        errorType = 'NoOpenAIAPIKey';
-      } else if (errorMessage.includes('400') || errorMessage.includes('invalid') ||
-                errorMessage.includes('parameter')) {
-        errorType = 'ProviderBizError';
-      }
-    }
-
     throw AgentRuntimeError.createImage({
       error: error as any,
-      errorType,
+      errorType: 'ProviderBizError',
       provider,
     });
   }
