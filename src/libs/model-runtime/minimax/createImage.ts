@@ -25,8 +25,8 @@ interface MiniMaxImageResponse {
  * Convert standard image parameters to MiniMax format
  */
 function convertImageParams(params: CreateImagePayload['params']) {
-  const { width, height, seed } = params;
-  
+  const { height, seed, width } = params;
+
   // Prepare the base parameters
   const miniMaxParams: any = {
     n: 1, // MiniMax supports 1-9 images
