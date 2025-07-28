@@ -39,6 +39,7 @@ export async function createMiniMaxImage(
         aspect_ratio: params.aspectRatio,
         model,
         n: 1,
+        prompt: params.prompt,
         ...(params.seed !== undefined ? { seed: params.seed } : {}),
       }),
       headers: {
