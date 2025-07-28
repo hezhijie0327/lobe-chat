@@ -53,7 +53,7 @@ function convertImageParams(params: CreateImagePayload['params']) {
     
     // Check if total pixels exceed 2M (recommended limit)
     const totalPixels = normalizedWidth * normalizedHeight;
-    if (totalPixels > 2000000) {
+    if (totalPixels > 2_000_000) {
       log('Warning: Image resolution (%dx%d = %d pixels) exceeds recommended 2M pixel limit', 
           normalizedWidth, normalizedHeight, totalPixels);
     }
@@ -106,12 +106,12 @@ export async function createMiniMaxImage(
     };
 
     const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
       body: JSON.stringify(requestBody),
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
     });
 
     if (!response.ok) {
