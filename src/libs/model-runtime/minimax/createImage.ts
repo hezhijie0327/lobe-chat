@@ -57,14 +57,8 @@ export async function createMiniMaxImage(
         // Failed to parse JSON error response
       }
 
-      // Check if it's a MiniMax error response format
-      const errorMessage = errorData?.base_resp?.status_msg || 
-                          errorData?.error?.message || 
-                          errorData?.message || 
-                          response.statusText;
-
       throw new Error(
-        `MiniMax API error (${response.status}): ${errorMessage}`
+        `MiniMax API error (${response.status}): ${errorData?.base_resp || response.statusText}`
       );
     }
 
@@ -96,7 +90,7 @@ export async function createMiniMaxImage(
 
     log('Image generated successfully: %s', imageUrl);
 
-    return {  imageUrl };
+    return { imageUrl };
 
   } catch (error) {
     log('Error in createMiniMaxImage: %O', error);
