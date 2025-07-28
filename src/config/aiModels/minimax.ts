@@ -63,13 +63,11 @@ const minimaxImageModels: AIImageModelCard[] = [
         default: '1:1',
         enum: ['1:1', '16:9', '4:3', '3:2', '2:3', '3:4', '9:16', '21:9'],
       },
-      height: { default: 1024, max: 2048, min: 512, step: 8 },
       imageUrl: { default: null },
       prompt: {
         default: '',
       },
       seed: { default: null },
-      width: { default: 1024, max: 2048, min: 512, step: 8 },
     },
     releasedAt: '2025-02-28',
     type: 'image',
