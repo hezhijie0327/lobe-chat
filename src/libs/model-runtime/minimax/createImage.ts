@@ -40,6 +40,7 @@ export async function createMiniMaxImage(
         model,
         n: 1,
         prompt: params.prompt,
+        //prompt_optimizer: true, // 开启 prompt 自动优化
         ...(params.seed !== undefined ? { seed: params.seed } : {}),
       }),
       headers: {
