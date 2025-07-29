@@ -10,6 +10,7 @@ vi.spyOn(console, 'error').mockImplementation(() => {});
 
 const mockOptions: CreateImageOptions = {
   apiKey: 'test-api-key',
+  baseURL: 'https://api.minimaxi.com/v1',
   provider: 'minimax',
 };
 
