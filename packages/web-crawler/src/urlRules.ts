@@ -100,9 +100,9 @@ export const crawUrlRules: CrawlUrlRule[] = [
     impls: ['jina'],
     urlPattern: 'https://(.*).feishu.cn/(.*)',
   },
-  // 小红书存在爬虫防护，使用 Search1API 或 Browserless (备用)
+  // 小红书存在爬虫防护，使用 Search1API 或 Browserless / Jina (备用)
   {
-    impls: ['search1api', 'browserless'],
+    impls: ['search1api', 'browserless', 'jina'],
     urlPattern: 'https://(.*).xiaohongshu.com/(.*)',
   },
 ];
