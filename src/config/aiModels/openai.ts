@@ -29,7 +29,6 @@ export const openaiChatModels: AIChatModelCard[] = [
     description:
       'o4-mini 是我们最新的小型 o 系列模型。 它专为快速有效的推理而优化，在编码和视觉任务中表现出极高的效率和性能。',
     displayName: 'o4-mini',
-    enabled: true,
     id: 'o4-mini',
     maxOutput: 100_000,
     pricing: {
@@ -104,7 +103,6 @@ export const openaiChatModels: AIChatModelCard[] = [
     description:
       'o3 是一款全能强大的模型，在多个领域表现出色。它为数学、科学、编程和视觉推理任务树立了新标杆。它也擅长技术写作和指令遵循。用户可利用它分析文本、代码和图像，解决多步骤的复杂问题。',
     displayName: 'o3',
-    enabled: true,
     id: 'o3',
     maxOutput: 100_000,
     pricing: {
@@ -255,13 +253,113 @@ export const openaiChatModels: AIChatModelCard[] = [
   {
     abilities: {
       functionCall: true,
+      reasoning: true,
+      search: true,
+      vision: true,
+    },
+    contextWindowTokens: 400_000,
+    description:
+      '跨领域的编码与智能体任务的最佳模型',
+    displayName: 'GPT 5',
+    enabled: true,
+    id: 'gpt-5',
+    maxOutput: 128_000,
+    pricing: {
+      cachedInput: 0.125,
+      input: 1.25,
+      output: 10,
+    },
+    releasedAt: '2025-08-07',
+    settings: {
+      extendParams: ['reasoningEffort'],
+      searchImpl: 'params',
+    },
+    type: 'chat',
+  },
+  {
+    abilities: {
+      functionCall: true,
+      reasoning: true,
+      search: true,
+      vision: true,
+    },
+    contextWindowTokens: 400_000,
+    description:
+      '适用于明确任务的更快、更具成本效益的 GPT-5 版本',
+    displayName: 'GPT 5 Mini',
+    enabled: true,
+    id: 'gpt-5-mini',
+    maxOutput: 128_000,
+    pricing: {
+      cachedInput: 0.025,
+      input: 0.25,
+      output: 2,
+    },
+    releasedAt: '2025-08-07',
+    settings: {
+      extendParams: ['reasoningEffort'],
+      searchImpl: 'params',
+    },
+    type: 'chat',
+  },
+  {
+    abilities: {
+      functionCall: true,
+      reasoning: true,
+      vision: true,
+    },
+    contextWindowTokens: 400_000,
+    description:
+      'GPT-5 的最快且最具成本效益的版本',
+    displayName: 'GPT 5 Nano',
+    id: 'gpt-5-nano',
+    maxOutput: 128_000,
+    pricing: {
+      cachedInput: 0.005,
+      input: 0.05,
+      output: 0.4,
+    },
+    releasedAt: '2025-08-07',
+    settings: {
+      extendParams: ['reasoningEffort'],
+      searchImpl: 'params',
+    },
+    type: 'chat',
+  },
+  {
+    abilities: {
+      functionCall: true,
+      reasoning: true,
+      vision: true,
+    },
+    contextWindowTokens: 400_000,
+    description:
+      'ChatGPT 中使用的 GPT-5 模型',
+    displayName: 'GPT-5 Chat',
+    enabled: true,
+    id: 'gpt-5-chat-latest',
+    maxOutput: 128_000,
+    pricing: {
+      cachedInput: 0.125,
+      input: 1.25,
+      output: 10,
+    },
+    releasedAt: '2025-08-07',
+    settings: {
+      extendParams: ['reasoningEffort'],
+      searchImpl: 'params',
+    },
+    type: 'chat',
+  },
+  {
+    abilities: {
+      functionCall: true,
       search: true,
       vision: true,
     },
     contextWindowTokens: 1_047_576,
     description: 'GPT-4.1 是我们用于复杂任务的旗舰模型。它非常适合跨领域解决问题。',
     displayName: 'GPT-4.1',
-    enabled: true,
     id: 'gpt-4.1',
     maxOutput: 32_768,
     pricing: {
@@ -285,7 +383,6 @@ export const openaiChatModels: AIChatModelCard[] = [
     description:
       'GPT-4.1 mini 提供了智能、速度和成本之间的平衡，使其成为许多用例中有吸引力的模型。',
     displayName: 'GPT-4.1 mini',
-    enabled: true,
     id: 'gpt-4.1-mini',
     maxOutput: 32_768,
     pricing: {
@@ -516,7 +613,6 @@ export const openaiChatModels: AIChatModelCard[] = [
     description:
       'ChatGPT-4o 是一款动态模型，实时更新以保持当前最新版本。它结合了强大的语言理解与生成能力，适合于大规模应用场景，包括客户服务、教育和技术支持。',
     displayName: 'ChatGPT-4o',
-    enabled: true,
     id: 'chatgpt-4o-latest',
     pricing: {
       input: 5,
