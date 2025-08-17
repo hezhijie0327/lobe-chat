@@ -116,7 +116,7 @@ export class LobeGoogleAI implements LobeRuntimeAI {
     const httpOptions = baseURL
       ? ({ baseUrl: baseURL, headers: {
         ...defaultHeaders,
-        ...(process.env.ENABLE_AIHUBMIX_APP_CODE && {
+        ...(process.env.ENABLE_AIHUBMIX_APP_CODE === '1' && {
           'APP-Code': 'LobeHub',
         }),
       } } as HttpOptions)
