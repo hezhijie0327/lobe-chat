@@ -14,11 +14,6 @@ const oaiSearchContextSize = process.env.OPENAI_SEARCH_CONTEXT_SIZE; // low, med
 
 export const LobeOpenAI = createOpenAICompatibleRuntime({
   baseURL: 'https://api.openai.com/v1',
-  defaultHeaders: {
-    ...(process.env.ENABLE_AIHUBMIX_APP_CODE && {
-      'APP-Code': 'LobeHub',
-    })
-  },
   chatCompletion: {
     handlePayload: (payload) => {
       const { enabledSearch, model, ...rest } = payload;
@@ -49,6 +44,13 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
       }
 
       return { ...rest, model, stream: payload.stream ?? true };
+    },
+  },
+  constructorOptions: {
+    defaultHeaders: {
+      ...(process.env.ENABLE_AIHUBMIX_APP_CODE && {
+        'APP-Code': 'LobeHub',
+      }),
     },
   },
   debug: {
