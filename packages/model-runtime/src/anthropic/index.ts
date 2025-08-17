@@ -64,7 +64,7 @@ export class LobeAnthropicAI implements LobeRuntimeAI {
       defaultHeaders: {
         ...defaultHeaders,
         'anthropic-beta': betaHeaders,
-        ...(process.env.ENABLE_AIHUBMIX_APP_CODE && {
+        ...(process.env.ENABLE_AIHUBMIX_APP_CODE === '1' && {
           'APP-Code': 'LobeHub',
         }),
       },
