@@ -48,7 +48,7 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
   },
   constructorOptions: {
     defaultHeaders: {
-      ...(process.env.ENABLE_AIHUBMIX_APP_CODE && {
+      ...(process.env.ENABLE_AIHUBMIX_APP_CODE === '1' && {
         'APP-Code': 'LobeHub',
       }),
     },
