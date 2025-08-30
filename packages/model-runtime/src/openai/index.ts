@@ -61,6 +61,13 @@ export const LobeOpenAI = createOpenAICompatibleRuntime({
       };
     },
   },
+  constructorOptions: {
+    defaultHeaders: {
+      ...(process.env.ENABLE_AIHUBMIX_APP_CODE === '1' && {
+        'APP-Code': 'LobeHub',
+      }),
+    },
+  },
   debug: {
     chatCompletion: () => process.env.DEBUG_OPENAI_CHAT_COMPLETION === '1',
     responses: () => process.env.DEBUG_OPENAI_RESPONSES === '1',
