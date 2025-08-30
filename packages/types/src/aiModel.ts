@@ -1,6 +1,5 @@
+import { ModelParamsSchema } from 'model-bank';
 import { z } from 'zod';
-
-import { ModelParamsSchema } from '@/libs/standard-parameters';
 
 export type ModelPriceCurrency = 'CNY' | 'USD';
 
@@ -52,6 +51,7 @@ const AiModelAbilitiesSchema = z.object({
   // files: z.boolean().optional(),
   functionCall: z.boolean().optional(),
   reasoning: z.boolean().optional(),
+  search: z.boolean().optional(),
   vision: z.boolean().optional(),
 });
 
@@ -121,7 +121,8 @@ export type PricingUnitName =
   | 'audioInput_cacheRead' // corresponds to ChatModelPricing.cachedAudioInput
 
   // Image-based pricing units
-  | 'imageGeneration'; // for image generation models
+  | 'imageGeneration' // for image generation models
+  | 'imageOutput';
 
 export type PricingUnitType =
   | 'millionTokens' // per 1M tokens
@@ -213,7 +214,8 @@ export type ExtendParamsType =
   | 'gpt5ReasoningEffort'
   | 'textVerbosity'
   | 'thinking'
-  | 'thinkingBudget';
+  | 'thinkingBudget'
+  | 'urlContext';
 
 export interface AiModelSettings {
   extendParams?: ExtendParamsType[];
@@ -326,7 +328,7 @@ export interface AiProviderModelListItem {
   displayName?: string;
   enabled: boolean;
   id: string;
-  parameters?: Record<string, any>;
+  parameters?: ModelParamsSchema;
   pricing?: Pricing;
   releasedAt?: string;
   settings?: AiModelSettings;
@@ -378,7 +380,7 @@ export interface EnabledAiModel {
   displayName?: string;
   enabled?: boolean;
   id: string;
-  parameters?: Record<string, any>;
+  parameters?: ModelParamsSchema;
   providerId: string;
   settings?: AiModelSettings;
   sort?: number;

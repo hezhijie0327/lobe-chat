@@ -1,3 +1,4 @@
+import { ModelParamsSchema } from 'model-bank';
 import { ReactNode } from 'react';
 
 import { AiModelType, Pricing } from '@/types/aiModel';
@@ -41,6 +42,8 @@ export interface ChatModelCard {
    */
   legacy?: boolean;
   maxOutput?: number;
+  parameters?: ModelParamsSchema;
+
   pricing?: Pricing;
 
   /**
