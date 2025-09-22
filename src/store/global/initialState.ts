@@ -34,7 +34,6 @@ export enum SettingsTabs {
   Provider = 'provider',
   Proxy = 'proxy',
   Storage = 'storage',
-  Sync = 'sync',
   SystemAgent = 'system-agent',
   TTS = 'tts',
 }
@@ -47,6 +46,7 @@ export enum ProfileTabs {
 }
 
 export interface SystemStatus {
+  chatInputHeight?: number;
   expandInputActionbar?: boolean;
   // which sessionGroup should expand
   expandSessionGroupKeys: string[];
@@ -115,6 +115,7 @@ export interface GlobalState {
 }
 
 export const INITIAL_STATUS = {
+  chatInputHeight: 64,
   expandInputActionbar: true,
   expandSessionGroupKeys: [SessionDefaultGroup.Pinned, SessionDefaultGroup.Default],
   filePanelWidth: 320,
